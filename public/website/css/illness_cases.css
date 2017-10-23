@@ -1,0 +1,77 @@
+*{
+	margin:0;
+	padding:0;
+}
+.medRecordList{
+	width:960px;
+	margin:0 auto;
+	background:#fff;
+}	
+.medRecordList tr{
+	width:100%;
+}
+.medRecordList tr td{
+	font-size:16px;
+	color:#595757;
+	text-align: center;
+	line-height:1.5em;
+	border:1px solid #fff;
+	border-width: 0 1px 0 0;
+	padding:8px 0;
+}
+.medRecordList tr td a{
+	color:#21c0d5;
+}
+.medRecordList tr .first{
+	width:285px;
+}
+.medRecordList tr .second{
+	width:305px;
+}
+.medRecordList tr .third{
+	width:206px;
+}
+#shokeBtn{
+	width:257px;
+	height:53px;
+	line-height: 53px;
+	color:#fff;
+	font-size:20px;
+	margin:0 auto;
+	margin-top:180px;
+	background:#21c0d5;
+	border-radius:5px;
+	text-align: center;
+	cursor:pointer;
+}
+.medRecordList tr td .delete{
+	margin-left:20px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.add_new{
+	height:26px;
+	padding-right:10px;
+	margin-bottom:10px;
+	text-align: right;
+}
+.add_new img{
+	width:26px;
+	height:26px;
+	margin-right:3px;
+	cursor: pointer;
+}
+.add_new span{
+	font-size:16px;
+	color:#595757;
+	position: relative;
+	top:-8px;
+	cursor: pointer;
+}
+#listPage{
+	display:none;
+	padding:70px 0 40px 0;
+}
+.showlist{
+	min-height:440px;
+}

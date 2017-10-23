@@ -1,0 +1,78 @@
+/*
+在线咨询
+ * 
+ * */
+html,
+body {
+    background-color: #fff;
+    word-wrap:break-word;
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+}
+.mui-content{
+    background-color:#fff;
+    width:95%;
+    margin:0 auto;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+header h1{
+}
+ul,li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+span{
+    color:#666666;
+    font-size: 14px;
+}
+h4{
+    line-height:1.5em;
+}
+h6{
+    color:#666666;
+    line-height:1.3em;
+    text-indent:0.2em;
+}
+a{
+    color:#fff;
+}
+.blue{
+    color:#30C6DF;
+}
+.red{
+    color: red;
+}
+.center{
+    width:95%;
+    margin:0 auto;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.clear{
+    clear:both;
+}
+p{
+    color:#666666;
+}
+.jiluzixun{
+    height: 44px;
+    position: relative;
+    z-index: 100;
+}
+.mui-bar{
+    padding: 0;
+    height: 45px;
+}
+.mui-bar .mui-title{
+    text-align: left;
+    left:23px;
+    width:5em;
+    font-size: 16px;
+}

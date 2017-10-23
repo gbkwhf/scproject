@@ -1,0 +1,100 @@
+*{
+	margin:0;
+	padding:0;
+}
+html, body {
+}
+div,li,a{
+	display: block;
+}
+body {
+    background-color: #fff;
+	word-wrap:break-word;
+	font-family: "微软雅黑";
+    font-size: 14px;
+    color:#000;
+    margin: 0;
+	padding: 0;
+}
+.content{
+	width:1000px;
+	margin:0 auto;
+}
+ul,li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+@font-face {
+	font-family:myfont1;
+	src:url(../fonts/方正兰亭特黑_GBK.TTF)
+}
+@font-face {
+	font-family: myfont2;
+	src:url(../fonts/方正兰亭黑_GBK.TTF)
+}
+@font-face {
+	font-family: myfont3;
+	src:url(../fonts/方正兰亭细黑_GBK.TTF)
+}
+@font-face {
+	font-family: myfont4;
+	src:url(../fonts/方正兰亭中黑_GBK.TTF)
+}
+.clearfix{
+	clear: both;
+}
+.paging{
+    height:28px;
+    margin:45px auto;
+    position:relative;
+    text-align: center;
+
+}
+.paging a{
+    float: left;
+    color: #4dbbaa;
+    height:28px;
+    line-height: 28px;
+    font-size: 20px;
+    display: block;
+    width: 50px;
+    text-align: center;
+    margin: 0px 4px 0px 4px;
+    cursor: pointer;
+}
+.paging a:hover{
+    background: #4dbbaa;
+    color:#fff;
+    border-radius: 4px;
+}
+.paging .pre{
+    background: url("../images/listpre.png");
+}
+.paging .pre:hover{
+    background: url("../images/listpre.png");
+}
+.paging .behindto{
+    background: url("../images/behindto.png");
+}
+.paging .behindto:hover{
+    background: url("../images/behindto.png");
+}
+.paging .nextto{
+    background: url("../images/nextto.png");
+}
+.paging .nextto:hover{
+    background: url("../images/nextto.png");
+}
+.paging .last{
+    background: url("../images/listlast.png");
+}
+.paging .last:hover{
+    background: url("../images/listlast.png");
+}
+.paging .active{
+
+    background: #4dbbaa;
+    color:#fff;
+    border-radius: 4px;
+}

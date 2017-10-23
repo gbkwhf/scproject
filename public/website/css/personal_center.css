@@ -1,0 +1,171 @@
+.container{
+	background:url(../images/bg1.png) repeat;
+}
+.banner{
+	width:100%;
+	height:383px;
+	background:url(../images/vip/banner.jpg) no-repeat;
+	background-size:cover;
+}
+.container .content{
+	padding:40px 0;
+}
+.left{
+	float:left;
+}
+.chooseTab {
+	padding:35px 25px 0 25px;
+	background:#21c0d5;
+	height:735px;
+}
+.chooseTab ul li{
+	padding-top:3px;
+	padding-bottom:3px;
+	border-bottom: 1px solid #7cd7e6;
+}
+.chooseTab ul li a{
+	width:250px;
+	height:48px;
+	cursor: pointer;
+	font-size:20px;
+	color:#fff;
+}
+.chooseTab ul li.choosen a{
+	background:#d3f2f7;
+	color:#21c0d5;
+}
+.chooseTab ul li a i{
+	display: inline-block;
+	margin-left:40px;
+	width:26px;
+	height:48px;
+	margin-right:19px;
+}
+.chooseTab ul li a span{
+	position: relative;
+	top:-16px;
+}
+.chooseTab ul li a .one{
+	background:url(../images/personal-center/icon1.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .one{
+	background:url(../images/personal-center/icon11.png) no-repeat center center;
+}
+.chooseTab ul li a .two{
+	background:url(../images/personal-center/icon2.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .two{
+	background:url(../images/personal-center/icon22.png) no-repeat center center;
+}
+.chooseTab ul li a .three{
+	background:url(../images/personal-center/icon3.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .three{
+	background:url(../images/personal-center/icon33.png) no-repeat center center;
+}
+.chooseTab ul li a .four{
+	background:url(../images/personal-center/icon4.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .four{
+	background:url(../images/personal-center/icon44.png) no-repeat center center;
+}
+.chooseTab ul li a .five{
+	background:url(../images/personal-center/icon5.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .five{
+	background:url(../images/personal-center/icon55.png) no-repeat center center;
+}
+.chooseTab ul li a .six{
+	background:url(../images/personal-center/me1.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .six{
+	background:url(../images/personal-center/me.png) no-repeat center center;
+}
+.chooseTab ul li a .seven{
+	background:url(../images/personal-center/icon77.png) no-repeat center center;
+}
+.chooseTab ul li.choosen a .seven{
+	background:url(../images/personal-center/icon7.png) no-repeat center center;
+}
+.chooseTab ul li.first{
+	border-top: 1px solid #7cd7e6;
+}
+.chooseShow{
+	margin-left:18px;
+	width:680px;
+	border:1px solid #21c0d5;
+	background:#fff;
+	min-height:768px;
+}
+.chooseShow iframe{
+	
+}
+.chooseShow iframe.show{
+	display:block;
+}
+#layer-content{
+	width:636px;
+	height:445px;
+	border:2px solid #21c0d5;
+	display:none;
+}
+#layer-content .p1{
+	background:#21c0d5;
+	color:#fff;
+	font-size:20px;
+	height:48px;
+	line-height:48px;
+	padding-left:15px;
+}
+#layer-content .center{
+	text-align: center;
+	font-size:26px;
+	color:#21c0d5;
+	margin-top:25px;
+}
+#layer-content .center p{
+	margin-bottom:40px;
+}
+#layer-content #shokeCode{
+	font-size:36px;
+	color:#595757;
+	height:48px;
+	line-height:48px;
+	border:2px solid #b6b6b6;
+	padding:0 20px 0 35px;
+	display:inline;
+	border-radius:24px;
+}
+#layer-content #shokeCode img{
+	margin-left:25px;
+	cursor:pointer;
+}
+#layer-content .p2{
+	text-align: center;
+	font-size:18px;
+	color:#595757;
+	line-height:1.5em;
+	margin-top:40px;
+}
+#layer-content .share{
+	width:252px;
+	height:38px;
+	line-height:38px;
+	color:#595757;
+	font-size:20px;
+	border-radius:20px;
+	/*background:#21c0d5;*/
+	text-align: center;
+	margin:0 auto;
+	margin-top:30px;
+}
+.layui-layer-ico{
+	background: url(../images/personal-center/close.png) no-repeat !important;
+}
+.layui-layer-setwin .layui-layer-close2 {
+    right: 0px !important;
+    top: -3px !important;
+    width: 27px !important;
+    height: 27px !important;
+    background-position: center center !important;
+}

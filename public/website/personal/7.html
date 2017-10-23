@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<title>申请会员</title>
+	    <link rel="stylesheet" href="../css/personal/7.css">
+	    
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-box">
+				<div class="input-box">
+					<label for="user"><img src="../images/personal-center/user.png" /></label>
+					<img src="../images/personal-center/line.png" class="line" />
+					<input type="text" name="user" id="user" placeholder="您的真实姓名" onkeyup="filter()" maxlength="6"/>
+				</div>
+				<div class="input-box">
+					<label for="phone"><img src="../images/personal-center/iphone.png" /></label>
+					<img src="../images/personal-center/line.png" class="line" />
+					<input type="text" name="phone" id="phone" placeholder="手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+				</div>
+				<div class="input-box">
+					<label for="uphone"><img src="../images/personal-center/iphone.png" /></label>
+					<img src="../images/personal-center/line.png" class="line" />
+					<input type="text" name="uphone" id="uphone" placeholder="推荐人手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+				</div>
+			</div>
+			<p class="sub-tit">选择会员类型</p>
+			<ul class="vip-type">
+				<li>
+					<div class="card-vip red">
+						<img src="../images/personal-center/red-card.png" />
+						<span>红卡会员</span>
+					</div>
+					<div class="input">
+						<input type="radio" name="card" id="red" grade="2" />
+						<label for="red"></label>
+					</div>
+				</li>
+				<li>
+					<div class="card-vip yellow">
+						<img src="../images/personal-center/yellow-card.png" />
+						<span>金卡会员</span>
+					</div>
+					<div class="input">
+						<input type="radio" name="card" id="yellow" grade="3" />
+						<label for="yellow"></label>
+					</div>
+				</li>
+				<li>
+					<div class="card-vip white">
+						<img src="../images/personal-center/white-card.png" />
+						<span>白金卡会员</span>
+					</div>
+					<div class="input">
+						<input type="radio" name="card" id="white" grade="4" />
+						<label for="white"></label>
+					</div>
+				</li>
+				<li>
+					<div class="card-vip black">
+						<img src="../images/personal-center/black-card.png" />
+						<span>黑卡会员</span>
+					</div>
+					<div class="input">
+						<input type="radio" name="card" id="black" grade="5" />
+						<label for="black"></label>
+					</div>
+				</li>
+			</ul>
+			<p style="margin-left:180px;font-size:14px;color:#21c0d5;margin-top:60px;"><span style="color:#21c0d5">* </span>为了更快的为您开通会员，请填写自己的真实联系信息。</p>
+			<a href="javascript:;" class="submit">提交</a>
+	   </div>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/layer/layer.js"></script>
+        
+	    <script>
+	    	sessionArr = getCookie('sessionArr');
+	    	if(!sessionArr){
+	    		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	    			window.parent.tologin();
+	    		});
+	    	}else{
+	    		ss=JSON.parse(sessionArr).session;
+	    	}
+	    	setIframeHeight();
+	    	
+	    	$(".submit").click(function(){
+	    		var user=$('#user').val();
+	    		var phone=$('#phone').val();
+	    		var uphone=$('#uphone').val();
+	    		vipgrade=$(".input input:checked").attr("grade");
+	    		if(!phone){
+	    			layer.msg("请填写手机号码");
+	                $('#phone').focus();
+	    		}
+	    		//格式校验
+	    		if(uphone){
+	    			var testGrade = checkGrade(vipgrade);
+		    		var testUphone = checkUphone(uphone);
+		    		var testPhone = checkPhone(phone);
+		            var testName = checkName(user);
+		            
+		            if(testName&&testPhone&&testUphone&&testGrade){
+		            	$.ajax({
+	                		type:"post",
+	                		url:commonUrl+'api/stj/member_apply'+versioninfo,
+	                		data:{
+	                			'code':uphone,
+	                			'grade':vipgrade,
+	                			'mobile':phone,
+	                			'name':user,
+	                			'ss':ss
+	                		},
+	                		success:function(data){
+	                			if(data.code==1){
+	                				console.log(data);
+	                				layer.msg("申请成功");
+	                			}else if(data.code=='1011'){
+			                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+			                  			window.parent.removec();
+			                  			window.parent.tologin();
+			                  		});
+			                  	}else{
+	                				layer.msg(data.msg)
+	                			}
+	                		}
+	                	});
+		            }
+	    		}else{
+	    			var testGrade = checkGrade(vipgrade);
+		    		var testPhone = checkPhone(phone);
+		            var testName = checkName(user);
+		            
+		            if(testName&&testPhone&&testGrade){
+		            	$.ajax({
+	                		type:"post",
+	                		url:commonUrl+'api/stj/member_apply'+versioninfo,
+	                		data:{
+	                			'code':uphone,
+	                			'grade':vipgrade,
+	                			'mobile':phone,
+	                			'name':user,
+	                			'ss':ss
+	                		},
+	                		success:function(data){
+	                			if(data.code==1){
+	                				console.log(data);
+	                				layer.msg("申请成功",{time:1000},function(){
+	                					window.parent.reloadFrame();
+	                				});
+	                			}else if(data.code=='1011'){
+			                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+			                  			window.parent.removec();
+			                  			window.parent.tologin();
+			                  		});
+			                  	}else{
+	                				layer.msg(data.msg)
+	                			}
+	                		}
+	                	});
+		            }
+	    		}
+	    			
+            })
+	    	//iframe自适应高度
+			function getDocHeight(doc) {
+			    doc = doc || document;
+			    var body = doc.body, html = doc.documentElement;
+			    var height = Math.max( body.scrollHeight, body.offsetHeight, 
+			        html.clientHeight, html.scrollHeight, html.offsetHeight );
+			    return height;
+			}
+			function setIframeHeight() {
+			    var ifrm = window.parent.document.getElementById("ifrm");
+			    var doc = ifrm.contentDocument? ifrm.contentDocument: 
+			        ifrm.contentWindow.document;
+			    ifrm.style.visibility = 'hidden';
+			    ifrm.style.height = "10px"; 
+			    ifrm.style.height = getDocHeight( doc ) + "px";
+			    ifrm.style.visibility = 'visible';
+			}
+	    	//校验手机号
+	        function checkPhone(val){
+	            var reg = /^1[034578][0-9]{9}$/;
+	            if(!val){
+	            	layer.msg("请填写手机号码");
+	                $('#phone').focus();
+	                return false;
+	            }else if(!reg.test(val)){
+	                layer.msg("请填写正确的手机号码");
+	                $('#phone').focus();
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        function checkUphone(val){
+	            var reg = /^1[034578][0-9]{9}$/;
+	            if(!reg.test(val)){
+	                layer.msg("请填写正确的推荐人手机号码");
+	                $('#uphone').focus();
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        function checkName(val){
+	            if(!val){
+	                layer.msg("请填写姓名");
+	                return false;
+	            }else if(val.length>6){
+	            	layer.msg('姓名由字母、数字、中文组成，不超过6位');
+	            }else{
+	                return true;
+	            }
+	
+	        }
+	        function checkGrade(val){
+	        	if(!val){
+	                layer.msg("请选择会员类型");
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        //正则判断用户名
+			function filter(){
+				var name=$("#user").val();
+				name=name.replace(/([^0-9a-zA-Z\u4e00-\u9fa5]+)$/,'');//英文字母、数字、中文
+				$("#user").val(name);
+			}
+	    </script>
+	</body>
+</html>

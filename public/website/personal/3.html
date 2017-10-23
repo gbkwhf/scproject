@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<title>咨询记录</title>
+	    <link rel="stylesheet" href="../css/personal/3.css">
+	    <link rel="stylesheet" href="../css/jquery.page.css">
+	    <style>
+	    	#page{
+	    		position: absolute;
+	    		bottom:0;
+	    	}
+	    </style>
+	    
+	</head>
+	<body>
+		<div class="container">
+			<table class="medRecordList" cellpadding="0" cellspacing="0" style="visibility: hidden;">
+				<tr>
+	                <td class="first">咨询类型</td>
+	                <td class="second">状态</td>
+	                <td class="third">咨询时间</td>
+	                <td>详情</td>
+	            </tr>
+			</table>
+			<table class="medRecordList" cellpadding="0" cellspacing="0" id="consult-list"></table>
+			<div id="page" style="visibility: hidden;"></div>
+	   </div>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/layer/layer.js"></script>
+		<script type="text/javascript" src="../js/jquery.page.js"></script>
+	    <script>
+	    	sessionArr = getCookie('sessionArr');
+	    	if(!sessionArr){
+	    		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	    			window.parent.tologin();
+	    		});
+	    	}else{
+	    		ss=JSON.parse(sessionArr).session;
+	    	}
+	    	layer.load(2);
+		    $.ajax({
+		    	type:'POST',
+		    	url:commonUrl + 'api/stj/question'+versioninfo,
+		    	async:false,
+		    	data:{
+		    		'home':1,
+		    		'ss':ss
+		    	},
+		    	success:function(data){
+		    		layer.closeAll();
+		    		console.log(data);
+                    if(data.code == 1){
+                    	if(data.result.list.length!=0){
+                    		conslist_page=Math.ceil(data.result.count/10);
+							$('.medRecordList').css('visibility','visible');
+							$('#page').css('visibility','visible');
+                    		html='';
+	                    	for(var i=0;i<data.result.list.length;i++){
+	                    		id=data.result.list[i].id;  //id
+	                    		state=data.result.list[i].state;    //反馈状态0未处理1已处理
+	                    		type=data.result.list[i].type;  //咨询类型
+	                    		created_at=data.result.list[i].created_at;   //添加时间
+	                    		if(state==0){
+	                    			state_text='未处理';
+	                    		}else if(state==1){
+	                    			state_text='已处理';
+	                    		}
+	                    		html+='<tr>';
+		                    	html+='	<td class="first">'+type+'</td>';
+		                    	html+='	<td class="second state">'+state_text+'</td>';
+		                    	html+='	<td class="third">'+created_at.slice(0,10)+'</td>';
+		                    	html+='	<td><a href="33.html?id='+id+'">查看</a></td>';
+		                    	html+='</tr>';
+	                    	}
+	                    	$('#consult-list').html(html);
+	                    	$('#consult-list tr td:last-child').css('color',"#21c0d5");
+					    	$('#consult-list tr:odd td').css('background','#e8e9e9');
+					    	setIframeHeight();
+					    	
+                    	}else{
+                    		layer.msg('暂无数据');
+                    	}
+                    	
+                  	}else if(data.code=='1011'){
+                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+                  			window.parent.removec();
+                  			window.parent.tologin();
+                  		});
+                  	}else{
+                  		layer.msg(data.msg);
+                  	}
+                }
+            });
+            $("#page").Page({
+		        totalPages: conslist_page,
+		        liNums: 7,
+		        activeClass: 'activP', //active 类样式定义
+		        callBack : function(page){
+//		          	console.log(page);
+		          	ajaxrequest(page);
+		        }
+      		});
+      		pageW=$('#page').width();
+      		$('#page').css('left',(680-pageW)/2 + 'px');
+      		function ajaxrequest(num){
+      			layer.load(2);
+				$.ajax({
+			    	type:'POST',
+			    	url:commonUrl + 'api/stj/question'+versioninfo,
+			    	data:{
+			    		'page':num,
+			    		'ss':ss
+			    	},
+			    	success:function(data){
+			    		layer.closeAll();
+			    		console.log(data);
+	                    if(data.code == 1){
+	                    	shows(data);
+	                  	}else if(data.code=='1011'){
+	                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	                  			window.parent.removec();
+	                  			window.parent.tologin();
+	                  		});
+	                  	}else{
+	                  		layer.msg(data.msg);
+	                  	}
+	                }
+	           	});
+			}
+			function shows(obj){
+				html='';
+            	for(var i=0;i<obj.result.length;i++){
+            		id=obj.result[i].id;  //id
+            		state=obj.result[i].state;    //反馈状态0未处理1已处理
+            		type=obj.result[i].type;  //咨询类型
+            		created_at=obj.result[i].created_at;   //添加时间
+            		if(state==0){
+            			state_text='未处理';
+            		}else if(state==1){
+            			state_text='已处理';
+            		}
+            		html+='<tr>';
+                	html+='	<td class="first">'+type+'</td>';
+                	html+='	<td class="second state">'+state_text+'</td>';
+                	html+='	<td class="third">'+created_at.slice(0,10)+'</td>';
+                	html+='	<td><a href="33.html?id='+id+'">查看</a></td>';
+                	html+='</tr>';
+            	}
+            	$('#consult-list').html(html);
+            	$('#consult-list tr td:last-child').css('color',"#21c0d5");
+		    	$('#consult-list tr:odd td').css('background','#e8e9e9');
+        		setIframeHeight();
+			}
+            //iframe自适应高度
+			function getDocHeight(doc) {
+			    doc = doc || document;
+			    var body = doc.body, html = doc.documentElement;
+			    var height = Math.max( body.scrollHeight, body.offsetHeight, 
+			        html.clientHeight, html.scrollHeight, html.offsetHeight );
+			    return height;
+			}
+			function setIframeHeight() {
+			    var ifrm = window.parent.document.getElementById("ifrm");
+			    var doc = ifrm.contentDocument? ifrm.contentDocument: 
+			        ifrm.contentWindow.document;
+			    ifrm.style.visibility = 'hidden';
+			    ifrm.style.height = "10px"; 
+			    ifrm.style.height = getDocHeight( doc ) + "px";
+			    ifrm.style.visibility = 'visible';
+			}
+	    </script>
+	</body>
+</html>

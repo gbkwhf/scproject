@@ -1,0 +1,202 @@
+.wrap{
+	position: relative;
+}
+.container{
+	padding: 0px 15px;
+	position: relative;
+}
+.container .sub-tit{
+	line-height: 58px;
+	font-size: 15px;
+	color: #333;
+}
+.vip-type li{
+	overflow: hidden;
+	padding-bottom: 15px;
+}
+.vip-type li .card-vip{
+	float: left;
+	width: 121px;
+	line-height: 55px;
+    border-radius: 10px;
+}
+.vip-type li .card-vip span{
+	color: #fff;
+	font-size: 16px;
+}
+.vip-type li .card-vip img{
+	width: 25px;
+    vertical-align: text-bottom;
+    padding-right: 3px;
+    padding-left: 15px;
+}
+.vip-type li .explain{
+	float: left;
+	width: 47%;
+}
+.vip-type li .input{
+	float: right;	
+	padding-top: 12px;
+}
+.vip-type li .explain .exp-txt{
+	font-size: 16px;
+	color: #333;
+	line-height: 55px;
+	padding-left: 20px;
+}
+.vip-type li .explain .exp-txts{
+	font-size: 16px;
+	color: #333;
+	line-height: 1.5em;
+	padding-left: 20px;
+	padding-top: 4px;
+}
+.vip-type li .explain span{
+	font-size: 14px;
+	color: #999;
+	line-height: 1.5em;
+	padding-left: 20px;
+}
+.vip-type li .input input{
+	display: none;
+}
+.vip-type li .input label{
+	background: url(../image/wx-input.png) no-repeat;
+	background-size: 30px 30px;
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+input[type="radio"]:checked +label{
+	background: url(../image/yx-input.png) no-repeat;
+	background-size: 30px 30px;
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+.red{
+	background-color: #ee907a;	
+}
+.yellow{
+	background-color: #eeda7a;
+}
+.white{
+	background-color: #c8c8c8;
+}
+.black{
+	background-color: #535353;
+}
+.container .greyline{
+	background-color: #ededed;
+	height: 10px;
+	margin-left: -15px;
+	margin-right: -15px;
+}
+.container .border-box{
+	border-bottom: 1px solid #ccc;
+	height: 58px;
+	line-height: 58px;
+	overflow: hidden;
+}
+.border-box .pic-box{
+	float: left;
+	width: 12%;
+}
+.border-box input{
+	float: left;
+	width: 85%;
+	line-height: 1.5em;
+	border: none;
+	padding: 17px 0px;
+	font-size: 15px;
+	color: #333;
+}
+.border-box .pic-box img{
+	display: block;
+}
+.container .determine{
+	font-size: 16px;
+	color: #fff;
+	background-color: #21c0d5;
+	line-height: 48px;
+	text-align: center;
+	margin: 30px -15px 0px;	
+}
+.fixed{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.container textarea{
+	width: 94%;
+	line-height: 1.5em;
+	font-size: 15px;
+	color: #333;
+	resize:none;
+	border-color: #ccc;
+	padding: 1% 3%;
+}
+.wrap .submit{
+	font-size: 16px;
+	color: #fff;
+	width: 100%;
+	background-color: #21c0d5;
+	line-height: 48px;
+	text-align: center;
+    position: absolute;
+    left: 0;
+}
+.popup{
+	width: 60%;
+	margin: 0px auto;
+	font-size: 15px;
+	color: #333;
+}
+.popup li{
+	line-height: 50px;
+	text-align: center;
+}
+.popup li:active{
+	background-color: #ccc;
+}
+.login-pop{
+	width: 240px;
+	border-radius: 5px;
+	display: none;
+}
+.login-pop h4{
+	font-size: 16px;
+	color: #21c0d5;
+	border-bottom: 1px solid #21c0d5;
+	text-align: center;
+	line-height: 40px;
+}
+.login-pop p{
+	line-height: 1.5em;
+	font-size: 14px;
+	color: #333;
+	padding: 25px 15px;
+}
+.login-pop .btn-xw{
+	overflow: hidden;
+	border-top: 1px solid #ccc;
+}
+.login-pop .btn-xw a{
+	width: 49%;
+	font-size: 15px;
+	color: #333;
+	line-height: 40px;
+	text-align: center;
+}
+.login-pop .btn-xw .confirm-btn{
+	/*float: left;
+	border-right: 1px solid #ccc;*/
+	width: 100%;
+}
+
+.exp-txt{
+	color: #666;
+    line-height: 1.5em;
+    padding-top: 15px;
+}

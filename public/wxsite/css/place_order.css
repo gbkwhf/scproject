@@ -1,0 +1,133 @@
+.container{
+	position: relative;
+}
+.title{
+	line-height: 1.5em;
+	color: #333;
+	font-size: 16px;
+	border-bottom: 1px solid #e6e6e6;
+	padding: 10px 15px;
+}
+.goods-show{
+	overflow: hidden;
+	padding: 10px 15px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.goods-show img{
+	display: block;
+	float: left;
+	border: 1px solid #ccc;
+}
+.goods-show .explain{
+	float: left;
+	line-height: 1.5em;
+	font-size: 16px;
+	color: #333;
+}
+.explain p{
+	padding-left: 10px;
+	display: -webkit-box;/*内容超出3行省略号显示*/
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+.explain span{
+	display: block;
+	color: #ff855a;
+	font-size: 20px;
+	padding: 0px 0px 0px 10px;
+}
+.explain span mark{
+	background-color: #fff;
+	color: #ff855a;
+	font-size: 20px;
+	margin-left: 3px;
+}
+.form-box{
+	padding: 0px 15px;
+	overflow: hidden;
+	line-height: 57px;
+}
+.form-boxs{
+	margin: 0px 15px;
+	overflow: hidden;
+	line-height: 57px;
+	border-bottom: 1px solid #ccc;
+}
+.form-box.borbot{
+	border-bottom: 1px solid #e6e6e6;
+}
+.form-box p,.form-box label,.form-boxs label{
+	float: left;
+	color: #333;
+	font-size: 15px;
+}
+.form-box input,.form-box span,.form-boxs input{
+	display: block;
+	float: right;
+	border: none;
+	text-align: right;
+	line-height: 1.5em;
+	padding: 18px 0px 19px;
+	font-size: 15px;
+	color: #666;
+}
+.form-box span{
+	color: #ff855a;
+	font-size: 18px;
+}
+.form-box span strong{
+	float: right;
+	color: #666;
+	width: 45px;
+	line-height: 20px;
+	text-align: center;
+}
+.form-box span .add{
+	font-size: 35px;
+    font-weight: 400;
+}
+.form-box span .numbers{
+	font-style: normal;
+	color: #333;
+	font-size: 18px;
+	font-weight: 400;
+}
+.form-box span .subtract{
+	font-size: 35px;
+    font-weight: 400;
+}
+.form-box span mark{
+	background-color: #fff;
+	font-size: 18px;
+	color: #ff855a;
+	vertical-align: bottom;
+	margin-left: 6px;
+}
+.form-box em{
+	float: right;
+	display: block;
+}
+.grayline{
+	height: 10px;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #e6e6e6;
+}
+.cont-box{
+	border-bottom: 1px solid #e6e6e6;
+}
+.submit{
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	background-color: #21c0d5;
+	display: block;
+	line-height: 48px;
+	margin-top: 20px;
+}
+.fixed{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}

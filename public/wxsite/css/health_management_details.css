@@ -1,0 +1,98 @@
+.containers{
+	position: relative;
+	padding-bottom: 59px;
+}
+.title{
+	line-height: 59px;
+	color: #333;
+	font-size: 16px;
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0px 15px;
+}
+.grayline{
+	height: 10px;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #e6e6e6;
+}
+.cont-exp{
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0px 15px;
+}
+.titles{
+	line-height: 59px;
+	color: #21c0d5;
+	font-size: 16px;
+	border-bottom: 1px solid #e6e6e6;
+	text-align: center;
+}
+.cont-exp .explain{
+	font-size: 14px;
+	color: #4d4d4d;
+	line-height: 1.5em;
+	padding: 11px 0px;
+}
+.form-box{
+	padding: 0px 15px;
+	overflow: hidden;
+	line-height: 57px;
+}
+.form-box.borbot{
+	border-bottom: 1px solid #e6e6e6;
+}
+.form-box p,.form-box label{
+	float: left;
+	color: #333;
+}
+.form-box input,.form-box span{
+	display: block;
+	float: right;
+	border: none;
+	text-align: right;
+	line-height: 1.5em;
+	padding: 18px 0px 19px;
+	font-size: 14px;
+	color: #666;
+}
+.form-box span{
+	color: #ff855a;
+	font-size: 13px;
+	font-weight: bold;
+}
+.form-box span mark{
+	background-color: #fff;
+	font-size: 18px;
+	color: #ff855a;
+	vertical-align: bottom;
+	margin-left: 6px;
+}
+.cont-box{
+	border-bottom: 1px solid #e6e6e6;
+}
+.submit{
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	background-color: #21c0d5;
+	display: block;
+	line-height: 48px;
+	margin-top: 20px;
+}
+.fixed{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.popup{
+	width: 60%;
+	margin: 0px auto;
+	font-size: 15px;
+	color: #333;
+}
+.popup li{
+	line-height: 50px;
+	text-align: center;
+}
+.popup li:active{
+	background-color: #ccc;
+}

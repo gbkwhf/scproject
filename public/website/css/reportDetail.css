@@ -1,0 +1,83 @@
+*{
+	margin:0;
+	padding:0;
+}
+.bg{
+	width:100%;
+	background: url(../images/bg1.png) repeat;
+}
+.container{
+	width:960px;
+	margin: 0 auto;
+	padding:60px 0;
+}
+.illname{
+	font-size:40px;
+	color:#21c0d5;
+	margin-bottom:30px;
+	border:none;
+	outline:none;
+	padding:3px 0px;
+}
+.hosp{
+	font-size:18px;
+	color:#595757;
+}
+.hosp span{
+	color:#595757;
+}
+.hosp .hosname{
+	/*float:left;*/
+}
+#hosname{
+	width:240px;
+	font-size:18px;
+	color:#595757;
+	border:none;
+	outline:none;
+	background: #fff;
+	padding:3px 0px;
+}
+.hosp .time{
+	/*float:right;*/
+	margin-top:10px;
+}
+.hosp .time input{
+	font-size:18px;
+	color:#595757;
+	border:none;
+	outline:none;
+	background: #fff;
+	padding:3px 0px;
+}
+.heatit{
+	margin-top:25px;
+	margin-bottom:10px;
+	color: #21c0d5;
+	font-size:22px;
+}
+.inp{
+	width:100%;
+	border-radius: 5px;
+	outline: none;
+	font-size:18px;
+	color:#595757;
+	line-height:1.5em;
+	padding:10px 14px;
+	display: block;
+	min-height:90px;
+	border:none;
+}
+.pics{
+	overflow:hidden;
+}
+.pics .picture{
+	width:220px;
+	height:220px;
+	float:left;
+	border:1px solid #b6b6b6;
+	margin-right:24px;
+}
+.clearfix{
+	clear:both;
+}

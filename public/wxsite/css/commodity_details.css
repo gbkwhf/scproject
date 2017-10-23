@@ -1,0 +1,96 @@
+.container{
+	position: relative;
+	padding-bottom: 58px;
+}
+.banner{
+	position: relative;
+}
+.banner img{
+	display: block;
+	width: 100%;
+	/*min-height: 190px;
+	max-height: 330px;*/
+}
+.banner p{
+	background: rgba(0,0,0,0.5);
+	padding: 0px 5%;
+	width: 90%;
+	position: absolute;
+	bottom: 0;
+	line-height: 45px;
+	font-size: 16px;
+	color: #fff;
+	white-space:nowrap; /*内容超出一行省略号显示*/
+	overflow:hidden; 
+	text-overflow:ellipsis;
+}
+.tit-info{
+	padding: 0px 15px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.tit-info p{
+	border-bottom: 1px solid #e6e6e6;
+	font-size: 17px;
+	color: #333;
+	line-height: 1.5em;
+	padding: 10px 0px;
+}
+.tit-info .price{
+	overflow: hidden;
+	line-height: 40px;
+}
+.tit-info .price span{
+	display: block;
+	float: left;
+	font-size: 18px;
+	color: #ff855a;
+}
+.tit-info .price span mark{
+	font-size: 18px;
+	background-color: #fff;
+	color: #ff855a;
+	margin-left: 3px;
+}
+.tit-info .price em{
+	font-style: normal;
+	display: block;
+	float: right;
+	font-size: 13px;
+	color: #808080;
+}
+.tit-info .price em strong{
+	font-weight: 400;
+}
+.grayline{
+	background-color: #f2f2f2;
+	height: 10px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.exp-text{
+	padding: 0px 15px;
+}
+.exp-text .title{
+	color: #21c0d5;
+	font-size: 16px;
+	line-height: 45px;
+	border-bottom: 1px solid #e6e6e6;
+	text-align: center;
+}
+.exp-text span{
+	display: block;
+	color: #4d4d4d;
+	font-size: 15px;
+	padding: 14px 0px;
+}
+.submit{
+	width: 100%;
+	display: block;
+	background-color: #21c0d5;
+	line-height: 48px;
+	color: #fff;
+	font-size: 16px;
+	text-align: center;
+	/*margin-top: 15px;*/
+	position: fixed;
+	bottom: 0;
+}

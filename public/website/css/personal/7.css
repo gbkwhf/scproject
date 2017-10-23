@@ -1,0 +1,125 @@
+*{
+	margin:0;
+	padding:0;
+}
+.container{
+	width:100%;
+	min-height: 700px;
+}
+.form-box{
+	margin-top: 58px;
+}
+.form-box .input-box{
+	border: 1px solid #b6b6b6;
+	line-height: 34px;
+	width: 205px;
+	margin: 0px auto 12px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.input-box label{
+	width: 37px;
+	float: left;
+}
+.input-box label img{
+	display: block;
+	margin: 9px auto;
+}
+.input-box .line{
+	display: block;
+	float: left;
+	width: 1px;
+	height: 27px;
+	margin-top: 5px;
+    margin-left: -2px;
+}
+.input-box input{
+	float: left;
+	width: 161px;
+	border: none;
+	line-height: 34px;
+	font-size: 18px;
+	color: #333;
+	padding: 0px 3px;
+	outline:medium;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.sub-tit{
+	text-align: center;
+	margin-top: 40px;
+	font-size: 16px;
+	color: #595757;
+	line-height: 58px;
+}
+.vip-type{
+	width: 321px;
+	margin: 0px auto;
+}
+.vip-type li{
+	overflow: hidden;
+	padding-bottom: 15px;
+	list-style: none;
+}
+.vip-type li .card-vip{
+	float: left;
+	width: 265px;
+	line-height: 50px;
+    border-radius: 10px;
+}
+.vip-type li .card-vip span{
+	color: #fff;
+	font-size: 16px;
+}
+.vip-type li .card-vip img{
+	width: 25px;
+    vertical-align: text-bottom;
+    padding-right: 3px;
+    padding-left: 15px;
+}
+.vip-type li .input{
+	float: right;	
+	padding-top: 12px;
+}
+.vip-type li .input input{
+	display: none;
+}
+.vip-type li .input label{
+	background: url(../../images/personal-center/wx-input.png) no-repeat;
+	background-size: 30px 30px;
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+input[type="radio"]:checked +label{
+	background: url(../../images/personal-center/yx-input.png) no-repeat;
+	background-size: 30px 30px;
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+.red{
+	background-color: #ee907a;	
+}
+.yellow{
+	background-color: #eeda7a;
+}
+.white{
+	background-color: #c8c8c8;
+}
+.black{
+	background-color: #535353;
+}
+.submit{
+	display: block;
+	text-align: center;
+	line-height: 38px;
+	height: 38px;
+	background-color: #21c0d5;
+	color: #fff;
+	margin: 32px auto 0px;
+	width: 218px;
+	font-size: 20px;
+	border-radius: 5px;
+	text-decoration: none;
+}

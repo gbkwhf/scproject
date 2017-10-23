@@ -1,0 +1,17 @@
+.container figure{
+	padding: 0px 15px;
+}
+figure figcaption{
+	color: #21c0d5;
+	line-height: 58px;
+	text-align: center;
+	font-size: 16px;
+	border-bottom: 1px solid #e6e6e6;
+	margin-bottom: 10px;
+}
+figure p{
+	line-height: 1.5em;
+	font-size: 15px;
+	color: #4d4d4d;
+	padding-bottom: 10px;
+}

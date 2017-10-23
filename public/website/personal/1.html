@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<title>病历列表</title>
+		<link rel="stylesheet" href="../css/jquery.page.css">
+	    <link rel="stylesheet" href="../css/personal/1.css">
+	    <style>
+	    	#page{
+	    		position: absolute;
+	    		bottom:0;
+	    	}
+	    </style>
+	    
+	</head>
+	<body>
+		<div class="container">
+			<p class="add_new" onclick="location.href='111.html'"><img src="../images/personal-center/new.png"><span>添加病历</span></p>
+			<div class="showlist"></div>
+			<div id="page" style="visibility: hidden;"></div>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/layer/layer.js"></script>
+		<script type="text/javascript" src="../js/jquery.page.js"></script>
+	    <script>
+	    	sessionArr = getCookie('sessionArr');
+	    	if(!sessionArr){
+	    		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	    			window.parent.tologin();
+	    		});
+	    	}else{
+	    		ss=JSON.parse(sessionArr).session;
+	    	}
+	    	medlist_page=0;
+	    	layer.load(2);
+	    	//加载首页数据
+		    $.ajax({
+		    	type:'POST',
+		    	url:commonUrl + 'api/stj/user_case/case_list'+versioninfo,
+		    	async:false,
+		    	data:{
+		    		'home':1,
+		    		'ss':ss
+		    	},
+		    	success:function(data){
+		    		layer.closeAll();
+//		    		console.log(data);
+                    if(data.code == 1){
+                    	if(data.result.list.length!=0){
+                    		medlist_page=Math.ceil(data.result.count/10);
+                    		$('#page').css('visibility','visible');
+                    		html='';
+                    		html+='<table class="medRecordList" cellpadding="0" cellspacing="0">';
+	                    	html+='<tr>';
+	                    	html+='	<td class="first">病情</td>';
+	                    	html+='	<td class="second">就诊医院</td>';
+	                    	html+='	<td class="third">就诊时间</td>';
+	                    	html+='	<td>详情</td>';
+	                    	html+='</tr>';
+	                    	for(var i=0;i<data.result.list.length;i++){
+	                    		id=data.result.list[i].id;
+	                    		html+='<tr>';
+		                    	html+='	<td class="first">'+data.result.list[i].title+'</td>';
+		                    	html+='	<td class="second">'+data.result.list[i].hospital+'</td>';
+		                    	html+='	<td class="third">'+(data.result.list[i].time).slice(0,10)+'</td>';
+		                    	html+='	<td><a href="11.html?id='+id+'">查看</a><a class="delete" onclick="deletes('+id+',this)">删除</a></td>';
+		                    	html+='</tr>';
+	                    	}
+	                    	html+='</table>';
+	                    	html+='<div id="shokeBtn">生成授权码</div>';
+	                    	$('.showlist').html(html);
+	                    	$('.medRecordList tr td:last-child').css('color',"#21c0d5");
+					    	$('.medRecordList tr:even').css('background','#e8e9e9');
+					    	$('.medRecordList tr:first').css('background','#21c0d5');
+					    	$('.medRecordList tr:first td').css('color',"#fff");
+					    	$('.first').each(function(){
+						    	var str=$(this).text();
+						    	var s=cutString(str,22);
+						    	$(this).text(s);
+						    });
+						    $('.second').each(function(){
+						    	var str=$(this).text();
+						    	var s=cutString(str,26);
+						    	$(this).text(s);
+						    });
+					    	setIframeHeight();
+					    	//授权码弹窗
+				           	$('#shokeBtn').click(function(){
+								window.parent.tips();
+					        });
+                    	}else{
+                    		layer.msg('暂无数据');
+                    	}
+                  	}else if(data.code=='1011'){
+                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+                  			window.parent.removec();
+                  			window.parent.tologin();
+                  		});
+                  	}else{
+                  		layer.msg(data.msg);
+                  	}
+                }
+            });
+            function deletes(ids,obj){
+            	sessionArr = getCookie('sessionArr');
+            	if(!sessionArr){
+		    		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+		    			window.parent.tologin();
+		    		});
+		    	}else{
+		    		ss=JSON.parse(sessionArr).session;
+		    		record=obj;
+		    		layer.load(2);
+		        	$.ajax({
+				    	type:'POST',
+				    	url:commonUrl + 'api/stj/user_case/del_case'+versioninfo,
+				    	data:{
+				    		'id':ids,
+				    		'ss':ss
+				    	},
+				    	success:function(data){
+				    		layer.closeAll();
+//				    		console.log(data);
+		                    if(data.code == 1){
+		                    	location.reload();
+		                  	}else if(data.code=='1011'){
+		                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+		                  			window.parent.removec();
+		                  			window.parent.tologin();
+		                  		});
+		                  	}else{
+		                  		layer.msg(data.msg);
+		                  	}
+		                }
+		           	});
+		    	}
+	        	
+	        }
+	        $("#page").Page({
+		        totalPages: medlist_page,
+		        liNums: 7,
+		        activeClass: 'activP', 
+		        callBack : function(page){
+//		          	console.log(page);
+		          	ajaxrequest(page);
+		        }
+      		});
+      		pageW=$('#page').width();
+      		$('#page').css('left',(680-pageW)/2 + 'px');
+      		function ajaxrequest(num){
+      			layer.load(2);
+				$.ajax({
+			    	type:'POST',
+			    	url:commonUrl + 'api/stj/user_case/case_list'+versioninfo,
+			    	data:{
+			    		'page':num,
+			    		'ss':ss
+			    	},
+			    	success:function(data){
+			    		layer.closeAll();
+//			    		console.log(data);
+	                    if(data.code == 1){
+	                    	shows(data);
+	                  	}else if(data.code=='1011'){
+	                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	                  			window.parent.removec();
+	                  			window.parent.tologin();
+	                  		});
+	                  	}else{
+	                  		layer.msg(data.msg);
+	                  	}
+	                }
+	           	});
+			}
+			function shows(obj){
+				html='';
+				html+='<table class="medRecordList" cellpadding="0" cellspacing="0">';
+            	html+='<tr>';
+            	html+='	<td class="first">病情</td>';
+            	html+='	<td class="second">就诊医院</td>';
+            	html+='	<td class="third">就诊时间</td>';
+            	html+='	<td>详情</td>';
+            	html+='</tr>';
+            	for(var i=0;i<obj.result.length;i++){
+            		id=obj.result[i].id;
+            		html+='<tr>';
+                	html+='	<td class="first">'+obj.result[i].title+'</td>';
+                	html+='	<td class="second">'+obj.result[i].hospital+'</td>';
+                	html+='	<td class="third">'+(obj.result[i].time).slice(0,10)+'</td>';
+                	html+='	<td><a href="11.html?id='+id+'">查看</a><a class="delete" onclick="deletes('+id+',this)">删除</a></td>';
+                	html+='</tr>';
+            	}
+            	html+='</table>';
+            	html+='<div id="shokeBtn">生成授权码</div>';
+            	$('.showlist').html(html);
+            	$('.medRecordList tr td:last-child').css('color',"#21c0d5");
+		    	$('.medRecordList tr:even').css('background','#e8e9e9');
+		    	$('.medRecordList tr:first').css('background','#21c0d5');
+		    	$('.medRecordList tr:first td').css('color',"#fff");
+		    	$('.first').each(function(){
+			    	var str=$(this).text();
+			    	var s=cutString(str,22);
+			    	$(this).text(s);
+			    });
+			    $('.second').each(function(){
+			    	var str=$(this).text();
+			    	var s=cutString(str,26);
+			    	$(this).text(s);
+			    });
+		    	//授权码弹窗
+	           	$('#shokeBtn').click(function(){
+					window.parent.tips();
+		        });
+			}
+			
+	        //iframe自适应高度
+			function getDocHeight(doc) {
+			    doc = doc || document;
+			    var body = doc.body, html = doc.documentElement;
+			    var height = Math.max( body.scrollHeight, body.offsetHeight, 
+			        html.clientHeight, html.scrollHeight, html.offsetHeight );
+			    return height;
+			}
+			function setIframeHeight() {
+			    var ifrm = window.parent.document.getElementById("ifrm");
+			    var doc = ifrm.contentDocument? ifrm.contentDocument: 
+			        ifrm.contentWindow.document;
+			    ifrm.style.visibility = 'hidden';
+			    ifrm.style.height = "10px"; 
+			    ifrm.style.height = getDocHeight( doc ) + "px";
+			    ifrm.style.visibility = 'visible';
+			}
+			function cutString(str, len) {
+				//length属性读出来的汉字长度为1
+				if(str.length*2 <= len) {
+				  return str;
+				}
+				var strlen = 0;
+				var s = "";
+				for(var i = 0;i < str.length; i++) {
+					s = s + str.charAt(i);
+				if (str.charCodeAt(i) > 128) {
+					strlen = strlen + 2;
+				    if(strlen >= len){
+				    return s.substring(0,s.length-1) + "...";
+					}
+				} else {
+				   strlen = strlen + 1;
+				   if(strlen >= len){
+				    return s.substring(0,s.length-2) + "...";
+				   }
+				  }
+				}
+				return s;
+			}
+	    </script>
+	</body>
+</html>

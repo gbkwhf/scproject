@@ -1,0 +1,54 @@
+.border-box{
+	position: relative;
+	margin: 100px 15px 0px;
+	border: 1px solid #ccc;
+	padding-top: 10px;
+}
+.border-box h4{
+	font-size: 16px;
+	font-weight: 400;
+	color: #333;
+	line-height: 1.5em;
+	text-align: center;
+	width: 170px;
+	position: absolute;
+	top: -13px;
+	left: 50%;
+	margin-left: -85px;
+	background-color: #fff;
+}
+.border-box p{
+	font-size: 15px;
+	color: #808080;
+	line-height: 1.5em;
+	padding: 0px 15px;
+	margin: 37px 0px;
+}
+.border-box img{
+	display: block;
+	position: absolute;	
+}
+.create{
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+}
+.refresh{
+	right: 15px;
+	top: 15px;
+}
+.share-p{
+	text-align: center;
+	font-size: 16px;
+	color: #333;
+	padding-top: 13px;
+}
+.share-btn{
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	background-color: #21c0d5;
+	display: block;
+	line-height: 48px;
+	margin-top: 106px;
+}

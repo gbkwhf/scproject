@@ -1,0 +1,43 @@
+.container{
+	overflow: hidden;
+}
+.container .first-classify{
+	width: 40%;
+	float: left;
+}
+.first-classify li{
+	overflow: hidden;
+	line-height: 55px;
+	border-bottom: 1px solid #ccc;
+	border-left: 5px solid #fff;
+}
+.first-classify li.active,.second-classify li.active{
+	border-left: 5px solid #21c0d5;
+	color: #21c0d5;
+}
+.first-classify li .country{
+	float: left;
+	width: 35%;
+}
+.first-classify li .country img{
+	display: block;
+	margin: 20px auto 0px;
+}
+.first-classify li p{
+	font-size: 15px;
+	color: #333;
+	float: left;
+	/*width: 100%;
+	text-align: center;*/
+}
+.container .second-classify{
+	width: 60%;
+	float: left;
+	display: none;
+}
+.second-classify li{
+	line-height: 43px;
+	border-bottom: 1px solid #ccc;
+	border-left: 5px solid #fff;
+	padding-left: 15px;
+}

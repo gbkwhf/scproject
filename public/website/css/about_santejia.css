@@ -1,0 +1,278 @@
+.banner{
+	width:100%;
+	height:570px;
+	background: url(../images/about/banner.jpg) no-repeat;
+}
+.banner .content{
+	position: relative;
+	height:570px;
+}
+.banner .content .font1{
+	position: absolute;
+	top:110px;
+	right:0;
+	display: block;
+}
+.banner .content .font2{
+	position: absolute;
+	bottom:110px;
+	right:0;
+	display: block;
+}
+.banner .content .topimg{
+	position: absolute;
+	bottom:-84px;
+	left:0;
+	display: block;
+}
+/*第二部分*/
+.club-profile{
+	width:100%;
+	background-image:url(../images/bg1.png);
+	background-repeat:repeat;
+	padding-top:70px;
+	padding-bottom:53px;
+}
+.club-profile .head{
+	padding-left:25px;
+}
+.tit-ch{
+	font-size:40px;
+	color:#21c0d5;
+}
+.tit-en{
+	font-size:25px;
+	color:#b6b6b6;
+	font-family:Arial;
+	margin-top:22px;
+}	
+.more-info{
+	color:#595757;
+	font-size:20px;
+	line-height:36px;
+	margin-top:20px;
+}
+.club-concept{
+	overflow: hidden;
+	margin-top:100px;
+}
+.club-concept img{
+	float:left;
+	display: block;
+}
+.club-concept .concept{
+	float:left;
+	padding-left:40px;
+	padding-right:40px;
+	color:#21c0d5;
+	background:#d6eef6;
+	width:371px;
+	padding-top:50px;
+	padding-bottom:49px;
+}
+/*.club-concept .concept p{
+	color:#21c0d5;
+}*/
+.club-concept .concept .more-info{
+	margin-top:60px;
+}
+/*第三部分*/
+.club-culture{
+	width:100%;
+	background:url(../images/bg2.png) repeat;
+	padding-top:69px;
+	padding-bottom:60px;
+}
+.club-culture .head{
+	text-align: center;
+}
+.culture-det{
+	overflow: hidden;
+	margin-top:36px;
+}
+.culture-det .culcontent{
+	width:310px;
+	height:334px;
+	background:url(../images/about/icon1-bg.png) no-repeat;
+	float:left;
+	margin-right:35px;
+}
+.culture-det .culcontent.lastone{
+	margin-right:0;
+}
+.culture-det .culcontent p{
+	text-align: center;
+}
+.culture-det .culcontent .p1{
+	font-size:24px;
+	color:#21c0d5;
+	margin-top:93px;
+}
+.culture-det .culcontent .hr{
+	display:block;
+	width:60px;
+	height:2px;
+	background:#21c0d5;
+	margin:0 auto;
+	margin-top:15px;
+}
+.culture-det .culcontent .p2{
+	font-size:20px;
+	color:#595757;
+	line-height:35px;
+	margin-top:10px;
+}
+.culture-det .culcontent .p2 span{
+	color:#21c0d5;
+}
+.culture-det .culcontent .p3{
+	line-height:32px;
+}
+.culture-det .culcontent .p4{
+	margin-top:34px;
+}
+.culture-det .culcontent .p4 span{
+	color:#21c0d5;
+	display:inline-block;
+}
+.culture-det .culcontent .p4 .span1{
+	font-size:22px;
+}
+.culture-det .culcontent .p4 .span2{
+	font-size:30px;
+	margin-top:16px;
+	margin-bottom:16px;
+}
+/*第四部分*/
+.team{
+	width:100%;
+	background:url(../images/bg1.png) repeat;
+	padding-bottom:80px;
+}
+.team .header2{
+	width:100%;
+	height:349px;
+	background:url(../images/about/middle.jpg) no-repeat;
+}
+.team .content{
+	position: relative;
+}
+.team .content .head{
+	position: absolute;
+	top:-107px;
+	left:0;
+	text-align: center;
+	width:100%;
+}
+.team-member{
+	overflow: hidden;
+	padding:0 71px;
+	
+}
+.team-member .mem{
+	float:left;
+	width:189px;
+	margin-right:34px;
+	margin-top:104px;
+}
+.team-member .mem.lastone{
+	margin-right:0;
+}
+.team-member .mem img{
+	width:189px;
+	display:block;
+}
+.team-member .mem p{
+	color:#595757;
+	font-size: 22px;
+	text-align: center;
+	margin-top:25px;
+}
+.team .btn{
+	width:595px;
+	font-size:26px;
+	color:#fff;
+	line-height: 60px;
+	background:#21c0d5;
+	margin:0 auto;
+	border-radius: 30px;
+	text-align: center;
+	margin-top:70px;
+}
+/*第五部分*/
+.service-sys{
+	width:100%;
+	background:url(../images/bg2.png) repeat;
+	padding-top:70px;
+	padding-bottom:70px;
+}
+.service-sys .head{
+	text-align: center;
+}
+.child-company{
+	overflow: hidden;
+	margin-top:45px;
+}
+.child-company .comp{
+	width:324px;
+	float:left;
+	margin-right:14px;
+}
+.child-company .comp.lastone{
+	margin-right:0;
+}
+.child-company .comp>img{
+	display:block;
+}
+.child-company .comp>div{
+	padding-top:12px;
+	padding-bottom:16px;
+	background:#21c0d5;
+	color:#fff;
+	font-size:26px;
+	text-align: center;
+}
+.child-company .comp>div img{
+	position: relative;
+	top:2.5px;
+	margin-right:9px;
+}
+.club-thing{
+	width: 100%;
+    background: url(../images/bg1.png) repeat;
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.club-thing .head{
+	text-align: center;
+}
+.club-thing .head .tit-en{
+	padding-bottom: 20px;
+}
+.timenode{
+	text-align: center;
+	margin-top:40px;
+}
+.timenode .year{
+	display:inline-block;
+	width:145px;
+	height:38px;
+	background:#21c0d5;
+	font-size:26px;
+	color:#fff;
+	text-align: center;
+	line-height: 38px;
+	border-radius: 20px;
+}
+.timenode .whathappen{
+	font-size:24px;
+	color:#21c0d5;
+	margin-top:30px;
+}
+.timenode .detail{
+	font-size:20px;
+	color:#595757;
+	line-height:36px;
+	text-align:left;
+	margin-top:21px;
+}

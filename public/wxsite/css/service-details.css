@@ -1,0 +1,51 @@
+.container{
+	padding: 0px 15px 15px;
+}
+.container .border-box{
+	border-bottom: 1px solid #ccc;
+	overflow: hidden;
+}
+.border-box p{
+	line-height: 58px;
+	float: left;
+	width: 49%;
+	font-size: 15px;
+	color: #333;
+}
+.border-box .right-box{
+	float: right;
+	text-align: right;
+}
+.border-box .right-box img{
+	display: block;
+	margin-top: 9px;
+}
+.border-box .right-box span{
+	display: block;
+	line-height: 1.5em;
+	font-size: 15px;
+	color: #333;
+	padding: 18px 0px;
+}
+.describe{
+	line-height: 58px;
+	font-size: 15px;
+	color: #333;
+}
+.describe span{
+	display: block;
+	width: 94%;
+    line-height: 1.5em;
+    font-size: 15px;
+    color: #333;
+    resize: none;
+    overflow: hidden;
+    border: none;
+    padding: 2% 3%;	
+    margin-bottom: 25px;
+}
+.gray-line{
+	background-color: #ededed;
+	height: 7px;
+	margin: 0px -15px;
+}

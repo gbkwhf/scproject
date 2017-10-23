@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<title>病历详情</title>
+	    <link rel="stylesheet" href="../css/personal/11.css">
+	    
+	</head>
+	<body>
+		<div class="container">
+			<!--<p class="illname">轻微脑血栓</p>
+			<div class="hosp">
+				<div class="hosname">就诊医院：<span>西安交通大学第二附属医院</span></div>
+				<div class="time">就诊时间：<span>2016-08-09</span></div>
+				<div class="clearfix"></div>
+			</div>
+			<p class="hosp heatit">病情描述</p>
+			<textarea id="illdescribe" class="inp"></textarea>
+			<p class="hosp heatit">医生结论</p>
+			<textarea id="conclusion" class="inp"></textarea>
+			<p class="hosp heatit">图片附件</p>
+			<div class="pics">
+				<div class="picture">
+					<img src="../images/personal-center/illimage.jpg">
+				</div>
+			</div>-->
+	   </div>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/layer/layer.js"></script>
+
+		<script src="../js/mobiscroll/js/mobiscroll.core-2.5.2.js" type="text/javascript"></script>
+		<script src="../js/mobiscroll/js/mobiscroll.core-2.5.2-zh.js" type="text/javascript"></script>
+
+		<link href="../js/mobiscroll/css/mobiscroll.core-2.5.2.css" rel="stylesheet" type="text/css" />
+		<link href="../js/mobiscroll/css/mobiscroll.animation-2.5.2.css" rel="stylesheet" type="text/css" />
+		<script src="../js/mobiscroll/js/mobiscroll.datetime-2.5.1.js" type="text/javascript"></script>
+		<script src="../js/mobiscroll/js/mobiscroll.datetime-2.5.1-zh.js" type="text/javascript"></script>
+		<script src="../js/mobiscroll/js/mobiscroll.android-ics-2.5.2.js" type="text/javascript"></script>
+		<link href="../js/mobiscroll/css/mobiscroll.android-ics-2.5.2.css" rel="stylesheet" type="text/css" />
+		
+		<script src="../js/lib/exif.js" type="text/javascript"></script>
+        <script src="../js/lib/mobileFix.mini.js" type="text/javascript"></script>
+        <script src="../js/lrz.js" type="text/javascript"></script>
+	    <script>
+	    	sessionArr = getCookie('sessionArr');
+	    	case_id=$_GET['id'];
+	    	if(!sessionArr){
+	    		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	    			window.parent.tologin();
+	    		});
+	    	}else{
+	    		ss=JSON.parse(sessionArr).session;
+	    	}
+	    	readdata();
+	    	function readdata(){
+	    		layer.load(2);
+	    		$.ajax({
+			    	type:'POST',
+			    	url:commonUrl + 'api/stj/user_case/case_list'+versioninfo,
+			    	data:{
+			    		'ss':ss,
+			    		'case_id': case_id
+			    	},
+			    	success:function(data){
+			    		layer.closeAll();
+//			    		console.log(data);
+	                    if(data.code == 1){
+	                    	title=data.result.title;
+	                    	hospital=data.result.hospital;
+	                    	time=data.result.time;
+	                    	user_desc=data.result.user_desc;
+	                    	doctor_desc=data.result.doctor_desc;
+	                    	html='';
+	                    	html+='<textarea id="title" class="illname" style="resize:none" maxlength="60" readonly>'+title+'</textarea>';
+	                    	html+='<div class="hosp">';
+	                    	html+='	<div class="hosname">就诊医院：<input id="hosname" type="text" maxlength="37" value="'+hospital+'" style="width:548px" readonly></div>';
+	                    
+	                    	html+='	<div class="clearfix"></div>';
+	                    	html+='</div>';
+	                    	html+='<div class="hosp">';
+	                    	html+='	<div class="time" style="margin-top:15px;">就诊时间：<input id="date" type="text" value="'+time.slice(0,10)+'" readonly></div>';
+	                    	html+='</div>';
+	                    	html+='<p class="hosp heatit">病情描述</p>';
+	                    	html+='<textarea id="illdescribe" class="inp" style="resize:none" readonly>'+user_desc+'</textarea>';
+	                    	html+='<p class="hosp heatit">医生结论</p>';
+	                    	html+='<textarea id="conclusion" style="resize:none" class="inp" readonly>'+doctor_desc+'</textarea>';
+	                    	if(data.result.img.length){
+	                    		html+='<p class="hosp heatit" id="uppic">图片附件</p>';
+	                    	}else{
+	                    		html+='<p class="hosp heatit" style="visibility:hidden" id="uppic">图片附件</p>';
+	                    	}
+	                    	html+='<div class="pics">';
+	                    	for(var i=0;i<data.result.img.length;i++){
+	                    		html+='<div class="picture uploadbox" id="'+data.result.img[i].id+'" org_img="'+data.result.img[i].url+'"  style="background-image:url('+data.result.img[i].url+');background-size:contain;background-position:center center;background-repeat:no-repeat;position: relative;transition: all 0.3s;-webkit-transition: all 0.3s;margin-bottom:15px;margin-right:13px;">';
+	                            html+='	<input type="" readonly class="filetest" accept="image/*" style="width: 100%;height: 100%;opacity: 0;position: absolute;left: 0px;top: 0px;z-index: 4;"/>';           
+	                            html+='	<img class="delete" onclick="delImg(this)" src="../images/personal-center/delete.png">';
+	                            html+='</div>';
+	                    	}
+	                    	html+='</div>';
+	                    	html+='<div id="edit" class="button">编辑</div>';
+	                    	html+='<div id="finish" class="button">完成</div>';
+	                    	$('.container').html(html);
+	                    	$('#finish').hide();  
+	                    	$('.delete').hide(); //删除按钮默认隐藏
+	                    	$('.pics .picture:last-child').css('margin-right',0);
+	                    	
+							//日期选择
+							var currYear = (new Date()).getFullYear();
+							var opt = {};
+							opt.date = {
+								preset: 'date'
+							};
+							opt.default = {
+								theme: 'android-ics light', //皮肤样式
+								display: 'modal', //显示方式 
+								mode: 'scroller', //日期选择模式
+								lang: 'zh',
+								startYear: currYear - 10, //开始年份
+//								endYear: currYear + 10 //结束年份
+								maxDate: new Date()	//从当前年，当前月，当前日结束
+
+							};   
+							//编辑
+							$('#edit').click(function(){
+								$('.illname,#hosname,#date').css('border',"1px solid #b6b6b6");
+								$("#date").val(''+time.slice(0,10)+'').scroller('destroy').scroller($.extend(opt['date'], opt['default']));
+								$('.illname,#hosname,#date,#illdescribe,#conclusion,.filetest').removeAttr('readonly');
+	//							$('.filetest').attr('type','file');
+								$('.delete').show();
+								$('#edit').hide();
+								$('#finish').show();
+								$('#uppic').css('visibility','visible');
+								html='';
+			                    html+='<div class="picture uploadbox"  id="" org_img=""  style="background-image:url(\'../images/personal-center/upload-add.png\');background-size:contain;background-position:center center;background-repeat:no-repeat;position: relative;transition: all 0.3s;-webkit-transition: all 0.3s;margin-bottom:15px;margin-right:13px;">';
+			                    html+='		<input class="filetest"  onchange="changefile(this)" type="file" accept="image/*" style="width: 100%;height: 100%;opacity: 0;position: absolute;left: 0px;top: 0px;z-index: 4;"/>';
+			                    html+='</div>';
+			                    $('.pics').append(html);
+			                    setIframeHeight();
+							});
+							setIframeHeight();
+							//编辑完成之后点击提交按钮
+					    	$('#finish').click(function(){
+					        	title=$('.illname').val();
+				            	hospital=$('#hosname').val();
+				            	time=$('#date').val();
+				            	user_desc=$('#illdescribe').val();
+				            	doctor_desc=$('#conclusion').val();
+				            	
+				            	//校验
+				            	var checkTitle = testTitle(title);
+					            var checkHosname = testHosname(hospital);
+					            var checkTime = testTime(time);
+					            var checkUD = testUD(user_desc);
+					            var checkDD = testDD(doctor_desc);
+					            
+				            	img_id_string='';
+				            	//循环取id
+				            	$('.uploadbox').each(function(){
+	                                imgs_id = $(this).attr('id');
+	                                if(imgs_id){
+	                                	img_id_string+=imgs_id+',';
+	                                }
+				            	});
+				            	img_id_string=img_id_string.substr(0,img_id_string.length-1);
+				     
+				            	if(checkTitle&&checkHosname&&checkTime&&checkUD&&checkDD){
+				            		//提交数据
+						            $.ajax({
+								    	type:'POST',
+								    	url:commonUrl + 'api/stj/user_case/add_case'+versioninfo,
+								    	data:{
+								    		'doctor_desc':doctor_desc,
+								    		'hospital':hospital,
+								    		'id':case_id,
+								    		'img_id':img_id_string,
+								    		'ss':ss,
+								    		'time':time,
+								    		'title':title,
+								    		'user_desc':user_desc
+								    	},
+								    	success:function(data){
+								    		console.log(data);
+						                    if(data.code == 1){
+						                    	layer.msg("提交成功",{time:1000},function(){
+				                					window.parent.location.reload();
+				                				});
+						                  	}else if(data.code=='1011'){
+						                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+						                  			window.parent.removec();
+						                  			window.parent.tologin();
+						                  		});
+						                  	}else{
+						                  		layer.msg(data.msg);
+						                  	}
+						                }
+						            });
+				            	}
+					        });
+	                  	}else if(data.code=='1011'){
+	                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+	                  			window.parent.removec();
+	                  			window.parent.tologin();
+	                  		});
+	                  	}else{
+	                  		layer.msg(data.msg);
+	                  	}
+	                }
+		        });
+	    	}
+		    
+	        function changefile(obj) {
+	            filetest = obj;
+	            layer.load(2, {time: 7*1000});
+	            lrz(filetest.files[0], {width: 400,quality:1}, function (result) {
+	                // 你需要的数据都在这里，可以以字符串的形式传送base64给服务端转存为图片。
+	                submitData={
+	                    base64_string:result.base64
+	                };
+	                //提交
+	                $.ajax({
+	                    type: "POST",
+	                    url: commonUrl + 'wxsite/upload.php'+versioninfo,
+	                    data: submitData,
+	                    dataType: 'json',
+	                    success: function(data){
+//	                        console.log(data);
+	                        if(data.code==1){
+	                            layer.closeAll();
+	                            img_url = 'http://'+data.data;
+//	                            console.log(img_url);
+								//上传图片
+					            $.ajax({
+							    	type:'POST',
+							    	url:commonUrl + 'api/stj/user_case/add_img'+versioninfo,
+							    	async:false,
+							    	data:{
+							    		'img_url':img_url,
+							    		'ss':ss
+							    	},
+							    	success:function(data){
+							    		console.log(data);
+					                    if(data.code == 1){
+					                    	img_id=data.result.id;  //传url得到图片的id
+					                  	}else if(data.code=='1011'){
+					                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+					                  			window.parent.removec();
+					                  			window.parent.tologin();
+					                  		});
+					                  	}else{
+					                  		layer.msg(data.msg);
+					                  	}
+					                }
+					            });
+	                            delhtml = '<img class="delete" onclick="delImg(this)" src="../images/personal-center/delete.png">';
+	                            $(filetest).parent(".uploadbox").css({
+	                                "background-image":"url('http://"+data.data+"')",
+	                                "background-size":"contain"
+	                            }).append(delhtml).attr("id",img_id);   //将id加到外层div上
+	                            $(filetest).remove();
+	                            html='';
+                                html+='<div class="picture uploadbox" id="" org_img=""  style="background-image:url(\'../images/personal-center/upload-add.png\');background-size:contain;background-position:center center;background-repeat:no-repeat;position: relative;transition: all 0.3s;-webkit-transition: all 0.3s;margin-bottom:15px;margin-right:13px">';
+			                    html+='		<input class="filetest"  onchange="changefile(this)" type="file" accept="image/*" id="logo_url" style="width: 100%;height: 100%;opacity: 0;position: absolute;left: 0px;top: 0px;z-index: 4;"/>';
+			                    html+='</div>';
+			                    $('.pics').append(html);
+			                    setIframeHeight();
+	                        }else{
+	                            alert(data.msg);
+	                        }
+	                    }
+	                });
+	            });
+	        }
+	        function delImg(obj){
+	        	del_id=$(obj).parent(".uploadbox").attr('id');
+	        	if(del_id){
+	        		$.ajax({
+	                    type: "POST",
+	                    url: commonUrl + 'api/stj/user_case/del_img' + versioninfo,
+	                    data: {
+	                    	'id':del_id,
+	                    	'ss':ss
+	                    },
+	                    dataType: 'json',
+	                    success: function(data){
+//	                        console.log(data);
+	                        if(data.code==1){
+	                            layer.msg('删除成功');
+	                        }else if(data.code=='1011'){
+		                  		layer.msg('该用户登陆数据已过期，请重新登陆',{time:1000},function(){
+		                  			window.parent.removec();
+		                  			window.parent.tologin();
+		                  		});
+		                  	}else{
+	                            layer.msg(data.msg);
+	                        }
+	                        $(obj).parent(".uploadbox").remove();
+                			setIframeHeight();
+	                    }
+	                });
+	        	}else{
+	        		$(obj).parent(".uploadbox").remove();
+                	setIframeHeight();
+	        	}
+          	}
+	        function testTitle(val){
+	            if(!val){
+	                layer.msg("请填写病情诊断");
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        function testTime(val){
+	            if(!val){
+	                layer.msg("请选择就诊时间");
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        function testHosname(val){
+	            if(!val){
+	                layer.msg("请填写就诊医院");
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        function testUD(val){
+	            if(!val){
+	                layer.msg('请填写病情描述');
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+	        function testDD(val){
+	            if(!val){
+	                layer.msg('请填写医生结论');
+	                return false;
+	            }else{
+	                return true;
+	            }
+	        }
+			//iframe自适应高度
+			function getDocHeight(doc) {
+			    doc = doc || document;
+			    var body = doc.body, html = doc.documentElement;
+			    var height = Math.max( body.scrollHeight, body.offsetHeight, 
+			        html.clientHeight, html.scrollHeight, html.offsetHeight );
+			    return height;
+			}
+			function setIframeHeight() {
+			    var ifrm = window.parent.document.getElementById("ifrm");
+			    var doc = ifrm.contentDocument? ifrm.contentDocument: 
+			        ifrm.contentWindow.document;
+			    ifrm.style.visibility = 'hidden';
+			    ifrm.style.height = "10px"; 
+			    ifrm.style.height = getDocHeight( doc ) + "px";
+			    ifrm.style.visibility = 'visible';
+			}
+	    </script>
+	</body>
+</html>

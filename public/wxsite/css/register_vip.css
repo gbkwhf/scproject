@@ -1,0 +1,124 @@
+.container{
+	overflow: hidden;
+}
+.container .banner{
+	width: 30%;
+	display: block;
+	margin: 52px auto 26px;
+}
+.container .banners{
+	width: 46%;
+	display: block;
+	margin: 52px auto 26px;
+}
+.container .sign{
+	width: 50%;
+	display: block;
+	margin: 66px auto 46px;
+}
+.container .form-box{
+	overflow: hidden;
+	line-height: 58px;
+}
+.form-box .pic-box{
+	float: left;
+	width: 10%;
+	padding-left: 2%;
+}
+.form-box .pic-box img{
+	display: block;
+	margin: 19px auto 0px;
+}
+.form-box .input{
+	float: left;
+	width: 81%;
+	margin-left: 2%;
+	position: relative;
+	border-bottom: 1px solid #ccc;
+}
+.form-box .input input{
+	font-size: 15px;
+	color: #333;
+	border: none;
+	width: 100%;
+	line-height: 1.5em;
+	padding: 17px 0px;
+}
+.form-box .input .yz-btn{
+	font-size: 14px;
+	color: #fff;	
+	background-color: #21c0d5;
+	position: absolute;
+	right: 0;
+	top: 14px;
+    line-height: 30px;
+    width: 38%;
+    text-align: center;
+    border-radius: 6px;
+}
+.form-box .input .yz-btns{
+	font-size: 14px;
+	color: #fff;	
+	background-color: #b0b0b0;
+	position: absolute;
+	right: 0;
+	top: 14px;
+    line-height: 30px;
+    width: 38%;
+    text-align: center;
+    border-radius: 6px;
+    display: none;
+}
+.regist{
+	font-size: 16px;
+	color: #fff;
+	background-color: #21c0d5;
+	width: 50%;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 5px;
+	margin: 18% auto 0px;
+}
+.btn-box{
+	font-size: 16px;
+	line-height: 44px;
+	margin: 18% auto 0px;
+	overflow: hidden;
+	width: 80%;
+}
+.btn-box a{
+	display: block;
+	width: 44%;
+	border-radius: 5px;
+	border: 1px solid #21c0d5;
+	background-color: #21c0d5;
+	color: #fff;
+	text-align: center;
+}
+.btn-box .zc-btn{
+	background-color: #fff;
+	color: #21c0d5;
+	float: left;		
+}
+.btn-box .dl-btn{
+	float: right;
+}
+.forget-btn{
+	display: inline-block;
+	float: right;
+	color: #21c0d5;
+	margin-top: 22px;
+}
+.forget-btn:active{
+	color: #21c0d5;
+	background-color: #fff;
+}
+.forget{
+	margin: 35px 15px 0px;
+	font-size: 16px;
+	color: #fff;
+	background-color: #21c0d5;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 5px;
+}

@@ -1,0 +1,36 @@
+*{
+	margin:0;
+	padding:0;
+}
+.container{
+	padding-left:30px;
+	padding-right:30px;
+	padding-top:35px;
+}
+.apply{
+	font-size:14px;
+	color:#595757;
+	line-height:1.5em;
+	margin-bottom: 10px;
+}
+.apply span{
+	font-size:14px;
+	color:#21c0d5;
+}
+.describe{
+	padding:12px;
+	border:1px solid #b6b6b6;
+	border-radius: 5px;
+	margin-top:12px;
+	margin-bottom:12px;
+	min-height:120px;
+}
+.apply .return{
+	float:left;
+}
+.apply .who{
+	float:right;
+}
+.clearfix{
+	clear:both;
+}

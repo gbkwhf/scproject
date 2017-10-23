@@ -1,0 +1,16 @@
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
+.idea
+_ide_helper.php
+test.php
+.buildpath
+.project
+.settings/
+.DS_Store
+public/upload/*
+public/wxsite/js/common.js
+public/website/js/common.js
+ueditor/php/upload/*

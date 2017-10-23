@@ -1,0 +1,20 @@
+﻿/*
+ * layer皮肤
+ * 作者：一☆隐☆一
+ * QQ:9073194
+ * 请保留这里的信息 谢谢！虽然你不保留我也不能把你怎么样！
+ */
+
+html #layui_layer_skinuserstylecss {
+	display: none;
+	position: absolute;
+	width: 1989px;
+}
+
+body .layer-ext-user .layui-layer-btn .layui-layer-btn0 {
+
+	background: #01a789;
+}
+#layui-layer1{
+	left:0;
+}

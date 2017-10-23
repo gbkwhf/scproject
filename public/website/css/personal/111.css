@@ -1,0 +1,123 @@
+*{
+	margin:0;
+	padding:0;
+}
+.container{
+	padding-left:30px;
+	padding-right:30px;
+	padding-top:35px;
+}
+.illname{
+	width:598px;
+	font-size:18px;
+	color:#21c0d5;
+	margin-bottom:15px;
+	border:1px solid #b6b6b6;
+	outline:none;
+	background: #fff;
+	padding:3px 10px;
+}
+.hosp{
+	font-size:14px;
+	color:#21c0d5;
+}
+.hosp span{
+	color:#595757;
+}
+.hosp .hosname{
+	float:left;
+}
+#hosname{
+	width:180px;
+	font-size:14px;
+	color:#595757;
+	border:1px solid #b6b6b6;
+	outline:none;
+	background: #fff;
+	padding:3px 10px;
+}
+.hosp .time{
+}
+.hosp .time input{
+	width:80px;
+	font-size:14px;
+	color:#595757;
+	border:1px solid #b6b6b6;
+	outline:none;
+	background: #fff;
+	padding:3px 10px;
+}
+.heatit{
+	margin-top:25px;
+	margin-bottom:10px;
+}
+.inp{
+	width:590px;
+	border:1px solid #b6b6b6;
+	border-radius: 5px;
+	outline: none;
+	font-size:14px;
+	color:#595757;
+	line-height:1.5em;
+	padding:10px 14px;
+	display: block;
+	min-height:90px;
+}
+.pics{
+	overflow:hidden;
+}
+.pics .picture{
+	width:190px;
+	height:190px;
+	float:left;
+	border:1px solid #b6b6b6;
+}
+.clearfix{
+	clear:both;
+}
+.dwo {
+    background: #fff !important;
+    opacity:0 !important;
+    filter: Alpha(Opacity=0) !important;
+}
+.dw{
+	top:167px !important;
+	left:100px !important;
+}
+.android-ics .dwv {
+    border-bottom: 2px solid #21c0d5 !important;
+}
+.android-ics .dw {
+	color:#21c0d5 !important;
+}
+.android-ics .dw .dwwol {
+    border-top: 2px solid #21c0d5 !important;
+    border-bottom: 2px solid #21c0d5 !important;
+}
+.dwwr{
+	width:245px !important;
+	border:1px solid #21c0d5;
+}
+.button{
+	width:100px;
+	height:40px;
+	line-height: 40px;
+	background:#21c0d5;
+	border-radius:5px;
+	font-size:15px;
+	color:#fff;
+	margin-left:518px;
+	margin-top:105px;
+	text-align: center;
+	display:inline-block;
+	cursor: pointer;
+}
+.picture .delete{
+	display: block;
+	position: absolute;
+	top:0px;
+	right:0px;
+	width:25px;
+	z-index:5;
+	cursor:pointer;
+}

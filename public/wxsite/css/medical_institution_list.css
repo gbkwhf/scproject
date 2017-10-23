@@ -1,0 +1,21 @@
+.container ul{
+	padding: 0px 15px 15px;
+}
+.container ul li{
+	border-bottom: 1px solid #ccc;
+	overflow: hidden;
+	padding: 15px 0px;
+}
+.container ul li img{
+	display: block;
+	float: left;
+	width: 52px;
+	height: 52px;
+}
+.container ul li p{
+	float: left;
+	line-height: 52px;
+	font-size: 16px;
+	color: #333;
+	margin-left: 15px;
+}

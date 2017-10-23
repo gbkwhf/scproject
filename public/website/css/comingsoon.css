@@ -1,0 +1,22 @@
+.container{
+	width:100%;
+	background:url(../images/bg1.png) repeat;
+	padding-top:180px;
+	padding-bottom:65px;
+}
+.container .ch{
+	font-size:50px;
+	color:#595757;
+	line-height:50px;
+}
+.container .en{
+	font-size:40px;
+	color:#c2c2c2;
+	font-family: arial;
+	margin-top:40px;
+}
+.container img{
+	display:block;
+	top:-97px;
+	position: relative;
+}

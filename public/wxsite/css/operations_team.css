@@ -1,0 +1,77 @@
+.container .banner{
+	position: relative;
+}
+.banner img{
+	display: block;
+	width: 100%;
+}
+.banner p{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 95%;
+	padding-left: 5%;
+	line-height: 45px;
+	background: rgba(0,0,0,0.5);
+	font-size: 16px;
+	color: #fff;
+}
+.executives{
+	overflow: hidden;
+	padding: 0px 15px;
+	position: relative;
+}
+.executives .personal-info{
+	float: left;
+	width: 50%;
+}
+.executives .personal-info .phone-job{
+	padding: 23px 0px;
+	overflow: hidden;
+}
+.executives .personal-info .phone-job img{
+	display: block;
+	float: left;
+}
+.executives .personal-info .phone-job span{
+	display: block;
+	line-height: 58px;
+	float: left;
+	font-size: 15px;
+	color: #333;
+	padding-left: 10px;
+}
+.active{
+	color: #21c0d5 !important;
+}
+.exp-info{
+	float: left;
+	border: 1px solid #e6e6e6;
+	border-width: 1px 0px;
+	position: absolute;
+    top: 104px;
+    left: 0;
+    padding: 0px 15px;
+}
+.cont-box{
+	display: none;
+	padding-bottom: 10px;
+	overflow-y:auto;
+	height:166px;
+}
+.cont-box p{
+	color: #4d4d4d;
+	font-size: 14px;
+	padding-top: 10px;
+	padding-left: 45px;
+	position: relative;
+	line-height: 1.5em;
+}
+.cont-box em{
+	color: #666;
+	font-style: normal;
+	position: absolute;
+	left: 0;
+	top: 10px;
+}
+

@@ -1,0 +1,94 @@
+.wrapper{
+	background:url(../images/bg1.png) repeat;
+	padding-bottom:25px;
+}
+.banner{
+	width:100%;
+	height:370px;
+	background:url(../images/news/banner.jpg) no-repeat;
+}
+.totaltit{
+	font-size:40px;
+	color:#21c0d5;
+	margin-top:78px;
+	margin-bottom:55px;
+	padding-left:20px;
+}
+.totaltit span{
+	font-size:25px;
+	color:#b6b6b6;
+	font-family: Arial;
+	margin-left:22px;
+	top:3px;
+	position: relative;
+}
+.newsList{
+	overflow: hidden;
+	min-height:710px;
+}
+.newsList li{
+	float:left;
+	width:50%;
+	overflow: hidden;
+	margin-bottom:25px;
+}
+.newsList li>img{
+	float:left;
+	width:206px;
+	height:115px;
+	margin-left:20px;
+	border:1px solid #d7d7d7;
+}
+.newsList li .articont{
+	width:230px;
+	margin-left:20px;
+	float:left;
+	height: 110px;
+	position: relative;
+}
+.articont .title{
+	font-size:16px;
+	color:#3f3f3f;
+}
+.articont .profile{
+	font-size:14px;
+	color:#898989;
+	line-height:1.5em;
+	margin-top:5px;
+}
+.articont .more{
+	position: absolute;
+	bottom:-4px;
+	left:0;
+	cursor: pointer;
+}
+.articont .more img{
+	display:block;
+	width:45px;
+	height:11px;
+} 
+.page{
+	margin: 0 auto;
+	text-align: center;
+	margin-top:55px;
+}
+.page li,.page li a{
+	display:inline;
+}
+.page li a{
+	font-size:16px;
+	padding:0 10px;
+	cursor: pointer;
+	text-decoration: underline;
+	color:#3f3f3f;
+}
+.page li a.active{
+	color:#21c0d5;
+	text-decoration: none;
+}
+.page span{
+	cursor:pointer;
+	color:#3f3f3f;
+	margin-left:5px;
+	margin-left:5px;
+}

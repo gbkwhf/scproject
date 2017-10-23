@@ -1,0 +1,49 @@
+*{
+	margin:0;
+	padding:0;
+}
+.container{
+	width:100%;
+	padding-top:35px;
+	min-height: 725px;
+	position: relative;
+}
+.medRecordList{
+	margin-left:10px;
+	width:660px;
+}	
+.medRecordList tr{
+	width:100%;
+}
+.medRecordList tr td{
+	font-size:14px;
+	color:#fff;
+	text-align: center;
+	height:37px;
+	line-height:37px;
+	border:1px solid #fff;
+	border-width: 0 1px 0 0;
+	background:#21c0d5;
+}
+.medRecordList tr .state{
+	color:#21c0d5;
+}
+.medRecordList tr td a{
+	color:#21c0d5;
+}
+.medRecordList tr .first{
+	width:198px;
+}
+.medRecordList tr .second{
+	width:208px;
+}
+.medRecordList tr .third{
+	width:142px;
+}
+#consult-list tr td{
+	color:#595757;
+	background:#fff;
+}
+#consult-list tr .state{
+	color:#21c0d5;
+}

@@ -1,0 +1,79 @@
+*{
+	margin:0;
+	padding:0;
+}
+.container{
+	width:100%;
+	padding-top:35px;
+	padding-bottom:90px;
+	min-height:633px;
+	position: relative;
+}
+.medRecordList{
+	margin-left:10px;
+	width:660px;
+}
+.medRecordList tr td{
+	font-size:14px;
+	color:#fff;
+	text-align: center;
+	border:1px solid #fff;
+	border-width: 0 1px 0 0;
+	height:37px;
+	line-height:37px;
+	background:#21c0d5;
+}
+.medRecordList tr .second{
+	width:172px;
+}
+.medRecordList tr .third{
+	width:172px;
+}
+.order-list li{
+	width:660px;
+	margin:0 auto;
+	padding-top:7px;
+	padding-bottom:7px;
+	border-bottom:1px solid #b6b6b6;
+	overflow: hidden;
+	cursor: pointer;
+}
+.order-list li div{
+	float:left;
+	color:#595757;
+	font-size:14px;
+}
+.proImge{
+	width:80px;
+	margin-right:12px;
+}
+.proImge img{
+	width:78px;
+	height:78px;
+	border:1px solid #b6b6b6;
+}
+.proInfo{
+	width:222px;
+}
+.time,.state{
+	width:173px;
+	text-align: center;
+	padding-top:32px;
+}
+.proInfo .price{
+	font-size:16px;
+	color:#fe7446;
+	float:left;
+}
+.proInfo .proNames{
+	height:62px;
+	overflow: hidden;
+	line-height:20px;
+}
+.proInfo .count{
+	float:right;
+	margin-right:12px;
+}
+.order-list li .state{
+	color:#fe7446;
+}
