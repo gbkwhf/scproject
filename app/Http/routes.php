@@ -44,3 +44,6 @@
 
 
 
+Route::get('test111',function(){
+	echo "222";
+});
