@@ -4,7 +4,7 @@ namespace App\TraitCollections;
 
 trait ServerTrait
 {
-    protected function getDispatchServerInfo($appName = 'stj')
+    protected function getDispatchServerInfo($appName = 'ys')
     {
 
         if(\Cache::has(strtoupper('app_server_info'))){
@@ -12,14 +12,14 @@ trait ServerTrait
         }
 
 
-		if($appName=='stj'){
-        	$mecData = \DB::table('stj_dim_server_config')
+		if($appName=='ys'){
+        	$mecData = \DB::table('ys_dim_server_config')
         	->where('category', 1)
         	->where('is_enable', 1)->first(['local_ip', 'local_port']);
         	
         	$lpsSql = <<<T_ECHO
 SELECT ip,port
-FROM stj_dim_server_config
+FROM ys_dim_server_config
 WHERE category = 2 AND is_enable = 1 AND  (max_loading - curr_loading) > 0
 ORDER BY max_loading - curr_loading DESC
 T_ECHO;
@@ -29,15 +29,15 @@ T_ECHO;
         }
 
 
-        $httpData = \DB::table('stj_dim_server_config')
+        $httpData = \DB::table('ys_dim_server_config')
             ->where('category', 3)
             ->where('is_enable', 1)->first(['ip', 'port']);
 
-        $newsData = \DB::table('stj_dim_server_config')
+        $newsData = \DB::table('ys_dim_server_config')
             ->where('category', 4)
             ->where('is_enable', 1)->first(['ip', 'port']);
 
-        $fileData = \DB::table('stj_dim_server_config')
+        $fileData = \DB::table('ys_dim_server_config')
             ->where('category', 5)
             ->where('is_enable', 1)->first(['ip', 'port']);
 

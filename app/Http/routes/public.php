@@ -23,41 +23,39 @@ Route::group([
 
 ],function (){
 
-	//用户实现注册
+	//用户实现注册（完成）
 	Route::post('auth/register','AuthController@register');
-	//普通用户名密码登陆
+	//普通用户名密码登陆（完成）
 	Route::post('auth/login','AuthController@login');
-	//重发短信接口
-	Route::post('auth/send/sms/again','AuthController@sendSMSAgain');
+    //免密登陆（完成）
+    Route::post('auth/mobile/login','AuthController@postLoginByMobile');
+    //重置密码(完成)
+    Route::post('auth/reset/password','AuthController@resetPassword');
+
+    //版本检查
+    Route::post('validate/version','AuthController@validateVersion');
 
 
-    
+    //xupan  新（完成）
+    //发送短信验证码，完成验证逻辑
+    Route::post('auth/send/user/sms','SendToUserSMSController@sendToUserSMS');
 
 
-	//重置密码
-	Route::post('auth/reset/password','AuthController@resetPassword');
+
+
+
+    //重发短信接口
+    //Route::post('auth/send/sms/again','AuthController@sendSMSAgain');
+
     //免密登录前发送短信
     //Route::post('auth/login/send/sms','AuthController@sendSMSBeforeLoginByMobile');
     //进行短信验证，进而免密登陆
     //Route::post('auth/mobile/login','AuthController@postLoginByMobile');
     //用户注册前发送短信
     /*Route::post('auth/register/send/sms','AuthController@beforeRegisterSendSMS');*/
-    Route::post('auth/register/send/sms','AuthController@sendSMSAgain');
-
-
+   // Route::post('auth/register/send/sms','AuthController@sendSMSAgain');
     //重置密码发短信
-    Route::post('auth/reset/password/send/sms','AuthController@resetPasswordBySMS');
-
-    //版本检查
-    Route::post('validate/version','AuthController@validateVersion');
-
-
-
-
-    //xupan  新
-    //发送短信验证码，完成验证逻辑
-    Route::post('auth/send/user/sms','SendToUserSMSController@sendToUserSMS');
-
+   // Route::post('auth/reset/password/send/sms','AuthController@resetPasswordBySMS');
 
 
 
