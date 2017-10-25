@@ -19,7 +19,7 @@ Route::get('image', function(){
 
 Route::group([
 
-    'prefix' => 'api/stj','namespace' => 'Baseuser'
+    'prefix' => 'api/gxsc','namespace' => 'Baseuser'
 
 ],function (){
 
@@ -50,6 +50,13 @@ Route::group([
 
     //版本检查
     Route::post('validate/version','AuthController@validateVersion');
+
+
+
+
+    //xupan  新
+    //发送短信验证码，完成验证逻辑
+    Route::post('auth/send/user/sms','SendToUserSMSController@sendToUserSMS');
 
 
 
