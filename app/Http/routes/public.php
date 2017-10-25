@@ -43,7 +43,6 @@ Route::group([
 
 
 
-
     //重发短信接口
     //Route::post('auth/send/sms/again','AuthController@sendSMSAgain');
 
@@ -66,10 +65,10 @@ Route::group([
 
 Route::group([
 
-    'prefix' => 'api/stj','namespace' => 'Baseuser', 'middleware'=> ['check.session:stj_session_info','check.version']
+    'prefix' => 'api/gxsc','namespace' => 'Baseuser', 'middleware'=> ['check.session:ys_session_info']//,'check.version']
 
 ],function (){
-    //修改密码
+    //修改密码(完成)
     Route::post('auth/update/password','AuthController@changePassword');
     
     

@@ -466,10 +466,10 @@ class AuthController extends Controller
      */
     public function changePassword(Request $request)
     {
-                $validator = $this->setRules([
-            'ss' => 'required',
+        $validator = $this->setRules([
+            'ss' => 'required|string',
             'npw' => 'required|min:8|max:20',
-            'opw' => 'required',
+            'opw' => 'required|string',
         ])
             ->_validate($request->all());
 
@@ -479,14 +479,14 @@ class AuthController extends Controller
         if(!$user_id){
         	return $this->setStatusCode(1011)->respondWithError($this->message);        	
         }
-        $had=\App\Member::where('user_id',$user_id)->where('password',md5($request->opw))->first();
-        if(!$had){
+        $had=\DB::table('ys_member')->where('user_id',$user_id)->where('password',md5(md5($request->opw)))->first();
+        if(empty($had)){
         	return $this->setStatusCode(6102)->respondWithError($this->message);
         }
         $data=array(
-        	'password'=>md5($request->npw),
+        	'password'=>md5(md5($request->npw)),
         );
-        $res=\App\Member::where('user_id',$user_id)->update($data);
+        $res=\DB::table('ys_member')->where('user_id',$user_id)->update($data);
 
         if($res === false){
             return $this->setStatusCode(9998)->respondWithError($this->message);
@@ -514,25 +514,27 @@ class AuthController extends Controller
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
         if (isset($request->uid)){//uid存在，获取他人头像
-            $uid = Member::where('user_id',$request->uid)->first();
+            $uid = \DB::table('ys_member')->where('user_id',$request->uid)->first();
             if ($uid){
-                if (!isset($uid['image'])){//没有上传头像
+                if (!isset($uid->image)){//没有上传头像
                     $data['msg'] = '该用户没有上传头像';
                     return $this->respond($data);
                 }else{
-                    return $this->respond($this->format($uid['image']));
+
+                    return $this->respond($this->format(storage_path().$uid->image));
                 }
             }else{
                 $data['msg'] = '该用户不存在';
                 return $this->respond($data);
             }
         }else{//uid不存在，获取用户自己的头像
-            $res = Member::where('user_id',$user_id)->first();
-            if (!isset($res['image'])){//没有上传头像
+            $res = \DB::table('ys_member')->where('user_id',$user_id)->first();
+            if (!isset($res->image)){//没有上传头像
                 $data['msg'] = '该用户没有上传头像';
                 return $this->respond($data);
             }else{
-                return $this->respond($this->format($res['image']));
+
+                return $this->respond($this->format(storage_path().$res->image));
             }
         }
 
@@ -561,9 +563,9 @@ class AuthController extends Controller
         	$new=base_path('storage').'/upload/hospital/'.$img_arr[1];
         	copy($old,$new);
         	\Image::make($new)->resize(100, 100)->save(base_path('storage').'/upload/hospital/'.'thu_'.$img_arr[1]);        	
-        	$res = Member::where('user_id',$user_id)->update(array('image'=>'/storage/upload/hospital/'.$img_arr[1]));
+        	$res = \DB::table('ys_member')->where('user_id',$user_id)->update(array('image'=>'/upload/hospital/'.$img_arr[1]));
         }else{        	
-        	if ($request->hasFile('image')){//判断是否有图片上传
+        	if($request->hasFile('image')){//判断是否有图片上传
         		$up_res=uploadPic($request->file('image'));//上传图片
         		if($up_res===false){
         			return $this->setStatusCode(6043)->respondWithError($this->message);
@@ -571,13 +573,14 @@ class AuthController extends Controller
         			$file_name['image']=$up_res;
         		}
         	}
-        	$res = Member::where('user_id',$user_id)->update($file_name);
+        	$res = \DB::table('ys_member')->where('user_id',$user_id)->update($file_name);
         }
-        $image=Member::where('user_id',$user_id)->select('image')->first();
-         
-        $img_arr=explode('/hospital/', $image['image']);
-        $new_data['source_image_url']=$image['image'];
-        $new_data['thumbnail_image_url']=$img_arr[0].'/hospital/thu_'.$img_arr[1];
+        $image=\DB::table('ys_member')->where('user_id',$user_id)->select('image')->first();
+
+        $img_arr=explode('/hospital/', $image->image);
+
+        $new_data['source_image_url']=storage_path().$image->image;
+        $new_data['thumbnail_image_url']=storage_path().$img_arr[0].'/hospital/thu_'.$img_arr[1];
         if($res === false){
 
             return $this->setStatusCode(9998)->respondWithError($this->message);
