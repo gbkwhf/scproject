@@ -89,7 +89,8 @@ class AuthController extends Controller
             'pw' => 'required|min:8|max:20',
             'name' => 'string',
             'sex' => 'integer|in:1,2', //1男2女0未选择
-            'pin' => 'required'
+            'pin' => 'required',
+            'invite_id'=>'string' //非必填，邀请人id
         ])
             ->_validate($request->all());
         if (!$validator) throw new ValidationErrorException;
@@ -120,6 +121,14 @@ class AuthController extends Controller
             $user_id = $is_empty->user_id + 1;
         }
 
+        //检测邀请人是否存在，以及邀请人id是否真实有效
+        if(!empty($request->invite_id)){
+            $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
+            $invite_id  = empty($is_true) ? "" : $request->invite_id;
+        }else{
+            $invite_id = "";
+        }
+
 
         \DB::beginTransaction(); //开启事务
 
@@ -131,6 +140,7 @@ class AuthController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
             'name' => empty($request->name) ? '游客' : $request->name,
             'sex' => empty($request->sex) ? '0' : $request->sex,
+            'invite_id' => $invite_id,
         ]);
 
         $update =  UserPincodeHistoryModel::where('id',$max->id)->update([
@@ -524,7 +534,6 @@ class AuthController extends Controller
                     $new_data['source_image_url']='';
                     $new_data['thumbnail_image_url']='';
                     return $this->respond($this->format($new_data));
-//                    return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
                 }else{
                     $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$uid->image;
                     $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$uid->image;
@@ -539,7 +548,6 @@ class AuthController extends Controller
                 $new_data['source_image_url']='';
                 $new_data['thumbnail_image_url']='';
                 return $this->respond($this->format($new_data));
-//                return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
 
             }else{
                 $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$res->image;
