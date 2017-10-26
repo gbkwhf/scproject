@@ -379,7 +379,7 @@ function uploadPic($file){
 		}
 		$a=$file->move(base_path('storage').'/upload/hospital/',$new_name);
 		Image::make(base_path('storage').'/upload/hospital/'.$new_name)->resize(100, 100)->save(base_path('storage').'/upload/hospital/'.'thu_'.$new_name);
-		$name='/upload/hospital/'.$new_name;
+		$name='/storage/upload/hospital/'.$new_name;
 		return $name;
 }
 //获取周围坐标

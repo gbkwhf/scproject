@@ -30,6 +30,8 @@ use Acme\Transformers\UserVerTransformer;
 use Acme\Transformers\UserExtendTransformer;
 use App\TraitCollections\ServerTrait;
 use App\TraitCollections\CurlHttpTrait;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class AuthController extends Controller
 {
@@ -113,7 +115,7 @@ class AuthController extends Controller
 
         $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
         if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
-            $user_id = getenv('260000') ? getenv('260000') : '260000';
+            $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
         }else{
             $user_id = $is_empty->user_id + 1;
         }
@@ -513,28 +515,30 @@ class AuthController extends Controller
         if (!$validator) throw new ValidationErrorException;
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
+        $http = getenv('HTTP_REQUEST_URL'); //获取域名
+
         if (isset($request->uid)){//uid存在，获取他人头像
             $uid = \DB::table('ys_member')->where('user_id',$request->uid)->first();
             if ($uid){
                 if (!isset($uid->image)){//没有上传头像
-                    $data['msg'] = '该用户没有上传头像';
-                    return $this->respond($data);
+                    return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
                 }else{
-
-                    return $this->respond($this->format(storage_path().$uid->image));
+                    $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$uid->image;
+                    $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$uid->image;
+                    return $this->respond($this->format($new_data));
                 }
             }else{
-                $data['msg'] = '该用户不存在';
-                return $this->respond($data);
+                return $this->setStatusCode(1039)->respondWithError($this->message);  //该用户不存在
             }
         }else{//uid不存在，获取用户自己的头像
             $res = \DB::table('ys_member')->where('user_id',$user_id)->first();
             if (!isset($res->image)){//没有上传头像
-                $data['msg'] = '该用户没有上传头像';
-                return $this->respond($data);
-            }else{
+                return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
 
-                return $this->respond($this->format(storage_path().$res->image));
+            }else{
+                $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$res->image;
+                $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$res->image;
+                return $this->respond($this->format($new_data));
             }
         }
 
@@ -554,40 +558,76 @@ class AuthController extends Controller
             ->_validate($request->all());
         if (!$validator) throw new ValidationErrorException;
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
-        
-        
-        
-        if($request->img_url){//网站上传方式
-        	$img_arr=explode('/upload/', $request->img_url);
-        	$old=public_path('upload').'/'.$img_arr[1];
-        	$new=base_path('storage').'/upload/hospital/'.$img_arr[1];
-        	copy($old,$new);
-        	\Image::make($new)->resize(100, 100)->save(base_path('storage').'/upload/hospital/'.'thu_'.$img_arr[1]);        	
-        	$res = \DB::table('ys_member')->where('user_id',$user_id)->update(array('image'=>'/upload/hospital/'.$img_arr[1]));
-        }else{        	
-        	if($request->hasFile('image')){//判断是否有图片上传
-        		$up_res=uploadPic($request->file('image'));//上传图片
-        		if($up_res===false){
-        			return $this->setStatusCode(6043)->respondWithError($this->message);
-        		}else{
-        			$file_name['image']=$up_res;
-        		}
-        	}
-        	$res = \DB::table('ys_member')->where('user_id',$user_id)->update($file_name);
+
+        $http = getenv('HTTP_REQUEST_URL'); //获取域名
+
+        //上传图片
+        if($request->hasFile('image')){//判断是否有图片上传
+            $up_res=$this->uploadPicHandle($request->file('image'));//上传图片
+            if($up_res){
+
+                //如果存在，则更新数据库
+                 $res = \DB::table('ys_member')->where('user_id',$user_id)->update(['image'=>$up_res]);
+
+                 if($res){
+
+                     $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$up_res;
+                     $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$up_res;
+                     return $this->respond($this->format($new_data));
+
+                 }else{//更改图像失败
+                     return $this->setStatusCode(6043)->respondWithError($this->message);
+                 }
+            }else{ //更改图像失败
+                return $this->setStatusCode(6043)->respondWithError($this->message);
+            }
+        }else{ //未找到图片
+            return $this->setStatusCode(6043)->respondWithError($this->message);
         }
-        $image=\DB::table('ys_member')->where('user_id',$user_id)->select('image')->first();
 
-        $img_arr=explode('/hospital/', $image->image);
-
-        $new_data['source_image_url']=storage_path().$image->image;
-        $new_data['thumbnail_image_url']=storage_path().$img_arr[0].'/hospital/thu_'.$img_arr[1];
-        if($res === false){
-
-            return $this->setStatusCode(9998)->respondWithError($this->message);
-        }else{
-            return $this->respond($this->format($new_data));
-        }
     }
+
+    //图片视图
+    public function showIco($fileName)
+    {
+        return \Response::download(storage_path().'/app/avatars/'.$fileName,null,array(),null);
+    }
+
+
+
+    private function uploadPicHandle($file){
+
+        $filesize=$file->getClientSize();
+        if($filesize>2097152){
+            die("{code': 6044,'msg':'文件超过2MB'}");
+            return false;
+        }
+
+        //检查文件类型
+        $entension = $file -> getClientOriginalExtension(); //上传文件的后缀.
+
+        if($entension=='imgj'){
+            $new_entension='jpg';
+        }elseif($entension=='imgp'){
+            $new_entension='png';
+        }elseif($entension=='imgg'){
+            $new_entension='gif';
+        }else{
+            $new_entension=$entension;
+        }
+        $mimeTye = $file -> getMimeType();
+        if(!in_array($mimeTye,array('image/jpeg','image/png'))){
+            die("{code': 6045,'msg':'文件类型不允许'}");
+            return false;
+        }
+        $new_name=time().rand(100,999).'.'.$new_entension;
+
+        $file->move(storage_path('app/avatars/'),$new_name);
+        Image::make(storage_path('app/avatars/').$new_name)->resize(100, 100)->save(storage_path('app/avatars/').'thu_'.$new_name);
+
+        return $new_name;
+    }
+
 
     /**
      * @param Request $request
