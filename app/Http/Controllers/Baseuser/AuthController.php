@@ -519,9 +519,12 @@ class AuthController extends Controller
 
         if (isset($request->uid)){//uid存在，获取他人头像
             $uid = \DB::table('ys_member')->where('user_id',$request->uid)->first();
-            if ($uid){
-                if (!isset($uid->image)){//没有上传头像
-                    return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
+            if (empty($uid)){
+                if (empty($uid->image)){//没有上传头像
+                    $new_data['source_image_url']='';
+                    $new_data['thumbnail_image_url']='';
+                    return $this->respond($this->format($new_data));
+//                    return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
                 }else{
                     $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$uid->image;
                     $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$uid->image;
@@ -532,8 +535,11 @@ class AuthController extends Controller
             }
         }else{//uid不存在，获取用户自己的头像
             $res = \DB::table('ys_member')->where('user_id',$user_id)->first();
-            if (!isset($res->image)){//没有上传头像
-                return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
+            if (empty($res->image)){//没有上传头像
+                $new_data['source_image_url']='';
+                $new_data['thumbnail_image_url']='';
+                return $this->respond($this->format($new_data));
+//                return $this->setStatusCode(1038)->respondWithError($this->message); //该用户没有上传头像
 
             }else{
                 $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$res->image;
