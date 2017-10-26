@@ -27,3 +27,30 @@ input,textarea{
 a{
 	text-decoration: none;
 }
+a:active{
+	-webkit-tap-highlight-color:transparent;  /*a链接点击消除蓝色背景*/
+}
+/*弹框  确定取消样式*/
+.btn-box{	
+	font-size: 15px;
+	border-top: 1px solid #ededed;
+	overflow: hidden;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.btn-box a{
+	line-height: 1.5em;
+	color: #333;
+	float: left;
+	text-align: center;
+	padding: 11px 0px;
+}
+.btn-box .confirm{
+	width: 50%;
+	color: #88c5be;
+}
+.btn-box .cancel{
+	width: 49%;
+	color: #9c9c9c;
+	border-right: 1px solid #e6e6e6;
+}
