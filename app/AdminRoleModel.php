@@ -8,5 +8,7 @@ class AdminRoleModel extends Model
 {
     protected  $table = "stj_admin_role";
     protected  $primaryKey = 'id';
-    public $timestamps = false;   
+    public $timestamps = false;
+
+
 }
