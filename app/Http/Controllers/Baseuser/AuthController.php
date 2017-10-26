@@ -378,7 +378,7 @@ class AuthController extends Controller
         if (!$validator) throw new ValidationErrorException;
 
         $serverVer = \Cache::get('update'.$request->get('os_language').$request->get('os_type'),function() use ($request){
-            $serverVer=\DB::table('stj_updateinfo')
+            $serverVer=\DB::table('ys_updateinfo')
                 ->where('os_language', $request->get('os_language'))
                 ->where('os_type', $request->get('os_type'))
                 ->first();
@@ -657,60 +657,79 @@ class AuthController extends Controller
             ->_validate($request->all());
         if (!$validator) throw new ValidationErrorException;
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
-        $profile = Member::where('user_id',$user_id)
-        			->first();
-        $res_version = UserVersionInfoModel::where('user_id',$user_id)->first();
-        if ($res_version){
-            $base_ver = $res_version['base_ver'];
-        }else{
-            $base_ver = 1;
+
+        $http = getenv('HTTP_REQUEST_URL'); //获取域名
+        $profile = \DB::table('ys_member')->where('user_id',$user_id)->first();
+
+        if(empty($profile)){ //用户不存在
+            return $this->setStatusCode(1039)->respondWithError($this->message);
         }
-        
-        //缩略图
-        if($profile['image'] !=''){
-        	$img_arr=explode('/hospital/', $profile['image']);
-        	$thu_img=$img_arr[0].'/hospital/thu_'.$img_arr[1];        	
-        }else{
-        	$thu_img='';
-        }
-        
-        if(!file_exists(public_path('/upload/qccode/').$user_id.'_qccode.png')){
-			//dd(public_path('upload/qccode/stj-icon.png'));
-        	//为用户生成邀请二维码图片
-        	\QrCode::format('png')->size(200)->errorCorrection('Q')->margin(0)->merge('/public/upload/qccode/stj-icon.png', .2)->generate(env('APPLY_URL').'?qc='.$profile['mobile'],public_path('/upload/qccode/').$user_id.'_qccode.png');
-        	
-        }
-        if ($profile['work_address'] == ""){
-            $work_address = '';
-        }else{
-            $work_address = $profile['work_address'];
-        }
-        
- 
-        
-        if($_SERVER['SERVER_PORT'] == 443){
-        	$http='https://';
-        }else{
-        	$http='http://';
-        }
-        
-        
+
         $params[] = array(
-        	'user_id'=>	$user_id,
-            'mobile'=>$profile['mobile'],
-            'sex_id'=>$profile['sex'],
-            'live_place'=>$profile['address'],
-            'name'=>$profile['name'],
-            'grade'=>$profile['grade'],
-            'birthday'=>$profile['birthday'],
-            'work_address'=>$work_address,
-        	'thumbnail_image_url'=>$thu_img,
-        	'source_image_url'=>$profile['image'],
-        	'base_ver'=>$base_ver,
-        	'vip_code'=>$profile['vip_code'],
-        	'qc_code'=>$http.$_SERVER['HTTP_HOST'].'//upload/qccode/'.$user_id.'_qccode.png',
+            'user_id'=>	$user_id,
+            'mobile'=>$profile->mobile,
+            'sex_id'=>$profile->sex,
+            'address'=>$profile->address,
+            'name'=>$profile->name,
+            'birthday'=>substr($profile->birthday,0,10),
+            'thumbnail_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.'thu_'.$profile->image,
+            'source_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.$profile->image,
         );
         return $this->respond($this->format($params));
+//
+//        $profile = \DB::table('ys_member')->where('user_id',$user_id)->first();
+//        $res_version = UserVersionInfoModel::where('user_id',$user_id)->first();
+//        if ($res_version){
+//            $base_ver = $res_version['base_ver'];
+//        }else{
+//            $base_ver = 1;
+//        }
+//
+//        //缩略图
+//        if($profile['image'] !=''){
+//        	$img_arr=explode('/hospital/', $profile['image']);
+//        	$thu_img=$img_arr[0].'/hospital/thu_'.$img_arr[1];
+//        }else{
+//        	$thu_img='';
+//        }
+//
+//        if(!file_exists(public_path('/upload/qccode/').$user_id.'_qccode.png')){
+//			//dd(public_path('upload/qccode/stj-icon.png'));
+//        	//为用户生成邀请二维码图片
+//        	\QrCode::format('png')->size(200)->errorCorrection('Q')->margin(0)->merge('/public/upload/qccode/stj-icon.png', .2)->generate(env('APPLY_URL').'?qc='.$profile['mobile'],public_path('/upload/qccode/').$user_id.'_qccode.png');
+//
+//        }
+//        if ($profile['work_address'] == ""){
+//            $work_address = '';
+//        }else{
+//            $work_address = $profile['work_address'];
+//        }
+//
+//
+//
+//        if($_SERVER['SERVER_PORT'] == 443){
+//        	$http='https://';
+//        }else{
+//        	$http='http://';
+//        }
+//
+//
+//        $params[] = array(
+//        	'user_id'=>	$user_id,
+//            'mobile'=>$profile['mobile'],
+//            'sex_id'=>$profile['sex'],
+//            'live_place'=>$profile['address'],
+//            'name'=>$profile['name'],
+//            'grade'=>$profile['grade'],
+//            'birthday'=>$profile['birthday'],
+//            'work_address'=>$work_address,
+//        	'thumbnail_image_url'=>$thu_img,
+//        	'source_image_url'=>$profile['image'],
+//        	'base_ver'=>$base_ver,
+//        	'vip_code'=>$profile['vip_code'],
+//        	'qc_code'=>$http.$_SERVER['HTTP_HOST'].'//upload/qccode/'.$user_id.'_qccode.png',
+//        );
+//        return $this->respond($this->format($params));
     }
 
     /**
@@ -723,46 +742,64 @@ class AuthController extends Controller
     {
         $validator = $this->setRules([
             'ss' => 'required|string',
-            'sex_id' => 'string',
-            'live_place' => 'string',
+            'sex_id' => 'integer|in:1,2', // 1男  2 女
+            'address' => 'string',
             'name' => 'string',
-        	'birthday'=> 'string',
-        	'work_address'=> 'string',
+        	'birthday'=> [
+                'string',
+                'regex:/^(19|20)\d{2}-(1[0-2]|0?[1-9])-(0?[1-9]|[1-2][0-9]|3[0-1])$/'
+            ],
         ])
             ->_validate($request->all());
         if (!$validator) throw new ValidationErrorException;
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
-        /*$input = Input::except('ss','os_type','version');*/
-        $params = array(
-            'sex'=>$request->sex_id,
-            'address'=>$request->live_place,
-            'name'=>$request->name,
-        	'birthday'=>$request->birthday,
-        	'work_address'=>$request->work_address,
-            'updated_at'=>date('Y-m-d H:i:s',time()),
-        );
-        $res = Member::where('user_id',$user_id)->update($params);
-        $res_version = UserVersionInfoModel::where('user_id',$user_id)->first();
-        if ($res_version){//如果用户的版本信息存在
-            $version = array(
-                'base_ver' => $res_version['base_ver']+1,
-                'last_update_date' => date('Y-m-d H:i:s',time())
-            );
-            UserVersionInfoModel::where('user_id',$user_id)->update($version);
-        }else{//如果用户的版本信息不存在
-            $version = array(
-                'base_ver' => 2, //原本没有版本信息，更新后插入该用户的版本信息，从2开始
-                'user_id' => $user_id,
-                'last_update_date' => date('Y-m-d H:i:s',time())
-            );
-            UserVersionInfoModel::insert($version);
+
+        $tmp = $request->all();
+        foreach($tmp as $k=>$v){
+            if(($k == 'ss') || empty($v)){
+                unset($tmp[$k]);
+            }else{
+                $tmp[$k] = addslashes($v);
+            }
         }
+
+        $res = \DB::table('ys_member')->where('user_id',$user_id)->update($tmp);
         if($res === false){
             return $this->setStatusCode(9998)->respondWithError($this->message);
 
         }else{
-            return $this->respond($this->format('',true));
+            return $this->respond($this->format([],true));
         }
+
+//        $params = array(
+//            'sex'=>$request->sex_id,
+//            'address'=>$request->live_place,
+//            'name'=>$request->name,
+//        	'birthday'=>$request->birthday,
+//            'updated_at'=>date('Y-m-d H:i:s',time()),
+//        );
+//        $res = Member::where('user_id',$user_id)->update($params);
+//        $res_version = UserVersionInfoModel::where('user_id',$user_id)->first();
+//        if ($res_version){//如果用户的版本信息存在
+//            $version = array(
+//                'base_ver' => $res_version['base_ver']+1,
+//                'last_update_date' => date('Y-m-d H:i:s',time())
+//            );
+//            UserVersionInfoModel::where('user_id',$user_id)->update($version);
+//        }else{//如果用户的版本信息不存在
+//            $version = array(
+//                'base_ver' => 2, //原本没有版本信息，更新后插入该用户的版本信息，从2开始
+//                'user_id' => $user_id,
+//                'last_update_date' => date('Y-m-d H:i:s',time())
+//            );
+//            UserVersionInfoModel::insert($version);
+//        }
+//        if($res === false){
+//            return $this->setStatusCode(9998)->respondWithError($this->message);
+//
+//        }else{
+//            return $this->respond($this->format('',true));
+//        }
     }
 
 

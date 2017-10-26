@@ -61,7 +61,7 @@ Route::group([
 
     //获取用户基本信息
     Route::post('user/profile','AuthController@Profile');
-    //更新个人基本信息
+    //更新个人基本信息（完成）
     Route::post('user/update/updateProfile','AuthController@UpdateProfile');
     
     
