@@ -23,6 +23,8 @@ class wechatCallbackapiTest {
 
     public function responseMsg(){
 
+        echo "";
+        /*
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信发来的XML数据
 
@@ -80,6 +82,7 @@ every day~
         }else {
             echo "";
         }
+        */
     }
 
     //验证字段
