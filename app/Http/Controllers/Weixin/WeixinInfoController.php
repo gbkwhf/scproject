@@ -58,46 +58,6 @@ class WeixinInfoController  extends Controller{
                             "type": "view",
                             "name": "双创商城",
                             "url": "http://www.baidu.com"
-                        },
-                        {
-                            "name": "加盟连锁",
-                            "sub_button": [
-                                {
-                                    "type": "view",
-                                    "name": "合伙开店",
-                                    "url": ""
-                                },
-                                {
-                                    "type": "view",
-                                    "name": "门店植入",
-                                    "url": ""
-                                }
-                            ]
-                        },
-                        {
-                            "name": "督市天地",
-                            "sub_button": [
-                                {
-                                    "type": "view",
-                                    "name": "督脉正阳",
-                                    "url": ""
-                                },
-                                {
-                                    "type": "view",
-                                    "name": "空中诊所",
-                                    "url": ""
-                                },
-                                {
-                                    "type": "view",
-                                    "name": "门店管理",
-                                    "url": ""
-                                },
-                                {
-                                    "type": "view",
-                                    "name": "关于我们",
-                                    "url": ""
-                                }
-                            ]
                         }
                     ]
                 }';
