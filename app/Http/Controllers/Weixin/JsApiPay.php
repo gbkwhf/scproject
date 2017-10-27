@@ -44,8 +44,6 @@ class JsApiPay  extends Controller
 	public function GetOpenid()
 	{
 
-        echo "进来了";die();
-
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 //        if(empty($code)){
@@ -63,7 +61,7 @@ class JsApiPay  extends Controller
 			//获取code码，以获取openid
 		    $code = $_GET['code'];
 			$openid = $this->getOpenidFromMp($code);
-			echo $openid;
+			echo "我也得到该值了".$openid;
 		}
 	}
 
