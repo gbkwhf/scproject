@@ -124,7 +124,7 @@ class JSSDK{
     // 如果在部署过程中代码在此处验证失败，请到 http://curl.haxx.se/ca/cacert.pem 下载新的证书判别文件。
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 //    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
       curl_setopt($curl, CURLOPT_URL, $url);
 
     $res = curl_exec($curl);

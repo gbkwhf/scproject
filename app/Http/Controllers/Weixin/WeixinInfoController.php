@@ -32,34 +32,11 @@ class WeixinInfoController  extends Controller{
 
         $jssdk = new JSSDK($appId,$appSecret);
 
-        $res = $jssdk->getSignPackage();
+        $data = $jssdk->getSignPackage();
 
-        print_r($res);
-
-
+        return $this->respond($this->format($data));
 
     }
-
-
-    private function http_request($url)
-    {
-
-        //初始化
-        $ch = curl_init();
-        //设置选项，包括URL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        //执行并获取HTML文档内容
-        $output = curl_exec($ch);
-        //释放curl句柄
-        curl_close($ch);
-        //打印获得的数据
-        print_r($output);
-
-
-    }
-
 
 
 
