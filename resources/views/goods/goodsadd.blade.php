@@ -55,41 +55,34 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" >商品排序</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="sort"  placeholder="Enter ..." class="form-control" value="{{ $data->sort or '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >普通会员价</label>
+                        <label class="col-sm-2 control-label" >销售价</label>
                         <div class="col-sm-10">
                             <input type="text"  name="price"  placeholder="Enter ..." class="form-control" value="{{ $data->price or '' }}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" >红卡会员价</label>
+                        <label class="col-sm-2 control-label" >成本价</label>
                         <div class="col-sm-10">
                             <input type="text"  name="price_grade1"  placeholder="Enter ..." class="form-control" value="{{ $data->price_grade1 or '' }}">
                         </div>
                     </div>
+	                <div class="form-group">
+	                  <label class="col-sm-2 control-label" for="inputEmail3">所属供应商</label>
+	                  <div class="col-sm-10">	                  
+	                  <select name="role"  class="form-control  " style="float:left;width:150px">
+                          <option value="">请选择供应商</option>
+                          @foreach ($suppliers as $supplier)
+                          <option @if(isset($data)) @if($data->supplier_id == $supplier['id']) selected="selected" @endif @endif value="{{$supplier['id']}}">{{$supplier['name']}}</option>
+                          @endforeach
+                      </select>
+	                  </div>
+	                </div> 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" >金卡会员价</label>
+                        <label class="col-sm-2 control-label" >商品排序</label>
                         <div class="col-sm-10">
-                            <input type="text"  name="price_grade2"  placeholder="Enter ..." class="form-control" value="{{ $data->price_grade2 or '' }}">
+                            <input type="text"  name="sort"  placeholder="Enter ..." class="form-control" value="{{ $data->sort or '' }}">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >白金卡会员价</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="price_grade3"  placeholder="Enter ..." class="form-control" value="{{ $data->price_grade3 or '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >黑卡会员价</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="price_grade4"  placeholder="Enter ..." class="form-control" value="{{ $data->price_grade4 or '' }}">
-                        </div>
-                    </div>
+                    </div>                    
                     <div class="form-group">
                         <label class="col-sm-2 control-label" >商品详情</label>
                         <div class="col-sm-10">
@@ -100,33 +93,46 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" >上架</label>
                         <div class="col-sm-10">
-                            {{--<input type="radio"  value="1" @if($data->state == 1) checked @endif name="state">是
-                            <input type="radio" value="0" @if($data->state == 0) checked @endif name="state">否--}}
-                            @if (isset($data) )
-                                <input type="radio"  @if($data->state == 1) checked="true" @endif value="1"  name="state">是
-                                <input type="radio"  @if($data->state == 0) checked="true" @endif value="0"  name="state">否
-                                @else
-                                <input type="radio"   value="1"  name="state">是
-                                <input type="radio" value="0"  name="state">否
-                                @endif
-
+                                <input type="radio"  @if(!isset($data) || $data->state == 1) checked="true" @endif value="1"  name="state">是
+                                <input type="radio"  @if(isset($data) && $data->state == 0) checked="true" @endif value="0"  name="state">否
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputEmail3">缩略图</label>
+                        <label class="col-sm-2 control-label" for="inputEmail3">商品图1</label>
                         <div class="col-sm-10">
-                            <input type="file" name="image" value="{!! $data->image or '' !!}" >
+                            <input type="file" name="image[]" value="{!! $data->image or '' !!}" >
                             <span style="color:red;font-size:12px;">图片尺寸：长400*宽400</span>
                             <input type="hidden" name="image_url" value="{!! $data->image or '' !!}">
-                            {{--@if (isset($data) && $data->image!='')
-                                <input type="hidden" name="img" value="{{ $data->image }}">
-                            @endif--}}
                             <br>
                             @if (isset($data) && $data->image!='')
                                 <a target="_blank" href="{{ $data->image }}"><img  width="200" height="100" src="{{ $data->image }}" ></a>
                             @endif
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="inputEmail3">商品图2</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="image[]" value="{!! $data->image or '' !!}" >
+                            <span style="color:red;font-size:12px;">图片尺寸：长400*宽400</span>
+                            <input type="hidden" name="image_url" value="{!! $data->image or '' !!}">
+                            <br>
+                            @if (isset($data) && $data->image!='')
+                                <a target="_blank" href="{{ $data->image }}"><img  width="200" height="100" src="{{ $data->image }}" ></a>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="inputEmail3">商品图3</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="image[]" value="{!! $data->image or '' !!}" >
+                            <span style="color:red;font-size:12px;">图片尺寸：长400*宽400</span>
+                            <input type="hidden" name="image_url" value="{!! $data->image or '' !!}">
+                            <br>
+                            @if (isset($data) && $data->image!='')
+                                <a target="_blank" href="{{ $data->image }}"><img  width="200" height="100" src="{{ $data->image }}" ></a>
+                            @endif
+                        </div>
+                    </div>                                        
                     <script type="text/javascript">
                         //实例化编辑器
                         //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例

@@ -1,0 +1,261 @@
+html,body{
+	background-color: #f2f2f2;
+}
+.wrapper{
+	padding-bottom: 48px;
+}
+.address-details{
+	background-color: #fff;
+	border-bottom: 10px solid #f2f2f2;
+}
+.address-info{
+	padding: 20px 15px;
+	-webkit-display: -webkit-flex; /* Safari */
+	display: flex;
+}
+.user-info{	
+	flex-grow: 4;
+    -webkit-flex-grow: 4;
+    line-height: 1.5em;
+    width: 0; /*解决flex布局设置flex-grow之后盒子宽度因为div内容撑开*/
+}
+.user-info h5{
+	font-size: 13px;
+	color: #000;
+	font-weight: 400;
+	padding-bottom: 5px;
+}
+.user-info .address{
+	color: #333;	
+}
+.sign{
+	-webkit-display: -webkit-flex; /* Safari */
+	display: flex;
+	flex-grow: 1;
+    -webkit-flex-grow: 1;
+    -webkit-display: -webkit-flex;
+    align-items: center;/*垂直居中*/
+    -webkit-align-items: center;
+    justify-content: flex-end;/*水平靠右*/
+    -webkit-justify-content: flex-end;
+    width: 0; /*解决flex布局设置flex-grow之后盒子宽度因为div内容撑开*/
+}
+.sign span{
+	display: block;
+	color: #666;
+	border: 1px solid #666;
+	padding: 0px 5px;
+	border-radius: 5px;
+}
+.sign img{
+	display: none;
+}
+.operation-btn{
+	padding-left: 15px;
+	padding-right: 15px;
+	border-top: 1px solid #ededed;
+	overflow: hidden;
+}
+.operation-btn p{
+	vertical-align: middle;
+	display: inline-block;
+	padding: 10px 8px;
+}
+.operation-btn p span{
+	color: #464646;
+}
+.operation-btn p img{
+	display: inline-block;
+	vertical-align: sub;
+	margin-right: 5px;
+}
+.default-address{
+	float: left;
+}
+.deletes,.edits{
+	float: right;
+}
+.edits img{
+	
+}
+.add-address{
+	text-align: center;
+	background: -webkit-linear-gradient(left, #ef833b , #f04d6a); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #ef833b , #f04d6a); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #ef833b , #f04d6a); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, #ef833b , #f04d6a); /* 标准的语法 */
+	color: #fff;
+	line-height: 48px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+}
+#edit-pop,#delete-pop,#add-pop{
+	display: none;
+}
+#edit-pop{
+	width: 300px;
+}
+#delete-pop{
+	width: 251px;
+}
+#delete-pop p{
+	text-align: center;
+	padding: 28px 0px;
+}
+#add-pop{
+	width: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -139px;
+	margin-left: -150px;
+	background: #fff;
+	z-index: 2;
+	border-radius: 5px;
+}
+#add-pop h4{
+	text-align: center;
+	line-height: 48px;
+	font-size: 15px;
+	font-weight: 400;
+	color: #151516;
+}
+.adinfo{
+	border: 1px solid #ededed;
+	border-width: 1px 0px;
+	overflow: hidden;
+}
+.adinfo input{
+	width: 47%;
+	padding-left: 3%;
+	border: none;
+	line-height: 44px;
+	float: left;
+	font-size: 14px;
+}
+.adinfo .user-name{
+	width: 46%;
+	border-radius: 0px;
+	border-right: 1px solid #ededed;
+}
+.detailed{
+	width: 94%;
+	resize: none;
+	font-size: 14px;
+	line-height: 1.5em;
+	padding: 10px 3%;
+	border: 1px solid #ededed;
+	border-width: 0px 0px 1px;
+	border-radius: 0px;
+}
+.save-use{
+	font-size: 14px;
+	color: #fff;
+	background: -webkit-linear-gradient(left, #ef833b , #f04d6a); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #ef833b , #f04d6a); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #ef833b , #f04d6a); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, #ef833b , #f04d6a); /* 标准的语法 */
+	width: 94%;
+	margin: 3% 3% 5%;
+	border-radius: 5px;
+	line-height: 42px;
+	text-align: center;
+}
+/*选择地区*/
+.express-area a { 
+	display: block;
+	font-size: 14px; 
+	line-height: 1.5em; 
+	background: url(../images/right-arrow.png) no-repeat 98% 50%; 
+	background-size: 8px 13px;
+	padding: 12px 20px 12px 3%;
+	border-bottom: 1px solid #ededed;
+}
+.express-area dl { 
+	position: relative; 
+	font-size: 14px; 
+	line-height: 1.5em; 
+	color: #151516; 
+}
+.express-area dl dt { 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	font-size: 14px; 
+	line-height: 1.5em; 
+}
+.express-area dl dd { 
+	margin-left: 75px;  
+	font-size: 14px; 
+	line-height: 1.5em;
+}
+/*选择地区弹层*/
+.express-area-box { 
+	display: none;
+	position: fixed; 
+	left: 0;
+	bottom: 0;
+	width: 100%; 
+	z-index: 100000001; 
+	background-color: #fff; 
+	color: #151516; 
+}
+.express-area-box header { 
+	position: relative; 
+	border-top: 1px solid #e2e2e2; 
+	border-bottom: 1px solid #e2e2e2; 
+}
+.express-area-box header h3 {  
+	text-align: center; 
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 48px; 
+}
+.express-area-box header .close { 
+	position: absolute; 
+	top: 0; 
+	width: 13px; 
+	height: 13px;
+	margin-top: 17px;
+	margin-right: 15px;
+}
+.express-area-box header .close { 
+	right: 0; 
+	background: url(../images/close-area.png) no-repeat center; 
+	background-size: 13px 13px; 
+}
+.express-area-box article { 
+	height: 250px; 
+	overflow-y: scroll; 
+}
+.area-list li {  
+	border-bottom: 1px solid #e2e2e2; 
+	text-align: justify; 
+	font-size: 14px; 
+	line-height: 1.5em;
+	padding: 13px 5px; 
+}
+
+/*遮罩层*/
+.mask { 
+	display: none; 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	z-index: 11; 
+	width: 100%; 
+	height: 100%; 
+	background-color: rgba(0,0,0,.5); 
+}
+.masks {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+}

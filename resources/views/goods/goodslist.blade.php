@@ -81,8 +81,8 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    {!! $data->render() !!}
-                </div>
+                    {!! $data->appends($search)->render() !!}
+             </div>
             </div>
             <!-- /.box -->
         </div>

@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdminRoleModel extends Model
+class SupplierModel extends Model
 {
-    protected  $table = "ys_admin_role";
+    protected  $table = "ys_supplier";
     protected  $primaryKey = 'id';
     public $timestamps = false;
+    protected $guarded = [];
 
 
 }
