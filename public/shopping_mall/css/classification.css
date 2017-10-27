@@ -1,6 +1,13 @@
 body{
     background: #f3f5f7;
+    overflow: hidden;
 
+}
+html{
+	overflow: hidden;
+}
+body,html,.content{
+	height:100%;
 }
 .content{
     padding-top: 13px;
@@ -8,9 +15,13 @@ body{
   
 
 }
+
 .left_nav{
     float:left;
     margin-right:11px;
+    height:100%;
+    overflow: auto;
+  
 }
 .left_nav>li{
     height:54px;
@@ -31,7 +42,10 @@ body{
     float:right;
     background: #ffffff;
     position: relative;
+    height: 100%;
+    overflow: auto;
 
+    
 }
 .right_content>ul{
     text-align: center;

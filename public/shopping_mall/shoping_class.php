@@ -53,11 +53,11 @@
 	<body>
 		<div class="container">
 			<ul>
-				<li style="margin-right:9px;" onclick="location.href='local_specialty_list.php'">
+				<li style="margin-right:9px;" onclick="location.href=''">
 					<img src="images/tutechan.png"/>
 					<em>食品土特产</em>
 				</li>
-				<li onclick="location.href='home_decoration_list.php'">
+				<li onclick="location.href=''">
 					<img src="images/jiaju.png" />
 					<em>家居家装</em>
 				</li>
@@ -81,6 +81,8 @@
 			
 		</div>
 	</body>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="js/config.js"></script>
+	
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 </html>
