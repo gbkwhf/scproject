@@ -44,12 +44,15 @@ class JsApiPay  extends Controller
 	public function GetOpenid()
 	{
 
+        echo "进来了";die();
+
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 //        if(empty($code)){
 			//触发微信返回code码
 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
+
 //            $tmp  = $this->http_request($url);
 //           print_r($tmp);die();
 //            echo "<script>window.location.replace('".$url."')</script>";
