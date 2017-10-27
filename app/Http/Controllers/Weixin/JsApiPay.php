@@ -43,7 +43,6 @@ class JsApiPay  extends Controller
 	 */
 	public function GetOpenid()
 	{
-
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
@@ -59,7 +58,8 @@ class JsApiPay  extends Controller
 		    $code = $_GET['code'];
 			$openid = $this->getOpenidFromMp($code);
 
-			return $openid;
+            $data["openId"] = $openid;
+            return $this->respond($this->format($data));
 		}
 	}
 
