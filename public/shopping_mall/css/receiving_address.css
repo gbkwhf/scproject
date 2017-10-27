@@ -75,9 +75,6 @@ html,body{
 .deletes,.edits{
 	float: right;
 }
-.edits img{
-	
-}
 .add-address{
 	text-align: center;
 	background: -webkit-linear-gradient(left, #ef833b , #f04d6a); /* Safari 5.1 - 6.0 */
