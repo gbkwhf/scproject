@@ -57,7 +57,7 @@ class WeixinInfoController  extends Controller{
                         {
                             "type": "view",
                             "name": "双创商城",
-                            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri=http%3A%2F%2Fgxdev.yxjk99.com%2Fshopping_mall%2Findex.php&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+                            "url": "http://t.cn/RWW5po6"
                         },
                         {
                             "name": "加盟连锁",
