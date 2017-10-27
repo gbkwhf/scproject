@@ -57,7 +57,7 @@ class WeixinInfoController  extends Controller{
                         {
                             "type": "view",
                             "name": "双创商城",
-                            "url": "http://t.cn/RWW5po6"
+                            "url": "http://www.baidu.com"
                         },
                         {
                             "name": "加盟连锁",
