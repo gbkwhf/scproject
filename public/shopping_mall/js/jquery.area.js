@@ -524,7 +524,6 @@ function intProvince() {
 	}
 	areaList.html(areaCont);
 	$("#areaBox").scrollTop(0);
-	$("#backUp").removeAttr("onClick").hide();
 }
 intProvince();
 
@@ -538,7 +537,6 @@ function selectP(p) {
 	areaList.html(areaCont);
 	$("#areaBox").scrollTop(0);
 	expressArea = province[p] + " > ";
-	$("#backUp").attr("onClick", "intProvince();").show();
 }
 
 /*选择城市*/
@@ -553,7 +551,7 @@ function selectC(p,c) {
 	if (sCity != "省直辖县级行政单位") {
 		if (sCity == "东莞市" || sCity == "中山市" || sCity == "儋州市" || sCity == "嘉峪关市") {
 			expressArea += sCity;
-			$("#expressArea dl dd").html(expressArea);
+			$(".expressArea dl dd").html(expressArea);
 			clockArea();
 		} else if (sCity == "市辖区" || sCity == "市辖县" || sCity == "香港岛" || sCity == "九龙半岛" || sCity == "新界" || sCity == "澳门半岛" || sCity == "离岛" || sCity == "无堂区划分区域") {
 			expressArea += "";
@@ -561,20 +559,19 @@ function selectC(p,c) {
 			expressArea += sCity + " > ";
 		}
 	}
-	$("#backUp").attr("onClick", "selectP(" + p + ");");
 }
 
 /*选择区县*/
 function selectD(p,c,d) {
 	clockArea();
 	expressArea += district[p][c][d];
-	$("#expressArea dl dd").html(expressArea);
+	$(".expressArea dl dd").html(expressArea);
 }
 
 /*关闭省市区选项*/
 function clockArea() {
 	$("#areaMask").fadeOut();
-	$("#areaLayer").animate({"bottom": "-297px"});
+	$("#areaLayer").fadeOut();
 	intProvince();
 }
 

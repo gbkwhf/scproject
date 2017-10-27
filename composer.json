@@ -30,7 +30,7 @@
     "autoload": {
         "classmap": [
           "app/Acme",
-          "database"          
+          "database"
         ],
         "psr-4": {
             "App\\": "app/",
@@ -38,7 +38,9 @@
         },
         "files": [
             "app/helpers.php",
-            "app/Libs/yunpian/YunpianAutoload.php"
+            "app/Libs/yunpian/YunpianAutoload.php",
+            "app/Http/Controllers/Weixin/jssdk.php",
+          "app/Http/Controllers/Weixin/wechatCallbackapiTest.php"
         ]
     },
     "autoload-dev": {

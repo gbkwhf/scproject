@@ -44,8 +44,8 @@ class CheckSession
 //
 //        });
 
-        $session = Session::where('session',$request->only('ss'))->pluck('session');
-
+//        $session = Session::where('session',$request->only('ss'))->pluck('session');
+        $session = Session::where('session',$request->only('ss'))->orWhere('open_id',$request->ss)->first();
         if (empty($session)) {
             return response()->json([
                 'code' => ErrorCode::API_ERR_INVALID_SESSION,
@@ -56,6 +56,15 @@ class CheckSession
 
         \Cache::put($sessionTable.$session,1,\Carbon\Carbon::now()->addDay(1));
         return $next($request);
+
+
+
+
+
+
+
+
+
 
     }
 }

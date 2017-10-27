@@ -14,7 +14,7 @@
 <body>
 
 	<div class="wrapper">
-		<header>
+		<header onclick="location.href='receiving_address.php'">
 			<img src="images/edit.png" width="14px" class="edit-icon" />
 			<p class="adress">收货地址：陕西省西安市高新区丈八一路绿地蓝海大厦东1002D</p>
 			<div class="user-name" ><img src="images/user-icon.png" width="13px"/><p>张先生</p></div>
@@ -30,7 +30,11 @@
 			<div class="commodity-align">
 				<div class="swiper-container">
 			        <div class="swiper-wrapper">
-			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
+			            <div class="swiper-slide">
+			            	<img src="images/zyyp.png" width="100%"/>
+			            	<p>¥388.00</p>
+			            	<span>*7</span>
+			            </div>
 			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
 			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
 			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
@@ -71,7 +75,7 @@
 		<h4>线下收款</h4>
 		<p>员工输入会员手机号直接完成付款</p>
 		<input type="text" placeholder="请输入会员手机号" maxlength="11" onkeyup="value=value.replace(/[^0-9.]/g,'') "  />
-		<div class="btn-box">
+		<div class="btn-box-pop">
 			<a href="javascript:void(0);" class="cancel" onclick="cancelPop()">取消</a>
 			<a href="javascript:void(0);" class="confirm">确认</a>
 		</div>

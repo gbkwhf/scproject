@@ -25,8 +25,43 @@
 				</div>
 			</div>
 			<div class="operation-btn">
-				<p class="edits"><img src="images/edits.png" width="15"/>编辑</p>
-				<p class="deletes"><img src="images/delete.png" width="16"/>删除</p>
+				<p class="default-address"><img src="images/unselected.png" width="16"/><span>设为默认</span></p>
+				<p class="deletes"><img src="images/delete.png" width="16"/><span>删除</span></p>
+				<!--<p class="edits"><img src="images/edits.png" width="14"/><span>编辑</span></p>-->
+			</div>
+		</div>
+		<div class="address-details">
+			<div class="address-info">
+				<div class="user-info">
+					<h5>陈一，15709283666</h5>
+					<p class="address">陕西西安雁塔区丈八东路陕西西安雁塔区丈八东路陕西西安雁塔区丈八东路</p>
+				</div>
+				<div class="sign">					
+					<span>使用</span>
+					<img src="images/pitch-on.png" width="30"/>				
+				</div>
+			</div>
+			<div class="operation-btn">
+				<p class="default-address"><img src="images/unselected.png" width="16"/><span>设为默认</span></p>
+				<p class="deletes"><img src="images/delete.png" width="16"/><span>删除</span></p>
+				<!--<p class="edits"><img src="images/edits.png" width="14"/><span>编辑</span></p>-->
+			</div>
+		</div>
+		<div class="address-details">
+			<div class="address-info">
+				<div class="user-info">
+					<h5>陈一，15709283666</h5>
+					<p class="address">陕西西安雁塔区丈八东路陕西西安雁塔区丈八东路陕西西安雁塔区丈八东路</p>
+				</div>
+				<div class="sign">					
+					<span>使用</span>
+					<img src="images/pitch-on.png" width="30"/>				
+				</div>
+			</div>
+			<div class="operation-btn">
+				<p class="default-address"><img src="images/unselected.png" width="16"/><span>设为默认</span></p>
+				<p class="deletes"><img src="images/delete.png" width="16"/><span>删除</span></p>
+				<!--<p class="edits"><img src="images/edits.png" width="14"/><span>编辑</span></p>-->
 			</div>
 		</div>
 		<a href="javascript:void(0);" class="add-address">新增地址</a>
@@ -40,8 +75,8 @@
 			<input type="text" class="user-phone" placeholder="电话" />
 		</div>
 		<!--选择地区-->
-        <section class="express-area">
-            <a id="expressArea" href="javascript:void(0)">
+        <!--<section class="express-area">
+            <a class="expressArea" href="javascript:void(0)">
                 <dl>
                     <dt>选择地区：</dt>
                     <dd>省 > 市 > 区/县</dd>
@@ -49,12 +84,12 @@
             </a>
         </section>
         <textarea rows="" cols="" class="detailed" placeholder="详细地址（可填写街道、小区、大厦）"></textarea>
-        <a href="javascript:;" class="save-use">保存并使用</a>
+        <a href="javascript:;" class="save-use">保存并使用</a>-->
 	</div>
 	<!--删除-->
 	<div id="delete-pop">
 		<p>确定要删除该地址吗？</p>
-		<div class="btn-box">
+		<div class="btn-box-pop">
 			<a href="javascript:void(0);" class="cancel" onclick="cancelPop()">取消</a>
 			<a href="javascript:void(0);" class="confirm">确认</a>
 		</div>
@@ -68,7 +103,7 @@
 		</div>
 		<!--选择地区-->
         <section class="express-area">
-            <a id="expressArea" href="javascript:void(0)">
+            <a class="expressArea" href="javascript:void(0)">
                 <dl>
                     <dt>选择地区：</dt>
                     <dd>省 > 市 > 区/县</dd>
@@ -77,12 +112,14 @@
         </section>
         <textarea rows="3" class="detailed" placeholder="详细地址（可填写街道、小区、大厦）"></textarea>
         <a href="javascript:;" class="save-use">保存并使用</a>
+        <span class="layui-layer-setwin">
+        	<a class="layui-layer-ico layui-layer-close layui-layer-close2" href="javascript:;" onclick="closeAddpop()"></a>
+        </span>
 	</div>
 	<!--选择地区弹层-->
     <section id="areaLayer" class="express-area-box">
         <header>
             <h3>选择地区</h3>
-            <a id="backUp" class="back" href="javascript:void(0)" title="返回"></a>
             <a id="closeArea" class="close" href="javascript:void(0)" title="关闭"></a>
         </header>
         <article id="areaBox">
@@ -91,6 +128,7 @@
     </section>
     <!--遮罩层-->
     <div id="areaMask" class="mask"></div>
+    <div class="masks"></div>
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
@@ -101,17 +139,28 @@
 	
 	$('.address-details').eq(0).find('.sign span').css('display','none');
 	$('.address-details').eq(0).find('.sign img').css('display','block');
+	$('.address-details').eq(0).find('.default-address img').attr('src','images/selected.png');
+	$('.address-details').eq(0).find('.default-address span').html('已设为默认');
+	$('.address-details').eq(0).find('.default-address span').css('color','#88c5be');
 	
 	//使用该地址
-	$('.sign span').click(function(){
-		
+	$('.sign span').click(function(){		
 		$('.sign span').show();
 		$('.sign img').hide();
 		$(this).hide();
 		$(this).siblings('img').show();
-		
 	})
 	
+	//设为默认地址
+	$('.default-address').click(function(){
+		$('.default-address img').attr('src','images/unselected.png');
+		$('.default-address span').html('设为默认');
+		$('.default-address span').css('color','#464646');
+		$(this).children('img').attr('src','images/selected.png');
+		$(this).children('span').html('已设为默认');
+		$(this).children('span').css('color','#88c5be');
+	})
+
 	//删除
 	$('.deletes').click(function(){
 		
@@ -140,21 +189,21 @@
 	//新增
 	$('.add-address').click(function(){
 		
-		layer.open({
-			type:1,
-			title:false,
-			closeBtn:true,
-			shadeClose:false,
-			content:$('#add-pop')
-		})
+		$('.masks').fadeIn();
+		$('#add-pop').fadeIn()
 		
 	})
 	
+	//关闭新增弹框
+	function closeAddpop(){
+		$('#add-pop').fadeOut();
+		$('.masks').fadeOut();
+	}
+	
 	/*打开省市区选项*/
-	$("#expressArea").click(function() {
-		alert(111);
-//		$("#areaMask").fadeIn();
-//		$("#areaLayer").animate({"bottom": 0});
+	$(".expressArea").click(function() {
+		$("#areaMask").fadeIn();
+		$("#areaLayer").fadeIn();
 	});
 	/*关闭省市区选项*/
 	$("#areaMask, #closeArea").click(function() {
@@ -163,7 +212,6 @@
 	
 </script>
 <style type="text/css">
-	/*body .layui-layer{border-radius:10px;}*/
 	.layui-layer.layui-anim.layui-layer-page{
 		border-radius: 5px;
 	} 
