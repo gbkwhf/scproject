@@ -40,7 +40,7 @@ class WeixinInfoController  extends Controller{
     //获取公众号首页
     public function GetOfficalIndex(){
 
-
+        define("TOKEN", "shuangchuanggx");
 //        echo urlencode('http://gxdev.yxjk99.com/shopping_mall/index.php');die();
 
 
