@@ -16,6 +16,9 @@ Route::get('image', function(){
 
 Route::get('api/gxsc/show-ico/{fileName}','Baseuser\AuthController@showIco');
 
+//绑定openId
+Route::post('api/gxsc/bind/user/openId','Baseuser\AuthController@bindOpenId');
+
 
 Route::group([
 

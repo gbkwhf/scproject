@@ -433,7 +433,7 @@ class AuthController extends Controller
         }
 
         //手机验证码的验证
-        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',4)->orderBy('id')->first();//获取id最大值
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',3)->orderBy('id')->first();//获取id最大值
         if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
             return $this->setStatusCode(1007)->respondWithError($this->message);
         }
@@ -801,6 +801,147 @@ class AuthController extends Controller
 //            return $this->respond($this->format('',true));
 //        }
     }
+
+
+
+    //绑定openId
+    public function bindOpenId(Request $request){
+
+        $validator = $this->setRules([
+            'un'  => 'required|regex:/^1[34578][0-9]{9}$/',
+            'pin' => 'required|string',
+            'openId' => 'required|string',
+            'invite_id'=>'string' //邀请人的id，非必填
+
+        ])
+            ->_validate($request->all());
+        if (!$validator) throw new ValidationErrorException;
+
+
+        //手机验证码的验证
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',5)->orderBy('id')->first();//获取id最大值
+        if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
+            return $this->setStatusCode(1007)->respondWithError($this->message);
+        }
+        //进行验证码校验，如果验证码超过10分钟，那么则失效了，其次，该验证码状态必须是未被验证状态，否则也视为失效
+        $minute=floor((time()-strtotime($max->pin_made_time))%86400/60);
+        $userful_time = env('USEFUL_TIME'); //有效时间，单位是分钟
+        if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
+            return $this->setStatusCode(1008)->respondWithError($this->message);
+        }
+
+        //首先判断该用户是否是系统内用户
+        $had_mobile=\DB::table('ys_member')->where('mobile',$request->un)->first();
+
+        //获取分配服务器信息
+        $serverArr = $this->getDispatchServerInfo('ys');
+
+        if(empty($had_mobile)){ //手机号码不存在，则应该为其注册
+
+            $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
+            if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
+                $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
+            }else{
+                $user_id = $is_empty->user_id + 1;
+            }
+
+            //检测邀请人是否存在，以及邀请人id是否真实有效
+            if(!empty($request->invite_id)){
+                $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
+                $invite_id  = empty($is_true) ? "" : $request->invite_id;
+            }else{
+                $invite_id = "";
+            }
+
+            \DB::beginTransaction(); //开启事务
+
+            //验证通过，则插入数据库，并且更改相应逻辑操作
+            $insert1 = \DB::table('ys_member')->insert([
+                'user_id'=>$user_id,
+                'mobile' => $request->un,
+                'password' => md5(md5('123456789')),
+                'created_at' => date('Y-m-d H:i:s'),
+                'name' => '游客',
+                'sex' =>0,
+                'invite_id' => $invite_id,
+            ]);
+
+            $update1 =  UserPincodeHistoryModel::where('id',$max->id)->update([
+
+                'is_succ' => '1',
+                'pin_accmulation_time' =>\DB::Raw('now()')
+            ]);
+
+            $insert2 = \DB::table('ys_session_info')->insert([
+
+                'user_id'=>$user_id,
+                'client_type'=>1, //安卓
+                'session'=>'',
+                'mid'=>$user_id,
+                'push_service_type'=>2,
+                'mec_ip' => $serverArr['mec_ip'],
+                'mec_port' => $serverArr['mec_port'],
+                'lps_ip' => $serverArr['lps_ip'],
+                'lps_port' => $serverArr['lps_port'],
+                'last_get_session_date' => Carbon::now(),
+                'session_hash' => '',
+                'openId'=>$request->openId,
+            ]);
+
+            if ($insert1 && $update1 && $insert2) {
+                DB::commit();
+                return $this->respond($this->format([],true));
+            }else {
+                DB::rollBack();
+                return $this->setStatusCode(1040)->respondWithError($this->message);
+            }
+
+
+        }else{ //否则，直接绑定openId即可
+            $session = (new Session)->createSession($had_mobile->user_id);
+            $is_exist = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->first();
+
+            \DB::beginTransaction(); //开启事务
+            if(!empty($is_exist)){
+                $update1 = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->update(['openId'=>$request->openId]);
+            }else{
+
+                $update1 = \DB::table('ys_session_info')->insert([
+
+                                'user_id'=>$had_mobile->user_id,
+                                'client_type'=>1, //安卓
+                                'session'=>$session,
+                                'mid'=>$had_mobile->user_id,
+                                'push_service_type'=>2,
+                                'mec_ip' => $serverArr['mec_ip'],
+                                'mec_port' => $serverArr['mec_port'],
+                                'lps_ip' => $serverArr['lps_ip'],
+                                'lps_port' => $serverArr['lps_port'],
+                                'last_get_session_date' => Carbon::now(),
+                                'session_hash' => abs(crc32($session)),
+                                'openId'=>$request->openId,
+                            ]);
+            }
+
+            $update2 =  UserPincodeHistoryModel::where('id',$max->id)->update([
+
+                'is_succ' => '1',
+                'pin_accmulation_time' =>\DB::Raw('now()')
+            ]);
+
+            if ($update1 && $update2) {
+                DB::commit();
+                return $this->respond($this->format([],true));
+            }else {
+                DB::rollBack();
+                return $this->setStatusCode(1040)->respondWithError($this->message);
+            }
+
+        }
+
+    }
+
+
 
 
     /**
