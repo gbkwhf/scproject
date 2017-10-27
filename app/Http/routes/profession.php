@@ -17,8 +17,10 @@ Route::group([
      * 微信公众号功能模块  (需要获取和生成这三个值：openId   access_token   apiTicket)
      */
     //1.获取openId
-//    Route::post('get/user/openId','WeixinInfoController@getOpenId');
     Route::get('get/user/openId','JsApiPay@GetOpenid');
+    //2.获取签名包
+    Route::get('get/user/sign/package','WeixinInfoController@GetSingPackage');
+
 
 
 

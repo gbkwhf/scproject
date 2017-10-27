@@ -23,29 +23,19 @@ class WeixinInfoController  extends Controller{
 
 
 
-    //获取openId
-    public function getOpenId(Request $request){
+    //获取微信签名包
+    public function GetSingPackage(){
 
-        $validator = $this->setRules([
-            'code' => 'string', //非必填
-        ])
-            ->_validate($request->all());
-
-        if (!$validator) throw new ValidationErrorException;
-
-
-        $code = empty($request->code) ? "" : $request->code;
 
         $appId = getenv('appId');
         $appSecret = getenv('appSecret');
 
-//        $jssdk = new JSSDK($appId,$appSecret);
-//
-//        print_r($jssdk->getJsApiTicket());
+        $jssdk = new JSSDK($appId,$appSecret);
 
-        $wxPay = new JsApiPay();
+        $res = $jssdk->getSignPackage();
 
-        print_r($wxPay->GetOpenid($code));
+        print_r($res);
+
 
 
     }

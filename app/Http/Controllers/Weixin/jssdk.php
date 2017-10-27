@@ -48,13 +48,18 @@ class JSSDK {
 
   private function getJsApiTicket() {
 
+      //如果jsapi_ticket.php文件不存在，则新创建一个该文件
+      $is_exist = file_exists(storage_path('app/')."jsapi_ticket.php");
+      if(!$is_exist){ //如果不存在，则创建一个新文件
+          $data['jsapi_ticket'] = "";
+          $data['expire_time'] = 0;
+          $this->set_php_file(storage_path('app/')."jsapi_ticket.php", json_encode($data));
+      }
+
     // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
+//    $data = json_decode($this->get_php_file($_SERVER['DOCUMENT_ROOT']."/wx/jsapi_ticket.php"));
+      $data = json_decode($this->get_php_file(storage_path('app/')."jsapi_ticket.php"));
 
-//      $is_exist = $this->get_php_file(storage_path('app/')."jsapi_ticket.php");
-//
-//      var_dump()
-
-    $data = json_decode($this->get_php_file($_SERVER['DOCUMENT_ROOT']."/wx/jsapi_ticket.php"));
     if ($data->expire_time < time()) {
       $accessToken = $this->getAccessToken();
       // 如果是企业号用以下 URL 获取 ticket
@@ -65,7 +70,8 @@ class JSSDK {
       if ($ticket) {
         $data->expire_time = time() + 7000;
         $data->jsapi_ticket = $ticket;
-        $this->set_php_file($_SERVER['DOCUMENT_ROOT']."/wx/jsapi_ticket.php", json_encode($data));
+//        $this->set_php_file($_SERVER['DOCUMENT_ROOT']."/wx/jsapi_ticket.php", json_encode($data));
+          $this->set_php_file(storage_path('app/')."jsapi_ticket.php", json_encode($data));
       }
     } else {
       $ticket = $data->jsapi_ticket;
@@ -75,18 +81,31 @@ class JSSDK {
   }
 
   public function getAccessToken() {
+
+      //如果access_token.php文件不存在，则新创建一个该文件
+      $is_exist = file_exists(storage_path('app/')."access_token.php");
+      if(!$is_exist){ //如果不存在，则创建一个新文件
+          $data['access_token'] = "";
+          $data['expire_time'] = 0;
+          $this->set_php_file(storage_path('app/')."access_token.php", json_encode($data));
+      }
+
+
     // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
-    $data = json_decode($this->get_php_file($_SERVER['DOCUMENT_ROOT']."/wx/access_token.php"));
+//    $data = json_decode($this->get_php_file($_SERVER['DOCUMENT_ROOT']."/wx/access_token.php"));
+      $data = json_decode($this->get_php_file(storage_path('app/')."access_token.php"));
     if ($data->expire_time < time()) {
       // 如果是企业号用以下URL获取access_token
       // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
       $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
       $res = json_decode($this->httpGet($url));
+
       $access_token = $res->access_token;
       if ($access_token) {
         $data->expire_time = time() + 7000;
         $data->access_token = $access_token;
-        $this->set_php_file($_SERVER['DOCUMENT_ROOT']."/wx/access_token.php", json_encode($data));
+//        $this->set_php_file($_SERVER['DOCUMENT_ROOT']."/wx/access_token.php", json_encode($data));
+          $this->set_php_file(storage_path('app/')."access_token.php", json_encode($data));
       }
     } else {
       $access_token = $data->access_token;
