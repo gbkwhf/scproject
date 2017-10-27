@@ -46,13 +46,10 @@ class JsApiPay  extends Controller
 
 		//通过code获得openid
 		if (!isset($_GET['code'])){
-//        if(empty($code)){
 			//触发微信返回code码
 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
 
-//            $tmp  = $this->http_request($url);
-//           print_r($tmp);die();
 //            echo "<script>window.location.replace('".$url."')</script>";
             Header("Location:$url");
 			exit();
@@ -61,29 +58,12 @@ class JsApiPay  extends Controller
 			//获取code码，以获取openid
 		    $code = $_GET['code'];
 			$openid = $this->getOpenidFromMp($code);
-			echo "我也得到该值了".$openid;
+
+			return $openid;
 		}
 	}
 
 
-    private function http_request($url)
-    {
-
-        //初始化
-        $ch = curl_init();
-        //设置选项，包括URL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        //执行并获取HTML文档内容
-        $output = curl_exec($ch);
-        //释放curl句柄
-        curl_close($ch);
-        //打印获得的数据
-        print_r($output);
-
-
-    }
 
 	/**
 	 * 
