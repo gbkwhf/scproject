@@ -51,20 +51,32 @@ html,body{
 	display: none;
 }
 .operation-btn{
-	text-align: right;
+	padding-left: 15px;
 	padding-right: 15px;
 	border-top: 1px solid #ededed;
+	overflow: hidden;
 }
 .operation-btn p{
-	color: #464646;
 	vertical-align: middle;
 	display: inline-block;
 	padding: 10px 8px;
+}
+.operation-btn p span{
+	color: #464646;
 }
 .operation-btn p img{
 	display: inline-block;
 	vertical-align: sub;
 	margin-right: 5px;
+}
+.default-address{
+	float: left;
+}
+.deletes,.edits{
+	float: right;
+}
+.edits img{
+	
 }
 .add-address{
 	text-align: center;
@@ -94,6 +106,14 @@ html,body{
 }
 #add-pop{
 	width: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -139px;
+	margin-left: -150px;
+	background: #fff;
+	z-index: 2;
+	border-radius: 5px;
 }
 #add-pop h4{
 	text-align: center;
@@ -117,6 +137,7 @@ html,body{
 }
 .adinfo .user-name{
 	width: 46%;
+	border-radius: 0px;
 	border-right: 1px solid #ededed;
 }
 .detailed{
@@ -126,7 +147,8 @@ html,body{
 	line-height: 1.5em;
 	padding: 10px 3%;
 	border: 1px solid #ededed;
-	border-width: 1px 0px;
+	border-width: 0px 0px 1px;
+	border-radius: 0px;
 }
 .save-use{
 	font-size: 14px;
@@ -148,7 +170,8 @@ html,body{
 	line-height: 1.5em; 
 	background: url(../images/right-arrow.png) no-repeat 98% 50%; 
 	background-size: 8px 13px;
-	padding: 12px 3%;
+	padding: 12px 20px 12px 3%;
+	border-bottom: 1px solid #ededed;
 }
 .express-area dl { 
 	position: relative; 
@@ -164,21 +187,18 @@ html,body{
 	line-height: 1.5em; 
 }
 .express-area dl dd { 
-	padding-top: .1rem; 
-	padding-right: .8rem; 
-	margin-left: 75px; 
-	text-align: justify; 
+	margin-left: 75px;  
 	font-size: 14px; 
 	line-height: 1.5em;
 }
 /*选择地区弹层*/
 .express-area-box { 
-	position: absolute; 
-	bottom: -297px; 
-	left: 50%; 
+	display: none;
+	position: fixed; 
+	left: 0;
+	bottom: 0;
+	width: 100%; 
 	z-index: 100000001; 
-	width: 320px; 
-	margin-left: -160px; 
 	background-color: #fff; 
 	color: #151516; 
 }
@@ -187,47 +207,35 @@ html,body{
 	border-top: 1px solid #e2e2e2; 
 	border-bottom: 1px solid #e2e2e2; 
 }
-.express-area-box header h3 { 
-	margin: 0 1.675rem; 
+.express-area-box header h3 {  
 	text-align: center; 
-	font-size: .8rem; 
-	line-height: 2.25rem; 
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 48px; 
 }
-.express-area-box header .back,
 .express-area-box header .close { 
 	position: absolute; 
 	top: 0; 
-	width: 1.675rem; 
-	height: 2.25rem; 
-}
-.express-area-box header .back { 
-	display: none; 
-	left: 0; 
-	background: url(../img/back.png) no-repeat center;   
-	background-size: .45rem .75rem; 
+	width: 13px; 
+	height: 13px;
+	margin-top: 17px;
+	margin-right: 15px;
 }
 .express-area-box header .close { 
 	right: 0; 
-	background: url(../img/close-area.png) no-repeat center; 
-	background-size: .675rem .675rem; 
+	background: url(../images/close-area.png) no-repeat center; 
+	background-size: 13px 13px; 
 }
 .express-area-box article { 
 	height: 250px; 
 	overflow-y: scroll; 
 }
-.area-list li { 
-	padding: .5rem; 
+.area-list li {  
 	border-bottom: 1px solid #e2e2e2; 
 	text-align: justify; 
-	font-size: .7rem; 
-	line-height: 1.25rem; 
-}
-
-.express-area-box { 
-	position: fixed; 
-	left: 0; 
-	width: 100%; 
-	margin-left: 0; 
+	font-size: 14px; 
+	line-height: 1.5em;
+	padding: 13px 5px; 
 }
 
 /*遮罩层*/
@@ -236,8 +244,18 @@ html,body{
 	position: absolute; 
 	top: 0; 
 	left: 0; 
-	z-index: 100000000; 
+	z-index: 11; 
 	width: 100%; 
 	height: 100%; 
 	background-color: rgba(0,0,0,.5); 
+}
+.masks {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
 }

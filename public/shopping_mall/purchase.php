@@ -14,7 +14,7 @@
 <body>
 
 	<div class="wrapper">
-		<header>
+		<header onclick="location.href='receiving_address.php'">
 			<img src="images/edit.png" width="14px" class="edit-icon" />
 			<p class="adress">收货地址：陕西省西安市高新区丈八一路绿地蓝海大厦东1002D</p>
 			<div class="user-name" ><img src="images/user-icon.png" width="13px"/><p>张先生</p></div>
