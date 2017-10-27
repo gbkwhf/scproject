@@ -13,7 +13,6 @@ use Acme\Exceptions\ValidationErrorException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-require_once "./jssdk.php";
 
 /**
  * Class WeixinInfoController
