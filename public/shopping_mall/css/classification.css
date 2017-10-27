@@ -21,6 +21,7 @@ body,html,.content{
     margin-right:11px;
     height:100%;
     overflow: auto;
+    border-top:1px solid #f3f5f7;
   
 }
 .left_nav>li{
@@ -29,15 +30,18 @@ body,html,.content{
     background: #fff;
     padding: 0 25px;
     text-align: center;
-    border: 1px solid #e6e6e6;
-    border-left: none;
+    border-bottom: 1px solid #e6e6e6;
+    border-right:1px solid #e6e6e6;
+    border-left:1px solid #e6e6e6;
     font-size: 15px;
     color: #333;
     
 }
-.left_nav>li:not(:last-child){
+
+
+/*.left_nav>li:not(:last-child){
     border-bottom: none;
-}
+}*/
 .right_content{
     float:right;
     background: #ffffff;
@@ -89,7 +93,8 @@ body,html,.content{
 }
 .left_nav>li.curr_tab{
     background: #f3f5f7;
-    color:#4bc2a4;
-    border: none;
+    color:#4bc2a4; 
+    border-right:1px solid #f3f5f7;
     display: block;
+   
 }

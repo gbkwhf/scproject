@@ -20,8 +20,7 @@
 	         <li> 增强免疫</li>
 	         <li> 滋补养生</li>
 	         <li> 保护眼睛</li>
-	         <li> 健康生活</li> 
-	              
+	         <li> 健康生活</li>         
 	         <li  class="last_li"> 健康器械</li>
       </ul>
      
@@ -244,17 +243,27 @@
 	     var winH=$(window).width();
 	     var leftnavH=$(".left_nav").width();
 	     $(".right_content").width(winH-leftnavH-24);
+	     var len=$(".left_nav>li").length;
 	     $(".left_nav>li").click(function(){
-	        $(".left_nav>li").not(".last_li").css("border-bottom","none");
-	         $(this).prev("li").css("border-bottom","1px solid #e6e6e6");
+	     	
+
 	         var index=$(this).index();
+	         if(index!=0){
+	         	$(".left_nav").css("border-top","1px solid #e6e6e6");
+	         	$(".left_nav>li").eq(len-1).css("border-bottom","1px solid #e6e6e6");
+	          }
+	          if(index==0){
+	          	$(".left_nav").css("border-top","1px solid #f3f5f7");
+//	          	$(".left_nav>li").eq(len-1).css("border-bottom","1px solid #e6e6e6");		
+	          
+	          }     
+	         if(index==len-1){
+	         	$(".left_nav>li").eq(len-1).css("border-bottom","none");
+	         }
+	        
 	         $(this).addClass("curr_tab").siblings("li").removeClass("curr_tab");
 	         $(".right_content").children("ul").eq(index).show().siblings("ul").hide();
 	     });
-	     //分类项目过长，内容滚动到顶部
-//	    $(".left_nav>li").click(function(){ 	
-//	    	$("html,body").animate({scrollTop:0},300);
-//	    	
-//	    });
+	  
 	 </script>
 </html>
