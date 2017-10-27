@@ -20,7 +20,8 @@ Route::group([
     Route::get('get/user/openId','JsApiPay@GetOpenid');
     //2.获取签名包
     Route::get('get/user/sign/package','WeixinInfoController@GetSingPackage');
-
+    //3.获取公众号首页
+    Route::get('get/official/accounts/index','WeixinInfoController@GetOfficalIndex');
 
 
 

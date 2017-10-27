@@ -39,7 +39,8 @@
         "files": [
             "app/helpers.php",
             "app/Libs/yunpian/YunpianAutoload.php",
-            "app/Http/Controllers/Weixin/jssdk.php"
+            "app/Http/Controllers/Weixin/jssdk.php",
+          "app/Http/Controllers/Weixin/wechatCallbackapiTest.php"
         ]
     },
     "autoload-dev": {

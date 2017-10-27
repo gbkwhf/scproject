@@ -26,19 +26,93 @@ class WeixinInfoController  extends Controller{
     //获取微信签名包
     public function GetSingPackage(){
 
-
         $appId = getenv('appId');
         $appSecret = getenv('appSecret');
 
         $jssdk = new JSSDK($appId,$appSecret);
 
         $data = $jssdk->getSignPackage();
-
         return $this->respond($this->format($data));
 
     }
 
 
+    //获取公众号首页
+    public function GetOfficalIndex(){
+
+
+//        echo urlencode('http://gxdev.yxjk99.com/shopping_mall/index.php');die();
+
+
+        $wx = new wechatCallbackapiTest();
+
+        $appId = getenv('appId');
+        $appSecret = getenv('appSecret');
+        $jssdk = new JSSDK($appId,$appSecret);
+        $getAccessToken = $jssdk->getAccessToken();
+
+       //data 菜单数据
+        $data = '{
+                    "button": [
+                        {
+                            "type": "view",
+                            "name": "双创商城",
+                            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri=http%3A%2F%2Fgxdev.yxjk99.com%2Fshopping_mall%2Findex.php&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+                        },
+                        {
+                            "name": "加盟连锁",
+                            "sub_button": [
+                                {
+                                    "type": "view",
+                                    "name": "合伙开店",
+                                    "url": ""
+                                },
+                                {
+                                    "type": "view",
+                                    "name": "门店植入",
+                                    "url": ""
+                                }
+                            ]
+                        },
+                        {
+                            "name": "督市天地",
+                            "sub_button": [
+                                {
+                                    "type": "view",
+                                    "name": "督脉正阳",
+                                    "url": ""
+                                },
+                                {
+                                    "type": "view",
+                                    "name": "空中诊所",
+                                    "url": ""
+                                },
+                                {
+                                    "type": "view",
+                                    "name": "门店管理",
+                                    "url": ""
+                                },
+                                {
+                                    "type": "view",
+                                    "name": "关于我们",
+                                    "url": ""
+                                }
+                            ]
+                        }
+                    ]
+                }';
+
+
+
+        if($_GET['echostr']){
+            $wx->valid(); //如果发来了echostr则进行验证
+        }else{
+            $wx->responseMsg(); //如果没有echostr，则返回消息
+        }
+
+        echo $wx->createMenu($getAccessToken,$data);
+
+    }
 
 
 
