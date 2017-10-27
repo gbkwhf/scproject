@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Weixin;
 
-class JSSDK {
+use App\Http\Controllers\Controller;
+
+class JSSDK  extends Controller{
+
   private $appId;
   private $appSecret;
 
