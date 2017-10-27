@@ -89,7 +89,7 @@
 	<!--删除-->
 	<div id="delete-pop">
 		<p>确定要删除该地址吗？</p>
-		<div class="btn-box">
+		<div class="btn-box-pop">
 			<a href="javascript:void(0);" class="cancel" onclick="cancelPop()">取消</a>
 			<a href="javascript:void(0);" class="confirm">确认</a>
 		</div>

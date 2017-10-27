@@ -1,0 +1,48 @@
+html,body{
+	height: 100%;
+}
+.wrapper{
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+}
+.btn-box{
+	width: 80%;
+	margin: 0px auto;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.btn-box a{
+	display: inline-block;
+	width: 50%;
+	line-height: 50px;
+	color: #fff;
+	text-align: center;
+	float: left;
+}
+.btn-box .shopping-mall{	
+	background: -webkit-linear-gradient(left, #ef833b , #f04d6a); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #ef833b , #f04d6a); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #ef833b , #f04d6a); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, #ef833b , #f04d6a); /* 标准的语法 */
+}
+.btn-box .personal-enter{
+	background: -webkit-linear-gradient(left, #f04d6a , #ef833b); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, ##f04d6a , #ef833b); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, ##f04d6a , #ef833b); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, ##f04d6a , #ef833b); /* 标准的语法 */
+}
+.btn-box .line{
+	width: 1px;
+	height: 50px;
+	background: #ce4f49;
+	display: inline-block;
+}
