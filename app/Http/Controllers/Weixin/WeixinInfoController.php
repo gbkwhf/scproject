@@ -104,7 +104,7 @@ class WeixinInfoController  extends Controller{
 
 
 
-        if($_GET['echostr']){
+        if(isset($_GET['echostr'])){
             $wx->valid(); //如果发来了echostr则进行验证
         }else{
             $wx->responseMsg(); //如果没有echostr，则返回消息
