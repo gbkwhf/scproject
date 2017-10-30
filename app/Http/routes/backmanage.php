@@ -26,9 +26,17 @@
 	Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth']], function () {
 		
 		Route::get('admin', 'HomeController@HomeList');
+		Route::get('agencyadmin', 'HomeController@agencyIndex');
+		Route::get('supplieradmin', 'HomeController@supplierIndex');
 
 		Route::Post('ajax/citylist', 'AjaxController@cityList');
 		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
+
+		//用户列表
+		Route::get('memberlist', 'MemberController@memberList');
+		Route::get('memberedit/{id}', 'MemberController@memberEdit');
+		Route::Post('membersave', 'MemberController@memberSave');
+	
 		
 		//供应商
 		Route::get('supplierlist', 'SupplierController@supplierList');
@@ -37,13 +45,26 @@
 		Route::get('supplieradd', 'SupplierController@supplierAdd');
 		Route::Post('suppliercreate', 'SupplierController@supplierCreate');
 		Route::get('supplierdelete/{id}', 'SupplierController@supplierDelete');
+		
+		//经销商
+		Route::get('agencylist', 'AgencyController@agencyList');
+		Route::get('agencyedit/{id}', 'AgencyController@agencyEdit');
+		Route::Post('agencysave', 'AgencyController@agencySave');
+		Route::get('agencyadd', 'AgencyController@agencyAdd');
+		Route::Post('agencycreate', 'AgencyController@agencyCreate');
+		Route::get('agencydelete/{id}', 'AgencyController@agencyDelete');		
 		//商品
         Route::get('goodslist', 'GoodsController@Goodslist');//商品列表
         Route::get('goods/goodsadd', 'GoodsController@Goodsadd');//添加商品
-        Route::post('goods/store', 'GoodsController@Store');//提交商品
-        Route::get('goods/edit/{id}', 'GoodsController@Edit');//编辑商品
+        Route::post('goods/goodscreate', 'GoodsController@GoodsCreate');//提交商品
+        Route::get('goods/goodsedit/{id}', 'GoodsController@GoodsEdit');//编辑商品
         Route::post('goods/goodssave', 'GoodsController@Goodssave');//编辑商品保存
         Route::get('goods/goodsdel/{id}', 'GoodsController@Goodsdel');//删除商品
+        Route::Post('ajax/getgoodsclass', 'AjaxController@getGoodsClass');
+        
+        
+        //供应商功能
+        Route::get('supplier/orderlist', 'SupplierManageController@orderList');//订单列表        
 		
 
     });

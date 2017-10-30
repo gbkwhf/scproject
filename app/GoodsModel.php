@@ -11,6 +11,7 @@ class GoodsModel extends Model
     protected  $table = "ys_goods";
     protected  $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    protected $guarded = [];
     
    
 }

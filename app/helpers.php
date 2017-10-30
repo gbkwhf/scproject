@@ -374,12 +374,12 @@ function uploadPic($file){
 		$new_name=time().rand(100,999).'.'.$new_entension;
 
 
-		if (!file_exists(base_path('storage').'/upload/hospital/')){
-				mkdir(base_path('storage').'/upload/hospital/');
+		if (!file_exists(base_path('public').'/upload/image/')){
+				mkdir(base_path('public').'/upload/image/');
 		}
-		$a=$file->move(base_path('storage').'/upload/hospital/',$new_name);
-		Image::make(base_path('storage').'/upload/hospital/'.$new_name)->resize(100, 100)->save(base_path('storage').'/upload/hospital/'.'thu_'.$new_name);
-		$name='/storage/upload/hospital/'.$new_name;
+		$a=$file->move(base_path('public').'/upload/image/',$new_name);
+		Image::make(base_path('public').'/upload/image/'.$new_name)->resize(100, 100)->save(base_path('public').'/upload/image/'.'thu_'.$new_name);
+		$name='/upload/image/'.$new_name;
 		return $name;
 }
 //获取周围坐标

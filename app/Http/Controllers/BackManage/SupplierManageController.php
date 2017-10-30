@@ -10,11 +10,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 
 
-class SupplierController  extends Controller
+class SupplierManageController  extends Controller
 {
 
 
- public  function supplierList (Request $request){
+ public  function orderList (Request $request){
+ 	
+ 	$supplier_id=\Session::get('role_userid');
+ 
+ 
+ 	
+ 	
+ 	
+ 	
+ 	
  	
  	$par=\App\SupplierModel::select();
  	$search=array();
