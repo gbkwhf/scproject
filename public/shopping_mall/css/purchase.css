@@ -68,6 +68,11 @@ html,body{
 	overflow: hidden;
 	background-color: #fff;
 	margin-bottom: 10px;
+	/* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 }
 .swiper-container {
     width: 73%;
@@ -103,8 +108,12 @@ html,body{
 .commodity-exp{
 	float: left;
 	width: 23%;
-	text-align: center;
-	padding-top: 44px;
+	-webkit-display: -webkit-flex;
+    display: flex;
+	-webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 .commodity-exp p{
 	display: inline-block;
