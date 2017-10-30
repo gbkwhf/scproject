@@ -163,7 +163,7 @@ abstract class Controller extends BaseController
     {
 
 //        $data = Session::where('session', $session)->first(['user_id']);
-        $data = Session::where('session', $session)->orWhere('open_id',$session)->first(['user_id']);
+        $data = Session::where('session', $session)->orWhere('openId',$session)->first(['user_id']);
 
         return $data ? $data->user_id : null;
 

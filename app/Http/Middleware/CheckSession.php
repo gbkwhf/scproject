@@ -45,7 +45,7 @@ class CheckSession
 //        });
 
 //        $session = Session::where('session',$request->only('ss'))->pluck('session');
-        $session = Session::where('session',$request->only('ss'))->orWhere('open_id',$request->ss)->first();
+        $session = Session::where('session',$request->only('ss'))->orWhere('openId',$request->ss)->first();
         if (empty($session)) {
             return response()->json([
                 'code' => ErrorCode::API_ERR_INVALID_SESSION,
