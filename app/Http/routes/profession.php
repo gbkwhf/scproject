@@ -53,7 +53,25 @@ Route::group([
 
 
 
+     /**
+      * 商品分类以及商品详情模块  登陆状态才可以访问
+      */
+         //4.增加商品评价（暂时不做）
+         //5.购物车
+
+
 
 
 
 });
+
+
+/**
+ * 商品分类以及商品详情模块   非登陆状态也可以访问
+ */
+    //1.获取商品二级分类
+    Route::get('api/gxsc/get/commodity/secondary/classification/{first_id}','HandleProfession\GetShopsInfoController@getSecondClass');
+    //2.根据二级分类id获取商品列表
+    Route::get('api/gxsc/get/commodity/lists/{second_id}','HandleProfession\GetShopsInfoController@getCommodityLists');
+    //3.根据商品id获取商品详情
+    Route::get('api/gxsc/get/commodity/info/{goods_id}','HandleProfession\GetShopsInfoController@getCommodityInfo');
