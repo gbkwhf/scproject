@@ -36,7 +36,7 @@
 <script>
 	
 	
-//	alert($_GET['code'])
+	alert($_GET['code'])
 	
 </script>
 <style type="text/css">
