@@ -20,7 +20,7 @@
             <!-- form start -->
 
              	@section('contentheader_title','会员详情')
-             	<form class="form-horizontal" action="{{ url('member/membersave') }}" method="post"  >
+             	<form class="form-horizontal" action="{{ url('membersave') }}" method="post"  >
               <div class="box-body">
                 <div class="form-group">
                   <label class="col-sm-2 control-label" >会员名</label>
@@ -52,25 +52,7 @@
                   <div class="col-sm-10">
                     <input type="text"  disabled="true "   placeholder="Enter ..." class="form-control" value="{{ $data->created_at or '' }}">
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" >会员等级</label>
-                  <div class="col-sm-10"> 			
-                      <select class="form-control" name="grade">
-                      	<option @if (isset($data) &&  $data->grade == 1) selected="" @endif value="1">普通会员</option>
-                      	<option @if (isset($data) &&  $data->grade == 2) selected="" @endif value="2" >红卡会员</option>
-                      	<option @if (isset($data) &&  $data->grade == 3) selected="" @endif value="3" >金卡会员</option> 
-                      	<option @if (isset($data) &&  $data->grade == 4) selected="" @endif value="4" >白金卡会员</option> 
-                      	<option @if (isset($data) &&  $data->grade == 5) selected="" @endif value="5" >黑卡会员</option>                                            
-                  	  </select>
-                  </div>
-                </div>    
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" >会员编号</label>
-                  <div class="col-sm-10">
-                    <input type="text"  name="vip_code"  placeholder="Enter ..." class="form-control" value="{{ $data->vip_code or '' }}">
-                  </div>
-                </div>                                                
+                </div>                                                  
                 <div class="form-group">
                   <label class="col-sm-2 control-label" >状态</label>
                   <div class="col-sm-10">

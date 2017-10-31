@@ -8,7 +8,7 @@
 <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('admin') }}"><b>圣特佳后台管理系统</b></a>{{----}}
+            <a href="{{ url('admin') }}"><b>双创共享后台管理系统</b></a>{{----}}
         </div><!-- /.login-logo -->
 
     @if (count($errors) > 0)
@@ -50,7 +50,11 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="checkbox icheck">
-
+					<select name="role_type" class="form-control ">
+						<option value="1" >经销商</option>
+						<option value="2" >供应商</option>
+						<option value="3" >系统管理</option>
+					</select>
                 </div>
             </div><!-- /.col -->
 

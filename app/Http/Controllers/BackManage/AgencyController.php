@@ -10,13 +10,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 
 
-class SupplierController  extends Controller
+class AgencyController  extends Controller
 {
 
 
- public  function supplierList (Request $request){
+ public  function agencyList (Request $request){
  	
- 	$par=\App\SupplierModel::select();
+ 	$par=\App\AgencyModel::select();
  	$search=array();
  	if ($request->name != ''){
  		$par->where('name','like',"%$request->name%");
@@ -36,15 +36,15 @@ class SupplierController  extends Controller
  		$val['state']=$state_arr[$val['state']];
  	}
 
-	return view('supplierlist',['data'=>$data,'search'=>$search]);
+	return view('agencylist',['data'=>$data,'search'=>$search]);
  }
  //
- public  function supplierEdit (Request $request){
+ public  function agencyEdit (Request $request){
  
- 	$data=\App\SupplierModel::where('id',$request->id)->first();
-	return view('supplieredit',['data'=>$data]);
+ 	$data=\App\AgencyModel::where('id',$request->id)->first();
+	return view('agencyedit',['data'=>$data]);
  } 
- public  function supplierSave (Request $request){
+ public  function agencySave (Request $request){
 
      $input = Input::except('_token');
      $rules = [
@@ -61,16 +61,17 @@ class SupplierController  extends Controller
                 'name'=>$request->name,
                 'mobile'=>$request->mobile,
                 'state'=>$request->state,
+        		'account'=>$request->account,
         );
         if(isset($request->password)){
             $params['password']=md5($request->password);
         }
-         $res = \App\SupplierModel::where('id',$request->id)->update($params);
+         $res = \App\AgencyModel::where('id',$request->id)->update($params);
          if($res === false){
              return back() -> with('errors','数据更新失败');
          }else{
              Session()->flash('message','保存成功');
-             return redirect('supplierlist');
+             return redirect('agencylist');
          }
      }else{
          return back() -> withErrors($validator);
@@ -78,12 +79,12 @@ class SupplierController  extends Controller
 
  }
  
- public  function supplierAdd (Request $request){
+ public  function agencyAdd (Request $request){
 
- 	return view('supplieredit');
+ 	return view('agencyedit');
  }
 
- public  function supplierCreate (Request $request){
+ public  function agencyCreate (Request $request){
      $input = Input::except('_token');
      $rules = [
          'name'=> 'required',
@@ -101,30 +102,25 @@ class SupplierController  extends Controller
                 'name'=>$request->name,
                 'mobile'=>$request->mobile,
                 'password'=>md5($request->password),
+        		'account'=>$request->account,
         		'state'=>$request->state,
         );
          //dd($params);
-         $res = \App\SupplierModel::create($params);
+         $res = \App\AgencyModel::create($params);
 
          if($res){
-             return redirect('supplierlist');
+             return redirect('agencylist');
          }else{
-             return back() -> with('errors','添加供应商错误');
+             return back() -> with('errors','添加经销商错误');
          }
      }else{
          return back() -> withErrors($validator);
      }
  }
- //删除供应商
- public function supplierDelete(Request $request)
+ //删除经销商
+ public function agencyDelete(Request $request)
  {
- 	\App\SupplierModel::where('id',$request->id)->delete();
- 	return redirect('supplierlist');
+ 	\App\AgencyModel::where('id',$request->id)->delete();
+ 	return redirect('agencylist');
  }
- 
-//  function test(Request $request){
- 	
- 	
-//  	dd(1);
-//  }
 }

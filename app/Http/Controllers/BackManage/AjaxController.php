@@ -37,5 +37,10 @@ class AjaxController  extends Controller
  	}
  	echo json_encode($user_info);
  }
+ //获取商品分类
+ public  function getGoodsClass (Request $request){
+ 	$class=DB::table('ys_goods_class')->where('first_id',$request->id)->get();
+ 	echo json_encode($class);
+ }
 
 }

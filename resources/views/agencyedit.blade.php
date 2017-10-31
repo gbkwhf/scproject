@@ -27,11 +27,11 @@
             <!-- /.box-header -->
             <!-- form start -->
              @if (isset($data) )
-             	@section('contentheader_title','编辑供应商')
-             	<form class="form-horizontal" action="{{ url('suppliersave') }}" method="post"  enctype ="multipart/form-data">
+             	@section('contentheader_title','编辑经销商')
+             	<form class="form-horizontal" action="{{ url('agencysave') }}" method="post"  enctype ="multipart/form-data">
              @else
-             	@section('contentheader_title','添加供应商')
-            	<form class="form-horizontal" action="{{ url('suppliercreate') }}" method="post"  enctype ="multipart/form-data">
+             	@section('contentheader_title','添加经销商')
+            	<form class="form-horizontal" action="{{ url('agencycreate') }}" method="post"  enctype ="multipart/form-data">
              @endif
               <div class="box-body">
                 <div class="form-group">
@@ -52,6 +52,12 @@
                       <input type="text" class="form-control" name="password" placeholder="Enter ..." value="">
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="inputEmail3">收款账户</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="account" placeholder="Enter ..." value="{{ $data->account or '' }}">
+                  </div>
+                </div>                
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="inputEmail3">状态</label>
                   <div class="col-sm-10">

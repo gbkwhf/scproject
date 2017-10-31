@@ -78,15 +78,41 @@ class AuthController extends Controller
      */
     protected function postLogin(Request $request)
     {
-    
     	$userInput = $request->get('captcha');
     
-    	if (Session::get('milkcaptcha') != $userInput) {
-    		return back()->withErrors([
-    				$this->loginUsername() => '验证码错误',
-    				]);
+//     	if (Session::get('milkcaptcha') != $userInput) {
+//     		return back()->withErrors([
+//     				$this->loginUsername() => '验证码错误',
+//     				]);
     
+//     	}
+    	$mobile=trim($request->name);
+    	$password=trim($request->password);
+    	//验证经销商和供应商验证登录
+    	if($request->role_type==1){//经销商
+    		$had=\App\AgencyModel::where('mobile',$mobile)->where('password',md5($password))->first();
+    		if($had){    			
+    			Auth::loginUsingId(2);
+    			\Session::put('role_userid', $had->id);
+    			return redirect('agencyadmin');
+    		}else{
+    			return back()->withErrors([
+    					$this->loginUsername() => '账号或密码错误',
+    					]);
+    		}
+    	}elseif($request->role_type==2){//供应商
+    		$had=\App\SupplierModel::where('mobile',$mobile)->where('password',md5($password))->first();
+    		if($had){
+    			Auth::loginUsingId(3);
+    			\Session::put('role_userid', $had->id);
+    			return redirect('supplieradmin');
+    		}else{
+    			return back()->withErrors([
+    					$this->loginUsername() => '账号或密码错误',
+    					]);
+    		}    		
     	}
+    	    	
     	$this->validate($request, [
     			$this->loginUsername() => 'required', 'password' => 'required',
     			]);

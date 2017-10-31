@@ -9,11 +9,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
     public function HomeList()
     {
+    	//Auth::user()->uuid=12;
+    	//dd(Auth::user());
 //         $time = date('Y-m-d 00:00:00',time());//今天零点
 //         $yesterday = date('Y-m-d 00:00:00',strtotime("$time-1 day"));//昨天零点
 //         $monday = date('Y-m-d 00:00:00',(time()-((date('w')==0?7:date('w'))-1)*24*3600));//周一零点
@@ -96,5 +100,14 @@ class HomeController extends Controller
 //         );
 
         return view('home');
+    }
+    //经销商首页
+    public function agencyIndex(){
+    	return view('agencyindex');
+    }
+    //供应商首页
+    public function supplierIndex(){    	
+    	$data=\App\SupplierModel::where('id',\Session::get('role_userid'))->first();
+    	return view('supplierindex',['data'=>$data]);
     }
 }

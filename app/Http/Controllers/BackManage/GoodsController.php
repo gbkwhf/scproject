@@ -8,25 +8,38 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use App\GoodsImageModel;
 
 class GoodsController extends Controller
 {
     //商品列表
     public function Goodslist(Request $request)
     {
+    	//搜索供应商，商品名，商品状态
     	$search=[];
-        $data = GoodsModel::orderBy('sort','asc')
-            ->orderBy('created_at','desc');
+        $data = GoodsModel::orderBy('sort','asc')->orderBy('created_at','desc')
+        		->join('ys_supplier','ys_goods.supplier_id','=','ys_supplier.id')
+        		->selectRaw('ys_goods.id,ys_goods.name,num,sort,price,cost_price,sales,ys_goods.state,ys_supplier.name as supplier_id');        
         if($request->name !=''){
-            $data->where('name','like','%'.$request->name.'%');
+            $data->where('ys_goods.name','like','%'.$request->name.'%');
             $search['name']=$request->name;
         }
-        if ($request->state != ''){
-            $data->where('state',$request->state);
+        if (isset($request->state) && $request->state != -1){
+            $data->where('ys_goods.state',$request->state);
             $search['state']=$request->state;
         }
+        if ($request->supplier != ''){
+        	$data->where('ys_goods.supplier_id',$request->supplier);
+        	$search['supplier']=$request->supplier;
+        }   
         $paginate = $data->paginate(10);
-        return view('goods.goodslist',['data'=>$paginate,'search'=>$search]);
+        $state_arr=[0=>'下架',1=>'正常'];
+        foreach ($paginate as $val){
+        	$val['state']=$state_arr[$val['state']];
+        	
+        }        
+        $suppliers=\App\SupplierModel::where('state',1)->get();
+        return view('goods.goodslist',['data'=>$paginate,'search'=>$search,'suppliers'=>$suppliers]);
     }
     //添加
     public function Goodsadd()
@@ -36,16 +49,8 @@ class GoodsController extends Controller
         return view('goods.goodsadd',['suppliers'=>$suppliers]);
     }
     //提交商品
-    public function Store(Request $request)
+    public function GoodsCreate(Request $request)
     {
-    	$image=[];
-    	foreach ($request->file('image') as $file){
-    		$up_res=uploadPic($file);
-    		$file_name[]=$up_res;
-    		$image = $file_name['0'];
-    	}
-    	
-    	dd($image);
 
         $input = Input::except('_token');
         $rules = [
@@ -56,6 +61,7 @@ class GoodsController extends Controller
             'content'=> 'required',
             'sort'=> 'required',
             'supplier_id'=> 'required',
+            'class_id'=> 'required',
             
         ];
         $massage = [
@@ -67,19 +73,11 @@ class GoodsController extends Controller
             'content.required' =>'商品详情不能为空',
             'sort.required' =>'商品排序不能为空',
             'supplier_id.required' =>'供应商不能为空',
+            'class_id.required' =>'商品分类不能为空',
         ];
         $validator = \Validator::make($input,$rules,$massage);
 
-        if($validator->passes()){/**/
-        	if ($request->hasFile('image')){//图片上传
-        		$image=[];
-        		foreach ($request->file('image') as $file){
-        			$up_res=uploadPic($file);
-        			$file_name[]=$up_res;
-        			$image = $file_name['0'];
-        		}
-        	}
-        	
+        if($validator->passes()){/**/        	
             $params=array(
                 'name'=>$request->name,
                 'num'=>$request->num,
@@ -89,8 +87,23 @@ class GoodsController extends Controller
                 'sort'=>$request->sort,
                 'state'=>$request->state>0?$request->state:0,
                 'supplier_id'=>$request->supplier_id,
+            	'class_id'=>$request->class_id,
             );
             $res = GoodsModel::create($params);
+            if ($request->hasFile('image')){//图片上传
+            	$image=[];
+            	foreach ($request->file('image') as $file){
+            		if(!empty($file)){
+            			$up_res=uploadPic($file);
+            			$file_name[]=$up_res;
+            			$img_params[]=[
+            			'goods_id'=>$res->id,
+            			'image'=>$file_name['0'],
+            			];            			
+            		}           		 
+            	}
+            	\App\GoodsImageModel::insert($img_params);
+            }
             if($res){
                 return redirect('goodslist');
             }else{
@@ -102,90 +115,76 @@ class GoodsController extends Controller
 
     }
     //编辑商品
-    public function Edit($id)
+    public function GoodsEdit($id)
     {
-        $data = GoodsModel::where('id',$id)->first();
-        return view('goods.goodsadd',['data'=>$data]);
+    	$suppliers=\App\SupplierModel::where('state',1)->get();    	 
+        $data = GoodsModel::where('ys_goods.id',$id)
+        		->leftjoin('ys_goods_class','ys_goods.class_id','=','ys_goods_class.id')
+        		->selectRaw('ys_goods.*,ys_goods_class.first_id')
+        		->first();
+        $images = GoodsImageModel::where('goods_id',$id)->get();
+        $goods_class=\DB::table('ys_goods_class')->where('first_id',$data->first_id)->get();        
+        return view('goods.goodsadd',['data'=>$data,'images'=>$images,'suppliers'=>$suppliers,'goods_class'=>$goods_class]);
     }
 
     //编辑商品保存
     public function Goodssave(Request $request)
     {
         $input = Input::except('_token');
-        $input['url'] = '';
-        if ($request->image == '' && $request->image_url == ''){
-            $input['url'] = '';
-        }elseif ($request->image != ''){
-            $input['url'] = $request->image ;
-        }elseif ($request->image_url != ''){
-            $input['url'] = $request->image_url ;
-        }
-        //dd($input);
         $rules = [
             'name'=> 'required',
             'num'=> 'required|regex:/^[0-9]{1,9}$/',
             'price'=> 'required',
-            'price_grade1'=> 'required',
-            'price_grade2'=> 'required',
-            'price_grade3'=> 'required',
-            'price_grade4'=> 'required',
-            'editorValue'=> 'required',
+            'cost_price'=> 'required',
+            'content'=> 'required',
             'sort'=> 'required',
-            'url'=> 'required',
-
-
+            'supplier_id'=> 'required',
+            'class_id'=> 'required',
+            
         ];
         $massage = [
             'name.required' =>'商品名称不能为空',
             'num.required' =>'商品库存不能为空',
             'num.regex' =>'商品库存必须大于0，且长度小于9位',
-            'price.required' =>'普通会员价不能为空',
-            'price_grade1.required' =>'红卡会员价不能为空',
-            'price_grade2.required' =>'金卡会员价不能为空',
-            'price_grade3.required' =>'白金卡会员价不能为空',
-            'price_grade4.required' =>'黑卡会员价不能为空',
-            'editorValue.required' =>'商品详情不能为空',
+            'price.required' =>'销售价不能为空',
+            'cost_price.required' =>'成本价不能为空',
+            'content.required' =>'商品详情不能为空',
             'sort.required' =>'商品排序不能为空',
-            'url.required' =>' 商品图片不能为空',
+            'supplier_id.required' =>'供应商不能为空',
+            'class_id.required' =>'商品分类不能为空',
         ];
         $validator = \Validator::make($input,$rules,$massage);
         if($validator->passes()){
-            if ($request->hasFile('image')){//图片上传
-                $up_res=uploadPic($request->file('image'));
-                $file_name[]=$up_res;
-                $image = $file_name['0'];
-            }else{
 
-                if ($input['image_url'] == ''){
-                    $image = '';
-                }else{
-                    $image_url =  explode("=",$input['image_url']);
-                    $image = $image_url['1'];
-                }
-
-            }
-            $input['image'] = $image;
-
-            $id = $input['id'];
-            if ($request->state == ''){
-                $state = 1;
-            }else{
-                $state = $request->state;
-            }
             $params=array(
                 'name'=>$input['name'],
                 'num'=>$input['num'],
                 'content'=>$input['editorValue'],
                 'sort'=>$input['sort'],
                 'price'=>$input['price'],
-                'price_grade1'=>$input['price_grade1'],
-                'price_grade2'=>$input['price_grade2'],
-                'price_grade3'=>$input['price_grade3'],
-                'price_grade4'=>$input['price_grade4'],
-                'state'=>$state,
-                'image'=>$image,
+                'cost_price'=>$input['cost_price'],
+                'state'=>$request->state>0?$request->state:0,
+            	'supplier_id'=>$input['supplier_id'],
+            	'class_id'=>$input['class_id'],
             );
-            $res = GoodsModel::where('id',$id)->update($params);
+            $res = GoodsModel::where('id',$input['id'])->update($params);
+            
+            if ($request->hasFile('image')){//图片上传
+            	$image=[];
+            	foreach ($request->file('image') as $file){
+            		if(!empty($file)){
+            			$up_res=uploadPic($file);
+            			$file_name[]=$up_res;
+            			$img_params[]=[
+            			'goods_id'=>$input['id'],
+            			'image'=>$file_name['0'],
+            			];
+            		}
+            	}   
+            	\App\GoodsImageModel::where('goods_id',$input['id'])->delete();           	
+            	\App\GoodsImageModel::insert($img_params);
+            }
+            
             if($res === false){
                 return back() -> with('errors','数据更新失败');
             }else{

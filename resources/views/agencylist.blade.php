@@ -6,7 +6,7 @@
     Home
 @endsection
 
-@section('contentheader_title','供应商列表')
+@section('contentheader_title','经销商列表')
 
 
 
@@ -33,7 +33,7 @@
               <div class="box-header">
                <br><br>
                   <div class="box-tools2 ">
-                      <form class="form-horizontal" id ="form_action" action="{{url('supplierlist')}}" method="get">
+                      <form class="form-horizontal" id ="form_action" action="{{url('agencylist')}}" method="get">
                           <div style="width: 800px;" class="input-group input-group-sm row">
                               <div class="col-lg-2">
 									<input placeholder="手机号" class="form-control  " style="float:left;width:161px" name="mobile" value="{{ $_GET['mobile'] or ''}}" type="text">                                                            
@@ -46,26 +46,27 @@
                           </div>
                       </form>
                   </div>
-                   <div style="float:right;margin-top: -55px;"><a href="{{url('supplieradd')}}">  <button type="button" class="btn bg-olive margin" >添加经销商</button></a></div>
+                   <div style="float:right;margin-top: -55px;"><a href="{{url('agencyadd')}}">  <button type="button" class="btn bg-olive margin" >添加经销商</button></a></div>
               </div>
-
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
                   <th>名称</th>
                   <th>手机号</th>
+                  <th>佣金</th>
                   <th>状态</th> 
                    <th>操作</th>
                 </tr>                
-                @foreach ($data as $supplier)    				
+                @foreach ($data as $agency)    				
 	    			<tr>
-	                  <td>{{ $supplier->name }}</td>
-	                  <td>{{ $supplier->mobile }}</td>
-	                  <td>{{ $supplier->state }}</td>                  
+	                  <td>{{ $agency->name }}</td>
+	                  <td>{{ $agency->mobile }}</td>
+	                  <td>{{ $agency->balance}}</td>
+	                  <td>{{ $agency->state }}</td>                  
 	                  <td>
-	                  		<a href="{{ url('supplieredit',['id'=>$supplier->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
-	                  		<a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('supplierdelete',['id'=>$supplier->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>                 			                  		
+	                  		<a href="{{ url('agencyedit',['id'=>$agency->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
+	                  		<a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('agencydelete',['id'=>$agency->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>                 			                  		
 	                  </td>
 	                </tr>                
 				@endforeach               
