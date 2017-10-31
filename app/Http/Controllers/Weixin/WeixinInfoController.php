@@ -79,29 +79,20 @@ class WeixinInfoController  extends Controller{
     public function getBindState(Request $request)
     {
         $validator = $this->setRules([
-            'mobile'  => 'required|regex:/^1[34578][0-9]{9}$/',
+            'openId'  => 'required|string',
         ])
             ->_validate($request->all());
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
-        //首先判断该用户是否是系统内用户
-        $had_mobile=\DB::table('ys_member')->where('mobile',$request->mobile)->first();
-        if(empty($had_mobile)){ //该手机号码不存在
-            return $this->setStatusCode(1014)->respondWithError($this->message);
-        }
-
         //判断该手机号码账户是否绑定了openId
-        $is_bind = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->first();
+        $is_bind = \DB::table('ys_session_info')->where('openId',$request->openId)->first();
         if(empty($is_bind)){
             $result['state'] = 0; //0 未绑定   1已绑定
         }else{
-            $result['state'] = empty($is_bind->openId) ? 0 : 1; //0 未绑定   1已绑定
+            $result['state'] =  1; //0 未绑定   1已绑定
         }
-
         return $this->respond($this->format($result));
     }
-
-
 
 
 }

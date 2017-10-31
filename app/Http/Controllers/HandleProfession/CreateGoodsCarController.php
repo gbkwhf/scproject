@@ -159,7 +159,13 @@ class CreateGoodsCarController extends Controller{
     public function getGoodsCarInfo(Request $request)
     {
 
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
 
 
