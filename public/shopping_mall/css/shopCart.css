@@ -1,0 +1,283 @@
+body{
+	background-color: ##f3f5f7;
+	/*min-width: 320px;
+	max-width: 640px;
+	margin: 0 auto;*/
+}
+.popBox{text-align: center;}
+.cancels{width: 90px;
+		color:#ffffff;
+		height: 28px;
+		margin-left:40px;
+		margin-bottom:10px;
+		line-height:28px;
+		background-color: #999999;
+		border-radius: 5px;
+		border: none;
+		float: left;
+}
+.confirm{
+	width: 90px;
+	color:#ffffff;
+	height: 28px;
+	margin-left:8px;
+	margin-bottom:10px;
+	margin-right:40px;
+	line-height:28px;
+	background-color: #ff4400;
+	border-radius: 5px;
+	float: left;
+}
+.shopHeader{
+	width: 100%;
+	height:35px;
+	background-color: #FFFFFF;
+	text-align: center;
+	line-height: 35px;
+	font-size: 16px;
+	color: #333333;
+	position: fixed;
+	z-index: 999;
+	
+}
+.manngerBut{
+	position: absolute;
+    left: 75%;
+    top: 3%;
+    width: 29%;
+}
+.deleteBtn{
+	float: right;
+	display: inline-block;
+	width: 74px;
+	height: 25px;
+	border:solid 1px #e08750;
+	font-size: 14px;
+	color: #e08750;
+	text-align: center;
+	line-height: 25px;
+    margin-top: 2%;
+    margin-right: 4%;
+	border-radius: 13px;
+
+}
+/*faf9f9*/
+.shopCartBox{
+	/*margin-top: 35px;*/
+	/*padding-top: ;*/
+	/*background-color: #f3f5f7;*/
+	width: 100%;
+	background-color: #f3f5f7;
+	min-height: 140px;
+	/*overflow: auto;*/
+	padding-top: 36px;
+	padding-bottom: 50px;
+}
+.shopCartList{
+	margin-left: 12px;
+	margin-right: 12px;
+	height: 140px;
+	margin-bottom: 10px;
+	background-color: #FFFFFF;
+	/*background-color: red;*/
+	padding-bottom: 4px;
+	border-radius: 4px;
+	border:solid 1px #e6e6e6;
+}
+
+.shopCartLeft{
+	width:38px;
+	background-color: #ffffff;
+	height: 140px;
+	float: left;
+}
+.shopCartRight{
+	height: 140px;
+	background-color: #fff;
+	margin-left: 38px;
+}
+
+ .label1{
+        width: 45px;
+	    height: 107px;
+	    display: block;
+	    background: url(../images/xuanZZ.png) no-repeat;
+	    background-size: 50%;
+	    margin-top: 152%;
+	    margin-left: 19%;
+        
+    }
+    .label1 input{
+        opacity: 0;
+    }
+     .shopCartLeft .checked{
+        background: url(../images/xz.png) no-repeat ;
+       background-size: 50%;
+	    margin-top: 152%;
+	    margin-left: 19%;
+	  
+    }
+    .catRightTop{
+    	width: 100%;
+    	height: 103px;
+    	background-color: #FFFFFF;
+    }
+.carImage{
+	width: 88px;
+	height: 88px;
+}
+.rightCart1{
+	padding-top: 24px;
+	float: left;
+	width: 30%;
+}
+.rightCart2{
+	float: left;
+	width: 70%;
+}
+.imgBoxBorder{
+	border: solid 1px #E6E6E6;
+	display: inline-block;
+	width: 88px;
+	height: 88px;
+}
+.rightTitleCat{
+	height: 42px;
+    /*width: 184%;*/
+    background-color: #fff;
+    margin-top: 26px;
+    padding-left: 10px;
+    padding-right: 8px;
+    overflow: hidden;
+    line-height: 23px;
+    font-size: 12px;
+    color: #333333;
+    text-overflow:ellipsis;
+	display:-webkit-box; 
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:2; 
+}
+
+
+
+.catPrice1{
+	float: left;
+	font-size:14px;
+	color: #d57232;
+	margin-top: 5px;
+}
+.catPrice{
+	clear: both;
+	padding-left: 10px;
+	margin-top: 10px;
+}
+.deleteImg{
+	float: right;
+	padding-right: 19px;
+	display: inline-block;
+}
+.AddJianBox{
+	width: 92px;
+    height: 31px;
+    float: right;
+    padding-top: 3px;
+    padding-left: 4px;
+    background: url(../images/circlieImg.jpg) no-repeat;
+    background-size: contain;
+    margin-top: 1%;
+    margin-right: 5%;
+    
+}
+.jianId{
+	width: 22px;
+	display: inline-block;
+	height: 22px;
+	background-color: #FFFFFF;
+	font-size: 18px;
+	color: #cccccc;
+	text-align: center;
+	line-height: 22px;
+	border-radius: 50%;
+}
+.inputNum{
+	width: 36px;
+    outline: none;
+    border: none;
+    vertical-align: middle;
+    display: inline-block;
+    margin-bottom: 7px;
+    background-color: #e6e6e6;
+    text-align: center;
+    color: #808080;
+}
+.shopFotter{
+	width: 100%;
+	height: 48px;
+	border-top:solid 1px #e7e7e7;
+	position: fixed;
+	bottom: 0;
+	z-index: 999;
+	background-color: #fafafa;
+}
+.shopForLeft0{
+	width:16%;
+	height: 48px;
+	/*background-color: gold;*/
+	float: left;
+}
+.shopForLeft1{
+	width: 25%;
+	height: 48px;
+	background-color: #fafafa;
+	float: left;
+}
+.shopForLeft2{
+	width: 46%;
+	height: 48px;
+	background-color: #fafafa;
+	float: left;
+	text-align: center;
+	line-height: 48px;
+}
+
+.label2{
+	    width: 53%;
+	   /* height: 107px;*/
+	    display: block;
+	    height: 48px;
+	    background: url(../images/xuanZZ.png) no-repeat;
+	    background-size: 70%;
+	     /*margin-top: 152%;
+	    margin-left: 19%;*/
+	   margin-left: 35%;
+	   margin-top: 22%;
+}
+
+ .shopForLeft0 .checked{
+ 	   width: 53%;
+ 	   height: 48px;
+        background: url(../images/xz.png) no-repeat ;
+       background-size: 70%;
+	  
+    }
+    .shopForLeft3{
+    	width: 13%;
+    	/*background-color: firebrick;*/
+    	float: left;
+    	height: 48px;
+    	font-size: 12px;
+    	color: #676767;
+    	/*text-align: center;*/
+    	line-height: 48px;
+    }
+.jiesuanStyle{
+	font-size: 14px;
+	color: #fff;
+	text-align: center;
+	line-height: 48px;
+	 background: -webkit-linear-gradient(left,rgba(239,127,63,1),rgba(240,83,100,1));
+}
+@media  screen and (min-width: 320px){
+	.carImage{width:90%;}
+	.imgBoxBorder{border:none;}
+}

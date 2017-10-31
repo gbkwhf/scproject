@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>店铺详情</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" type="text/css" href="css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="css/shopDetails.css"/>
+       <link rel="stylesheet" type="text/css" href="css/swiper-3.4.0.min.css" >
+        
+	</head>
+	<body>
+		<!-----------顶部固定----------->
+		<div class="shopTitle">
+			<a href="#001" class="shop dd" >商品</a>
+			<a href="#002" class="details">详情</a>
+			<a href="#003" class="evaluate">评价</a>
+		</div>
+		<!-----------轮播图------------->
+		<div class="swiper-container aa" id="001">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide sw1"> </div>
+				<div class="swiper-slide sw2"> </div>
+				<div class="swiper-slide sw3"> </div>
+				<div class="swiper-slide sw4"> </div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+		<!--<div class="imgNum">1/10</div>-->
+		
+		<!--<div class="shopBanner">
+			<img src="images/banner1.jpg"/>
+			<div class="imgNum">1/10</div>
+		</div>-->
+		
+		<div class="shopIntroduce">美国纯天然进口大米 ( 安全 绿色 无公害）来自农场 的天然种植基地</div>
+		<div class="shopPrice">
+			<div class="price">¥386.00</div>
+			<div class="bor"></div>
+			<div class="super">超级返?</div>
+		</div>
+		<div class="kong"></div>
+		<div class="shopInformation">
+			<div class="shopIntoduce"><a href="#002">商品介绍</a></div>
+			<div class="apprarise"><a href="#003">评论</a></div>
+		</div>
+		<!-----------底部固定------------->
+		<div class="shopBuy">
+			<div class="addCar" onclick="location.href='shopCart.html'">加入购物车</div>
+			<div class="addXian"></div>
+			<div class="promBuy">立即购买</div>
+		</div>
+
+		<!------------商品详情------------>
+		<div class="detailTitle aa" id="002">商品详情</div>
+		<div class="shopImg">
+			<img src="images/shopImg.png"/>
+			<img src="images/shopImg2.png"/>
+		</div>
+		<!------------商品评价------------>
+		<div class="shopApprarise aa" id="003">商品评价</div>
+		<div class="apprariseBox">
+			<div class="apprariseNav">
+				<div class="userMessage">
+					<div class="userImg">
+						<img src="images/userImg1.png"/>
+					</div>
+					<div class="userName">
+						<p class="user-name">外屏总是碎</p>
+						<img src="images/star.png" class="star"/>
+					</div>
+					<div class="apprariseDate">2017-02-22</div>
+				</div>
+				<div class="evaluationContent">不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃</div>
+			</div>
+			<div class="apprariseNav">
+				<div class="userMessage">
+					<div class="userImg">
+						<img src="images/userImg2.png"/>
+					</div>
+					<div class="userName">
+						<p class="user-name">袁腾飞</p>
+						<img src="images/star.png" class="star"/>
+					</div>
+					<div class="apprariseDate">2017-02-22</div>
+				</div>
+				<div class="evaluationContent">不错！很好吃，一直在她家买.</div>
+			</div>
+			<div class="apprariseNav">
+				<div class="userMessage">
+					<div class="userImg">
+						<img src="images/userImg1.png"/>
+					</div>
+					<div class="userName">
+						<p class="user-name">外屏总是碎</p>
+						<img src="images/star.png" class="star"/>
+					</div>
+					<div class="apprariseDate">2017-02-22</div>
+				</div>
+				<div class="evaluationContent">不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃</div>
+			</div>
+			<div class="apprariseNav">
+				<div class="userMessage">
+					<div class="userImg">
+						<img src="images/userImg2.png"/>
+					</div>
+					<div class="userName">
+						<p class="user-name">多啦爱梦</p>
+						<img src="images/star.png" class="star"/>
+					</div>
+					<div class="apprariseDate">2017-02-22</div>
+				</div>
+				<div class="evaluationContent">不错！很好吃，一直在她家买.</div>
+			</div>
+			
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/swiper-3.4.0.min.js"></script>
+	<script type="text/javascript" src="js/shopDetails.js"></script>
+</html>
