@@ -53,15 +53,15 @@
 	<body>
 		<div class="container">
 			<ul>
-				<li style="margin-right:9px;" onclick="location.href=''">
+				<li style="margin-right:9px;" onclick="location.href='healthy_mall_list.php?first_id=1'">
 					<img src="images/tutechan.png"/>
 					<em>食品土特产</em>
 				</li>
-				<li onclick="location.href=''">
+				<li  onclick="location.href='healthy_mall_list.php?first_id=2'">
 					<img src="images/jiaju.png" />
 					<em>家居家装</em>
 				</li>
-				<li style="margin-right:9px;" onclick="location.href='healthy_mall_list.php'">
+				<li style="margin-right:9px;"  onclick="location.href='healthy_mall_list.php?first_id=3'">
 					<img src="images/health_shoping.png"/>
 					<em>健康商城</em>
 				</li>
@@ -69,11 +69,11 @@
 					<img src="images/linyi_shop.png"/>
 					<em>聆医管</em>
 				</li>
-				<li style="margin-right:9px;" onclick="location.href=''">
+				<li style="margin-right:9px;">
 					<img src="images/life.png"/>
 					<em>生活缴费</em>
 				</li>
-				<li onclick="location.href=''">
+				<li>
 					<img src="images/Customer.png"/>
 					<em>售后交流</em>
 				</li>
@@ -81,8 +81,4 @@
 			
 		</div>
 	</body>
-	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="js/config.js"></script>
-	
-	<script type="text/javascript" src="js/jquery.min.js"></script>
 </html>

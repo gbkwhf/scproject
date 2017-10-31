@@ -1,0 +1,39 @@
+html,body{
+	background: #f3f5f7;
+}
+.wrapper{
+	padding: 0px 12px 20px;
+}
+.withdrawals-record{
+	margin-top: 9px;
+	background: #fff;
+	padding: 20px;
+	overflow: hidden;
+	border: 1px solid #e6e6e6;
+	border-radius: 5px;
+}
+.withdrawals-record .record-con{
+	overflow: hidden;
+}
+.record-con p{
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	float: left;
+	line-height: 1.5em;
+}
+.record-con span{
+	float: right;
+	display: block;
+	font-size: 15px;
+	color: #88c5be;
+	line-height: 1.5em;
+}
+.withdrawals-record  em{
+	display: block;
+	font-size: 13px;
+	font-style: normal;
+	color: #999;
+	line-height: 1.5em;
+	padding-top: 10px;
+}

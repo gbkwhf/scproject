@@ -35,11 +35,26 @@
 			            	<p>¥388.00</p>
 			            	<span>*7</span>
 			            </div>
-			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
-			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
-			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
-			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
-			            <div class="swiper-slide"><img src="images/zyyp.png" width="100%"/></div>
+			            <div class="swiper-slide">
+			            	<img src="images/zyyp.png" width="100%"/>
+			            	<p>¥388.00</p>
+			            	<span>*7</span>
+			            </div>
+			            <div class="swiper-slide">
+			            	<img src="images/zyyp.png" width="100%"/>
+			            	<p>¥388.00</p>
+			            	<span>*7</span>
+			            </div>
+			            <div class="swiper-slide">
+			            	<img src="images/zyyp.png" width="100%"/>
+			            	<p>¥388.00</p>
+			            	<span>*7</span>
+			            </div>
+			            <div class="swiper-slide">
+			            	<img src="images/zyyp.png" width="100%"/>
+			            	<p>¥388.00</p>
+			            	<span>*7</span>
+			            </div>
 			        </div>
 			    </div>
 			    <div class="commodity-exp">
