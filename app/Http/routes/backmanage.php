@@ -64,7 +64,9 @@
         
         
         //供应商功能
-        Route::get('supplier/orderlist', 'SupplierManageController@orderList');//订单列表        
+        Route::get('supplier/orderlist', 'SupplierManageController@orderList');//订单列表
+        Route::get('supplier/orderdetial/{id}', 'SupplierManageController@orderDetial');//订单发货
+        Route::post('supplier/ordersend', 'SupplierManageController@orderSend');//订单发货
 		
 
     });

@@ -17,69 +17,95 @@ class SupplierManageController  extends Controller
  public  function orderList (Request $request){
  	
  	$supplier_id=\Session::get('role_userid');
- 
- 
+
  	
  	
- 	
- 	
- 	
- 	
- 	$par=\App\SupplierModel::select();
+ 	$par=\App\SubOrderModel::where('supplier_id','=',$supplier_id)->where('ys_base_order.state','=',1)
+ 						->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
+ 						->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','express_num');
+ 					 					 	
+ 	//付款时间，订单号，用户手机，订单状态，
  	$search=array();
- 	if ($request->name != ''){
- 		$par->where('name','like',"%$request->name%");
- 		$search['name']=$request->name;
+ 	if ($request->start != ''){
+ 		$par->where('ys_base_order.pay_time','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
  	}
+ 	if ($request->end != ''){
+ 		$par->where('ys_base_order.pay_time','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	} 	
  	if ($request->mobile != ''){
- 		$par->where('mobile','like',"%$request->mobile%");
+ 		$par->where('ys_base_order.receive_mobile','like',"%$request->mobile%");
  		$search['mobile']=$request->mobile;
  	}
-
- 	$data=$par->orderBy('id','desc')->paginate(10);
- 	$state_arr=[
- 		0=>'禁用',
- 		1=>'正常',
+ 	if ($request->order_id != ''){
+ 		$par->where('ys_sub_order.id','like',"%$request->order_id%");
+ 		$search['order_id']=$request->order_id;
+ 	} 	
+ 	if ($request->state != '-1'){
+ 		$par->where('ys_base_order.state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	}
+ 	
+ 	$data=$par->paginate(10);
+ 	$pay_arr=[
+ 		1=>'微信支付',
+ 		2=>'线下支付',
  	];
  	foreach ($data as $val){
- 		$val['state']=$state_arr[$val['state']];
+ 		$goods_name=\App\OrderGoodsModel::where('sub_id',$val->order_id)
+ 						->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
+ 						->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
+ 						->get(); 		
+ 		$val->goods_name=str_limit($goods_name[0]->goods_name,10,'...');
+ 		$val->pay_type=$pay_arr[$val->pay_type];
+ 		$val->state=empty($val->express_num)?'未发货':'已发货';
+ 		
  	}
 
-	return view('supplierlist',['data'=>$data,'search'=>$search]);
+	return view('supplierorderlist',['data'=>$data,'search'=>$search]);
  }
  //
- public  function supplierEdit (Request $request){
+ public  function orderDetial (Request $request){
  
- 	$data=\App\SupplierModel::where('id',$request->id)->first();
-	return view('supplieredit',['data'=>$data]);
+ 	$data=\App\SubOrderModel::where('ys_sub_order.id',$request->id)
+ 							->where('ys_base_order.state','=',1)
+ 							->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
+ 							->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','receive_address','receive_name','express_num','express_name')						
+ 							->first(); 	
+ 	$goods_name=\App\OrderGoodsModel::where('sub_id',$request->id)
+ 							->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
+ 							->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
+ 							->get(); 	 
+ 	$data['goods_name']=$goods_name[0]->goods_name;
+ 	$data['receive_address']=$data['receive_name'].'，'.$data['receive_mobile'].'，'.$data['receive_address'];
+ 	
+
+	return view('supplierorderdetial',['data'=>$data]);
  } 
- public  function supplierSave (Request $request){
+ public  function orderSend (Request $request){
 
      $input = Input::except('_token');
      $rules = [
-         'name'=> 'required',
-         'mobile'=> 'required',
+         'express_name'=> 'required',
+         'express_num'=> 'required',
      ];
      $massage = [
-         'name.required' =>'名称不能为空',
-         'mobile.required' =>'手机号不能为空',
+         'express_name.required' =>'快递公司不能为空',
+         'express_num.required' =>'快递单号不能为空',
      ];
      $validator = \Validator::make($input,$rules,$massage);
      if($validator->passes()){
         $params=array(
-                'name'=>$request->name,
-                'mobile'=>$request->mobile,
-                'state'=>$request->state,
+                'express_name'=>trim($request->express_name),
+                'express_num'=>trim($request->express_num),
         );
-        if(isset($request->password)){
-            $params['password']=md5($request->password);
-        }
-         $res = \App\SupplierModel::where('id',$request->id)->update($params);
+         $res = \App\SubOrderModel::where('id',$request->id)->update($params);
          if($res === false){
              return back() -> with('errors','数据更新失败');
          }else{
              Session()->flash('message','保存成功');
-             return redirect('supplierlist');
+             return redirect('supplier/orderlist');
          }
      }else{
          return back() -> withErrors($validator);
@@ -87,53 +113,6 @@ class SupplierManageController  extends Controller
 
  }
  
- public  function supplierAdd (Request $request){
-
- 	return view('supplieredit');
- }
-
- public  function supplierCreate (Request $request){
-     $input = Input::except('_token');
-     $rules = [
-         'name'=> 'required',
-         'password'=> 'required',
-         'mobile'=> 'required',
-     ];
-     $massage = [
-         'name.required' =>'名称不能为空',
-         'mobile.required' =>'手机号不能为空',
-         'password.required' =>'密码不能为空',
-     ];
-     $validator = \Validator::make($input,$rules,$massage);
-     if($validator->passes()){
-        $params=array(
-                'name'=>$request->name,
-                'mobile'=>$request->mobile,
-                'password'=>md5($request->password),
-        		'state'=>$request->state,
-        );
-         //dd($params);
-         $res = \App\SupplierModel::create($params);
-
-         if($res){
-             return redirect('supplierlist');
-         }else{
-             return back() -> with('errors','添加供应商错误');
-         }
-     }else{
-         return back() -> withErrors($validator);
-     }
- }
- //删除供应商
- public function supplierDelete(Request $request)
- {
- 	\App\SupplierModel::where('id',$request->id)->delete();
- 	return redirect('supplierlist');
- }
  
-//  function test(Request $request){
- 	
- 	
-//  	dd(1);
-//  }
+
 }
