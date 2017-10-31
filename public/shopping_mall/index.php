@@ -13,21 +13,61 @@
 <body>
 
 	<div class="wrapper">
-		<div class="btn-box">
-			<a href="shoping_class.php" class="shopping-mall">商城</a>
-			<span class="line"></span>
-			<a href="javascript:;" class="personal-enter">个人中心</a>
+		<div class="module-box" onclick="location.href='member_zone.php'">
+			<div class="pic-module">				
+				<img src="images/shopping-pic.jpg" width="100%"/>
+				<span></span>
+			</div>
+			<h4>购物商城</h4>
+		</div>
+		<div class="module-box" onclick="location.href='personal_center.php'">
+			<div class="pic-module">				
+				<img src="images/personal-center.jpg" width="100%"/>
+				<span></span>
+			</div>
+			<h4>个人中心</h4>
 		</div>
 	</div>
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/jquery.qrcode.min.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
 	
+	if(getCookie("openid")){
+		//验证openid是否绑定
+		$.ajax({
+			type:'get',
+			url: commonsUrl + 'api/gxsc/scan/this/phone/bind/openId' +versioninfos,
+			data:{'openid':getCookie("openid")},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					alert(data.result.state);
+					if(data.result.state==0){ //未绑定
+						location.href = 'register.php';
+					}else if(data.result.state==1){ //已绑定
+						
+					}
+				}
+			}
+		})
+	}else{
+		//获取openid
+		$.ajax({
+			type:"get",
+			url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
+			data:{
+				"code":$_GET['code']
+			},success:function(data){
+				if(data.code==1){
+					setCookie("openid",data.result.openId);
+					location.href = 'register.php';
+				}
+			}
+		});
+	}
 	
 	
 </script>

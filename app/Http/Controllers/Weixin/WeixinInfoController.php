@@ -75,7 +75,24 @@ class WeixinInfoController  extends Controller{
     }
 
 
+    //4.判断该手机号码是否已经绑定了openId
+    public function getBindState(Request $request)
+    {
+        $validator = $this->setRules([
+            'openId'  => 'required|string',
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
+        //判断该手机号码账户是否绑定了openId
+        $is_bind = \DB::table('ys_session_info')->where('openId',$request->openId)->first();
+        if(empty($is_bind)){
+            $result['state'] = 0; //0 未绑定   1已绑定
+        }else{
+            $result['state'] =  1; //0 未绑定   1已绑定
+        }
+        return $this->respond($this->format($result));
+    }
 
 
 }
