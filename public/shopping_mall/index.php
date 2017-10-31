@@ -43,10 +43,11 @@
 		},success:function(data){
 			if(data.code==1){
 				setCookie("openid",data.result.openId);
+				alert(getCookie("openid"));
 			}
 		}
 	});
-	alert(getCookie("openid"));
+	
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
