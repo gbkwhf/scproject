@@ -10,25 +10,23 @@
     <link rel="stylesheet" href="css/classification.css">
 </head>
 <body>
- <div class="content">
- 	
- 		<ul class="left_nav">
-	        <!--<li class="curr_tab">营养保健</li>
-	        <li> 家庭常备</li>
-	        <li> 健康调理</li>         
-	        <li  class="last_li"> 健康器械</li>-->
-      	</ul>
-     
-     <div class="right_content">
-         <ul>
-             <!--<li>
-                 <img src="images/rice.png" alt="">
-                 <em>澳大利亚大米</em>
-                 <i>¥18.00</i>
-             </li>                    -->
-         </ul>
-     </div>
- </div>
+<div class="content"> 	
+ 	<ul class="left_nav">
+        <!--<li class="curr_tab">营养保健</li>
+        <li> 家庭常备</li>
+        <li> 健康调理</li>       
+        <li  class="last_li"> 健康器械</li>-->
+    </ul>     
+    <div class="right_content">
+        <ul>
+            <!--<li>
+                <img src="images/rice.png" alt="">
+                <em>澳大利亚大米</em>
+                <i>¥18.00</i>
+            </li>                    -->
+        </ul>
+    </div>
+</div>
 </body>
 	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="js/config.js"></script>
@@ -97,7 +95,7 @@
 		    				$('.right_content ul').css({'line-height':winH-33+'px','text-align':'center','color':'#333'});
 		    			}else{
 			    			for(var i=0;i<data.result.length;i++){
-			    				html+='<li goods_id="'+data.result[i].goods_id+'">'+
+			    				html+='<li goods_id="'+data.result[i].goods_id+'" onclick="location.href=\'shopDetails.php?goods_id='+data.result[i].goods_id+'\'">'+
 					                '<img src="'+data.result[i].image+'" alt="">'+
 					                '<em>'+data.result[i].goods_name+'</em>'+
 					                '<i>¥'+data.result[i].price+'</i>'+

@@ -68,7 +68,7 @@
             $('.getCode').attr('onclick','');
             layer.load(2);
             $.ajax({
-                url:commonUrl+'api/gxsc/auth/send/user/sms'+versioninfo,
+                url:commonsUrl+'api/gxsc/auth/send/user/sms'+versioninfos,
                 timeout:TIMEOUT,
                 method:'POST',
                 data:{
@@ -96,7 +96,7 @@
             	verify = $('#verify').val();
             	inpmobile = $('#inpmobile').val();
                 $.ajax({
-                    url:commonUrl+'api/gxsc/bind/user/openId'+versioninfo,
+                    url:commonsUrl+'api/gxsc/bind/user/openId'+versioninfos,
                     timeout:TIMEOUT,
                     method:'POST',
                     data:{
