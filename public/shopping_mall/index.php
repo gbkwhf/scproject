@@ -35,18 +35,38 @@
 <script src="js/config.js"></script>
 <script>
 	
-	$.ajax({
-		type:"get",
-		url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
-		data:{
-			"code":$_GET['code']
-		},success:function(data){
-			if(data.code==1){
-				setCookie("openid",data.result.openId);
-				alert(getCookie("openid"));
+	if(getCookie("openid")){
+		//验证openid是否绑定
+		$.ajax({
+			type:'get',
+			url: commonsUrl + 'api/gxsc/scan/this/phone/bind/openId' +versioninfos,
+			data:{'openid':getCookie("openid")},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					if(data.result.state==0){ //未绑定
+						location.href = 'register.php';
+					}else if(data.result.state==1){ //已绑定
+						
+					}
+				}
 			}
-		}
-	});
+		})
+	}else{
+		//获取openid
+		$.ajax({
+			type:"get",
+			url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
+			data:{
+				"code":$_GET['code']
+			},success:function(data){
+				if(data.code==1){
+					setCookie("openid",data.result.openId);
+				}
+			}
+		});
+	}
+	
 	
 </script>
 <style type="text/css">

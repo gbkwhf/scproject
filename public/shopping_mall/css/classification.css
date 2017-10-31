@@ -11,10 +11,13 @@ html,body{
     float:left;
     width: 30%;
     margin-right:3%;
-    border-top:1px solid #f3f5f7; 
+    border-top:1px solid #f3f5f7;
+    overflow-y: auto;
+    height: 100%;
 }
 .left_nav>li{
-    line-height: 54px;
+    line-height: 1.5em;
+    padding: 15px 0px;
     background: #fff;
     text-align: center;
     border-bottom: 1px solid #e6e6e6;
@@ -33,6 +36,8 @@ html,body{
     background: #ffffff;
     padding-bottom:20px;
     overflow: hidden;
+    overflow-y: auto;
+    height: 100%;
 }
 .right_content>ul>li{
     float: left;
@@ -52,8 +57,12 @@ html,body{
     color: #4d4d4d;
     font-size: 13px;
     padding: 8px 0px 2px;
-    line-height: 1.5em;
     display: block;
+    overflow:hidden; 
+	text-overflow:ellipsis;
+	display:-webkit-box; 
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:1;
 }
 .right_content>ul>li>i{
     font-style: normal;
