@@ -44,6 +44,7 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
+					alert(data.result.state);
 					if(data.result.state==0){ //未绑定
 						location.href = 'register.php';
 					}else if(data.result.state==1){ //已绑定
@@ -62,6 +63,7 @@
 			},success:function(data){
 				if(data.code==1){
 					setCookie("openid",data.result.openId);
+					location.href = 'register.php';
 				}
 			}
 		});
