@@ -16,12 +16,14 @@ Route::group([
     /**
      * 微信公众号功能模块  (需要获取和生成这三个值：openId   access_token   apiTicket)
      */
-    //1.获取openId
-    Route::get('get/user/openId','JsApiPay@GetOpenid');
-    //2.获取签名包
-    Route::get('get/user/sign/package','WeixinInfoController@GetSingPackage');
-    //3.获取公众号首页
-    Route::get('get/official/accounts/index','WeixinInfoController@GetOfficalIndex');
+        //1.获取openId
+        Route::get('get/user/openId','JsApiPay@GetOpenid');
+        //2.获取签名包
+        Route::get('get/user/sign/package','WeixinInfoController@GetSingPackage');
+        //3.获取公众号首页
+        Route::get('get/official/accounts/index','WeixinInfoController@GetOfficalIndex');
+        //4.判断该手机号码是否已经绑定了openId
+        Route::post('scan/this/phone/bind/openId','WeixinInfoController@getBindState');
 
 
 
@@ -60,12 +62,17 @@ Route::group([
 
 
       /**
-       * 商品下单和创建购物车模块  登陆状态才可以访问
+       * 购物车模块  登陆状态才可以访问
        */
-         //1.创建购物车
+         //1.创建购物车，给购物车中添加商品信息
+          Route::post('add/goods/car/commodity','CreateGoodsCarController@addGoodsCar');
+         //2.更改购物车中某条商品的数量（1:加号   2:减号 ）
+          Route::post('update/goods/car/commodity/number','CreateGoodsCarController@updateGoodsNumber');
+         //3.获取购物车中商品信息
+          Route::post('get/goods/car/commodity/info','CreateGoodsCarController@getGoodsCarInfo');
+          //4.删除购物车中的商品
 
-
-
+          //5.更改购物车：选中该商品的标志（选中/不选中）
 
 });
 
