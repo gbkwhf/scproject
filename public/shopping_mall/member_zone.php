@@ -13,19 +13,19 @@
 <body>
 
 	<div class="wrapper">
-		<div class="module-box" onclick="location.href='member_zone.php'">
+		<div class="module-box" onclick="location.href='shoping_class.php'">
 			<div class="pic-module">				
-				<img src="images/shopping-pic.jpg" width="100%"/>
+				<img src="images/vip-pic.jpg" width="100%"/>
 				<span></span>
 			</div>
-			<h4>购物商城</h4>
+			<h4>VIP专区</h4>
 		</div>
-		<div class="module-box" onclick="location.href='personal_center.php'">
+		<div class="module-box" onclick="location.href='healthy_mall_list.php?first_id=4'">
 			<div class="pic-module">				
-				<img src="images/personal-center.jpg" width="100%"/>
+				<img src="images/not-vip-pic.jpg" width="100%"/>
 				<span></span>
 			</div>
-			<h4>个人中心</h4>
+			<h4>非会员专区</h4>
 		</div>
 	</div>
 </body>
@@ -35,18 +35,8 @@
 <script src="js/config.js"></script>
 <script>
 	
-	$.ajax({
-		type:"get",
-		url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
-		data:{
-			"code":$_GET['code']
-		},success:function(data){
-			if(data.code==1){
-				setCookie("openid",data.result.openId);
-				alert(getCookie("openid"));
-			}
-		}
-	});
+	
+	
 	
 </script>
 <style type="text/css">

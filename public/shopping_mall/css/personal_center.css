@@ -1,0 +1,70 @@
+.wrapper header{
+	background: url(../images/bg-img.jpg) no-repeat;
+	box-shadow: 0px 0px 15px #d2d2d2;
+}
+.user-info{
+	padding: 35px 27px;
+	overflow: hidden;
+}
+.head-portrait{
+	float: left;
+	border: 2px solid #fff;
+    border-radius: 50%;
+}
+.head-portrait img{
+	display: block;
+	border-radius: 50%;
+}
+.user-info p{
+	float: left;
+	line-height: 1.5em;
+	padding: 17px 10px 16px;
+	color: #fff;
+	font-size: 15px;
+}
+.account-info{
+	padding-bottom: 27px;
+	overflow: hidden;
+}
+.balance{
+	border-right: 1px solid rgba(230, 230, 230, 0.6);
+}
+.balance,.cashback{
+	float: left;
+	width: 49%;
+	text-align: center;
+}
+.balance em,.cashback em{
+	font-size: 13px;
+	color: #fff;
+	font-style: normal;
+	display: inline-block;
+}
+.balance p,.cashback p{
+	display: inline-block;
+	font-size: 16px;
+	color: #fff;
+	line-height: 1.5em;
+}
+.balance span,.cashback span{
+	display: block;
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.8);
+	line-height: 1.5em;
+}
+.menu-list{
+	padding: 0px 10px;
+}
+.menu-list li{
+	line-height: 1.5em;
+	color: #333;
+	font-size: 15px;
+	padding: 16px 13px;
+	border-bottom: 1px solid #e6e6e6;
+	overflow: hidden;
+}
+.menu-list li img{
+	display: block;
+	float: right;
+	margin-top: 4px;
+}
