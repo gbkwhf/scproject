@@ -35,8 +35,17 @@
 <script src="js/config.js"></script>
 <script>
 	
-	
-	alert($_GET['code'])
+	$.ajax({
+		type:"get",
+		url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
+		data:{
+			"code":$_GET['code']
+		},success:function(data){
+			if(data.code==1){
+				alert(data);
+			}
+		}
+	});
 	
 </script>
 <style type="text/css">
