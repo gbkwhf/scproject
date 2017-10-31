@@ -42,11 +42,11 @@
 			"code":$_GET['code']
 		},success:function(data){
 			if(data.code==1){
-				alert(data);
+				setCookie("openid",data.result.openId);
 			}
 		}
 	});
-	
+	alert(getCookie("openid"));
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
