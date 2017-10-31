@@ -44,16 +44,13 @@ class GetShopsInfoController extends Controller{
                 ->get();
 
         $result = empty($data) ? [] : $data;
-
+        $http = getenv('HTTP_REQUEST_URL');
        //改变图片链接，使其可以直接访问
        if(!empty($result)){
-
            foreach($result as $k=>$v){
-
-
+                $result[$k]->image = $http.$v->image;
            }
        }
-
         return  $this->respond($this->format($result));
     }
 
@@ -63,6 +60,7 @@ class GetShopsInfoController extends Controller{
 
         if($goods_id < 1) return $this->setStatusCode(9999)->respondWithError($this->message);
 
+        $http = getenv('HTTP_REQUEST_URL');
         //商品详情
         $goods = \DB::table('ys_goods')->select('id as goods_id','name as goods_name','num','price','sales','content','sales as img_url')
                   ->where('state',1) //0下架1上架
@@ -78,14 +76,10 @@ class GetShopsInfoController extends Controller{
 
             //改变图片链接，使其可以直接访问
             if(!empty($images)){
-
                 foreach($images as $k=>$v){
-
-
+                    $images[$k]->image = $http.$v->image;
                 }
-
             }
-
             $goods->img_url = $images;
 
         }

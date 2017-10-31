@@ -40,7 +40,7 @@ Route::group([
 
 
     /**
-     * 地址管理模块
+     * 地址管理模块 登陆状态才可以访问
      */
         //1.添加收货地址
         Route::post('add/delivery/goods/address','AddressManageController@addGoodsAddress');
@@ -57,8 +57,12 @@ Route::group([
       * 商品分类以及商品详情模块  登陆状态才可以访问
       */
          //4.增加商品评价（暂时不做）
-         //5.购物车
 
+
+      /**
+       * 商品下单和创建购物车模块  登陆状态才可以访问
+       */
+         //1.创建购物车
 
 
 
