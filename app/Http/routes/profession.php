@@ -71,9 +71,9 @@ Route::group([
          //3.获取购物车中商品信息
           Route::post('get/goods/car/commodity/info','CreateGoodsCarController@getGoodsCarInfo');
           //4.删除购物车中的商品
-
+          Route::post('delete/goods/car/commodity','CreateGoodsCarController@deleteGoodsCar');
           //5.更改购物车：选中该商品的标志（选中/不选中）
-
+          Route::post('update/goods/car/commodity/state','CreateGoodsCarController@updateGoodsCar');
 });
 
 

@@ -168,11 +168,107 @@ class CreateGoodsCarController extends Controller{
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
 
+        $goods_info = \DB::table('ys_goods_car')->where('user_id',$user_id)
+                     ->select('id as car_id','goods_id','goods_name','goods_price','goods_url','number','state','first_class_id','created_at')
+                     ->get();
 
+        $result = [];
+        $returns = 0;
+        $no_returns = 0;
+        if(!empty($goods_info)){
+            foreach($goods_info as $k=>$v){
+                if(($v->state == 1) && ($v->first_class_id == 4)){ //表示该商品是选中状态 ,并且该商品的一级分类id是不支持返利的商品4
+                    $no_returns += ($v->number) * ($v->goods_price);
+                }elseif(($v->state == 1) && ($v->first_class_id != 4)){
+                    $returns += ($v->number) * ($v->goods_price);
+                }
+            }
+
+            $result['return'] = $returns;//可支持返利的商品总金额
+            $result['no_return'] = $no_returns;//不支持返利的商品总金额
+
+        }else{
+
+            $goods_info = [];
+            $result['return'] = $returns;//可支持返利的商品总金额
+            $result['no_return'] = $no_returns;//不支持返利的商品总金额
+        }
+
+        $result['info'] =  $goods_info;
+
+        return  $this->respond($this->format($result));
+
+    }
+
+    //4.删除购物车中的商品
+    public function deleteGoodsCar(Request $request)
+    {
+
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'car_id' => 'required|integer' //购物车id
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        //判断该条记录是否存在
+        $goods_info = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->first();
+        if(empty($goods_info)){ //未找到该条购物车记录
+            return $this->setStatusCode(1043)->respondWithError($this->message);
+        }
+
+        \DB::beginTransaction(); //开启事务
+        $delete = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->delete();
+
+        if ($delete) {
+            \DB::commit();
+            return  $this->respond($this->format([],true));
+        }else {
+            \DB::rollBack();
+            return $this->setStatusCode(9998)->respondWithError($this->message);
+        }
 
     }
 
 
+    //5.更改购物车：选中该商品的标志（选中/不选中）
+    public function updateGoodsCar(Request $request)
+    {
+
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'car_id' => 'required|integer' //购物车id
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        //判断该条记录是否存在
+        $goods_info = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->first();
+        if(empty($goods_info)){ //未找到该条购物车记录
+            return $this->setStatusCode(1043)->respondWithError($this->message);
+        }
+
+        if($goods_info->state == 1){
+            $state = 0;
+        }else{
+            $state = 1;
+        }
+        \DB::beginTransaction(); //开启事务
+        $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->update(['state'=>$state,'updated_at'=>\DB::Raw('Now()')]);
+
+        if ($update) {
+            \DB::commit();
+            return  $this->respond($this->format([],true));
+        }else {
+            \DB::rollBack();
+            return $this->setStatusCode(9998)->respondWithError($this->message);
+        }
+
+    }
 
 
 
