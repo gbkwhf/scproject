@@ -48,7 +48,7 @@ class GetShopsInfoController extends Controller{
        //改变图片链接，使其可以直接访问
        if(!empty($result)){
            foreach($result as $k=>$v){
-                $result[$k]->image = $http.$v->image;
+                $result[$k]->image = empty($v->image) ? "" : $http.$v->image;
            }
        }
         return  $this->respond($this->format($result));
@@ -77,7 +77,7 @@ class GetShopsInfoController extends Controller{
             //改变图片链接，使其可以直接访问
             if(!empty($images)){
                 foreach($images as $k=>$v){
-                    $images[$k]->image = $http.$v->image;
+                    $images[$k]->image =  empty($v->image) ? "" : $http.$v->image;
                 }
             }
             $goods->img_url = $images;

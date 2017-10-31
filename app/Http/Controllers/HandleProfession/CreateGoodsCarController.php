@@ -1,0 +1,182 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2017/10/31
+ * Time: 14:44
+ */
+
+namespace App\Http\Controllers\HandleProfession;
+
+
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+
+
+/**
+ * Class CreateGoodsCarController
+ * @package App\Http\Controllers\HandleProfession
+ * 该控制器主要用于完成购物车功能
+ */
+class CreateGoodsCarController extends Controller{
+
+
+    //1.创建购物车，给购物车中添加商品信息
+    public function addGoodsCar(Request $request)
+    {
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'goods_id' => 'required|integer', //商品id
+            'number' => 'required|integer|min:1', //商品数量，最少为1个
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        //首先判断该商品是否存在
+        $goods_info = \DB::table('ys_goods as a')->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
+                            ->leftjoin('ys_goods_class as c','a.class_id','=','c.id')
+                            ->select('a.id as goods_id','a.name as goods_name','a.num','a.price','a.sales','b.image','c.first_id')
+                            ->where('a.id',$request->goods_id)
+                            ->where('a.state',1) //0下架1上架
+                            ->groupBy('a.id')
+                            ->first();
+
+        if(empty($goods_info)){ //该商品不存在
+            return $this->setStatusCode(1042)->respondWithError($this->message);
+        }
+
+        //判断该商品是否已经加入购物车了
+        $is_exist = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->first();
+        if(empty($is_exist)){ //如果为空，则继续插入数据，否则不做任何处理
+
+            $http = getenv('HTTP_REQUEST_URL');
+            //改变图片链接，使其可以直接访问
+            $goods_info->image =  empty($goods_info->image) ? "" : $http. $goods_info->image;
+
+            \DB::beginTransaction(); //开启事务
+            //然后把收集到的数据插入数据库:购物车表
+            $insert = \DB::table('ys_goods_car')->insert([
+
+                'user_id' => $user_id,
+                'goods_id' => $request->goods_id,
+                'goods_name' => $goods_info->goods_name,
+                'goods_price' => $goods_info->price,
+                'goods_url' => $goods_info->image,
+                'number' => $request->number,
+                'first_class_id' => $goods_info->first_id,
+                'state'=>1,//1选中  0不选中
+                'created_at' => \DB::Raw('Now()'),
+                'updated_at' => \DB::Raw('Now()'),
+            ]);
+
+            if ($insert) {
+                \DB::commit();
+                return  $this->respond($this->format([],true));
+            }else {
+                \DB::rollBack();
+                return $this->setStatusCode(9998)->respondWithError($this->message);
+            }
+
+        }else{ //如果该商品已经存在购物车，则直接返回成功状态即可
+            return  $this->respond($this->format([],true));
+        }
+
+
+    }
+
+    //2.更改购物车中某条商品的数量（plus:加号   minus:减号 ） ---》该加减只能用于购物车中的加减
+    public function updateGoodsNumber(Request $request)
+    {
+
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'goods_id' => 'required|integer', //商品id
+            'symbol' => 'required|integer|in:1,2', //1:加号   2:减号
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        //首先判断该商品是否存在
+        $is_exist = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->first();
+        if(empty($is_exist)) { //如果为空，则表示商品不存在
+            return $this->setStatusCode(1042)->respondWithError($this->message);
+        }
+
+        \DB::beginTransaction(); //开启事务
+        //接着判断加减，每次加减完成之后，需要把该用户的购物车中的商品总金额算出来，返回去
+
+        if($request->symbol == 1){ //加1
+            $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update(['number'=>$is_exist->number+1,'updated_at'=>\DB::Raw('Now()')]);
+        }elseif($request->symbol == 2){ //减1（如果本身就是1个，那么就没办法继续减了）
+
+            if($is_exist->number >= 2){ //只有数量超过2，才能保证减1的情况下，其数量还有1个
+                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update(['number'=>$is_exist->number-1,'updated_at'=>\DB::Raw('Now()')]);
+            }else{
+                $update = 1;
+            }
+        }
+        if ($update) {
+            \DB::commit();
+        }else {
+            \DB::rollBack();
+        }
+
+       //最后我们计算该用户购物车中所有有效的记录的总价格(分：可返利总金额和不可返利总金额两种)
+        $goods_info =  \DB::table('ys_goods_car')->where('user_id',$user_id)->where('state',1)->select('goods_price','number','first_class_id')->get();
+        $price = [];
+        if(empty($goods_info)){
+
+            $price['return'] = 0;//可支持返利的商品总金额
+            $price['no_return'] = 0;//不支持返利的商品总金额
+
+        }else{
+
+               $returns = 0;
+               $no_returns = 0;
+               foreach($goods_info as $k=>$v){
+                   if($v->first_class_id == 4){ //只有一级分类id为4的商品不支持返利，其他的都支持返利
+                       $no_returns += ($v->number) * ($v->goods_price);
+                   }else{
+                       $returns += ($v->number) * ($v->goods_price);
+                   }
+               }
+            $price['return'] = $returns;//可支持返利的商品总金额
+            $price['no_return'] = $no_returns;//不支持返利的商品总金额
+        }
+
+        return  $this->respond($this->format($price));
+    }
+
+
+    //3.获取购物车中商品信息
+    public function getGoodsCarInfo(Request $request)
+    {
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
