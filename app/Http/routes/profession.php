@@ -74,6 +74,26 @@ Route::group([
           Route::post('delete/goods/car/commodity','CreateGoodsCarController@deleteGoodsCar');
           //5.更改购物车：选中该商品的标志（选中/不选中）
           Route::post('update/goods/car/commodity/state','CreateGoodsCarController@updateGoodsCar');
+
+
+
+
+       /**
+        * 订单模块 ：创建订单和获取订单信息
+        */
+           //1.创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买
+           Route::post('user/create/commodity/order','CreateOrdersController@createOrders');
+           //2.获取订单详情
+
+           //3.获取订单列表
+
+
+
+
+
+
+
+
 });
 
 

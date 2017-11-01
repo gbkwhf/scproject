@@ -39,7 +39,7 @@ class CreateGoodsCarController extends Controller{
         //首先判断该商品是否存在
         $goods_info = \DB::table('ys_goods as a')->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
                             ->leftjoin('ys_goods_class as c','a.class_id','=','c.id')
-                            ->select('a.id as goods_id','a.name as goods_name','a.num','a.price','a.sales','b.image','c.first_id')
+                            ->select('a.id as goods_id','a.supplier_id','a.name as goods_name','a.num','a.price','a.sales','b.image','c.first_id')
                             ->where('a.id',$request->goods_id)
                             ->where('a.state',1) //0下架1上架
                             ->groupBy('a.id')
@@ -67,6 +67,7 @@ class CreateGoodsCarController extends Controller{
                 'goods_price' => $goods_info->price,
                 'goods_url' => $goods_info->image,
                 'number' => $request->number,
+                'supplier_id' => $goods_info->supplier_id,//供应商id
                 'first_class_id' => $goods_info->first_id,
                 'state'=>1,//1选中  0不选中
                 'created_at' => \DB::Raw('Now()'),
