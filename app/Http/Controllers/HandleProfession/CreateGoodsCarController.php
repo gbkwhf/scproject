@@ -150,6 +150,7 @@ class CreateGoodsCarController extends Controller{
                }
             $price['return'] = $returns;//可支持返利的商品总金额
             $price['no_return'] = $no_returns;//不支持返利的商品总金额
+            $price['return_rule'] = getenv('RETURN_RULE');//返利规则，大于该规则金额才进行返利
         }
 
         return  $this->respond($this->format($price));
@@ -193,6 +194,7 @@ class CreateGoodsCarController extends Controller{
             $goods_info = [];
             $result['return'] = $returns;//可支持返利的商品总金额
             $result['no_return'] = $no_returns;//不支持返利的商品总金额
+            $result['return_rule'] = getenv('RETURN_RULE');//返利规则，大于该规则金额才进行返利
         }
 
         $result['info'] =  $goods_info;

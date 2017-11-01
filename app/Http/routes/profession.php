@@ -52,6 +52,8 @@ Route::group([
         Route::post('edit/delivery/goods/address','AddressManageController@editGoodsAddress');
         //4.设置默认地址
         Route::post('handle/delivery/goods/default/address','AddressManageController@handleDefaultAddress');
+        //5.删除收货地址
+        Route::post('delete/delivery/goods/address','AddressManageController@deleteAddress');
 
 
 

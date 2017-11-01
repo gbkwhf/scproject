@@ -41,7 +41,9 @@ class AddressManageController  extends  Controller{
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
-
+        //判断该用户是否有地址记录，如果有则直接插入该地址即可，如果没有则插入该地址，并且设置为默认地址
+        $is_exist = \DB::table('ys_user_addresses')->where('user_id',$user_id)->first();
+        $is_default = empty($is_exist) ? 1 : 0;
         $insert = \DB::table('ys_user_addresses')->insert([
              'user_id' => $user_id,
              'name' => addslashes($request->name),
@@ -50,7 +52,7 @@ class AddressManageController  extends  Controller{
              'address' => $request->address,
              'created_at' => \DB::Raw('now()'),
              'updated_at' => \DB::Raw('now()'),
-             'is_default' => 0,
+             'is_default' => $is_default,
         ]);
         if($insert)
              return  $this->respond($this->format([],true));
@@ -174,6 +176,35 @@ class AddressManageController  extends  Controller{
 
     }
 
+    //5.删除收货地址
+    public function deleteAddress(Request $request){
+
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'address_id' => 'required|integer', //地址id
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        $info = \DB::table('ys_user_addresses')->where('user_id',$user_id)->where('id',$request->address_id)->first();
+        if(empty($info)){ //该收货地址不存在
+            return $this->setStatusCode(1041)->respondWithError($this->message);
+        }
+
+        \DB::beginTransaction(); //开启事务
+
+        $delete = \DB::table('ys_user_addresses')->where('user_id',$user_id)->where('id',$request->address_id)->delete();
+
+        if ($delete) {
+            \DB::commit();
+            return  $this->respond($this->format([],true));
+        }else {
+            \DB::rollBack();
+            return $this->setStatusCode(9998)->respondWithError($this->message);
+        }
+
+    }
 
 
 

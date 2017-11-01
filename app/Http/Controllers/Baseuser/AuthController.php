@@ -665,6 +665,10 @@ class AuthController extends Controller
             return $this->setStatusCode(1039)->respondWithError($this->message);
         }
 
+        //接着检查是否是员工
+        $is_employee = \DB::table('ys_employee')->where('user_id',$user_id)->first();
+        $member = empty($is_employee) ? 0 : 1; //0非会员  1会员
+
         $params[] = array(
             'user_id'=>	$user_id,
             'mobile'=>$profile->mobile,
@@ -674,6 +678,7 @@ class AuthController extends Controller
             'birthday'=>substr($profile->birthday,0,10),
             'thumbnail_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.'thu_'.$profile->image,
             'source_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.$profile->image,
+            'is_member'=>$member
         );
         return $this->respond($this->format($params));
 //
