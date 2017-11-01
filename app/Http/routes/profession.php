@@ -81,11 +81,13 @@ Route::group([
        /**
         * 订单模块 ：创建订单和获取订单信息
         */
-           //1.创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买
+           //1.会员主动创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买  ---->走线上支付
            Route::post('user/create/commodity/order','CreateOrdersController@createOrders');
-           //2.获取订单详情
+           //2.员工给会员创建订单  ---->走线下支付
+           Route::post('employee/give/user/create/commodity/order','CreateOrdersController@employeeGivCreateOrders');
+           //3.获取订单详情
 
-           //3.获取订单列表
+           //4.获取订单列表
 
 
 
