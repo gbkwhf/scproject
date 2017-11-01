@@ -158,12 +158,12 @@ class AddressManageController  extends  Controller{
 
         $update1 = \DB::table('ys_user_addresses')->where('user_id',$user_id)->whereIn('id',$id_arr)->update([
             'is_default' => 0,
-            'updated_at' => \DB::Raw('now()'),
+            'updated_at' => \DB::Raw('now()')
         ]);
 
         $update2 = \DB::table('ys_user_addresses')->where('user_id',$user_id)->where('id',$request->address_id)->update([
             'is_default' => 1,
-            'updated_at' => \DB::Raw('now()'),
+            'updated_at' => \DB::Raw('now()')
         ]);
 
         if ($update1 && $update2) {
@@ -193,10 +193,25 @@ class AddressManageController  extends  Controller{
         }
 
         \DB::beginTransaction(); //开启事务
-
         $delete = \DB::table('ys_user_addresses')->where('user_id',$user_id)->where('id',$request->address_id)->delete();
 
-        if ($delete) {
+        //如果默认地址删除了，那么自动把最早设置的地址设为默认地址即可
+        if($info->is_default == 1){ //表示删除的就是默认地址
+
+            $address = \DB::table('ys_user_addresses')->where('user_id',$user_id)->orderBy('created_at','asc')->first();
+            if(!empty($address)){
+                $update = \DB::table('ys_user_addresses')->where('user_id',$user_id)->where('id',$address->id)->update([
+                    'is_default' => 1,
+                    'updated_at' => \DB::Raw('now()')
+                ]);
+            }else{ //如果删除默认地址后，该用户地址库中没地址了，那么也不做任何处理
+                $update = 1;
+            }
+        }else{ //如果删除的不是默认地址那么就不做处理
+            $update = 1;
+        }
+
+        if ($delete && $update){
             \DB::commit();
             return  $this->respond($this->format([],true));
         }else {
