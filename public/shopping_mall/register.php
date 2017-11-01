@@ -108,12 +108,16 @@
                         layer.closeAll();
                         if(data.code==1){
 							layer.msg("绑定成功");
+							
 							var lastpage = window.document.referrer;
-                            if (/(iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
-                                window.location.href = window.document.referrer;
-                            } else {
-                                window.history.go(-1);	 
-                        	}
+							setTimeout(function(){
+								if (/(iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
+	                                window.location.href = window.document.referrer;
+	                            } else {
+	                                window.history.go(-1);	 
+	                        	}
+							},1000)
+                            
                         }else{
                             layer.msg(data.msg);
                         }
