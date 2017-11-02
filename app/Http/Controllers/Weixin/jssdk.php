@@ -83,6 +83,18 @@ class JSSDK{
     return $ticket;
   }
 
+
+    //获取用户微信个人信息
+    public function getUserInfo($openId) {
+
+        $accessToken = $this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$accessToken&openid=$openId&lang=zh_CN";
+        $res = json_decode($this->httpGet($url));
+
+        return $res;
+    }
+
+
   public function getAccessToken() {
 
       //如果access_token.php文件不存在，则新创建一个该文件

@@ -6,7 +6,7 @@
     Home
 @endsection
 
-@section('contentheader_title','合作申请列表')
+@section('contentheader_title','订单列表')
 
 
 
@@ -30,38 +30,32 @@
 <div class="row">
         <div class="col-xs-12">
           <div class="box">
-              <div class="box-header">
-                  <br><br>
+          
+                        <div class="box-header">
+               <br><br>
                   <div class="box-tools2 ">
-                      <form class="form-horizontal" action="{{url('hzapplylist')}}" method="get">
+                      <form class="form-horizontal" id ="form_action" action="{{url('agency/orderlist')}}" method="get">
                           <div style="width: 800px;" class="input-group input-group-sm row">
-                              <div class="col-lg-2">{{----}}
-                                  <select name="type"  class="form-control  " style="float:left;">
-                                      <option value="">合作类型</option>
-                                      <option value="3" >医疗机构</option>
-                                      <option value="4">医疗专家</option>
-                                      <option value="5">企业合作</option>
-                                  </select>
+                              <div class="col-lg-2">
+                                  <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
                               </div>
                               <div class="col-lg-2">
-                                  <select name="state"  class="form-control  " style="float:left;">
-                                      <option value="">合作状态</option>
-                                      <option value="0">未处理</option>
-                                      <option value="1">已处理</option>
-                                  </select>
+                                  <input type="text" placeholder="结束日期" id="end" class="inline laydate-icon form-control" style="float:left;" name="end" value="{{ $_GET['end'] or ''}}">
                               </div>
-                              <div class="col-lg-2">
-                                  <input type="text"  placeholder=" 申请合作起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
-                              </div>
-                              <div class="col-lg-2">
-                                  <input type="text" placeholder="申请合作结束日期" id="end" class="inline laydate-icon form-control" style="float:left;" name="end" value="{{ $_GET['end'] or ''}}">
+                             <div class="col-lg-3">
+	                            <select name="employee_id"  class="form-control pull-right"  style="width: 200px">
+	                                <option value=""> 请选择员工 </option>
+			                          @foreach ($employees as $employee)
+			                          <option @if(isset($_GET['employee_id'])) @if($_GET['employee_id'] == $employee['id']) selected="selected" @endif @endif value="{{$employee['user_id']}}">{{$employee['name']}}</option>
+			                          @endforeach
+	                            </select>
+                              </div>                                                                                      
+                              <div class="col-lg-2" style="position:relative">
+                                  <input type="hidden" name="search" value="1">
+                                  <input type="text" placeholder="收货人手机" class="form-control  " style="float:left;width:141px" name="mobile" value="{{ $_GET['mobile'] or ''}}">
+                                  <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>                                  
                               </div>
 
-                              <div class="col-lg-4">
-                                  <input type="hidden" name="search" value="1">
-                                  <input type="text" placeholder="手机号码" class="form-control  " style="float:left;width:227px" name="mobile" value="{{ $_GET['mobile'] or ''}}">
-                                  <button class="btn btn-default" style="float:right;height: 34px;" type="submit"><i class="fa fa-search"></i></button>
-                              </div>
                           </div>
                       </form>
                   </div>
@@ -70,35 +64,31 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
-                  <th>ID</th>
-                  <th>合作类型</th>
-                  <th>联系人</th>
-                  <th>联系电话</th>
-                  <th>申请时间</th>
-                  <th >状态</th>
+				  <th>员工名</th>
+                  <th>商品名</th>
+                  <th>订单金额</th>
+                  <th>付款时间</th>
+                  <th>收货人手机</th>
                    <th>操作</th>
                 </tr>                
-                @foreach ($data as $apply)    				
+                @foreach ($data as $order)    				
 	    			<tr>
-	                  <td>{{ $apply->id }}</td>
-	                  <td>{{ $apply->type }}</td>
-	                  <td>{{ $apply->name }}</td>
-	                  <td>{{ $apply->mobile }}</td>
-	                  <td>{{ $apply->created_at }}</td>	
-	                  <td>@if ($apply->state == 0) 未处理
-	                    	@else 已处理
-	                    	@endif
-	                  </td>	                  
+					  <td>{{ $order->employee_name }}</td>
+	                  <td>{{ $order->goods_name }}</td>
+	                  <td>{{ $order->amount }}</td>	                  
+	                  <td>{{ $order->pay_time }}</td>
+	                  <td>{{ $order->receive_mobile }}</td>
 	                  <td>
-	                  		<a href="{{ url('hzapply/hzapplyedit',['id'=>$apply->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
+	                  		<a href="{{ url('agency/orderdetial',['id'=>$order->id]) }}"><button class="btn bg-orange margin" type="button">订单详情</button></a>
 	                  </td>
 	                </tr>                
 				@endforeach               
               </tbody></table>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-            	{!! $data->render() !!}
+            
+            <div class="box-footer clearfix">总数：{{$data->total()}}条
+            	{!! $data->appends($search)->render() !!}
             </div>
           </div>
           <!-- /.box -->          

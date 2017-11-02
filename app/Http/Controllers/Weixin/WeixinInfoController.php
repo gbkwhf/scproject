@@ -94,5 +94,27 @@ class WeixinInfoController  extends Controller{
         return $this->respond($this->format($result));
     }
 
+    //5.获取微信头像和姓名
+    public function getOwnWeixinInfo(Request $request){
+
+        $validator = $this->setRules([
+            'ss'  => 'required|string',
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+
+        $appId = getenv('appId');
+        $appSecret = getenv('appSecret');
+
+        $jssdk = new JSSDK($appId,$appSecret);
+
+        $data = $jssdk->getUserInfo($request->ss);
+
+        return $this->respond($this->format($data));
+
+
+    }
+
 
 }
