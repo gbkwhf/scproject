@@ -68,7 +68,7 @@ class CreateOrdersController extends Controller{
             return $this->setStatusCode(1043)->respondWithError($this->message);
         }
 
-
+        $update_goods_arr = []; //购买商品的goods_id数组
         $return_all_profit = 0; //计算该笔订单返利区的商品总利润
         $delete_id_arr = [];  //需要清空购物车中的商品id
         $supplier_id_class = [];//供销商id数组
@@ -87,11 +87,39 @@ class CreateOrdersController extends Controller{
 
                 array_push($delete_id_arr,$v->id);
 
+                array_push($update_goods_arr,$v->goods_id);
+
                 $require_amount += ($v->number) * ($v->goods_price);
             }
             $return_rule = getenv('RETURN_RULE');
             //计算返利的份数
             $copies = floor($returns / $return_rule);
+
+
+        /**
+         *  判断商品库存是否够
+         */
+        $complete_arr = []; //用于更新销量和库存
+        //查询一下购买商品的详情,进而判断商品库存是否充足
+        $tmp_goods_info = \DB::table('ys_goods')->whereIn('id',$update_goods_arr)->select('id as goods_id','num','sales')->get();
+        foreach($goods_info as $k=>$v){
+            foreach($tmp_goods_info as $kk=>$vv){
+                if($v->goods_id == $vv->goods_id){
+                    //进一步比较两个数据的大小，判断库存是否充足
+                    if(($vv->num - $v->number) < 0){ //库存不足
+                        return $this->setStatusCode(1046)->respondWithError($this->message);
+                    }
+
+                    $make_tmp_arr = [
+                        'goods_id'=>$vv->goods_id, //商品id
+                        'buy_num'=>$v->number, //购买数量
+                        'rest_num'=>$vv->num, //库存剩余数量
+                        'sales'=>$vv->sales //该商品销量
+                    ];
+                    array_push($complete_arr,$make_tmp_arr);
+                }
+            }
+        }
 
 
          /**
@@ -274,6 +302,8 @@ class CreateOrdersController extends Controller{
         }
 
 
+
+        $update_goods_arr = []; //购买商品的goods_id数组
         $return_all_profit = 0; //计算该笔订单返利区的商品总利润
         $delete_id_arr = [];  //需要清空购物车中的商品id
         $supplier_id_class = [];
@@ -292,11 +322,39 @@ class CreateOrdersController extends Controller{
 
             array_push($delete_id_arr,$v->id);
 
+            array_push($update_goods_arr,$v->goods_id);
+
             $require_amount += ($v->number) * ($v->goods_price);
         }
         $return_rule = getenv('RETURN_RULE');
         //计算返利的份数
         $copies = floor($returns / $return_rule);
+
+
+        /**
+         *  判断商品库存是否够
+         */
+            $complete_arr = []; //用于更新销量和库存
+            //查询一下购买商品的详情,进而判断商品库存是否充足
+            $tmp_goods_info = \DB::table('ys_goods')->whereIn('id',$update_goods_arr)->select('id as goods_id','num','sales')->get();
+            foreach($goods_info as $k=>$v){
+                foreach($tmp_goods_info as $kk=>$vv){
+                     if($v->goods_id == $vv->goods_id){
+                           //进一步比较两个数据的大小，判断库存是否充足
+                         if(($vv->num - $v->number) < 0){ //库存不足
+                             return $this->setStatusCode(1046)->respondWithError($this->message);
+                         }
+
+                         $make_tmp_arr = [
+                             'goods_id'=>$vv->goods_id, //商品id
+                             'buy_num'=>$v->number, //购买数量
+                             'rest_num'=>$vv->num, //库存剩余数量
+                             'sales'=>$vv->sales //该商品销量
+                         ];
+                         array_push($complete_arr,$make_tmp_arr);
+                     }
+                }
+            }
 
 
         /**
@@ -402,6 +460,28 @@ class CreateOrdersController extends Controller{
         }
         //(5)如果付款成功，则把购物车中已购买的商品清空 $delete_id_arr
         $delete = \DB::table('ys_goods_car')->where('user_id',$user_id)->whereIn('id',$delete_id_arr)->delete();
+
+        //(6)购买成功后更新商品的销量和库存
+        $update_arr = [];
+        foreach($complete_arr as $k=>$v){
+
+            $update = \DB::table('ys_goods')->where('id',$v['goods_id'])->update([
+                            'num'=>$v['rest_num'] - $v['buy_num'],
+                            'sales'=>$v['sales'] + $v['buy_num'],
+                            'updated_at'=>\DB::Raw('Now()')
+                        ]);
+
+            array_push($update_arr,$update);
+        }
+
+        //下面这个循环的目的是为了保证使用循环更新时的每一项都成功
+        foreach($update_arr as $k=>$v){
+            if(!$v){
+                \DB::rollBack();
+                return $this->setStatusCode(9998)->respondWithError($this->message);
+            }
+        }
+
         /**
          * 最后提交事务，并且返回主订单id
          */
