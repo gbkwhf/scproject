@@ -42,8 +42,8 @@
         	<!-- 供应商功能 -->	    
 			<li @if (in_array($current_route,['supplier'])) class="active" @endif @if (!in_array(30,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplier/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>            
         	<!-- 经销商功能 -->	    
-			<li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(50,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplierlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
-			<li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(51,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplierlist') }}"><i class="fa fa-edit"></i><span>员工管理</span></a></li>            
+			<li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(50,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
+			<li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(51,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/setemployee') }}"><i class="fa fa-edit"></i><span>员工管理</span></a></li>            
           
             
             

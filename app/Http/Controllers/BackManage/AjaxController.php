@@ -21,20 +21,21 @@ class AjaxController  extends Controller
  }
  public  function getUserInfo (Request $request){
  	
- 	$user_info=DB::table('sky_user_data_master.user_base_info')
- 					->where('user_base_info.mobile',$request->phone)
- 					->leftJoin('ysbt_employees','user_base_info.user_id','=','ysbt_employees.user_id')
- 					->select('user_base_info.user_name','ysbt_employees.*')
- 					->first();
+ 	$user_info=DB::table('ys_member')->where('ys_member.mobile',$request->phone)
+ 					->leftJoin('ys_employee','ys_member.user_id','=','ys_employee.user_id')
+ 					->select('ys_member.name','ys_employee.*')
+ 					->first(); 	
  	if(!$user_info){
  		return 3;//人员不存在
  	} 	
- 	if($user_info->store_id>0 && $user_info->store_id!=$request->shop_id){
+ 	if($user_info->agency_id>0){ 		
+ 		if($user_info->agency_id==$request->agency_id){
+ 			return 1;//已在本店
+ 		}
  		return 2;//已在其他店
  	} 	 
- 	if($user_info->is_master==1 && $user_info->store_id==$request->shop_id){
-		return 1;//已是本店店主
- 	}
+
+ 	
  	echo json_encode($user_info);
  }
  //获取商品分类
