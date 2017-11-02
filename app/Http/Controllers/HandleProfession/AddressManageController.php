@@ -44,7 +44,7 @@ class AddressManageController  extends  Controller{
         //判断该用户是否有地址记录，如果有则直接插入该地址即可，如果没有则插入该地址，并且设置为默认地址
         $is_exist = \DB::table('ys_user_addresses')->where('user_id',$user_id)->first();
         $is_default = empty($is_exist) ? 1 : 0;
-        $insert = \DB::table('ys_user_addresses')->insert([
+        $insert = \DB::table('ys_user_addresses')->insertGetId([
              'user_id' => $user_id,
              'name' => addslashes($request->name),
              'mobile' => $request->mobile,
@@ -55,7 +55,7 @@ class AddressManageController  extends  Controller{
              'is_default' => $is_default,
         ]);
         if($insert)
-             return  $this->respond($this->format([],true));
+             return  $this->respond($this->format(['address_id'=>$insert],true));
         else
             return $this->setStatusCode(9998)->respondWithError($this->message);
 
