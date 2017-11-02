@@ -5,17 +5,27 @@ $(function(){
         paginationClickable:true,
         paginationType : 'fraction',
         loop: true,
-        pagination: '.swiper-pagination'
+        pagination: '.swiper-pagination',
+        observer:true,//修改swiper自己或子元素时，自动初始化swiper 
+		observeParents:false,//修改swiper的父元素时，自动初始化swiper 
+		onSlideChangeEnd: function(swiper){ 
+　　　	swiper.update();  
+　　	　	mySwiper.startAutoplay();
+　　 	 	mySwiper.reLoop();  
+		}
+
+        
 
     });
+    
 });
 $(window).scroll(function(){
 		var top = $(document).scrollTop();
         var h = $(window).height();
 		$('.aa').each(function(i,v){
-			console.log($(this));
+		
 			var height = $(this).offset().top; 
-			console.log(i);
+			
 			if(top + h/2> height){
 			
 				$('.shopTitle a:eq('+i+')').addClass('dd');
@@ -25,3 +35,4 @@ $(window).scroll(function(){
 		});
 		
 	});
+	

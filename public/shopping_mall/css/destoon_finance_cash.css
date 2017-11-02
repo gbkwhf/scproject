@@ -15,19 +15,16 @@ input[type="button"]{-webkit-appearance: none;}
 	background-color: #ffffff;
 	text-align: center;
 	line-height: 35px;
-}
-.desTitle{
-	width: 80%;
-	height: 35px;
-	float: left;
-	/*background-color: gray;*/
 	font-size: 16px;
 	color: #333333;
 }
+
 .record{
 	width: 20%;
 	height: 35px;
-	float: left;
+	line-height: 35px;
+	float: right;
+	text-align: center;
 	/*background-color: darkolivegreen;*/
 	color: #333333;
 }
@@ -36,6 +33,7 @@ input[type="button"]{-webkit-appearance: none;}
 	height:355px;
 	background-color: #ffffff;
 	margin: 0 auto;
+	margin-top: 35px;
 }
 .desWhere{
 	height: 66px;

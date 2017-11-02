@@ -374,12 +374,12 @@ function uploadPic($file){
 		$new_name=time().rand(100,999).'.'.$new_entension;
 
 
-		if (!file_exists(base_path('storage').'/upload/hospital/')){
-				mkdir(base_path('storage').'/upload/hospital/');
+		if (!file_exists(base_path('public').'/upload/image/')){
+				mkdir(base_path('public').'/upload/image/');
 		}
-		$a=$file->move(base_path('storage').'/upload/hospital/',$new_name);
-		Image::make(base_path('storage').'/upload/hospital/'.$new_name)->resize(100, 100)->save(base_path('storage').'/upload/hospital/'.'thu_'.$new_name);
-		$name='/storage/upload/hospital/'.$new_name;
+		$a=$file->move(base_path('public').'/upload/image/',$new_name);
+		Image::make(base_path('public').'/upload/image/'.$new_name)->resize(100, 100)->save(base_path('public').'/upload/image/'.'thu_'.$new_name);
+		$name='/upload/image/'.$new_name;
 		return $name;
 }
 //获取周围坐标
@@ -425,5 +425,51 @@ for ($i=0; $i < 10; $i++) {
     $str.= $string[rand(0,strlen($string)-1)];
 }
 return $str;
+
+}
+
+use App\Result;
+/*
+ * 使用云片自带的函数发送HTTP远程请求，并且得到返回结果
+ */
+function  PostCURL($url,$post_data){
+
+
+    $ch = curl_init();
+
+    /* 设置验证方式 */
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept:text/plain;charset=utf-8', 'Content-Type:application/x-www-form-urlencoded','charset=utf-8'));
+
+    /* 设置返回结果为流 */
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    /* 设置超时时间*/
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+    /* 设置通信方式 */
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt ($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+    $retry=0;
+    // 若执行失败则重试
+    do{
+        $output = curl_exec($ch);
+        $retry++;
+        //            echo $retry."\n";
+    }while((curl_errno($ch) !== 0) && $retry<$GLOBALS['YUNPIAN_CONFIG']['RETRY_TIMES']);
+
+    if (curl_errno($ch) !== 0) {
+        $r = new Result(null, $post_data, null,curl_error($ch));
+        curl_close($ch);
+        return $r;
+    }
+    $output = trim($output, "\xEF\xBB\xBF");
+    $statusCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+    $ret = new Result($statusCode,$post_data,json_decode($output,true),null);
+    curl_close($ch);
+    return $ret;
 
 }

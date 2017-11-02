@@ -1,0 +1,33 @@
+html,body{
+	background: #f3f5f7;
+}
+.wrapper{
+    padding-bottom: 20px;
+}
+.module-box{
+	padding-top: 10px;
+}
+.module-box .pic-module{
+	position: relative;
+}
+.pic-module img{
+	display: block;
+}
+.pic-module span{
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -12px;
+	width: 0;
+	height: 0;
+	border: 11px solid transparent;
+	border-bottom: 11px solid #fff;
+}
+.module-box h4{
+	text-align: center;
+	font-size: 16px;
+	color: #333;
+	line-height: 48px;
+	background: #fff;
+}

@@ -173,8 +173,9 @@ body{
 }
 .deleteImg{
 	float: right;
-	padding-right: 19px;
+	padding-right: 8px;
 	display: inline-block;
+	padding-top: 14px;
 }
 .AddJianBox{
 	width: 92px;
@@ -189,7 +190,7 @@ body{
     
 }
 .jianId{
-	width: 22px;
+	width: 23px;
 	display: inline-block;
 	height: 22px;
 	background-color: #FFFFFF;
@@ -200,12 +201,12 @@ body{
 	border-radius: 50%;
 }
 .inputNum{
-	width: 36px;
+	width: 40px;
     outline: none;
     border: none;
     vertical-align: middle;
     display: inline-block;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     background-color: #e6e6e6;
     text-align: center;
     color: #808080;

@@ -20,7 +20,7 @@ class Session extends Model
     }
 
     public $timestamps = false;
-    protected $table = 'stj_session_info';
+    protected $table = 'ys_session_info';
     protected $fillable = [
         'user_id','client_type','session','mid','push_service_type','mec_ip',
         'mec_port','lps_ip','lps_port','last_get_session_date','session_hash'
@@ -29,7 +29,7 @@ class Session extends Model
     protected $primaryKey = 'user_id';
 
     //真实表名为了动态修改
-    static public $tableName='stj_session_info';
+    static public $tableName='ys_session_info';
 
     //发信息表名
     static public $sendTableName='';

@@ -1,8 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
 html,body{
-	min-width: 320px;
-	max-width: 640px;
+	/*min-width: 320px;
+	max-width: 640px;*/
 	margin: 0 auto;
 }
 img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
@@ -61,6 +61,10 @@ input[type="button"]{-webkit-appearance: none;}
 	color: #e4e3e3;
 	text-align: center;
 }*/
+.shopImg{
+	min-height: 300px;
+	overflow: auto;
+}
 .swiper-container {
   width: 100%;
   height: 370px;
@@ -80,7 +84,7 @@ input[type="button"]{-webkit-appearance: none;}
 	z-index: 15;
 }
 
-.sw1 {
+/*.sw1 {
   width: 100%;
   background: url(../images/banner1.jpg);
   background-size: 100% 100%; }
@@ -97,12 +101,13 @@ input[type="button"]{-webkit-appearance: none;}
   .sw4 {
   width: 100%;
   background: url(../images/banner1.jpg);
-  background-size: 100% 100%; }
+  background-size: 100% 100%; }*/
   /*-----------分页器样式-------------*/
 .swiper-pagination-fraction{
 	width: 10%;
 	height: 24px;
-	background-color: #949392;
+	/*background-color: #949392;*/
+	background-color: rgba(0,0,0,0.3);
 	/*right: 13px;
 	top: 336px;*/
 	border-radius: 25px;
@@ -187,10 +192,11 @@ input[type="button"]{-webkit-appearance: none;}
     width: 100%;
     bottom: 0;
     z-index: 999;
+    text-align: center;
 
 }
 
-.addCar{
+/*.addCar{
 	float: left;
 	width: 49%;
 	text-align: center;
@@ -207,9 +213,9 @@ input[type="button"]{-webkit-appearance: none;}
 
 	float: right;
 	width: 49%;
-	/* padding-right: 69px; */
+	
 	text-align: center;
-}
+}*/
 
 /*--------------商品介绍、评价--------*/
 .detailTitle{

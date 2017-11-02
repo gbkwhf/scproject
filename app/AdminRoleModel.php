@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminRoleModel extends Model
 {
-    protected  $table = "stj_admin_role";
+    protected  $table = "ys_admin_role";
     protected  $primaryKey = 'id';
-    public $timestamps = false;   
+    public $timestamps = false;
+
+
 }
