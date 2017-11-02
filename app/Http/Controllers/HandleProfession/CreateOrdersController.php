@@ -69,7 +69,9 @@ class CreateOrdersController extends Controller{
         }
 
 
-        $supplier_id_class = [];
+        $return_all_profit = 0; //计算该笔订单返利区的商品总利润
+        $delete_id_arr = [];  //需要清空购物车中的商品id
+        $supplier_id_class = [];//供销商id数组
         $require_amount = 0; //购物车商品总金额
         /**
          * 计算返利份数 和 购物车商品总金额
@@ -79,8 +81,11 @@ class CreateOrdersController extends Controller{
             foreach($goods_info as $k=>$v){
                 if($v->first_class_id != 4){ //只有一级分类id为4的商品不支持返利，其他的都支持返利,这里计算出总的可以支持返利的金额
                     $returns += ($v->number) * ($v->goods_price);
+                    $return_all_profit += ($v->number) * ($v->goods_price - $v->cost_price);
                 }
                 array_push($supplier_id_class,$v->supplier_id);
+
+                array_push($delete_id_arr,$v->id);
 
                 $require_amount += ($v->number) * ($v->goods_price);
             }
@@ -119,7 +124,8 @@ class CreateOrdersController extends Controller{
                     'require_amount'=>$require_amount,//需要的总金额
                     'receive_mobile'=>$request->mobile, //收货人手机号码
                     'receive_name'=>$request->name,//收货人姓名
-                    'rebate_num'=>$copies //支持返现的份数
+                    'rebate_num'=>$copies, //支持返现的份数
+                    'all_profit'=>$return_all_profit //该笔订单的所有商品总利润
               ];
 
              //2.子订单 （主订单号 子订单号  子订单总金额 供应商id）
@@ -168,7 +174,7 @@ class CreateOrdersController extends Controller{
         //(3)生成子订单和商品的对应表信息
          $insert3 = \DB::table('ys_order_goods')->insert($sub_goods);
 
-
+        //(4)如果使用新地址，则把新地址写入到地址库中去
         if($request->flag == 1) { //使用新地址
             //判断该用户是否有地址记录，如果有则直接插入该地址即可，如果没有则插入该地址，并且设置为默认地址
             $is_exist = \DB::table('ys_user_addresses')->where('user_id',$user_id)->first();
@@ -188,10 +194,13 @@ class CreateOrdersController extends Controller{
             $insert4 = 1;
         }
 
+        //(5)如果付款成功，则把购物车中已购买的商品清空 $delete_id_arr
+        $delete = \DB::table('ys_goods_car')->where('user_id',$user_id)->whereIn('id',$delete_id_arr)->delete();
+
         /**
          * 最后提交事务，并且返回主订单id
          */
-        if ($insert1 && $insert2 && $insert3 && $insert4) {
+        if ($insert1 && $insert2 && $insert3 && $insert4 && $delete) {
             \DB::commit();
             return  $this->respond($this->format(['order_id'=>$base_order_id]));
         }else {
@@ -264,8 +273,9 @@ class CreateOrdersController extends Controller{
             return $this->setStatusCode(1043)->respondWithError($this->message);
         }
 
-        //需要清空购物车中的商品id
-        $delete_id_arr = [];
+
+        $return_all_profit = 0; //计算该笔订单返利区的商品总利润
+        $delete_id_arr = [];  //需要清空购物车中的商品id
         $supplier_id_class = [];
         $require_amount = 0; //购物车商品总金额
         /**
@@ -276,6 +286,7 @@ class CreateOrdersController extends Controller{
         foreach($goods_info as $k=>$v){
             if($v->first_class_id != 4){ //只有一级分类id为4的商品不支持返利，其他的都支持返利,这里计算出总的可以支持返利的金额
                 $returns += ($v->number) * ($v->goods_price);
+                $return_all_profit += ($v->number) * ($v->goods_price - $v->cost_price);
             }
             array_push($supplier_id_class,$v->supplier_id);
 
@@ -322,7 +333,8 @@ class CreateOrdersController extends Controller{
             'receive_mobile'=>$request->mobile, //收货人手机号码
             'receive_name'=>$request->name,//收货人姓名
             'require_amount'=>$require_amount,//需要的总金额
-            'rebate_num'=>$copies //支持返现的份数
+            'rebate_num'=>$copies, //支持返现的份数
+            'all_profit'=>$return_all_profit //该笔订单的所有商品总利润
         ];
 
         //2.子订单 （主订单号 子订单号  子订单总金额 供应商id）
@@ -357,8 +369,6 @@ class CreateOrdersController extends Controller{
                 return $this->setStatusCode(9998)->respondWithError($this->message);
             }
         }
-
-
 
         \DB::beginTransaction(); //开启事务
         //生成订单分为如下三步：
