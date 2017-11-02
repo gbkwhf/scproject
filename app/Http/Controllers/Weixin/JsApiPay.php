@@ -58,7 +58,17 @@ class JsApiPay  extends Controller
 		    $code = $_GET['code'];
 			$openid = $this->getOpenidFromMp($code);
 
+            $user_id = $this->getUserIdBySession($openid); //获取员工id
+            if(!is_null($user_id)){
+                //接着检查是否是员工
+                $is_employee = \DB::table('ys_employee')->where('user_id',$user_id)->first();
+                $member = empty($is_employee) ? 0 : 1; //0会员  1员工
+            }else{
+                $member = "";
+            }
+
             $data["openId"] = $openid;
+            $data["is_member"] = $member;
             return $this->respond($this->format($data));
 		}
 	}
