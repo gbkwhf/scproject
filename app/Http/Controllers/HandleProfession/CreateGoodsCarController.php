@@ -39,7 +39,7 @@ class CreateGoodsCarController extends Controller{
         //首先判断该商品是否存在
         $goods_info = \DB::table('ys_goods as a')->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
                             ->leftjoin('ys_goods_class as c','a.class_id','=','c.id')
-                            ->select('a.id as goods_id','a.name as goods_name','a.num','a.price','a.sales','b.image','c.first_id')
+                            ->select('a.id as goods_id','a.cost_price','a.supplier_id','a.name as goods_name','a.num','a.price','a.sales','b.image','c.first_id')
                             ->where('a.id',$request->goods_id)
                             ->where('a.state',1) //0下架1上架
                             ->groupBy('a.id')
@@ -64,9 +64,11 @@ class CreateGoodsCarController extends Controller{
                 'user_id' => $user_id,
                 'goods_id' => $request->goods_id,
                 'goods_name' => $goods_info->goods_name,
-                'goods_price' => $goods_info->price,
+                'goods_price' => $goods_info->price, //商品定价
+                'cost_price' => $goods_info->cost_price,//成本价
                 'goods_url' => $goods_info->image,
                 'number' => $request->number,
+                'supplier_id' => $goods_info->supplier_id,//供应商id
                 'first_class_id' => $goods_info->first_id,
                 'state'=>1,//1选中  0不选中
                 'created_at' => \DB::Raw('Now()'),
@@ -149,6 +151,7 @@ class CreateGoodsCarController extends Controller{
                }
             $price['return'] = $returns;//可支持返利的商品总金额
             $price['no_return'] = $no_returns;//不支持返利的商品总金额
+            $price['return_rule'] = getenv('RETURN_RULE');//返利规则，大于该规则金额才进行返利
         }
 
         return  $this->respond($this->format($price));
@@ -192,6 +195,7 @@ class CreateGoodsCarController extends Controller{
             $goods_info = [];
             $result['return'] = $returns;//可支持返利的商品总金额
             $result['no_return'] = $no_returns;//不支持返利的商品总金额
+            $result['return_rule'] = getenv('RETURN_RULE');//返利规则，大于该规则金额才进行返利
         }
 
         $result['info'] =  $goods_info;

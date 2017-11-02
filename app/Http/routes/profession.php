@@ -24,6 +24,8 @@ Route::group([
         Route::get('get/official/accounts/index','WeixinInfoController@GetOfficalIndex');
         //4.判断该手机号码是否已经绑定了openId
         Route::post('scan/this/phone/bind/openId','WeixinInfoController@getBindState');
+        //5.获取微信头像和姓名
+        Route::post('get/user/weixin/info','WeixinInfoController@getOwnWeixinInfo');
 
 
 
@@ -52,6 +54,8 @@ Route::group([
         Route::post('edit/delivery/goods/address','AddressManageController@editGoodsAddress');
         //4.设置默认地址
         Route::post('handle/delivery/goods/default/address','AddressManageController@handleDefaultAddress');
+        //5.删除收货地址
+        Route::post('delete/delivery/goods/address','AddressManageController@deleteAddress');
 
 
 
@@ -74,6 +78,36 @@ Route::group([
           Route::post('delete/goods/car/commodity','CreateGoodsCarController@deleteGoodsCar');
           //5.更改购物车：选中该商品的标志（选中/不选中）
           Route::post('update/goods/car/commodity/state','CreateGoodsCarController@updateGoodsCar');
+
+
+
+
+       /**
+        * 订单模块 ：创建订单和获取订单信息
+        */
+           //1.会员主动创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买  ---->走线上支付
+           Route::post('user/create/commodity/order','CreateOrdersController@createOrders');
+           //2.员工给会员创建订单  ---->走线下支付
+           Route::post('employee/give/user/create/commodity/order','CreateOrdersController@employeeGivCreateOrders');
+           //3.获取订单详情(暂不支持)
+           //4.获取订单列表（已完成的）
+           Route::post('get/commodity/order/info/list','CreateOrdersController@getOrderLists');
+
+
+
+        /**
+         * 个人中心模块
+         */
+             //1.获取我邀请的用户列表
+             Route::post('get/invite/user/info/list','GetUserOwnInfoController@getInviteList');
+
+
+
+
+
+
+
+
 });
 
 

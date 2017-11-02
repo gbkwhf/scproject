@@ -101,7 +101,7 @@ class AuthController extends Controller
             return $this->setStatusCode(1002)->respondWithError($this->message);
         }
 
-        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',1)->orderBy('id')->first();//获取id最大值
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',1)->orderBy('id','desc')->first();//获取id最大值
         if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
             return $this->setStatusCode(1007)->respondWithError($this->message);
 
@@ -274,7 +274,7 @@ class AuthController extends Controller
         }
 
         //手机验证码的验证
-        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',4)->orderBy('id')->first();//获取id最大值
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',4)->orderBy('id','desc')->first();//获取id最大值
         if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
             return $this->setStatusCode(1007)->respondWithError($this->message);
         }
@@ -433,7 +433,7 @@ class AuthController extends Controller
         }
 
         //手机验证码的验证
-        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',3)->orderBy('id')->first();//获取id最大值
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',3)->orderBy('id','desc')->first();//获取id最大值
         if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
             return $this->setStatusCode(1007)->respondWithError($this->message);
         }
@@ -665,6 +665,10 @@ class AuthController extends Controller
             return $this->setStatusCode(1039)->respondWithError($this->message);
         }
 
+        //接着检查是否是员工
+        $is_employee = \DB::table('ys_employee')->where('user_id',$user_id)->first();
+        $member = empty($is_employee) ? 0 : 1; //0会员  1员工
+
         $params[] = array(
             'user_id'=>	$user_id,
             'mobile'=>$profile->mobile,
@@ -674,6 +678,7 @@ class AuthController extends Controller
             'birthday'=>substr($profile->birthday,0,10),
             'thumbnail_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.'thu_'.$profile->image,
             'source_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.$profile->image,
+            'is_member'=>$member
         );
         return $this->respond($this->format($params));
 //
@@ -819,7 +824,7 @@ class AuthController extends Controller
 
 
         //手机验证码的验证
-        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',5)->orderBy('id')->first();//获取id最大值
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',5)->orderBy('id','desc')->first();//获取id最大值
         if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
             return $this->setStatusCode(1007)->respondWithError($this->message);
         }
