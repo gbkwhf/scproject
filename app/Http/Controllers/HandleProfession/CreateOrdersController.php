@@ -415,9 +415,104 @@ class CreateOrdersController extends Controller{
 
     }
 
+     //获取订单列表（已完成的）
+    public function getOrderLists(Request $request){
 
 
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+         //获取自己购买的所有商品列表
+         $order_info = \DB::table('ys_base_order as a') //主订单
+                       ->leftjoin('ys_sub_order as b','a.id','=','b.base_id') //子订单
+                       ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id') //子订单和商品对应表
+                       ->leftjoin('ys_goods as d','d.id','=','c.goods_id')
+                       ->select('b.id as sub_order_id','b.price','c.goods_id','c.num','d.name as goods_name','d.name as image')
+                       ->where('a.state',1) //0未付款  1已付款
+                       ->where('user_id',$user_id)
+                       ->orderBy('create_time','desc')
+                       ->get();
+
+         $goods_id_arr = []; //购买过的所有商品id
+         $order_arr_tmp = [];
+         //按照子订单号进行分类
+
+          if(!empty($order_info)){
+              foreach($order_info as $k=>$v){
+
+                  $order_info[$k]->image = "";
+                  array_push($goods_id_arr,$v->goods_id);
+                  array_push($order_arr_tmp,$v->sub_order_id);
+              }
+
+              //商品图片
+              $goods_info = \DB::table('ys_goods_image')
+                              ->select('goods_id','image')
+                              ->whereIn('goods_id',$goods_id_arr)
+                              ->groupBy('goods_id')
+                              ->get();
+
+              //调用该方法格式化图片，并且使得数据按照子订单号递归分组
+              $res = $this->recursiveGroup($order_info,$order_arr_tmp,$goods_info);
+
+              //使用下面这个循环使得通用的数据提出来，然后单独把不同信息方数组里面
+              $data = array_fill(0,count($res),[]);
+              foreach($res as $k=>$v){
+                  $number = 0;
+                  $tmp_ar = [];
+                  if(is_array($v) && !empty($v)){
+                      foreach($v as $key=>$val){
+                         $number += $val->num;
+                          array_push($tmp_ar,['goods_id'=>$val->goods_id,'goods_name'=>$val->goods_name,'number'=>$val->num,'image'=>$val->image]);
+                      }
+                  }
+
+                  $data[$k] = [
+                      'sub_order_id'=>$v[0]->sub_order_id,
+                      'price'=>$v[0]->price,
+                      'number'=>$number,
+                      'goods_info'=>$tmp_ar
+                  ];
+              }
+              $result = $data;
+          }else{
+              $result = [];
+          }
+
+        return  $this->respond($this->format($result));
+    }
+
+
+    //二维对象数组进行按照某个值进行分类
+    private function recursiveGroup($arr,$order_arr_tmp,$goods_info){
+
+        $http = getenv('HTTP_REQUEST_URL');
+        $order_arr = array_values(array_unique($order_arr_tmp));
+        $tmp = array_fill(0,count($order_arr),[]);
+
+
+        foreach($arr as $k=>$v){
+
+            $arr[$k]->image = ""; //先把所有的image置空
+            foreach($goods_info as $key=>$val){
+                if($v->goods_id === $val->goods_id){
+                    $arr[$k]->image = $http.$val->image;
+                }
+            }
+
+            foreach($order_arr as $kk=>$vv){
+                if($v->sub_order_id == $vv){
+                    array_push($tmp[$kk],$v);
+                }
+            }
+        }
+        return $tmp;
+    }
 
 
 

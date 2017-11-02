@@ -87,10 +87,9 @@ Route::group([
            Route::post('user/create/commodity/order','CreateOrdersController@createOrders');
            //2.员工给会员创建订单  ---->走线下支付
            Route::post('employee/give/user/create/commodity/order','CreateOrdersController@employeeGivCreateOrders');
-           //3.获取订单详情
-
-           //4.获取订单列表
-
+           //3.获取订单详情(暂不支持)
+           //4.获取订单列表（已完成的）
+           Route::post('get/commodity/order/info/list','CreateOrdersController@getOrderLists');
 
 
 
