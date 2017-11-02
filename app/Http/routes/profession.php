@@ -24,6 +24,8 @@ Route::group([
         Route::get('get/official/accounts/index','WeixinInfoController@GetOfficalIndex');
         //4.判断该手机号码是否已经绑定了openId
         Route::post('scan/this/phone/bind/openId','WeixinInfoController@getBindState');
+        //5.获取微信头像和姓名
+        Route::post('get/user/weixin/info','WeixinInfoController@getOwnWeixinInfo');
 
 
 
@@ -90,6 +92,15 @@ Route::group([
            //3.获取订单详情(暂不支持)
            //4.获取订单列表（已完成的）
            Route::post('get/commodity/order/info/list','CreateOrdersController@getOrderLists');
+
+
+
+        /**
+         * 个人中心模块
+         */
+             //1.获取我邀请的用户列表
+             Route::post('get/invite/user/info/list','GetUserOwnInfoController@getInviteList');
+
 
 
 
