@@ -105,7 +105,11 @@
 	  			success: function(data) {
 	  				if(data.code == 1) { //请求成功
 	  					console.log(data);
-	  					$('.shopping-cart span').html(data.result.info.length)
+	  					var numberShop = 0;
+	  					for(var i=0;i<data.result.info.length;i++){
+							numberShop += parseInt(data.result.info[i].number) ;
+	  					}
+						$('.shopping-cart span').html(numberShop);
 	  					
 	  				}else{
 	  					layer.msg(data.msg);

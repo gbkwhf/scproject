@@ -139,7 +139,8 @@
 			content:$('.xxsk')
 		})
 	}
-	
+	var t=JSON.parse(localStorage.getItem('moneyArr'));
+	console.log(t);
 //	提交订单
 	function submit(){
 		
