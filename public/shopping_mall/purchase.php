@@ -14,11 +14,11 @@
 <body>
 
 	<div class="wrapper">
-		<header onclick="location.href='receiving_address.php'">
+		<header>
 			<img src="images/edit.png" width="14px" class="edit-icon" />
-			<p class="adress">收货地址：陕西省西安市高新区丈八一路绿地蓝海大厦东1002D</p>
-			<div class="user-name" ><img src="images/user-icon.png" width="13px"/><p>张先生</p></div>
-			<div class="user-phone" ><img src="images/telephone.png" width="15px"/><p>13619894965</p></div>
+			<p class="address">收货地址：</p>
+			<div class="user-name" ><img src="images/user-icon.png" width="13px"/><p></p></div>
+			<div class="user-phone" ><img src="images/telephone.png" width="15px"/><p></p></div>
 			<img src="images/car.png" width="103px" class="illustration" />								
 		</header>
 		<div class="js-details">
@@ -74,8 +74,8 @@
 		<footer>
 			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
 			<div class="buy-operation">
-				<!--<p onclick="scancode()">进店扫码<span>到门店付款</span></p>-->
-				<p onclick="createOrder()"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>
+				<p onclick="scancode()" class="scanCode">进店扫码<span>到门店付款</span></p>
+				<p onclick="createOrder()" class="substitute" style="display: none;"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>
 				<i></i>
 				<em onclick="submit()">提交</em>
 			</div>
@@ -145,10 +145,71 @@
 		
 	}
 	
+	//获取收货地址
+	if($_GET['address_id']){
+		//获取指定地址
+		$.ajax({
+			type:"post",
+			url:commonsUrl + "api/gxsc/get/delivery/goods/address" + versioninfos,
+			data:{'ss':getCookie('openid'),'address_id':$_GET['address_id']},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					$('.address').append(data.result[0].address);
+					$('.user-name p').append(data.result[0].name);
+					$('.user-phone p').append(data.result[0].mobile);
+					$('header').attr('onclick',"lastpage("+$_GET['address_id']+")");
+					
+				}else{
+	                layer.msg(data.msg);
+	            }
+			}
+		});
+	}else{
+		//获取所有地址
+		$.ajax({
+			type:"post",
+			url:commonsUrl + "api/gxsc/get/delivery/goods/address" + versioninfos,
+			data:{'ss':getCookie('openid')},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					if(data.result.length==0){
+						//去新增收货地址
+						$('header').html('<span style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
+					}else{
+						//筛选默认地址
+						for(var i=0;i<data.result.length;i++){
+							if(data.result[i].is_default==1){
+								$('.address').append(data.result[i].address);
+								$('.user-name p').append(data.result[i].name);
+								$('.user-phone p').append(data.result[i].mobile);
+								$('header').attr('onclick',"lastpage("+data.result[i].address_id+")");
+							}
+						}
+					}
+				}else{
+	                layer.msg(data.msg);
+	            }
+			}
+		});
+	}
 	
+	function lastpage(addressId){
+		location.href='receiving_address.php?address_id='+addressId;
+	}
+	
+	//身份校验
+	
+	if(getCookie('is_member')==0){ //会员
+		$('.scanCode').show();
+		$('.substitute').hide();
+	}else if(getCookie('is_member')==1){ //员工
+		$('.scanCode').hide();
+		$('.substitute').show();
+	}
 </script>
 <style type="text/css">
-	/*body .layui-layer{border-radius:10px;}*/
 	.layui-layer.layui-anim.layui-layer-page{
 		border-radius: 5px;
 	} 

@@ -18,7 +18,7 @@
 				<div class="head-portrait">
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
-				<p>用户昵称</p>
+				<p></p>
 			</div>
 			<div class="account-info">
 				<div class="balance">
@@ -38,22 +38,56 @@
 				我的订单
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="location.href='invitation.php'">
+			<!--<li onclick="location.href='invitation.php'">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
-			</li>
+			</li>-->
 		</ul>
 	</div>
-	
+	<!--购物车-->
+	<div class="shopping-cart" onclick="location.href='shopCart.php'">
+		<img src="images/shopping-cart.png"/>
+		<span></span>
+	</div>
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-	
+		//获取个人信息
+		$.ajax({
+			type:'post',
+			url:commonsUrl+ 'api/gxsc/get/user/weixin/info' +versioninfos,
+			data:{'ss':getCookie('openid')},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);					
+					$('.head-portrait img').attr('src',data.result.headimgurl);
+					$('.user-info p').html(data.result.nickname);
+				}else{
+  					layer.msg(data.msg);
+  				}
+			}
+		})
 		
-	
+		//获取购物车中的商品数量
+  		$.ajax({
+  			type: "post",
+  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, 
+  			data: {
+  				"ss": getCookie('openid')
+  			},
+  			success: function(data) {
+  				if(data.code == 1) { //请求成功
+  					console.log(data);
+  					$('.shopping-cart span').html(data.result.info.length)
+  					
+  				}else{
+  					layer.msg(data.msg);
+  				}
+  			}
+  		});
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
