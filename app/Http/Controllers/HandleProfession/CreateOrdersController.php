@@ -512,7 +512,7 @@ class CreateOrdersController extends Controller{
                        ->leftjoin('ys_sub_order as b','a.id','=','b.base_id') //子订单
                        ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id') //子订单和商品对应表
                        ->leftjoin('ys_goods as d','d.id','=','c.goods_id')
-                       ->select('b.id as sub_order_id','b.price','c.goods_id','c.num','d.name as goods_name','d.name as image')
+                       ->select('b.id as sub_order_id','b.price','b.express_name','b.express_num','c.goods_id','c.num','d.name as goods_name','d.name as image')
                        ->where('a.state',1) //0未付款  1已付款
                        ->where('user_id',$user_id)
                        ->orderBy('create_time','desc')
@@ -551,10 +551,11 @@ class CreateOrdersController extends Controller{
                           array_push($tmp_ar,['goods_id'=>$val->goods_id,'goods_name'=>$val->goods_name,'number'=>$val->num,'image'=>$val->image]);
                       }
                   }
-
                   $data[$k] = [
                       'sub_order_id'=>$v[0]->sub_order_id,
                       'price'=>$v[0]->price,
+                      'express_name'=>is_null($v[0]->express_name) ? "" :$v[0]->express_name,
+                      'express_num'=>is_null($v[0]->express_num) ? "" : $v[0]->express_num,
                       'number'=>$number,
                       'goods_info'=>$tmp_ar
                   ];
@@ -581,7 +582,7 @@ class CreateOrdersController extends Controller{
             $arr[$k]->image = ""; //先把所有的image置空
             foreach($goods_info as $key=>$val){
                 if($v->goods_id === $val->goods_id){
-                    $arr[$k]->image = $http.$val->image;
+                    $arr[$k]->image = empty($val->image) ? "" : $http.$val->image;
                 }
             }
 
@@ -595,6 +596,77 @@ class CreateOrdersController extends Controller{
     }
 
 
+
+    //4.获取订单详情(根据子订单id获取订单详情---拆分后)
+    public function getSubOrderInfo(Request $request)
+    {
+
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'sub_order_id' => 'required|string' //子订单id
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        //首先判断该子订单是否是该会员买的，如果不是则无权获取该订单详情
+        $base_info = \DB::table('ys_sub_order as a')->leftjoin('ys_base_order as b','a.base_id','=','b.id')
+                      ->select('a.id as sub_order_id','a.base_id','a.price','a.express_name','a.express_num',
+                          'b.user_id','b.create_time','b.pay_type','b.employee_id','b.state','b.receive_address',
+                          'b.require_amount','b.receive_mobile','b.receive_name')
+                      ->where('a.id',$request->sub_order_id)->where('b.user_id',$user_id)->first();
+
+        if(empty($base_info)){ //提示：您无权获取该的订单详情
+            return $this->setStatusCode(1047)->respondWithError($this->message);
+        }
+
+
+        //获取自己购买的该子订单的商品列表
+        $goods_info = \DB::table('ys_sub_order as b') //子订单
+                            ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id') //子订单和商品对应表
+                            ->leftjoin('ys_goods as d','d.id','=','c.goods_id')
+                            ->leftjoin('ys_goods_image as e','d.id','=','e.goods_id')
+                            ->select('c.goods_id','c.num','d.name as goods_name','d.price as goods_price','e.image')
+                            ->where('b.id',$request->sub_order_id)
+                            ->groupBy('e.goods_id')
+                            ->get();
+
+        $http = getenv('HTTP_REQUEST_URL');
+        foreach($goods_info as $k=>$v){
+            $goods_info[$k]->image = empty($v->image) ? "" : $http.$v->image;
+        }
+
+        $data = [];
+        $data['address'] = $base_info->receive_address; //收货地址
+        $data['mobile']  = $base_info->receive_mobile; //收货人电话
+        $data['name']    = $base_info->receive_name; //收货人
+        $data['sub_order_id'] = $base_info->sub_order_id; //子订单id
+        $data['base_order_id'] = $base_info->base_id; //主订单id
+        $data['create_time'] = $base_info->create_time; //下单时间
+        $data['price'] =$base_info->price; //子订单总价
+        $data['pay_type'] = $base_info->pay_type; //付款方式：1微信，2线下支付
+        $data['state'] = $base_info->state; //订单状态：0未付款，1，已付款
+        $data['express_name'] = is_null($base_info->express_name) ? "" : $base_info->express_name; //快递名称
+        $data['express_num'] = is_null($base_info->express_num) ? "" : $base_info->express_num; //快递单号
+        $data['goods_list'] = $goods_info; //子订单包含的商品列表
+
+        return  $this->respond($this->format($data));
+
+    }
+
+    //5.获取订单详情（根据主订单id获取详情----拆分前）
+    public function getBaseOrderInfo(Request $request)
+    {
+
+
+
+
+
+
+
+
+    }
 
 
 

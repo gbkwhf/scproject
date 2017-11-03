@@ -89,10 +89,12 @@ Route::group([
            Route::post('user/create/commodity/order','CreateOrdersController@createOrders');
            //2.员工给会员创建订单  ---->走线下支付
            Route::post('employee/give/user/create/commodity/order','CreateOrdersController@employeeGivCreateOrders');
-           //3.获取订单详情(暂不支持)
-           //4.获取订单列表（已完成的）
+           //3.获取订单列表（已完成的--并且拆单成子订单格式）
            Route::post('get/commodity/order/info/list','CreateOrdersController@getOrderLists');
-
+           //4.获取订单详情(根据子订单id获取订单详情---拆分后)
+           Route::post('get/commodity/sub_order/info','CreateOrdersController@getSubOrderInfo');
+           //5.获取订单详情（根据主订单id获取详情----拆分前）
+           Route::post('get/commodity/base_order/info','CreateOrdersController@getBaseOrderInfo');
 
 
         /**
@@ -100,6 +102,7 @@ Route::group([
          */
              //1.获取我邀请的用户列表
              Route::post('get/invite/user/info/list','GetUserOwnInfoController@getInviteList');
+             //2.获取我的物流信息
 
 
 
