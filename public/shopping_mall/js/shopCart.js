@@ -7,7 +7,7 @@
   			dataType: 'json', //数据格式
   			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, //请求地址
   			data: {
-  				"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+  				"ss": getCookie('openid') //请求参数  openid
   			},
   			success: function(data) {
   				console.log(data)
@@ -81,7 +81,7 @@
   							url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
   							data: {
   								"car_id": car_id, //请求参数
-  								"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+  								"ss": getCookie('openid') //请求参数  openid
   							},
   							success: function(data) { //请求成功
   								console.log(data)
@@ -121,7 +121,7 @@
   						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
   						data: {
   							"car_id": car_id, //请求参数
-  							"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+  							"ss": getCookie('openid') //请求参数  openid
   						},
   						success: function(data) { //请求成功
   							console.log('这是对的');
@@ -158,7 +158,7 @@
   						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
   						data: {
   							"car_id": car_id, //请求参数
-  							"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+  							"ss": getCookie('openid') //请求参数  openid
   						},
   						success: function(data) { //请求成功
   							console.log('这是对的');
@@ -214,7 +214,7 @@
   					data: {
   						"symbol": 1, //点击加号传1
   						"goods_id": goods_id, //请求参数
-  						"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+  						"ss": getCookie('openid') //请求参数  openid
   					},
   					success: function(data) { //请求成功
   						console.log(data);
@@ -259,7 +259,7 @@
   					data: {
   						"symbol": 2, //点击减号传2
   						"goods_id": goods_id, //请求参数
-  						"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+  						"ss": getCookie('openid') //请求参数  openid
   					},
   					success: function(data) { //请求成功
   						console.log(data);

@@ -103,7 +103,7 @@
 					data: {
 						"symbol": 1, //点击加号传1
 						"goods_id": goods_id, //请求参数
-						"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+						"ss": getCookie('openid') //请求参数  openid
 					},
 					success: function(data) { //请求成功
 						console.log(data);
@@ -117,7 +117,7 @@
 					type: "post",
 					url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
 					data: {
-						"ss": "adlkfjadiaodsmmmmm"
+						"ss": getCookie('openid')
 					},
 					success: function(data) {
 						if(data.code == 1) { //请求成功
