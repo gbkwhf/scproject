@@ -84,16 +84,23 @@ Route::group([
 
        /**
         * 订单模块 ：创建订单和获取订单信息
+        *
+        * (1)用户自己创建订单，自己走线上支付流程                               ---->走线上支付
+        * (2)用户自己创建订单，走线下支付流程，员工调接口确认该笔订单支付完成         ---->走线下支付
+        * (3)员工替用户创建订单，需要传用户手机号码，然后直接下单支付一体，直接完成    ---->走线下支付
+        *
         */
            //1.会员主动创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买  ---->走线上支付
            Route::post('user/create/commodity/order','CreateOrdersController@createOrders');
            //2.员工给会员创建订单  ---->走线下支付
            Route::post('employee/give/user/create/commodity/order','CreateOrdersController@employeeGivCreateOrders');
-           //3.获取订单列表（已完成的--并且拆单成子订单格式）
+           //3.员工确认完成用户自己创建的订单（线下收钱，使得订单结束，变成已支付）
+           Route::post('employee/ack/complete/user/commodity/order','CreateOrdersController@employeeAckCompleteOrder');
+           //4.获取订单列表（已完成的--并且拆单成子订单格式）
            Route::post('get/commodity/order/info/list','CreateOrdersController@getOrderLists');
-           //4.获取订单详情(根据子订单id获取订单详情---拆分后)
+           //5.获取订单详情(根据子订单id获取订单详情---拆分后)
            Route::post('get/commodity/sub_order/info','CreateOrdersController@getSubOrderInfo');
-           //5.获取订单详情（根据主订单id获取详情----拆分前）
+           //6.获取订单详情（根据主订单id获取详情----拆分前）
            Route::post('get/commodity/base_order/info','CreateOrdersController@getBaseOrderInfo');
 
 

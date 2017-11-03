@@ -239,7 +239,7 @@ class CreateOrdersController extends Controller{
     }
 
 
-    //员工给会员创建订单  ---->走线下支付(登陆者身份是员工)
+    //2.员工给会员创建订单  ---->走线下支付(登陆者身份是员工)
     public function employeeGivCreateOrders(Request $request){
 
 
@@ -495,7 +495,83 @@ class CreateOrdersController extends Controller{
 
     }
 
-     //获取订单列表（已完成的）
+
+    //3.员工确认完成用户自己创建的订单（线下收钱，使得订单结束，变成已支付）
+    public function employeeAckCompleteOrder(Request $request){
+
+        $validator = $this->setRules([
+            'ss' => 'required|string', //员工session
+            'base_order_id' => 'required|string' //主订单id
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+        //（1）首先判定角色身份，必须是员工才可以调用该接口
+        $is_employee = \DB::table('ys_employee')->where('user_id',$user_id)->first();
+        if(empty($is_employee)){ //表示不是员工
+            return $this->setStatusCode(1045)->respondWithError($this->message);
+        }
+        //(2)如果是员工，那么就要把订单状态和商品销量、库存等都需要修改
+        $order_info = \DB::table('ys_base_order as a')
+                          ->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
+                          ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id')
+                          ->leftjoin('ys_goods as d','c.goods_id','=','d.id')
+                          ->select('a.require_amount','c.goods_id','c.num as buy_num','d.num as rest_num','d.sales')
+                          ->where('a.id',$request->base_order_id)
+                          ->get();
+
+
+       if(empty($order_info)){ //订单不存在
+           return $this->setStatusCode(6100)->respondWithError($this->message);
+       }
+        $base = [
+            'pay_time'=>date("Y-m-d H:i:s"),
+            'pay_type'=>2,//付款方式:1微信，2线下支付
+            'employee_id'=>$user_id,//员工id也就是本次替用户购买者的id
+            'state' => 1,//订单状态0未付款，1，已付款
+            'amount'=>$order_info[0]->require_amount,//实际收到的总金额
+        ];
+
+        \DB::beginTransaction(); //开启事务
+        //更新主订单信息
+        $update1 = \DB::table('ys_base_order')->where('id',$request->base_order_id)->update($base);
+
+        //更新商品销量和库存
+        $update_arr = [];
+        foreach($order_info as $k=>$v){
+
+            $update = \DB::table('ys_goods')->where('id',$v->goods_id)->update([
+                'num'=>$v->rest_num - $v->buy_num,
+                'sales'=>$v->sales + $v->buy_num,
+                'updated_at'=>\DB::Raw('Now()')
+            ]);
+            array_push($update_arr,$update);
+        }
+
+        //下面这个循环的目的是为了保证使用循环更新时的每一项都成功
+        foreach($update_arr as $k=>$v){
+            if(!$v){
+                \DB::rollBack();
+                return $this->setStatusCode(9998)->respondWithError($this->message);
+            }
+        }
+        /**
+         * 最后提交事务，并且返回主订单id
+         */
+        if ($update1) {
+            \DB::commit();
+            return  $this->respond($this->format([],true));
+        }else {
+            \DB::rollBack();
+            return $this->setStatusCode(9998)->respondWithError($this->message);
+        }
+
+    }
+
+
+     //4.获取订单列表（已完成的）
     public function getOrderLists(Request $request){
 
 
@@ -597,7 +673,7 @@ class CreateOrdersController extends Controller{
 
 
 
-    //4.获取订单详情(根据子订单id获取订单详情---拆分后)
+    //5.获取订单详情(根据子订单id获取订单详情---拆分后)
     public function getSubOrderInfo(Request $request)
     {
 
@@ -655,7 +731,7 @@ class CreateOrdersController extends Controller{
 
     }
 
-    //5.获取订单详情（根据主订单id获取详情----拆分前）
+    //6.获取订单详情（根据主订单id获取详情----拆分前）
     public function getBaseOrderInfo(Request $request)
     {
 
