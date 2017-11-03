@@ -17,7 +17,7 @@
 		<div class="shopTitle">
 			<a class="shop dd" onclick="click_scroll1();">商品</a>
 			<a class="details" onclick="click_scroll2();">详情</a>
-			<a class="evaluate" onclick="click_scroll3();">评价</a>
+			<!--<a class="evaluate" onclick="click_scroll3();">评价</a>-->
 		</div>
 
 		<!-----------轮播图------------->
@@ -32,14 +32,14 @@
 			<div class="super">超级返?</div>
 		</div>
 		<div class="kong"></div>
-		<div class="shopInformation">
+		<!--<div class="shopInformation">
 			<div class="shopIntoduce">
-				<a href="#002">商品介绍</a>
+				<a href="#002">商品详情</a>
 			</div>
 			<div class="apprarise">
 				<a href="#003">评论</a>
 			</div>
-		</div>
+		</div>-->
 		<!-----------底部固定------------->
 		<div class="shopBuy">
 			<div class="addCar">加入购物车</div>
@@ -53,7 +53,7 @@
 			<img src="images/shopImg2.png" />-->
 		</div>
 		<!------------商品评价------------>
-		<div class="shopApprarise aa" id="003">商品评价</div>
+		<!--<div class="shopApprarise aa" id="003">商品评价</div>
 		<div class="apprariseBox">
 			<div class="apprariseNav">
 				<div class="userMessage">
@@ -107,7 +107,7 @@
 				</div>
 				<div class="evaluationContent">不错！很好吃，一直在她家买.</div>
 			</div>
-		</div>
+		</div>-->
 	</body>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript" src="js/config.js"></script>
@@ -166,7 +166,7 @@
 					data: {
 						"goods_id": goods_id,//商品id
 						"number": 1,//商品数量
-						"ss": 'adlkfjadiaodsmmmmm'//openid
+						"ss": getCookie('openid')//openid
 					},
 					success: function(data) {
 						//				console.log(data)

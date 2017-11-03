@@ -7,7 +7,7 @@
   			dataType: 'json', //数据格式
   			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, //请求地址
   			data: {
-  				"ss": 'adlkfjadiaodsmmmmm' //请求参数  openid
+  				"ss":getCookie('openid') //请求参数  openid
   			},
   			success: function(data) {
   				console.log(data)
@@ -16,7 +16,7 @@
   					//					console.log(con);
   					$.each(con, function(k, v) {
   						var car_id = con[k].car_id; //购物车id
-  						var first_class_id=con[k].first_class_id;
+  						var first_class_id = con[k].first_class_id;
   						var created_at = con[k].created_at;
   						var goods_id = con[k].goods_id; //商品id
   						var goods_name = con[k].goods_name; //商品名称
@@ -24,7 +24,7 @@
   						var goods_url = con[k].goods_url; //商品图片
   						var number = con[k].number; //商品数量
   						var state = con[k].state; //商品状态
-  						var t = "<div class='shopCartList'><div class='shopCartLeft'><label class='label1'><input  type='checkbox'  class='input'   /><input type='checkbox' id=" + goods_id + " value=" + car_id + " hidden='hidden' class='hiIn'/></label></div><div class='shopCartRight'><div class='catRightTop'><div class='rightCart1'><span class='imgBoxBorder'><img src=" + goods_url + " alt='' class='carImage'/></span></div><div class='rightCart2'><div class='rightTitleCat'><span>" + goods_name + "</span><span class='deleteImg'><img src='images/shopDelete.png' alt='' style='display:inline-block;vertical-align: middle;width:17px;height:18px;'/></span></div><div class='catPrice'><span class='catPrice1'><span style='font-size: 10px;'>￥</span><span class='priceEvery'>" + goods_price + "</span></span></div></div></div><div class='AddJianBox'><span class='jianId minus' id='minus'>-</span><span style='display: inline-block;' class='numkk'><input type='text' name='' id='' value=" + number + " class='inputNum' readonly='readonly'/></span><span class='jianId addClass' id='plus'>+</span></div></div></div>"
+  						var t = "<div class='shopCartList'><div class='shopCartLeft'><label class='label1'><input  type='checkbox'  class='input'   /><input type='checkbox' url="+goods_url+" price="+goods_price+" inNum="+number+" name="+goods_name+" id=" + goods_id + " value=" + car_id + " hidden='hidden' class='hiIn'/></label></div><div class='shopCartRight'><div class='catRightTop'><div class='rightCart1'><span class='imgBoxBorder'><img src=" + goods_url + " alt='' class='carImage'/></span></div><div class='rightCart2'><div class='rightTitleCat'><span>" + goods_name + "</span><span class='deleteImg'><img src='images/shopDelete.png' alt='' style='display:inline-block;vertical-align: middle;width:17px;height:18px;'/></span></div><div class='catPrice'><span class='catPrice1'><span style='font-size: 10px;'>￥</span><span class='priceEvery'>" + goods_price + "</span></span></div></div></div><div class='AddJianBox'><span class='jianId minus' id='minus'>-</span><span style='display: inline-block;' class='numkk'><input type='text' name='' id='' value=" + number + " class='inputNum' readonly='readonly'/></span><span class='jianId addClass' id='plus'>+</span></div></div></div>"
   						$('.shopCartBox').append(t); //动态显示商品
   					});
   				}
@@ -32,14 +32,6 @@
   		});
   	}
   	shopCar();
-  	//点击管理出现删除按钮
-  	//	$('#manngerId').click(function() {
-  	//			if($('#deleIddd').css("display") == "none") {
-  	//				$('#deleIddd').show();
-  	//			} else {
-  	//				$('#deleIddd').hide();
-  	//			}
-  	//		})
   	//点击取消删除框的事件
   	$('#cancelsId').click(function() {
   			layer.closeAll()
@@ -89,7 +81,7 @@
   						url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
   						data: {
   							"car_id": car_id, //请求参数
-  							"ss": 'adlkfjadiaodsmmmmm' //请求参数  openid
+  							"ss": getCookie('openid') //请求参数  openid
   						},
   						success: function(data) { //请求成功
   							console.log(data)
@@ -117,25 +109,27 @@
   			//----------------单选------
   		$(".input").click(function() {
   			var car_id = $(this).parent().parent().parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
-  			$.ajax({
-  						type: "post", //请求方式
-  						dataType: 'json', //数据格式
-  						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
-  						data: {
-  							"car_id": car_id, //请求参数
-  							"ss": 'adlkfjadiaodsmmmmm' //请求参数  openid
-  						},
-  						success: function(data) { //请求成功
-  							console.log(data)
-  							
-  						}
-  					});
-  			
-  			
+  			console.log(car_id + 'kdddddop[p');
+
   			//给单选框添加checked选项
   			$(this).parent().toggleClass("checked");
   			//如果这个单选框选中
   			if($(this).parent().hasClass('checked')) {
+  				$.ajax({
+  					type: "post", //请求方式
+  					dataType: 'json', //数据格式
+  					url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
+  					data: {
+  						"car_id": car_id, //请求参数
+  						"ss": getCookie('openid') //请求参数  openid
+  					},
+  					success: function(data) { //请求成功
+  						console.log('这是对的');
+  						console.log(data)
+
+  					}
+  				});
+
   				$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
   				//取当前的选中的数量
   				var t = $(this).parent().parent().parent().find('input[class*=inputNum]').val();
@@ -158,6 +152,21 @@
   				//给合计赋值    
   				$(".totalPrice").text(t.toFixed(2))
   			} else { //当前的复选框没有选中
+  				$.ajax({//判断是否选中的ajax接口
+  					type: "post", //请求方式
+  					dataType: 'json', //数据格式
+  					url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
+  					data: {
+  						"car_id": car_id, //请求参数
+  						"ss": getCookie('openid') //请求参数  openid
+  					},
+  					success: function(data) { //请求成功
+  						console.log('这是对的');
+  						console.log(data)
+
+  					}
+  				});
+
   				//取当前的选中的数量
   				var t = $(this).parent().parent().parent().find('input[class*=inputNum]').val();
   				console.log(t);
@@ -193,6 +202,7 @@
   		});
   		//点击增加按钮触发事件++++
   		$(".addClass").click(function() {
+  			var mmThis = $(this);
   			var sure1 = $(this).parent().parent().parent();
   			var goods_id = $(sure1).find("input[class*=hiIn]").attr("id"); //获取car_id的值
   			console.log(goods_id + '点击出现购物车id');
@@ -204,16 +214,18 @@
   				data: {
   					"symbol": 1, //点击加号传1
   					"goods_id": goods_id, //请求参数
-  					"ss": 'adlkfjadiaodsmmmmm' //请求参数  openid
+  					"ss": getCookie('openid') //请求参数  openid
   				},
   				success: function(data) { //请求成功
   					console.log(data);
 
+  					//shopCar();
+  					var nummm = $(mmThis).parent().find('input[class*=inputNum]');
+  					//单品数量增加
+  					nummm.val(parseInt(nummm.val()) + 1);
+
   				}
   			});
-  			var nummm = $(this).parent().find('input[class*=inputNum]');
-  			//单品数量增加
-  			nummm.val(parseInt(nummm.val()) + 1);
 
   			//前面的复选框有没有选中
   			var isTrue = $(this).parent().parent().parent().find('label[class*=label1]').hasClass('checked');
@@ -221,7 +233,7 @@
   			if(isTrue) {
   				var num = $(this).parent().find('input[class*=inputNum]');
   				//单品数量增加
-  				num.val(parseInt(num.val()) + 1);
+  				//				num.val(parseInt(num.val()) + 1);
   				//				//计算总价
   				var goods_price = parseInt($(this).parent().parent().find('span[class*=priceEvery]').text());
   				console.log(goods_price + '这是单价');
@@ -235,7 +247,7 @@
 
   		//点击减少按钮触发事件--------
   		$(".minus").click(function() {
-
+  			var hhThis = $(this);
   			var sure1 = $(this).parent().parent().parent();
   			var goods_id = $(sure1).find("input[class*=hiIn]").attr("id"); //获取car_id的值
   			console.log(goods_id + '点击出现购物车id');
@@ -247,21 +259,30 @@
   				data: {
   					"symbol": 2, //点击减号传2
   					"goods_id": goods_id, //请求参数
-  					"ss": 'adlkfjadiaodsmmmmm' //请求参数  openid
+  					"ss": getCookie('openid') //请求参数  openid
   				},
   				success: function(data) { //请求成功
   					console.log(data);
+  					var tjj = $(hhThis).parent().find('input[class*=inputNum]');
+  					if(tjj.val() == "" || undefined || null) {
+  						tjj.val(1);
+  					}
+  					tjj.val(parseInt(tjj.val()) - 1)
+  					if(parseInt(tjj.val()) <= 1) {
+  						tjj.val(1);
+  						layer.msg('亲，这个数量不能再少了');
+  					}
   				}
   			});
-  			var tjj = $(this).parent().find('input[class*=inputNum]');
-  			if(tjj.val() == "" || undefined || null) {
-  				tjj.val(1);
-  			}
-  			tjj.val(parseInt(tjj.val()) - 1)
-  			if(parseInt(tjj.val()) <= 1) {
-  				tjj.val(1);
-  				layer.msg('亲，这个数量不能再少了');
-  			}
+  			//			var tjj = $(this).parent().find('input[class*=inputNum]');
+  			//			if(tjj.val() == "" || undefined || null) {
+  			//				tjj.val(1);
+  			//			}
+  			//			tjj.val(parseInt(tjj.val()) - 1)
+  			//			if(parseInt(tjj.val()) <= 1) {
+  			//				tjj.val(1);
+  			//				layer.msg('亲，这个数量不能再少了');
+  			//			}
 
   			//判断前面的复选框有没有选择
   			var isTrue = $(this).parent().parent().parent().find('label[class*=label1]').hasClass('checked');
@@ -281,7 +302,7 @@
   				if(t.val() == "" || undefined || null) {
   					t.val(1);
   				}
-  				t.val(parseInt(t.val()) - 1)
+  				//				t.val(parseInt(t.val()) - 1)
   				if(parseInt(t.val()) <= 1) {
   					t.val(1);
   					layer.msg('亲，这个数量不能再少了');
@@ -295,7 +316,60 @@
   			}
   		});
   	}, 500)
+		//-------结算的点击事件--------------
+		$(".jiesuanStyle").click(function(){
+			//循环这些数组，判断前面的复选框选中之后，
+			var nval=$('.totalPrice').text();
+			console.log(nval);
+			if(nval!=0.00||nval!=0){
+				var arrId=[]; //car_id,
+				var shopArrId=[]; //商品id
+				var nameArr=[];  //名称
+				var priceArr=[];//单价
+				var imgUrl=[];//商品图片
+				var shopNum=[];//商品数量
+				var len=$(".checked input[class*=hiIn]").length;
+						$(".checked input").each(function(){  
+							if ($(this).hasClass("hiIn")){
+								for(var i=0;i<len;i++){
+									var thisVal=$(this).val(); //car_id
+									var shopId=$(this).attr('id');////商品id
+									var thisNum=$(this).attr('inNum');//商品数量
+									var thisName=$(this).attr('name'); //商品名称
+									var thisPrice=$(this).attr('price');//商品单价
+									var thisImg=$(this).attr('url');//商品图片
+								}
+								shopArrId.push(shopId);//商品id
+								arrId.push(thisVal);//car_id
+								nameArr.push(thisName); //商品名臣
+								priceArr.push(thisPrice);//单价
+								imgUrl.push(thisImg);//商品图片
+								shopNum.push(thisNum);//商品数量
+							}
+						})
+					console.log(shopArrId);
+					console.log(arrId);
+					console.log(nameArr);
+					console.log(priceArr);
+					console.log(imgUrl);
+					console.log(shopNum);
+					var params='';
+				for(var i=0;i<arrId.length;i++){
+						params+='&id='+arrId[i]+'&shopId='+shopArrId[i]+'&name='+nameArr[i]+'&price='+priceArr[i]+'&src='+imgUrl[i]+'&number='+shopNum[i];
+						
+				}
+				console.log(params);
+//				params=params.replace("?&","?")
+//				console.log(params);
+			window.location.href='purchase.php?'+params;
 
+			}else{
+				layer.msg('请选择你要结算的宝贝');
+			}
+		})
+		
+		
+		
   	//全选的价格计算
   	function allsetTotal() {
   		var s = 0;
