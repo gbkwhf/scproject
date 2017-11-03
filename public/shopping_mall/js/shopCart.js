@@ -7,7 +7,7 @@
   			dataType: 'json', //数据格式
   			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, //请求地址
   			data: {
-  				"ss": getCookie('openid') //请求参数  openid
+  				"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
   			},
   			success: function(data) {
   				console.log(data)
@@ -81,7 +81,7 @@
   							url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
   							data: {
   								"car_id": car_id, //请求参数
-  								"ss": getCookie('openid') //请求参数  openid
+  								"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
   							},
   							success: function(data) { //请求成功
   								console.log(data)
@@ -121,7 +121,7 @@
   						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
   						data: {
   							"car_id": car_id, //请求参数
-  							"ss": getCookie('openid') //请求参数  openid
+  							"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
   						},
   						success: function(data) { //请求成功
   							console.log('这是对的');
@@ -130,7 +130,7 @@
   						}
   					});
 
-  					$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
+//					$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
   					//取当前的选中的数量
   					var t = $(this).parent().parent().parent().find('input[class*=inputNum]').val();
   					console.log(t);
@@ -158,7 +158,7 @@
   						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
   						data: {
   							"car_id": car_id, //请求参数
-  							"ss": getCookie('openid') //请求参数  openid
+  							"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
   						},
   						success: function(data) { //请求成功
   							console.log('这是对的');
@@ -214,7 +214,7 @@
   					data: {
   						"symbol": 1, //点击加号传1
   						"goods_id": goods_id, //请求参数
-  						"ss": getCookie('openid') //请求参数  openid
+  						"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
   					},
   					success: function(data) { //请求成功
   						console.log(data);
@@ -259,7 +259,7 @@
   					data: {
   						"symbol": 2, //点击减号传2
   						"goods_id": goods_id, //请求参数
-  						"ss": getCookie('openid') //请求参数  openid
+  						"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
   					},
   					success: function(data) { //请求成功
   						console.log(data);

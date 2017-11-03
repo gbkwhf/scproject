@@ -53,6 +53,7 @@
 	<script type="text/javascript" src="js/layer/layer.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			shopCarts();  //页面加载的时候显示购物车的数量
 			var goods_id = $_GET['goods_id'];
 			console.log(goods_id + '+++++');
 			$.ajax({
@@ -92,46 +93,47 @@
 			});
 			//------------创建购物车------------
 			$(".addCar").click(function() {
-					//console.log(getCookie("openid") + '这是cookie');
-					var goods_id = $_GET['goods_id'];
-					console.log(goods_id + '+++++');
-					$.ajax({
-						type: "post",
-						dataType: 'json',
-						url: commonsUrl + '/api/gxsc/add/goods/car/commodity' + versioninfos,
-						data: {
-							"goods_id": goods_id, //商品id
-							"number": 1, //商品数量
-							"ss": getCookie('openid') //openid
-						},
-						success: function(data) {
-							//				console.log(data)
-							if(data.code == 1) { //请求成功
-								setTimeout(function() {
-										layer.msg("加入购物车成功了，请到购物车查看");
-									}, 1000)
-									//							location.href = "shopCart.php";
-							}
-						}
-					});
-				})
-				//获取购物车中的商品数量
-			$.ajax({
-				type: "post",
-				url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
-				data: {
-					"ss": getCookie('openid')
-				},
-				success: function(data) {
-					if(data.code == 1) { //请求成功
-						console.log(data);
-						$('.shopping-cart span').html(data.result.info.length)
 
-					} else {
-						layer.msg(data.msg);
+				var goods_id = $_GET['goods_id'];
+				console.log(goods_id + '+++++');
+				$.ajax({
+					type: "post", //请求方式
+					dataType: 'json', //数据格式
+					url: commonsUrl + '/api/gxsc/update/goods/car/commodity/number' + versioninfos, //请求地址
+					data: {
+						"symbol": 1, //点击加号传1
+						"goods_id": goods_id, //请求参数
+						"ss": "adlkfjadiaodsmmmmm" //请求参数  openid
+					},
+					success: function(data) { //请求成功
+						console.log(data);
+						shopCarts();
 					}
-				}
-			});
+				});
+			})
+			//获取购物车中的商品数量
+			function shopCarts() {
+				$.ajax({
+					type: "post",
+					url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
+					data: {
+						"ss": "adlkfjadiaodsmmmmm"
+					},
+					success: function(data) {
+						if(data.code == 1) { //请求成功
+							console.log(data);
+							var numberShop = 0;
+							for(var i = 0; i < data.result.info.length; i++) {
+								numberShop += parseInt(data.result.info[i].number);
+							}
+							$('.shopping-cart span').html(numberShop);
+
+						} else {
+							layer.msg(data.msg);
+						}
+					}
+				});
+			};
 		});
 	</script>
 	<script type="text/javascript">
