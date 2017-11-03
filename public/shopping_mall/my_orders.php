@@ -79,6 +79,20 @@
 	
 	$('.commodity-list li:last').css('padding-bottom','0px');
 	
+	//获取已完成的订单列表
+	$.ajax({
+		type:"post",
+		url:commonsUrl+"api/gxsc/get/commodity/order/info/list"+versioninfos,
+		data:{'ss':getCookie('openid')},
+		success:function(data){
+			if(data.code==1){
+				console.log(data);
+			}else{
+				layer.msg(data.msg);
+			}
+		}
+	});
+	
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

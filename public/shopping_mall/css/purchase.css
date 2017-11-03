@@ -18,7 +18,7 @@ html,body{
 	float: right;
 	margin: 10px 10px 0px 0px;
 }
-.adress{
+.address{
 	padding: 33px 26px 8px;
 	line-height: 1.5em;
 	color: #333;
@@ -138,6 +138,7 @@ html,body{
 .commodity-exp img{
 	display: inline-block;
 	vertical-align: text-bottom;
+	margin: 3px 0px 0px 3px;
 }
 .explain-buy{
 	padding: 25px 33px;
@@ -209,7 +210,7 @@ footer{
 }
 .buy-operation i{
 	width: 2px;
-	height: 21px;
+	height: 25px;
 	margin: 12px 0px;
 	background: #ce4f49;
 	display: inline-block;
