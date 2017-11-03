@@ -1,5 +1,5 @@
 body{
-	background-color: ##f3f5f7;
+	background-color: #f3f5f7;
 	/*min-width: 320px;
 	max-width: 640px;
 	margin: 0 auto;*/
@@ -77,7 +77,7 @@ body{
 	margin-left: 12px;
 	margin-right: 12px;
 	height: 140px;
-	margin-bottom: 10px;
+	margin-top: 10px;
 	background-color: #FFFFFF;
 	/*background-color: red;*/
 	padding-bottom: 4px;
