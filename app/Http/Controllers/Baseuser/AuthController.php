@@ -678,7 +678,8 @@ class AuthController extends Controller
             'birthday'=>substr($profile->birthday,0,10),
             'thumbnail_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.'thu_'.$profile->image,
             'source_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.$profile->image,
-            'is_member'=>$member
+            'is_member'=>$member,
+            'balance'=>$profile->balance //余额
         );
         return $this->respond($this->format($params));
 //
