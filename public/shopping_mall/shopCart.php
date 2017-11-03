@@ -14,10 +14,9 @@
 
 	<body>
 		<!--头部-->
-		<div class="shopHeader">
+		<!--<div class="shopHeader">
 			购物车
-			<!--<span class="manngerBut" id="manngerId">管理</span>-->
-		</div>
+		</div>-->
 
 		<!--购物车内容-->
 		<div class="shopCartBox">
