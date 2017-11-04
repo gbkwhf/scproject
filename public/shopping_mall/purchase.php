@@ -205,13 +205,13 @@
 					//		生成二维码
 			        $('.qccode').qrcode({
 			            width: 130, //宽度
-<<<<<<< HEAD
+
 			            height:130, //高度
 			            text:commonsUrl+'shopping_mall/staff_order_details.php?base_order_id='+data.result.order_id  //任意内容
-=======
-			            height:130, //高度 
-			            text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"  //任意内容
->>>>>>> 2e7613a79d8f8c5035333aef66067006ffc7021a
+
+			            //height:130, //高度 
+			           // text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"  //任意内容
+
 			        });
 			        
 			        layer.open({
@@ -350,7 +350,7 @@
 		})
 	}
 	
-<<<<<<< HEAD
+
 	//获取收货地址
 	if($_GET['address_id']){
 		//获取指定地址
@@ -437,8 +437,6 @@
 	$('.swiper-slide img').height(winW*0.73/3-20);
 	$('.commodity-exp p').html('共'+numbers+'件');
 	$('.actual-payment span').html('¥'+totals.toFixed(2));
-=======
->>>>>>> 1b44830d1a69d37fe067e6150841da2014f54d9c
 	
 </script>
 <style type="text/css">
