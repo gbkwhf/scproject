@@ -66,7 +66,6 @@
 	$.ajax({
 		type:"get",
 		url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
-		data:{},
 		success:function(data){
 			if(data.code==1){
 				alert(data.result.openId);
