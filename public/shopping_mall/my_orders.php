@@ -13,21 +13,21 @@
 <body>
 
 	<div class="wrapper">
-		<div class="order-module">
+		<!--<div class="order-module">
 			<h4>2017.10.25</h4>
 			<i class="half-line"></i>
 			<ul class="commodity-list">
 				<li>
-					<img src="images/zyyp.png" width="77"/>
-					<p>长城 (Gmsdfgsdnm) 红酒 华夏葡萄  (711) 张裕解百纳</p>
-				</li>
-				<li>
-					<img src="images/zyyp.png" width="77"/>
-					<p>长城 (Gmsdfgsdnm) 红酒 华夏葡萄  (711) 张裕解百纳</p>
-				</li>
-				<li>
-					<img src="images/zyyp.png" width="77"/>
-					<p>长城 (Gmsdfgsdnm) 红酒 华夏葡萄  (711) 张裕解百纳</p>
+					<div class="picbox">						
+						<img src="images/rice.png" width="100%"/>
+					</div>
+					<div class="commodity-info">
+						<em>长城 (Gmsdfgsdnm) 红酒 华夏葡 萄 (711) 张裕解百纳</em>
+						<div class="price-info">
+							<p>¥388.00</p>
+							<span>x 1</span>
+						</div>
+					</div>
 				</li>
 			</ul>
 			<i class="half-line" style="float: right;"></i>
@@ -38,33 +38,7 @@
 			<div class="state-box">
 				<p>已完成</p>
 			</div>
-		</div>
-		<div class="order-module">
-			<h4>2017.10.25</h4>
-			<i class="half-line"></i>
-			<ul class="commodity-list">
-				<li>
-					<img src="images/zyyp.png" width="77"/>
-					<p>长城 (Gmsdfgsdnm) 红酒 华夏葡萄  (711) 张裕解百纳</p>
-				</li>
-				<li>
-					<img src="images/zyyp.png" width="77"/>
-					<p>长城 (Gmsdfgsdnm) 红酒 华夏葡萄  (711) 张裕解百纳</p>
-				</li>
-				<li>
-					<img src="images/zyyp.png" width="77"/>
-					<p>长城 (Gmsdfgsdnm) 红酒 华夏葡萄  (711) 张裕解百纳</p>
-				</li>
-			</ul>
-			<i class="half-line" style="float: right;"></i>
-			<div class="summary">
-				<p>实付款：<em>¥388.00</em></p>
-				<span>共11件</span>
-			</div>
-			<div class="state-box">
-				<p>已完成</p>
-			</div>
-		</div>
+		</div>-->
 	</div>
 	
 </body>
@@ -75,9 +49,7 @@
 <script>
 	
 	var winW = $(window).width();
-	$('.commodity-list li p').width(winW-145);
 	
-	$('.commodity-list li:last').css('padding-bottom','0px');
 	
 	//获取已完成的订单列表
 	$.ajax({
@@ -87,6 +59,39 @@
 		success:function(data){
 			if(data.code==1){
 				console.log(data);
+				html='';
+				for(var i=0;i<data.result.length;i++){
+					html+='<div class="order-module">'+
+					'	<h4>'+data.result[i].number+'</h4>'+
+					'	<i class="half-line"></i>'+
+					'	<ul class="commodity-list">';
+					for(var j=0;j<data.result[i].goods_info.length;j++){
+						html+='<li>'+
+						'	<div class="picbox">'+						
+						'		<img src="'+data.result[i].goods_info[j].image+'" width="100%"/>'+
+						'	</div>'+
+						'	<div class="commodity-info">'+
+						'		<em>'+data.result[i].goods_info[j].goods_name+'</em>'+
+						'		<div class="price-info">'+
+						'			<span>x '+data.result[i].goods_info[j].number+'</span>'+
+						'		</div>'+
+						'	</div>'+
+						'</li>';
+					}
+					html+='	</ul>'+
+					'	<i class="half-line" style="float: right;"></i>'+
+					'	<div class="summary">'+
+					'		<p>实付款：<em>¥'+data.result[i].price+'</em></p>'+
+					'		<span>共'+data.result[i].number+'件</span>'+
+					'	</div>'+
+					'	<div class="state-box">'+
+					'		<p>已完成</p>'+
+					'	</div>'+
+					'</div>';
+				}
+				$('.wrapper').html(html);
+				$('.commodity-info').width(winW-155);
+				
 			}else{
 				layer.msg(data.msg);
 			}

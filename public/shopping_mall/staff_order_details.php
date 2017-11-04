@@ -61,7 +61,6 @@
 <script>
 	
 	var winW = $(window).width();
-	$('.commodity-info').width(winW-169);
 	
 	//获取openid
 	$.ajax({
@@ -121,6 +120,9 @@
 							'	<li>支付方式：<span>线下支付</span></li>'+
 							'</ul>';
 							$('.order-details').html(html);
+							
+							$('.commodity-info').width(winW-169);
+							
 						}else{
 							layer.msg(data.msg);
 						}
