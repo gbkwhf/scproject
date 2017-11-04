@@ -59,7 +59,7 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-	location.reload();
+	
 	var winW = $(window).width();
 	
 	//获取openid

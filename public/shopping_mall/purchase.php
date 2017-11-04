@@ -143,10 +143,10 @@
 	//身份校验
 	
 	if(getCookie('is_member')==0){ //会员
-		$('.scanCode').show();
+		$('.scanCode').hide();
 		$('.substitute').hide();
-//		$('.buy-operation i').hide();
-//		$('.buy-operation em').css('width','100%');
+		$('.buy-operation i').hide();
+		$('.buy-operation em').css('width','100%');
 	}else if(getCookie('is_member')==1){ //员工
 		$('.scanCode').hide();
 		$('.substitute').show();
