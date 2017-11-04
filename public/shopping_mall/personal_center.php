@@ -23,13 +23,13 @@
 			<div class="account-info">
 				<div class="balance">
 					<em>¥</em>
-					<p>3888.00</p>
+					<p>0</p>
 					<span>余额（可提现）</span>
 				</div>
 				<div class="cashback">
 					<em>¥</em>
 					<p>563.00</p>
-					<span>当日返现</span>
+					<span>昨日返现</span>
 				</div>
 			</div>
 		</header>
@@ -89,6 +89,25 @@
   					
   				}else{
   					layer.msg(data.msg);
+  				}
+  			}
+  		});
+  		
+  		//获取用户基本信息
+  		$.ajax({
+  			type:"post",
+  			url:commonsUrl+"api/gxsc/user/profile"+versioninfos,
+  			data:{'ss':getCookie('openid')},
+  			success:function(data){
+  				if(data.code==1){
+  					console.log(data);
+  					if(data.result[0].balance==null || data.result[0].balance==''){
+  						$('.balance p').html('0');
+  					}else{
+  						$('.balance p').html(data.result[0].balance);
+  					}
+  				}else{
+  					layer.msg(data.msg)
   				}
   			}
   		});

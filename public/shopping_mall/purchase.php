@@ -16,7 +16,7 @@
 	<div class="wrapper">
 		<header>
 			<img src="images/edit.png" width="14px" class="edit-icon" />
-			<p class="address">收货地址：</p>
+			<p class="address">收货地址：<span></span></p>
 			<div class="user-name" ><img src="images/user-icon.png" width="13px"/><p></p></div>
 			<div class="user-phone" ><img src="images/telephone.png" width="15px"/><p></p></div>
 			<img src="images/car.png" width="103px" class="illustration" />								
@@ -30,35 +30,15 @@
 			<div class="commodity-align">
 				<div class="swiper-container">
 			        <div class="swiper-wrapper">
-			            <div class="swiper-slide">
+			            <!--<div class="swiper-slide">
 			            	<img src="images/zyyp.png" width="100%"/>
 			            	<p>¥388.00</p>
 			            	<span>*7</span>
-			            </div>
-			            <div class="swiper-slide">
-			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>¥388.00</p>
-			            	<span>*7</span>
-			            </div>
-			            <div class="swiper-slide">
-			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>¥388.00</p>
-			            	<span>*7</span>
-			            </div>
-			            <div class="swiper-slide">
-			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>¥388.00</p>
-			            	<span>*7</span>
-			            </div>
-			            <div class="swiper-slide">
-			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>¥388.00</p>
-			            	<span>*7</span>
-			            </div>
+			            </div>-->
 			        </div>
 			    </div>
 			    <div class="commodity-exp">
-			    	<p>共10件</p>
+			    	<p></p>
 			    	<img src="images/right-arrow.png" width="8"/>
 			    </div>
 			</div>	
@@ -103,30 +83,48 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-	/*Initialize Swiper*/
-	var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 3,
-        paginationClickable: true,
-        spaceBetween: 30,
-        freeMode: true
-    });
+	
+	var winW = $(window).width();
 	
 	//用户微信扫码付款
 	function scancode(){
-//		生成二维码
-        $('.qccode').qrcode({
-            width: 130, //宽度
-            height:130, //高度
-            text:'YSBTDDID_'  //任意内容
-        });
-        
-        layer.open({
-        	type: 1,
-        	title:false,
-        	closeBtn:false,
-        	shadeClose: false,
-        	content: $('#codemask')
-        })
+		var address = $('.address span').html();
+		var	mobile = $('.user-phone p').html();
+		var	name = $('.user-name p').html();
+		$.ajax({
+			type:'post',
+			url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
+			data:{
+				'address':address,
+				'flag':2,
+				'mobile':mobile,
+				'name':name,
+				'ss':getCookie('openid')
+			},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					
+					//		生成二维码
+			        $('.qccode').qrcode({
+			            width: 130, //宽度
+			            height:130, //高度
+			            text:commonsUrl+'shopping_mall/staff_order_details.php?order_id='+data.result.order_id  //任意内容
+			        });
+			        
+			        layer.open({
+			        	type: 1,
+			        	title:false,
+			        	closeBtn:false,
+			        	shadeClose: false,
+			        	content: $('#codemask')
+			        })
+				}else{
+					layer.msg(data.msg);
+				}
+			}
+		})
+  
 	}
 	
 	//替用户创建订单
@@ -139,11 +137,69 @@
 			content:$('.xxsk')
 		})
 	}
-	var t=JSON.parse(localStorage.getItem('moneyArr'));
-	console.log(t);
+	
+	//员工替会员购买
+	$('.confirm').click(function(){
+		var address = $('.address span').html();
+		var	mobile = $('.user-phone p').html();
+		var	name = $('.user-name p').html();
+		var	phone = $('.xxsk input').val();
+		if(testTel(phone)){
+			$.ajax({
+				type:'post',
+				url:commonsUrl + 'api/gxsc/employee/give/user/create/commodity/order' + versioninfos,
+				data:{
+					'address':address,
+					'flag':2,
+					'mobile':mobile,
+					'name':name,
+					'ss':getCookie('openid'),
+					'phone':phone
+				},
+				success:function(data){
+					if(data.code==1){
+						console.log(data);
+						layer.msg('提交成功');
+						setTimeout(function(){layer.closeAll();},1000);						
+					}else{
+						layer.msg(data.msg);
+						setTimeout(function(){layer.closeAll();},1000);
+					}
+				}
+			})
+		}else{
+			layer.msg('请填写正确的手机号')
+		}
+		
+	})
+	
+	
 //	提交订单
 	function submit(){
-		
+		var address = $('.address span').html();
+		var	mobile = $('.user-phone p').html();
+		var	name = $('.user-name p').html();
+		$.ajax({
+			type:'post',
+			url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
+			data:{
+				'address':address,
+				'flag':2,
+				'mobile':mobile,
+				'name':name,
+				'ss':getCookie('openid')
+			},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					layer.msg('提交成功');
+					setTimeout(function(){layer.closeAll();},1000);						
+				}else{
+					layer.msg(data.msg);
+					setTimeout(function(){layer.closeAll();},1000);
+				}
+			}
+		})
 	}
 	
 	//获取收货地址
@@ -156,9 +212,9 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
-					$('.address').append(data.result[0].address);
-					$('.user-name p').append(data.result[0].name);
-					$('.user-phone p').append(data.result[0].mobile);
+					$('.address span').html(data.result[0].address);
+					$('.user-name p').html(data.result[0].name);
+					$('.user-phone p').html(data.result[0].mobile);
 					$('header').attr('onclick',"lastpage("+$_GET['address_id']+")");
 					
 				}else{
@@ -182,9 +238,9 @@
 						//筛选默认地址
 						for(var i=0;i<data.result.length;i++){
 							if(data.result[i].is_default==1){
-								$('.address').append(data.result[i].address);
-								$('.user-name p').append(data.result[i].name);
-								$('.user-phone p').append(data.result[i].mobile);
+								$('.address span').html(data.result[i].address);
+								$('.user-name p').html(data.result[i].name);
+								$('.user-phone p').html(data.result[i].mobile);
 								$('header').attr('onclick',"lastpage("+data.result[i].address_id+")");
 							}
 						}
@@ -209,10 +265,42 @@
 		$('.scanCode').hide();
 		$('.substitute').show();
 	}
+	
+	var shoppingDetails=JSON.parse(localStorage.getItem('moneyArr'));
+	console.log(shoppingDetails);
+	var shoppingList = '',
+		totals = 0,
+		numbers = 0;
+	for(var i=0;i<shoppingDetails.length;i++){
+		shoppingList+='<div class="swiper-slide">'+
+        '	<img src="'+shoppingDetails[i].src+'" width="100%"/>'+
+        '	<p>¥'+shoppingDetails[i].price+'</p>'+
+        '	<span>x '+shoppingDetails[i].number+'</span>'+
+        '</div>';
+        
+        for(var j=0;j<parseInt(shoppingDetails[i].number);j++){
+        	numbers++;
+        	totals += parseFloat(shoppingDetails[i].price);
+        }
+        
+	}
+	$('.swiper-wrapper').html(shoppingList);
+	$('.swiper-slide img').height(winW*0.73/3-20);
+	$('.commodity-exp p').html('共'+numbers+'件');
+	$('.actual-payment span').html('¥'+totals.toFixed(2));
+	
+	/*Initialize Swiper*/
+	var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 3,
+        paginationClickable: true,
+        spaceBetween: 30,
+        freeMode: true
+   });
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
 		border-radius: 5px;
-	} 
+	}
+	
 </style>
 </html>
