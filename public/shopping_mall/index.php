@@ -62,7 +62,7 @@
 		$.ajax({
 			type:'post',
 			url: commonsUrl + 'api/gxsc/scan/this/phone/bind/openId' +versioninfos,
-			data:{'openid':getCookie("openid")},
+			data:{'openId':getCookie("openid")},
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
