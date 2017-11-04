@@ -104,7 +104,7 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
-					var tzurl = encodeURIComponent(commonsUrl+"shopping_mall/staff_order_details.php?base_order_id="+data.result.order_id);
+					var tzurl = encodeURIComponent(commonsUrl+"shopping_mall/staff_order_details.php");
 					//		生成二维码
 			        $('.qccode').qrcode({
 			            width: 130, //宽度
