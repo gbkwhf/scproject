@@ -106,22 +106,56 @@ class CreateGoodsCarController extends Controller{
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
         //首先判断该商品是否存在
-        $is_exist = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->first();
-        if(empty($is_exist)) { //如果为空，则表示商品不存在
+        $goods_info = \DB::table('ys_goods as a')->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
+            ->leftjoin('ys_goods_class as c','a.class_id','=','c.id')
+            ->select('a.id as goods_id','a.cost_price','a.supplier_id','a.name as goods_name','a.num','a.price','a.sales','b.image','c.first_id')
+            ->where('a.id',$request->goods_id)
+            ->where('a.state',1) //0下架1上架
+            ->groupBy('a.id')
+            ->first();
+
+        if(empty($goods_info)){ //该商品不存在
             return $this->setStatusCode(1042)->respondWithError($this->message);
         }
 
+
+        //接着判断该商品是否在购物车中
+        $is_exist = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->first();
         \DB::beginTransaction(); //开启事务
-        //接着判断加减，每次加减完成之后，需要把该用户的购物车中的商品总金额算出来，返回去
+        if(empty($is_exist)) { //如果为空，则表示商品不存在,则把该商品写入购物车即可
 
-        if($request->symbol == 1){ //加1
-            $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update(['number'=>$is_exist->number+1,'updated_at'=>\DB::Raw('Now()')]);
-        }elseif($request->symbol == 2){ //减1（如果本身就是1个，那么就没办法继续减了）
+            $http = getenv('HTTP_REQUEST_URL');
+            //改变图片链接，使其可以直接访问
+            $goods_info->image =  empty($goods_info->image) ? "" : $http. $goods_info->image;
+            //然后把收集到的数据插入数据库:购物车表
+            $update = \DB::table('ys_goods_car')->insert([
 
-            if($is_exist->number >= 2){ //只有数量超过2，才能保证减1的情况下，其数量还有1个
-                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update(['number'=>$is_exist->number-1,'updated_at'=>\DB::Raw('Now()')]);
-            }else{
-                $update = 1;
+                'user_id' => $user_id,
+                'goods_id' => $request->goods_id,
+                'goods_name' => $goods_info->goods_name,
+                'goods_price' => $goods_info->price, //商品定价
+                'cost_price' => $goods_info->cost_price,//成本价
+                'goods_url' => $goods_info->image,
+                'number' => 1, //第一次插入，数量为1
+                'supplier_id' => $goods_info->supplier_id,//供应商id
+                'first_class_id' => $goods_info->first_id,
+                'state'=>1,//1选中  0不选中
+                'created_at' => \DB::Raw('Now()'),
+                'updated_at' => \DB::Raw('Now()'),
+            ]);
+
+        }else{ //否则就直接更改数量
+
+            //接着判断加减，每次加减完成之后，需要把该用户的购物车中的商品总金额算出来，返回去
+            if($request->symbol == 1){ //加1
+                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update(['number'=>$is_exist->number+1,'updated_at'=>\DB::Raw('Now()')]);
+            }elseif($request->symbol == 2){ //减1（如果本身就是1个，那么就没办法继续减了）
+
+                if($is_exist->number >= 2){ //只有数量超过2，才能保证减1的情况下，其数量还有1个
+                    $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update(['number'=>$is_exist->number-1,'updated_at'=>\DB::Raw('Now()')]);
+                }else{
+                    $update = 1;
+                }
             }
         }
         if ($update) {
@@ -129,6 +163,7 @@ class CreateGoodsCarController extends Controller{
         }else {
             \DB::rollBack();
         }
+
 
        //最后我们计算该用户购物车中所有有效的记录的总价格(分：可返利总金额和不可返利总金额两种)
         $goods_info =  \DB::table('ys_goods_car')->where('user_id',$user_id)->where('state',1)->select('goods_price','number','first_class_id')->get();
