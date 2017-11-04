@@ -109,7 +109,7 @@
 			        $('.qccode').qrcode({
 			            width: 130, //宽度
 			            height:130, //高度
-			            text:commonsUrl+'shopping_mall/staff_order_details.php?order_id='+data.result.order_id  //任意内容
+			            text:commonsUrl+'shopping_mall/staff_order_details.php?base_order_id='+data.result.order_id  //任意内容
 			        });
 			        
 			        layer.open({
@@ -179,6 +179,7 @@
 		var address = $('.address span').html();
 		var	mobile = $('.user-phone p').html();
 		var	name = $('.user-name p').html();
+		//创建订单
 		$.ajax({
 			type:'post',
 			url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
@@ -192,11 +193,56 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
-					layer.msg('提交成功');
-					setTimeout(function(){layer.closeAll();},1000);						
+					//支付订单
+					$.ajax({
+						type:"post",
+						url:commonsUrl+"api/gxsc/pay/goods"+versioninfos,
+						data:{
+							'base_order_id':data.result.order_id,
+							'filling_type':3,
+							'open_id':getCookie('openid'),
+							'ss':getCookie('openid')
+						},
+						success:function(data){
+							if(data.code==1){
+								console.log(data);
+								data.result.timeStamp = data.result.timeStamp.toString();
+								retStr =data.result;
+								callpay();
+                                //调用微信JS api 支付
+                                function jsApiCall(){
+                                    WeixinJSBridge.invoke(
+                                        'getBrandWCPayRequest',
+                                        retStr,
+                                        function(res){
+                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                                //支付成功
+                                                location.href='my_orders.php';
+                                            }else{
+//												             alert(res.err_msg);
+                                            }
+                                        }
+                                    );
+                                }
+                                function callpay(){
+                                    if (typeof WeixinJSBridge == "undefined"){
+                                        if( document.addEventListener ){
+                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                                        }else if (document.attachEvent){
+                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                                        }
+                                    }else{
+                                        jsApiCall();
+                                    }
+                                }
+							}else{
+								layer.msg(data.msg);
+							}
+						}
+					});						
 				}else{
 					layer.msg(data.msg);
-					setTimeout(function(){layer.closeAll();},1000);
 				}
 			}
 		})
@@ -233,7 +279,7 @@
 					console.log(data);
 					if(data.result.length==0){
 						//去新增收货地址
-						$('header').html('<span style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
+						$('header').html('<span onclick="location.href=\'receiving_address.php\'" style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
 					}else{
 						//筛选默认地址
 						for(var i=0;i<data.result.length;i++){

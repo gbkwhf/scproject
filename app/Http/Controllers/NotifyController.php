@@ -24,6 +24,7 @@ class NotifyController extends Controller
         $result=$object->completePurchase();
 
         \Log::info('the '.$type.' notify  request_params is',$_REQUEST);
+        \Log::info(var_export($result,true));
 
         //验证失败
         if($result===false){
@@ -33,23 +34,62 @@ class NotifyController extends Controller
         //返回相关关订单信息
         if($result){
 
-    		$order=\App\OrderModel::where('id',$result['order_id'])->first();
-        	
-            if($result['price']<$order->price){
+            $order=\DB::table('ys_base_order')->where('id',$result['order_id'])->first();
+
+            $order_info = \DB::table('ys_base_order as a')
+                            ->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
+                            ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id')
+                            ->leftjoin('ys_goods as d','c.goods_id','=','d.id')
+                            ->select('a.require_amount','c.goods_id','c.num as buy_num','d.num as rest_num','d.sales')
+                            ->where('a.id',$result['order_id'])
+                            ->get();
+
+            if(empty($order_info) || empty($order)){
+                \Log::info('the order not exist');
+                exit;
+            }
+            if($result['price']<$order->require_amount){
                 \Log::info('the '.$type.' maybe hack');
                 exit;
             }
-            DB::beginTransaction(); //开启事务
-            //成功更新订单
-            
-            
-            $updateOrder=\App\OrderModel::where('id',$result['order_id'])->update(array('state'=>1,'payment_at'=>date('Y-m-d H:i:s',time())));
-			//商品销量+1
-			//商品库存-1
-			\App\GoodsModel::where('id',$order->goods_id)->increment('sales',$order['num']);
-			\App\GoodsModel::where('id',$order->goods_id)->decrement('num',$order['num']);
 
-            if ($updateOrder) {
+            $types_define=array_flip(config('clinic-config.filling_type'));
+            $base = [
+                'pay_time'=>date("Y-m-d H:i:s"),
+                'pay_type'=>$types_define[$type],//付款方式:1微信，2线下支付 3微信js
+                'state' => 1,//订单状态0未付款，1，已付款
+                'amount'=>$result['price'],//实际收到的总金额
+            ];
+
+            DB::beginTransaction(); //开启事务
+            //更新主订单信息
+            $update1 = \DB::table('ys_base_order')->where('id',$result['order_id'])->update($base);
+
+            //更新商品销量和库存
+            $update_arr = [];
+            foreach($order_info as $k=>$v){
+
+                $update = \DB::table('ys_goods')->where('id',$v->goods_id)->update([
+                    'num'=>$v->rest_num - $v->buy_num,
+                    'sales'=>$v->sales + $v->buy_num,
+                    'updated_at'=>\DB::Raw('Now()')
+                ]);
+                array_push($update_arr,$update);
+            }
+
+            //下面这个循环的目的是为了保证使用循环更新时的每一项都成功
+            foreach($update_arr as $k=>$v){
+                if(!$v){
+                    \DB::rollBack();
+                    \Log::info('goodsorder_fail');
+                    return $result['return_msg _fail'];
+                }
+            }
+
+            /**
+             * 最后提交事务，并且返回主订单id
+             */
+            if ($update1) {
                 DB::commit();
                 \Log::info('goodsorder_success');
                 return $result['return_msg_ok'];
