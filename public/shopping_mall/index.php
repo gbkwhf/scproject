@@ -60,7 +60,7 @@
 	function checkBind(){
 		//验证openid是否绑定
 		$.ajax({
-			type:'get',
+			type:'post',
 			url: commonsUrl + 'api/gxsc/scan/this/phone/bind/openId' +versioninfos,
 			data:{'openid':getCookie("openid")},
 			success:function(data){
