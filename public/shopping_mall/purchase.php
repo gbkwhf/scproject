@@ -206,6 +206,36 @@
 						success:function(data){
 							if(data.code==1){
 								console.log(data);
+								data.result.timeStamp = data.result.timeStamp.toString();
+								retStr =data.result;
+								callpay();
+                                //调用微信JS api 支付
+                                function jsApiCall(){
+                                    WeixinJSBridge.invoke(
+                                        'getBrandWCPayRequest',
+                                        retStr,
+                                        function(res){
+                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                                //支付成功
+                                                location.href='my_orders.php';
+                                            }else{
+//												             alert(res.err_msg);
+                                            }
+                                        }
+                                    );
+                                }
+                                function callpay(){
+                                    if (typeof WeixinJSBridge == "undefined"){
+                                        if( document.addEventListener ){
+                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                                        }else if (document.attachEvent){
+                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                                        }
+                                    }else{
+                                        jsApiCall();
+                                    }
+                                }
 							}else{
 								layer.msg(data.msg);
 							}
