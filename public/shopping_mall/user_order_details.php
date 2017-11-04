@@ -51,7 +51,7 @@
 				<li>支付方式：<span>线下支付</span></li>
 			</ul>-->
 		</div>
-		<a href="javascript:;" class="submit">确认收款，提交订单</a>
+		<!--<a href="javascript:;" class="submit">确认收款，提交订单</a>-->
 	</div>
 </body>
 <script src="js/jquery.min.js"></script>
@@ -61,76 +61,58 @@
 <script>
 	
 	var winW = $(window).width();
-	
-	//获取openid
+
+	//获取订单详情
 	$.ajax({
-		type:"get",
-		url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
+		type:"post",
+		url:commonsUrl+"api/gxsc/get/commodity/sub_order/info"+versioninfos,
+		data:{
+			'ss':getCookie('openid'),
+			'sub_order_id':$_GET['sub_order_id']
+		},
 		success:function(data){
 			if(data.code==1){
 				console.log(data);
-				setCookie("openid",data.result.openId);
-				if(data.result.is_member==0){
-					layer.msg('抱歉，您不是员工哦');
-					setTimeout(closewin(),1000)
+				html='';
+				html+='<h4>订单号：'+data.result.sub_order_id+'</h4>'+
+				'<div class="main">'+
+				'	<div class="user-info">'+
+				'		<p>'+data.result.name+'<span>'+data.result.mobile+'</span></p>'+
+				'		<em><img src="images/address-icon.png" width="10" />'+data.result.address+'</em>'+
+				'	</div>'+
+				'	<ul class="order-list">';
+				for(var i=0;i<data.result.goods_list.length;i++){
+					html+='		<li>'+
+					'			<div class="picbox">'+						
+					'				<img src="'+data.result.goods_list[i].image+'" width="100%"/>'+
+					'			</div>'+
+					'			<div class="commodity-info">'+
+					'				<em>'+data.result.goods_list[i].goods_name+'</em>'+
+					'				<div class="price-info">'+
+					'					<p>¥'+data.result.goods_list[i].goods_price+'</p>'+
+					'					<span>x '+data.result.goods_list[i].num+'</span>'+
+					'				</div>'+
+					'			</div>'+
+					'		</li>';
 				}
-				setCookie("is_member",data.result.is_member);
-				//获取订单详情
-				$.ajax({
-					type:"post",
-					url:commonsUrl+"api/gxsc/get/commodity/base_order/info"+versioninfos,
-					data:{
-						'ss':getCookie('openid'),
-						'base_order_id':$_GET['base_order_id']
-					},
-					success:function(data){
-						if(data.code==1){
-							console.log(data);
-							html='';
-							html+='<h4>订单号：'+data.result.base_order_id+'</h4>'+
-							'<div class="main">'+
-							'	<div class="user-info">'+
-							'		<p>'+data.result.name+'<span>'+data.result.mobile+'</span></p>'+
-							'		<em><img src="images/address-icon.png" width="10" />'+data.result.address+'</em>'+
-							'	</div>'+
-							'	<ul class="order-list">';
-							console.log(data.result.info);
-							for(var i=0;i<data.result.info.length;i++){
-								for(var j=0;j<data.result.info[i].goods_list.length;j++){
-									html+='		<li>'+
-									'			<div class="picbox">'+						
-									'				<img src="'+data.result.info[i].goods_list[j].image+'" width="100%"/>'+
-									'			</div>'+
-									'			<div class="commodity-info">'+
-									'				<em>'+data.result.info[i].goods_list[j].goods_name+'</em>'+
-									'				<div class="price-info">'+
-									'					<p>¥'+data.result.info[i].goods_list[j].goods_price+'</p>'+
-									'					<span>x '+data.result.info[i].goods_list[j].num+'</span>'+
-									'				</div>'+
-									'			</div>'+
-									'		</li>';
-								}
-							}
-							html+='	</ul>'+
-							'	<p class="total">需线下收款：<span>¥'+data.result.price+'</span></p>'+
-							'</div>'+
-							'<ul class="orderinfo-list">'+
-							'	<li>下单时间：<span>'+data.result.create_time+'</span></li>'+
-							'	<li>支付方式：<span>线下支付</span></li>'+
-							'</ul>';
-							$('.order-details').html(html);
-							
-							$('.commodity-info').width(winW-169);
-							
-						}else{
-							layer.msg(data.msg);
-						}
-					}
-				});
+				html+='	</ul>'+
+				'	<p class="total">总价：<span>¥'+data.result.price+'</span></p>'+
+				'</div>'+
+				'<ul class="orderinfo-list">'+
+				'	<li>下单时间：<span>'+data.result.create_time+'</span></li>';
+				if(data.result.pay_type==3){
+					html+='	<li>支付方式：<span>微信</span></li>';
+				}else if(data.result.pay_type==2){
+					html+='	<li>支付方式：<span>线下支付</span></li>';
+				}
+				html+='</ul>';
+				$('.order-details').html(html);
+				
+				$('.commodity-info').width(winW-169);
 				
 			}else{
-                layer.msg(data.msg);
-            }
+				layer.msg(data.msg);
+			}
 		}
 	});
 	

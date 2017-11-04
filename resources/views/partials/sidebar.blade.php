@@ -25,16 +25,10 @@
         <ul class="sidebar-menu">
             <li @if (in_array($current_route,['admin','member/memberedit'])) class="active" @endif @if (!in_array(1,$power_arr)) style="display:none"  @endif  ><a href="{{ url('/admin') }}"><i class='fa fa-dashboard'></i> <span>数据统计</span></a></li>
             <li @if (in_array($current_route,['memberlist','member/memberedit'])) class="active" @endif  @if (!in_array(2,$power_arr)) style="display:none"  @endif  ><a href="{{ url('memberlist') }}"><i class='fa fa-table'></i> <span>会员列表</span></a></li>
-
-            
-            
-            
-            
-            
-            
             <li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(3,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplierlist') }}"><i class="fa fa-edit"></i><span>供应商列表</span></a></li>
-            <li @if (in_array($current_route,['agencylist'])) class="active" @endif @if (!in_array(3,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agencylist') }}"><i class="fa fa-edit"></i><span>经销商列表</span></a></li>
-            <li @if (in_array($current_route,['goodslist'])) class="active" @endif @if (!in_array(3,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goodslist') }}"><i class="fa fa-edit"></i><span>商品列表</span></a></li>
+            <li @if (in_array($current_route,['agencylist'])) class="active" @endif @if (!in_array(4,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agencylist') }}"><i class="fa fa-edit"></i><span>经销商列表</span></a></li>
+            <li @if (in_array($current_route,['goodslist'])) class="active" @endif @if (!in_array(5,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goodslist') }}"><i class="fa fa-edit"></i><span>商品列表</span></a></li>
+            <li @if (in_array($current_route,['goodslist'])) class="active" @endif @if (!in_array(6,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
 
             
 
