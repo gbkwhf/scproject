@@ -135,8 +135,6 @@ class JsApiPay  extends Controller
 		//取出openid
 		$data = json_decode($res,true);
 
-        print_r($data);die();
-
 		$this->data = $data;
 		$openid = $data['openid'];
 		return $openid;
