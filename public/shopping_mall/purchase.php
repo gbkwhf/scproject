@@ -109,7 +109,7 @@
 			        $('.qccode').qrcode({
 			            width: 130, //宽度
 			            height:130, //高度
-			            text:commonsUrl+'shopping_mall/staff_order_details.php?order_id='+data.result.order_id  //任意内容
+			            text:commonsUrl+'shopping_mall/staff_order_details.php?base_order_id='+data.result.order_id  //任意内容
 			        });
 			        
 			        layer.open({
@@ -179,6 +179,7 @@
 		var address = $('.address span').html();
 		var	mobile = $('.user-phone p').html();
 		var	name = $('.user-name p').html();
+		//创建订单
 		$.ajax({
 			type:'post',
 			url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
@@ -192,8 +193,24 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
-					layer.msg('提交成功');
-					setTimeout(function(){location.href='my_orders.php'},1000);						
+					//支付订单
+					$.ajax({
+						type:"post",
+						url:commonsUrl+"api/gxsc/pay/goods"+versioninfos,
+						data:{
+							'base_order_id':data.result.order_id,
+							'filling_type':3,
+							'open_id':getCookie('openid'),
+							'ss':getCookie('openid')
+						},
+						success:function(data){
+							if(data.code==1){
+								console.log(data);
+							}else{
+								layer.msg(data.msg);
+							}
+						}
+					});						
 				}else{
 					layer.msg(data.msg);
 				}
