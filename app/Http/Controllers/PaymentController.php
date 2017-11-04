@@ -22,62 +22,51 @@ class PaymentController extends Controller
 
     	$validator = $this->setRules([
     			'ss' => 'required|string',
-    			'order_id' => 'required|string',  //订单号
-    			'filling_type' => 'required|in:1,2,3,4,5',    //支付方式 1支付宝2微信
+    			'base_order_id' => 'required|string',  //主订单id
+    			'filling_type' => 'required|in:1,3',    //支付方式 1微信 2线下支付 3微信js
+                'open_id' => 'string'//公众号id
     			])
     			->_validate($request->all());
-    	if (!$validator) throw new ValidationErrorException;
-    	$user_id=\App\Session::where('session',$request->ss)->first()->user_id;
+    	if (!$validator) return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        if($request->filling_type == 3){ //当支付方式为：微信js时候，open_id必填
+            if(empty($request->open_id)){
+                return $this->setStatusCode(9999)->respondWithError($this->message);
+            }
+        }
+
+    	$user_id= $this->getUserIdBySession($request->ss); //获取用户id;
     	//查询订单
-    	$order=\App\OrderModel::where('id',$request->order_id)->where('user_id',$user_id)->first();
+    	$order=\DB::table('ys_base_order')->where('id',$request->base_order_id)->where('user_id',$user_id)->first();
     	if(empty($order)){ //订单不存在
     		return $this->setStatusCode(6100)->respondWithError($this->message);
     	}
-    	if($order->state!=0){
+    	if($order->state == 1){ //订单已支付
     		return $this->setStatusCode(6101)->respondWithError($this->message);
     	} 
     	//支付方式
     	$filling_type=config('clinic-config.filling_type.'.$request->filling_type);
     	
 
-    	 
-
-//     	//测试支付成功
-//     	$updateOrder=\App\OrderModel::where('id',$request->order_id)->update(array('payment_by'=>$request->filling_type,'state'=>1,'payment_at'=>date('Y-m-d H:i:s',time())));
-//     	//商品销量+1
-//     	//商品库存-1
-//     	\App\GoodsModel::where('id',$order->goods_id)->increment('sales',$order->num);
-//     	\App\GoodsModel::where('id',$order->goods_id)->decrement('num',$order->num);
-//     	return $this->respond($this->format('',true));
-//     	exit;
-
-    	 
     	$http=$_SERVER['SERVER_PORT'] == 443?'https://':'http://';
 
     	//吊起支付
     	$obj=new \Acme\Repository\UnitePay($filling_type,'goods_order');
-    	if ($request->input("filling_type")==3){
+    	if ($request->input("filling_type")==3){ //微信js（公众号支付）
     		$open_id=$request->input("open_id");
     		$wechatJsParam=["open_id"=>$open_id];
-    	}elseif($request->input("filling_type")==4){
+    	}elseif($request->input("filling_type")==4){ //网站支付宝支付
     		$wechatJsParam=['return_url'=>$http.$_SERVER['HTTP_HOST'].'/website/personal_center.php?queue=4'];
     	}else{
     		$wechatJsParam=[];
     	}
     	//支付
-    	$response=$obj->purchase($request->order_id,config('clinic-config.default_service_name'),$order->amount,$wechatJsParam);
-
+    	$response=$obj->purchase($request->base_order_id,config('clinic-config.default_service_name'),$order->require_amount,$wechatJsParam);
     	//失败提示
     	if($response===false)  return $this->setStatusCode(9998)->respondWithError($this->message);
     
     	\Log::info('the '.$filling_type.' url is', ['res'=>$response]);
-    	
 
-    
-    	//成功更新订单
-    	$order=\App\OrderModel::where('id',$request->order_id)->update(array('payment_by'=>$request->filling_type));
-    	 
-    
     	return $this->respond($this->format($response));
     
     

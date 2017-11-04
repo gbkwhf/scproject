@@ -70,7 +70,6 @@ EgPCS436VV01gGCI3/ECQGc2GFAcBkRLXeyztWTskj82HaDkHI2pLQ9w6lpdJCG0
 	        'appId' => 'wx97bfadf3a81d8206',
 	        'mchId' =>'1491005162',
 	        'apiKey' => '07kmwATHWNJae6J2QtB5OJSKxlGwdNR2',
-	        //'tradeType'=>'APP'
 	        ]
         ],  
         /**
