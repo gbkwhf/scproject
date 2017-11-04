@@ -69,6 +69,7 @@
 		data:{},
 		success:function(data){
 			if(data.code==1){
+				alert(data.result.openId);
 				console.log(data);
 				setCookie("openid",data.result.openId);
 				if(data.result.is_member==0){
