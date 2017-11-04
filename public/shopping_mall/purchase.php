@@ -267,7 +267,7 @@
 	}
 	
 	var shoppingDetails=JSON.parse(localStorage.getItem('moneyArr'));
-	console.log(shoppingDetails);
+	console.log(shoppingDetails)
 	var shoppingList = '',
 		totals = 0,
 		numbers = 0;

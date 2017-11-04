@@ -61,7 +61,7 @@
 				dataType: 'json',
 				url: commonsUrl + 'api/gxsc/get/commodity/info/' + goods_id + versioninfos,
 				data: {
-					"goods_id": goods_id
+					"goods_id": goods_id//商品id
 				},
 				success: function(data) {
 					console.log(data)
@@ -108,6 +108,7 @@
 					success: function(data) { //请求成功
 						console.log(data);
 						shopCarts();
+						layer.msg("加入购物车成功,请点击购物车进行查看！");
 					}
 				});
 			})
