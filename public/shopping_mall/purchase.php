@@ -32,7 +32,7 @@
 			        <div class="swiper-wrapper">
 			            <!--<div class="swiper-slide">
 			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>￥388.00</p>
+			            	<p>¥388.00</p>
 			            	<span>*7</span>
 			            </div>-->
 			        </div>
@@ -52,7 +52,7 @@
 			</ul>
 		</div>
 		<footer>
-			<p class="actual-payment">实付款：<span>￥3688.00</span></p>
+			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
 			<div class="buy-operation">
 				<p onclick="scancode()" class="scanCode">进店扫码<span>到门店付款</span></p>
 				<p onclick="createOrder()" class="substitute" style="display: none;"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>
@@ -143,10 +143,10 @@
 	//身份校验
 	
 	if(getCookie('is_member')==0){ //会员
-		$('.scanCode').hide();
+		$('.scanCode').show();
 		$('.substitute').hide();
-		$('.buy-operation i').hide();
-		$('.buy-operation em').css('width','100%');
+//		$('.buy-operation i').hide();
+//		$('.buy-operation em').css('width','100%');
 	}else if(getCookie('is_member')==1){ //员工
 		$('.scanCode').hide();
 		$('.substitute').show();
@@ -160,7 +160,7 @@
 	for(var i=0;i<shoppingDetails.length;i++){
 		shoppingList+='<div class="swiper-slide">'+
         '	<img src="'+shoppingDetails[i].src+'" width="100%"/>'+
-        '	<p>￥'+shoppingDetails[i].price+'</p>'+
+        '	<p>¥'+shoppingDetails[i].price+'</p>'+
         '	<span>x '+shoppingDetails[i].number+'</span>'+
         '</div>';
         
@@ -173,7 +173,7 @@
 	$('.swiper-wrapper').html(shoppingList);
 	$('.swiper-slide img').height(winW*0.73/3-20);
 	$('.commodity-exp p').html('共'+numbers+'件');
-	$('.actual-payment span').html('￥'+totals.toFixed(2));
+	$('.actual-payment span').html('¥'+totals.toFixed(2));
 	
 	/*Initialize Swiper*/
 	var swiper = new Swiper('.swiper-container', {
