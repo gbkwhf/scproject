@@ -669,7 +669,22 @@ class AuthController extends Controller
         $is_employee = \DB::table('ys_employee')->where('user_id',$user_id)->first();
         $member = empty($is_employee) ? 0 : 1; //0会员  1员工
 
-        $params[] = array(
+
+        //查一下昨日返利的金额
+        $date = date("Y-m-d",strtotime("-1 day"));
+
+        $res = \DB::table('ys_bills')->where('user_id',$user_id)->where('created_at','like','%'.$date.'%')->get();
+
+        if(empty($res)){
+            $return_money = 0;
+        }else{
+            $return_money = 0;
+            foreach($res as $k=>$v){
+                $return_money += $v->amount;
+            }
+        }
+
+        $params = [
             'user_id'=>	$user_id,
             'mobile'=>$profile->mobile,
             'sex_id'=>$profile->sex,
@@ -678,8 +693,10 @@ class AuthController extends Controller
             'birthday'=>substr($profile->birthday,0,10),
             'thumbnail_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.'thu_'.$profile->image,
             'source_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.$profile->image,
-            'is_member'=>$member
-        );
+            'is_member'=>$member,
+            'balance'=>is_null($profile->balance) ? 0 : $profile->balance, //余额
+            'yesterday_return_money'=>$return_money //昨日返利
+        ];
         return $this->respond($this->format($params));
 //
 //        $profile = \DB::table('ys_member')->where('user_id',$user_id)->first();

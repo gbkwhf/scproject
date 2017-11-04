@@ -63,15 +63,9 @@ class UnitePay
         $type=$this->payWay; //alipay
 
         //获取业务路由
-        $route=config('notify-url.'.$this->businessType); //ysbt::notify-recharge
-        $notify=route($route,['type'=>$type]); //http://127.0.0.1/ysbt/public/api/v1/ysbt-recharge-pay-notify/alipay
+        $route=config('notify-url.'.$this->businessType); //ys::goods_notify
+        $notify=route($route,['type'=>$type]); //http://127.0.0.1/gongxiangshangcheng/public/api/gxsc/ys-goods-notify/wechatpay_js
 
-//        Array
-//        (
-//            [notifyUrl] => http://127.0.0.1/ysbt/public/api/v1/ysbt-recharge-pay-notify/alipay
-//        )
-
-        //echo  $order_id."---------".$title."--------------".$money;die(); //929671475892179442---------充值--------------1
         return  $this->$type($order_id,$title,$money,array_merge(['notifyUrl'=>$notify],$extend));
     }
 

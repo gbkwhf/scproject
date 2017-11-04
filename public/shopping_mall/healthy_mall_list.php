@@ -27,10 +27,16 @@
         </ul>
     </div>
 </div>
+<!--购物车-->
+<div class="shopping-cart" onclick="location.href='shopCart.php'">
+	<img src="images/shopping-cart.png"/>
+	<span></span>
+</div>
 </body>
-	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="js/config.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/config.js"></script>
 	<script src="js/jquery.min.js"></script>
+	<script src="js/layer/layer.js"></script>
 	<script>
 	    
 			
@@ -74,7 +80,9 @@
 				        
 				        levelList($(this).attr("second_id"));
 				    });
-	    		}
+	    		}else{
+                    layer.msg(data.msg);
+                }
 	    	}
 	    });
 	    
@@ -91,9 +99,10 @@
 		    			console.log(data);
 		    			html='';
 		    			if(data.result.length==0){
-		    				$('.right_content ul').html('暂无商品,敬请期待!');
-		    				$('.right_content ul').css({'line-height':winH-33+'px','text-align':'center','color':'#333'});
+		    				$('.right_content').html('<p>暂无商品,敬请期待!</p>');
+		    				$('.right_content p').css({'line-height':winH-33+'px','text-align':'center','color':'#333'});
 		    			}else{
+		    				html+='<ul>';
 			    			for(var i=0;i<data.result.length;i++){
 			    				html+='<li goods_id="'+data.result[i].goods_id+'" onclick="location.href=\'shopDetails.php?goods_id='+data.result[i].goods_id+'\'">'+
 					                '<img src="'+data.result[i].image+'" alt="">'+
@@ -101,11 +110,36 @@
 					                '<i>¥'+data.result[i].price+'</i>'+
 					            '</li>';
 			    			}
-			    			$('.right_content ul').html(html);
+			    			html+='</ul>';
+			    			$('.right_content').html(html);
 						}
-		    		}
+		    		}else{
+	                    layer.msg(data.msg);
+	                }
 		    	}
 			});
 	  	}
+	  	
+	  	//获取购物车中的商品数量
+  		$.ajax({
+  			type: "post",
+  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, 
+  			data: {
+  				"ss": getCookie('openid')
+  			},
+  			success: function(data) {
+  				if(data.code == 1) { //请求成功
+  					console.log(data);
+  					var numberShop = 0;
+  					for(var i=0;i<data.result.info.length;i++){
+						numberShop += parseInt(data.result.info[i].number) ;
+  					}
+					$('.shopping-cart span').html(numberShop);
+  					
+  				}else{
+  					layer.msg(data.msg);
+  				}
+  			}
+  		});
 	 </script>
 </html>

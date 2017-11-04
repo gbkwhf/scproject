@@ -83,9 +83,9 @@ Route::group(['prefix' => 'api/gxsc'], function () {
 	Route::get('getorderstate/{order_id}','PaymentController@getOrderState');
 
 	//商品订单支付回调
-    Route::any('stj-goods-notify/{type}',['as'=>'stj::goods_notify','uses'=>'NotifyController@goodsNotify']);
+    Route::any('ys-goods-notify/{type}',['as'=>'ys::goods_notify','uses'=>'NotifyController@goodsNotify']);
     //服务订单支付回调
-    Route::any('stj-service-notify/{type}',['as'=>'stj::service_notify','uses'=>'NotifyController@serviceNotify']);
+//    Route::any('ys-service-notify/{type}',['as'=>'ys::service_notify','uses'=>'NotifyController@serviceNotify']);
 
 
 });
@@ -96,13 +96,14 @@ Route::group(['prefix' => 'api/gxsc'], function () {
 
 Route::group([
 
-    'prefix' => 'api/gxsc', 'middleware'=> ['check.session:stj_session_info']
+    'prefix' => 'api/gxsc', 'middleware'=> ['check.session:ys_session_info']
 
 ],function () {
 
+         //支付购买的商品
          Route::post('pay/goods', 'PaymentController@payGoodsOrder');
 
-         Route::post('pay/service', 'PaymentController@payServiceOrder');
+//         Route::post('pay/service', 'PaymentController@payServiceOrder');
 
 });
 

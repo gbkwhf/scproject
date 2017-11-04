@@ -65,20 +65,57 @@
 					<img src="images/health_shoping.png"/>
 					<em>健康商城</em>
 				</li>
-				<li onclick="location.href='http://ysbt.kospital.com/wx/index.php'">
+				<li onclick="waitting()">
 					<img src="images/linyi_shop.png"/>
 					<em>聆医管</em>
 				</li>
-				<li style="margin-right:9px;">
+				<li style="margin-right:9px;" onclick="waitting()">
 					<img src="images/life.png"/>
 					<em>生活缴费</em>
 				</li>
-				<li>
+				<li onclick="waitting()">
 					<img src="images/Customer.png"/>
 					<em>售后交流</em>
 				</li>
 			</ul>
 			
 		</div>
+		<!--购物车-->
+		<div class="shopping-cart" onclick="location.href='shopCart.php'">
+			<img src="images/shopping-cart.png"/>
+			<span></span>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/layer/layer.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/config.js"></script>
+		<script type="text/javascript">
+			
+			function waitting(){
+				layer.msg('暂未开通，敬请期待哦！')
+			}
+			
+			//获取购物车中的商品数量
+	  		$.ajax({
+	  			type: "post",
+	  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, 
+	  			data: {
+	  				"ss": getCookie('openid')
+	  			},
+	  			success: function(data) {
+	  				if(data.code == 1) { //请求成功
+	  					console.log(data);
+	  					var numberShop = 0;
+	  					for(var i=0;i<data.result.info.length;i++){
+							numberShop += parseInt(data.result.info[i].number) ;
+	  					}
+						$('.shopping-cart span').html(numberShop);
+	  					
+	  				}else{
+	  					layer.msg(data.msg);
+	  				}
+	  			}
+	  		});
+		</script>
 	</body>
 </html>

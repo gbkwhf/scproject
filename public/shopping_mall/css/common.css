@@ -3,6 +3,7 @@
 	padding:0;
 }
 html, body {
+	
 }
 div,li,a{
 	display: block;
@@ -53,4 +54,38 @@ a:active{
 	width: 49%;
 	color: #9c9c9c;
 	border-right: 1px solid #e6e6e6;
+}
+
+/*悬浮购物车*/
+.shopping-cart{
+	position: relative;
+	position: fixed;
+	bottom: 20%;
+	right: 15px;
+	background:rgba(102,102,102,0.8);
+	padding: 7px;
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
+	box-shadow: 0px 0px 10px rgba(247,137,72,0.5);
+}
+.shopping-cart img{
+	display: block;
+	width: 100%;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+.shopping-cart span{
+	background: rgba(247,137,72,1);
+	color: #fff;
+	line-height: 14px;
+	min-width: 14px;
+	font-size: 12px;
+	border-radius: 17px;
+	transform: scale(.9);
+	text-align: center;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	padding: 1px 3px 3px;
 }

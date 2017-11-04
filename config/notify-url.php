@@ -4,7 +4,7 @@
  */
 return [
     //支付回调路由
-    'goods_order'=>'stj::goods_notify',
-    'service_order'=>'stj::service_notify',
+    'goods_order'=>'ys::goods_notify',
+    'service_order'=>'ys::service_notify',
 
 ];

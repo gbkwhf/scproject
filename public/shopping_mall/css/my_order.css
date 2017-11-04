@@ -31,17 +31,61 @@ html,body{
 	overflow: hidden;
 	padding-bottom: 10px;	
 }
-.commodity-list li img{
-	display: block;
-	float: left;
-	border: 1px solid #e6e6e6;
+.commodity-list li .picbox {
+    border: 1px solid #e6e6e6;
+    margin-right: 8px;
+    width: 89px;
+    height: 89px;
+    background: #f6f2f3;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    float: left;
 }
-.commodity-list li p{
-	float: left;
-	color: #333;
-	font-size: 13px;
-	padding-left: 10px;
-	line-height: 1.5em;
+.picbox img {
+    display: block;
+    max-height: 89px;
+    min-height: 65px;
+}
+.commodity-info {
+    float: left;
+}
+.commodity-info em {
+    font-style: normal;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.5em;
+    display: block;
+    margin: 8px 0px 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    min-height: 56px;
+}
+.price-info {
+    overflow: hidden;
+    padding-top: 4px;
+}
+.price-info p {
+    float: left;
+    color: #999;
+    font-size: 16px;
+}
+.price-info span {
+    float: right;
+    color: #999;
+    font-size: 13px;
+    display: block;
+    padding-top: 2px;
 }
 .summary{
 	overflow: hidden;
@@ -69,7 +113,7 @@ html,body{
 	font-size: 16px;
 }
 .state-box{
-	background: #88c5be;
+	background: #ccc;
 	width: 50px;
 	position: absolute;
 	right: -10px;

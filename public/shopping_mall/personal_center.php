@@ -18,18 +18,18 @@
 				<div class="head-portrait">
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
-				<p>用户昵称</p>
+				<p></p>
 			</div>
 			<div class="account-info">
 				<div class="balance">
 					<em>¥</em>
-					<p>3888.00</p>
+					<p>0</p>
 					<span>余额（可提现）</span>
 				</div>
 				<div class="cashback">
 					<em>¥</em>
 					<p>563.00</p>
-					<span>当日返现</span>
+					<span>昨日返现</span>
 				</div>
 			</div>
 		</header>
@@ -38,22 +38,79 @@
 				我的订单
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="location.href='invitation.php'">
+			<!--<li onclick="location.href='invitation.php'">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
-			</li>
+			</li>-->
 		</ul>
 	</div>
-	
+	<!--购物车-->
+	<div class="shopping-cart" onclick="location.href='shopCart.php'">
+		<img src="images/shopping-cart.png"/>
+		<span></span>
+	</div>
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-	
+		//获取个人信息
+		$.ajax({
+			type:'post',
+			url:commonsUrl+ 'api/gxsc/get/user/weixin/info' +versioninfos,
+			data:{'ss':getCookie('openid')},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);					
+					$('.head-portrait img').attr('src',data.result.headimgurl);
+					$('.user-info p').html(data.result.nickname);
+				}else{
+  					layer.msg(data.msg);
+  				}
+			}
+		})
 		
-	
+		//获取购物车中的商品数量
+  		$.ajax({
+  			type: "post",
+  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, 
+  			data: {
+  				"ss": getCookie('openid')
+  			},
+  			success: function(data) {
+  				if(data.code == 1) { //请求成功
+  					console.log(data);
+  					var numberShop = 0;
+  					for(var i=0;i<data.result.info.length;i++){
+						numberShop += parseInt(data.result.info[i].number) ;
+  					}
+					$('.shopping-cart span').html(numberShop);
+  					
+  				}else{
+  					layer.msg(data.msg);
+  				}
+  			}
+  		});
+  		
+  		//获取用户基本信息
+  		$.ajax({
+  			type:"post",
+  			url:commonsUrl+"api/gxsc/user/profile"+versioninfos,
+  			data:{'ss':getCookie('openid')},
+  			success:function(data){
+  				if(data.code==1){
+  					console.log(data);
+  					if(data.result[0].balance==null || data.result[0].balance==''){
+  						$('.balance p').html('0');
+  					}else{
+  						$('.balance p').html(data.result[0].balance);
+  					}
+  				}else{
+  					layer.msg(data.msg)
+  				}
+  			}
+  		});
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

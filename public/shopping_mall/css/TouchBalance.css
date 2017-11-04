@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{
+	min-width: 320px;
+	max-width: 640px;
+	margin: 0 auto;
+	background-color: #f3f5f7;
+}
+img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
+input[type="button"]{-webkit-appearance: none;}
+/*----------申请提现---------*/
+.destoonHead{
+	width: 100%;
+	height: 35px;
+	background-color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+	font-size: 16px;
+	color: #333333;
+}
+
+.record{
+	
+	width: 20%;
+	float: right;
+	text-align: center;
+	line-height: 38px;
+	/*background-color: darkolivegreen;*/
+	color: #333333;
+	
+}
+.purse{
+	width: 100%;
+	height: 236px;
+	/*background: url(../images/purse.png) no-repeat;
+	background-size: 50% 80%;
+	background-color: #f3f5f7;
+	background-position: 50% 100%;*/
+	background-color: #f3f5f7;
+	overflow: hidden;
+}
+.purse img{width: 115px;height: 145px;margin: 0 auto;margin-top: 85px;}
+.purseBox{
+	text-align: center;
+}
+.bance{
+	font-size: 16px;
+	color: #333333;
+	padding-top: 31px;
+}
+.banceNum{
+	font-size: 26px;
+	color: #000000;
+	padding-top: 18px;
+	font-weight: bold;
+}
+.totalMoney{
+	color: #999999;
+	padding-left: 62px;
+	padding-top: 45px;
+}
+.desBtn{
+	width: 292px;
+	height: 44px;
+	background-color: #59c7ae;
+	text-align: center;
+	line-height: 44px;
+	color: #ffffff;
+	margin: 0 auto;
+	border-radius: 20px;
+	margin-top: 10px;
+}
