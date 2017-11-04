@@ -97,7 +97,7 @@
   	setTimeout(function() {
   			$('.deleteImg').click(function() {
   					var tt = $(this).parent().parent().parent().parent().parent();
-  					var car_id = $(this).parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
+  					var car_id = $(this).parent().parent().parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
   					//点击删除按钮出现的弹框
   					var Layer = layer.open({
   						type: 1,
