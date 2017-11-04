@@ -110,7 +110,7 @@ class JsApiPay  extends Controller
 	 * 
 	 * @return openid
 	 */
-/*
+
 	public function GetOpenidFromMp($code)
 	{
 
@@ -139,7 +139,7 @@ class JsApiPay  extends Controller
 		$openid = $data['openid'];
 		return $openid;
 	}
-*/
+
 	/**
 	 * 
 	 * 拼接签名字符串
