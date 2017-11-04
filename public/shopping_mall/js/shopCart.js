@@ -97,7 +97,7 @@
   	setTimeout(function() {
   			$('.deleteImg').click(function() {
   					var tt = $(this).parent().parent().parent().parent().parent();
-  					var car_id = $(this).parent().parent().parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
+  					var car_id = $(this).parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
   					//点击删除按钮出现的弹框
   					var Layer = layer.open({
   						type: 1,
@@ -147,9 +147,9 @@
   									allsetTotal(); //调用总价
   								}
   								allsetTotal();
-  								setTimeout(function() {
-  									layer.msg('您已经删除该宝贝了');
-  								}, 800)
+//								setTimeout(function() {
+//									layer.msg('您已经删除该宝贝了');
+//								}, 800)
   								layer.closeAll();
   								var numNew = $(".shopCartBox .shopCartList").length;
   								if(numNew == 0) { //判断购物车的数量
@@ -163,7 +163,9 @@
   				})
   				//----------------单选------
   			$(".input").click(function() {
-  				var car_id = $(this).parent().parent().parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
+  			
+  				var car_id = $(this).parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
+//				console.log( $(this).parent());
   				console.log(car_id + 'kdddddop[p');
 
   				//给单选框添加checked选项
