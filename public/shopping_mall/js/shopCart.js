@@ -14,23 +14,67 @@
   				if(data.code == 1) { //请求成功
   					var con = data.result.info;
   					//					console.log(con);
+  					var html = '';
   					$.each(con, function(k, v) {
   						var car_id = con[k].car_id; //购物车id
   						var first_class_id = con[k].first_class_id;
   						var created_at = con[k].created_at;
   						var goods_id = con[k].goods_id; //商品id
-  						var goods_name = con[k].goods_name; //商品名称
-  						var goods_price = con[k].goods_price; //商品单价
-  						var goods_url = con[k].goods_url; //商品图片
-  						var number = con[k].number; //商品数量
+  						var goods_name = con[k].goods_name == '' ? '无' : con[k].goods_name; //商品名称
+  						var goods_price = con[k].goods_price == '' ? '无' : con[k].goods_price; //商品单价
+  						var goods_url = con[k].goods_url == '' ? '无' : con[k].goods_url; //商品图片
+  						var number = con[k].number == '' ? '无' : con[k].number; //商品数量
   						var state = con[k].state; //商品状态
-  						var t = "<div class='shopCartList'><div class='shopCartLeft'><label class='label1'><input  type='checkbox'  class='input'   /><input type='checkbox' url=" + goods_url + " price=" + goods_price + " inNum=" + number + " name=" + goods_name + " id=" + goods_id + " value=" + car_id + " hidden='hidden' class='hiIn'/></label></div><div class='shopCartRight'><div class='catRightTop'><div class='rightCart1'><span class='imgBoxBorder'><img src=" + goods_url + " alt='' class='carImage'/></span></div><div class='rightCart2'><div class='rightTitleCat'><span>" + goods_name + "</span><span class='deleteImg'><img src='images/shopDelete.png' alt='' style='display:inline-block;vertical-align: middle;width:17px;height:18px;'/></span></div><div class='catPrice'><span class='catPrice1'><span style='font-size: 10px;'>￥</span><span class='priceEvery'>" + goods_price + "</span></span></div></div></div><div class='AddJianBox'><span class='jianId minus' id='minus'>-</span><span style='display: inline-block;' class='numkk'><input type='text' name='' id='' value=" + number + " class='inputNum' readonly='readonly'/></span><span class='jianId addClass' id='plus'>+</span></div></div></div>"
-  						$('.shopCartBox').append(t); //动态显示商品
+  						var state1 = con[k].state == '0' ? te(k) : hh(k); //商品状态
+  						html += "<div class='shopCartList'><div class='shopCartLeft'><label class='label1'><input  type='checkbox'  class='input'   /><input type='checkbox' state=" + state + " url=" + goods_url + " price=" + goods_price + " inNum=" + number + " name=" + goods_name + " id=" + goods_id + " value=" + car_id + " hidden='hidden' class='hiIn'/></label></div><div class='shopCartRight'><div class='catRightTop'><div class='rightCart1'><span class='imgBoxBorder'><img src=" + goods_url + " alt='' class='carImage'/></span></div><div class='rightCart2'><div class='rightTitleCat'><span>" + goods_name + "</span><span class='deleteImg'><img src='images/shopDelete.png' alt='' style='display:inline-block;vertical-align: middle;width:17px;height:18px;'/></span></div><div class='catPrice'><span class='catPrice1'><span style='font-size: 10px;'>￥</span><span class='priceEvery'>" + goods_price + "</span></span></div></div></div><div class='AddJianBox'><span class='jianId minus' id='minus'>-</span><span style='display: inline-block;' class='numkk'><input type='text' name='' id='' value=" + number + " class='inputNum' readonly='readonly'/></span><span class='jianId addClass' id='plus'>+</span></div></div></div>"
   					});
+  					$('.shopCartBox').append(html); //动态显示商品
   				}
   			}
   		});
   	}
+
+  	function te(m) {
+  		//		alert(m+'mm0');
+  		setTimeout(function() {
+  			//				console.log( $('.shopCartList').eq(m));
+  			$('.shopCartList').eq(m).find('label').removeClass("checked");
+  			$('.shopCartList').eq(m).find('input.input').prop('checked', false);
+
+  			allsetTotal();
+  			//判断如果所有的上面框选择，复选框是否选择
+  			var s = $(".input").length;
+  			var a = $(".input:checked").length;
+  			if(s == a) {
+  				allInput.prop('checked', true);
+  				allInput.parent().addClass("checked");
+  			} else {
+  				allInput.prop('checked', false);
+  				allInput.parent().removeClass("checked");
+  			}
+  		}, 300);
+  	}
+
+  	function hh(m) {
+  		//		alert(m+'mm1');
+  		setTimeout(function() {
+  			$('.shopCartList').eq(m).find('label').addClass("checked");
+  			$('.shopCartList').eq(m).find('input.input').prop('checked', true);
+  			allsetTotal();
+  			//判断如果所有的上面框选择，复选框是否选择
+  			var s = $(".input").length;
+  			var a = $(".input:checked").length;
+  			if(s == a) {
+  				allInput.prop('checked', true);
+  				allInput.parent().addClass("checked");
+  			} else {
+  				allInput.prop('checked', false);
+  				allInput.parent().removeClass("checked");
+  			}
+  		}, 300)
+
+  	}
+
   	shopCar();
   	//点击取消删除框的事件
   	$('#cancelsId').click(function() {
@@ -87,6 +131,16 @@
   								console.log(data)
   								$(tt).remove(); //移除当前的商品
   								//循环这些数组，判断前面的复选框选中之后，就把相应的数组删除
+  								//判断如果所有的上面框选择，复选框是否选择
+  								var s = $(".input").length;
+  								var a = $(".input:checked").length;
+  								if(s == a) {
+  									allInput.prop('checked', true);
+  									allInput.parent().addClass("checked");
+  								} else {
+  									allInput.prop('checked', false);
+  									allInput.parent().removeClass("checked");
+  								}
   								var nval = $('.totalPrice').text(); //获取总价的值
   								console.log(nval);
   								if(nval != 0.00 || nval != 0) {
@@ -105,6 +159,7 @@
   							}
   						});
   					})
+
   				})
   				//----------------单选------
   			$(".input").click(function() {
@@ -130,7 +185,7 @@
   						}
   					});
 
-//					$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
+  					//					$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
   					//取当前的选中的数量
   					var t = $(this).parent().parent().parent().find('input[class*=inputNum]').val();
   					console.log(t);
@@ -218,8 +273,6 @@
   					},
   					success: function(data) { //请求成功
   						console.log(data);
-
-  						//shopCar();
   						var nummm = $(mmThis).parent().find('input[class*=inputNum]');
   						//单品数量增加
   						nummm.val(parseInt(nummm.val()) + 1);
@@ -324,7 +377,7 @@
   					for(var i = 0; i < len; i++) {
   						var thisVal = $(this).val(); //car_id
   						var shopId = $(this).attr('id'); ////商品id
-  						var thisNum = $(this).attr('inNum'); //商品数量
+  						var thisNum = $(this).parent().parent().parent().find('input[class*=inputNum]').val(); //商品数量
   						var thisName = $(this).attr('name'); //商品名称
   						var thisPrice = $(this).attr('price'); //商品单价
   						var thisImg = $(this).attr('url'); //商品图片
