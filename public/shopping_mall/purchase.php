@@ -206,6 +206,7 @@
 						success:function(data){
 							if(data.code==1){
 								console.log(data);
+								data.result.timeStamp = data.result.timeStamp.toString();
 								retStr =data.result;
 								callpay();
                                 //调用微信JS api 支付
