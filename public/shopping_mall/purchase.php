@@ -32,7 +32,7 @@
 			        <div class="swiper-wrapper">
 			            <!--<div class="swiper-slide">
 			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>¥388.00</p>
+			            	<p>￥388.00</p>
 			            	<span>*7</span>
 			            </div>-->
 			        </div>
@@ -52,7 +52,7 @@
 			</ul>
 		</div>
 		<footer>
-			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
+			<p class="actual-payment">实付款：<span>￥3688.00</span></p>
 			<div class="buy-operation">
 				<p onclick="scancode()" class="scanCode">进店扫码<span>到门店付款</span></p>
 				<p onclick="createOrder()" class="substitute" style="display: none;"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>
@@ -160,7 +160,7 @@
 	for(var i=0;i<shoppingDetails.length;i++){
 		shoppingList+='<div class="swiper-slide">'+
         '	<img src="'+shoppingDetails[i].src+'" width="100%"/>'+
-        '	<p>¥'+shoppingDetails[i].price+'</p>'+
+        '	<p>￥'+shoppingDetails[i].price+'</p>'+
         '	<span>x '+shoppingDetails[i].number+'</span>'+
         '</div>';
         
@@ -173,7 +173,7 @@
 	$('.swiper-wrapper').html(shoppingList);
 	$('.swiper-slide img').height(winW*0.73/3-20);
 	$('.commodity-exp p').html('共'+numbers+'件');
-	$('.actual-payment span').html('¥'+totals.toFixed(2));
+	$('.actual-payment span').html('￥'+totals.toFixed(2));
 	
 	/*Initialize Swiper*/
 	var swiper = new Swiper('.swiper-container', {
@@ -201,17 +201,12 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
-					var tzurl = encodeURIComponent(commonsUrl+"shopping_mall/staff_order_details.php");
+					var tzurl = encodeURIComponent(commonsUrl+"shopping_mall/staff_order_details.php?base_order_id="+data.result.order_id);
 					//		生成二维码
 			        $('.qccode').qrcode({
 			            width: 130, //宽度
-
-			            height:130, //高度
-			            text:commonsUrl+'shopping_mall/staff_order_details.php?base_order_id='+data.result.order_id  //任意内容
-
-			            //height:130, //高度 
-			           // text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"  //任意内容
-
+			            height:130, //高度 
+			            text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"  //任意内容
 			        });
 			        
 			        layer.open({
@@ -349,94 +344,6 @@
 			}
 		})
 	}
-	
-
-	//获取收货地址
-	if($_GET['address_id']){
-		//获取指定地址
-		$.ajax({
-			type:"post",
-			url:commonsUrl + "api/gxsc/get/delivery/goods/address" + versioninfos,
-			data:{'ss':getCookie('openid'),'address_id':$_GET['address_id']},
-			success:function(data){
-				if(data.code==1){
-					console.log(data);
-					$('.address span').html(data.result[0].address);
-					$('.user-name p').html(data.result[0].name);
-					$('.user-phone p').html(data.result[0].mobile);
-					$('header').attr('onclick',"lastpage("+$_GET['address_id']+")");
-					
-				}else{
-	                layer.msg(data.msg);
-	            }
-			}
-		});
-	}else{
-		//获取所有地址
-		$.ajax({
-			type:"post",
-			url:commonsUrl + "api/gxsc/get/delivery/goods/address" + versioninfos,
-			data:{'ss':getCookie('openid')},
-			success:function(data){
-				if(data.code==1){
-					console.log(data);
-					if(data.result.length==0){
-						//去新增收货地址
-						$('header').html('<span onclick="location.href=\'receiving_address.php\'" style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
-					}else{
-						//筛选默认地址
-						for(var i=0;i<data.result.length;i++){
-							if(data.result[i].is_default==1){
-								$('.address span').html(data.result[i].address);
-								$('.user-name p').html(data.result[i].name);
-								$('.user-phone p').html(data.result[i].mobile);
-								$('header').attr('onclick',"lastpage("+data.result[i].address_id+")");
-							}
-						}
-					}
-				}else{
-	                layer.msg(data.msg);
-	            }
-			}
-		});
-	}
-	
-	function lastpage(addressId){
-		location.href='receiving_address.php?address_id='+addressId;
-	}
-	
-	//身份校验
-	
-	if(getCookie('is_member')==0){ //会员
-		$('.scanCode').show();
-		$('.substitute').hide();
-	}else if(getCookie('is_member')==1){ //员工
-		$('.scanCode').hide();
-		$('.substitute').show();
-	}
-	
-	var shoppingDetails=JSON.parse(localStorage.getItem('moneyArr'));
-	console.log(shoppingDetails)
-	var shoppingList = '',
-		totals = 0,
-		numbers = 0;
-	for(var i=0;i<shoppingDetails.length;i++){
-		shoppingList+='<div class="swiper-slide">'+
-        '	<img src="'+shoppingDetails[i].src+'" width="100%"/>'+
-        '	<p>¥'+shoppingDetails[i].price+'</p>'+
-        '	<span>x '+shoppingDetails[i].number+'</span>'+
-        '</div>';
-        
-        for(var j=0;j<parseInt(shoppingDetails[i].number);j++){
-        	numbers++;
-        	totals += parseFloat(shoppingDetails[i].price);
-        }
-        
-	}
-	$('.swiper-wrapper').html(shoppingList);
-	$('.swiper-slide img').height(winW*0.73/3-20);
-	$('.commodity-exp p').html('共'+numbers+'件');
-	$('.actual-payment span').html('¥'+totals.toFixed(2));
 	
 </script>
 <style type="text/css">
