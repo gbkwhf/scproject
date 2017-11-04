@@ -11,44 +11,46 @@
 </head>
 <body>
 	<div class="wrapper">
-		<h4>订单号：15515205445214</h4>
-		<div class="main">
-			<div class="user-info">
-				<p>王洪强<span>18344555589</span></p>
-				<em><img src="images/address-icon.png" width="10" />陕西省莲湖区丈八一路绿地蓝海大厦10 f1002出门 左转</em>
+		<div class="order-details">
+			<h4>订单号：15515205445214</h4>
+			<div class="main">
+				<div class="user-info">
+					<p>王洪强<span>18344555589</span></p>
+					<em><img src="images/address-icon.png" width="10" />陕西省莲湖区丈八一路绿地蓝海大厦10 f1002出门 左转</em>
+				</div>
+				<ul class="order-list">
+					<li>
+						<div class="picbox">						
+							<img src="images/rice.png" width="100%"/>
+						</div>
+						<div class="commodity-info">
+							<em>长城 (Gmsdfgsdnm) 红酒 华夏葡 萄 (711) 张裕解百纳</em>
+							<div class="price-info">
+								<p>¥388.00</p>
+								<span>x 1</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="picbox">						
+							<img src="images/rice.png" width="100%"/>
+						</div>
+						<div class="commodity-info">
+							<em>长城 (Gmsdfgsdnm) 红酒 华夏葡 萄 (711) 张裕解百纳</em>
+							<div class="price-info">
+								<p>¥388.00</p>
+								<span>x 1</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<p class="total">需线下收款：<span>¥388.00</span></p>
 			</div>
-			<ul class="order-list">
-				<li>
-					<div class="picbox">						
-						<img src="images/rice.png" width="100%"/>
-					</div>
-					<div class="commodity-info">
-						<em>长城 (Gmsdfgsdnm) 红酒 华夏葡 萄 (711) 张裕解百纳</em>
-						<div class="price-info">
-							<p>¥388.00</p>
-							<span>x 1</span>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="picbox">						
-						<img src="images/rice.png" width="100%"/>
-					</div>
-					<div class="commodity-info">
-						<em>长城 (Gmsdfgsdnm) 红酒 华夏葡 萄 (711) 张裕解百纳</em>
-						<div class="price-info">
-							<p>¥388.00</p>
-							<span>x 1</span>
-						</div>
-					</div>
-				</li>
+			<ul class="orderinfo-list">
+				<li>下单时间：<span>2015-10-25  13:50:06</span></li>
+				<li>支付方式：<span>线下支付</span></li>
 			</ul>
-			<p class="total">需线下收款：<span>¥388.00</span></p>
 		</div>
-		<ul class="orderinfo-list">
-			<li>下单时间：<span>2015-10-25  13:50:06</span></li>
-			<li>支付方式：<span>线下支付</span></li>
-		</ul>
 		<a href="javascript:;" class="submit">确认收款，提交订单</a>
 	</div>
 </body>
@@ -60,6 +62,61 @@
 	
 	var winW = $(window).width();
 	$('.commodity-info').width(winW-169);
+	
+	//获取openid
+	$.ajax({
+		type:"get",
+		url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
+		data:{},
+		success:function(data){
+			if(data.code==1){
+				console.log(data);
+				//获取订单详情
+				$.ajax({
+					type:"post",
+					url:commonsUrl+"api/gxsc/get/commodity/base_order/info"+versioninfos,
+					data:{'ss':data.result.openId,'base_order_id':$_GET['base_order_id']},
+					success:function(data){
+						if(data.code==1){
+							console.log(data);
+							html='';
+							html+='<h4>订单号：'+data.result.base_order_id+'</h4>'+
+							'<div class="main">'+
+							'	<div class="user-info">'+
+							'		<p>'+data.result.name+'<span>'+data.result.mobile+'</span></p>'+
+							'		<em><img src="images/address-icon.png" width="10" />陕西省莲湖区丈八一路绿地蓝海大厦10 f1002出门 左转</em>'+
+							'	</div>'+
+							'	<ul class="order-list">'+
+							'		<li>'+
+							'			<div class="picbox">'+						
+							'				<img src="images/rice.png" width="100%"/>'+
+							'			</div>'+
+							'			<div class="commodity-info">'+
+							'				<em>长城 (Gmsdfgsdnm) 红酒 华夏葡 萄 (711) 张裕解百纳</em>'+
+							'				<div class="price-info">'+
+							'					<p>¥388.00</p>'+
+							'					<span>x 1</span>'+
+							'				</div>'+
+							'			</div>'+
+							'		</li>'+
+							'	</ul>'+
+							'	<p class="total">需线下收款：<span>¥388.00</span></p>'+
+							'</div>'+
+							'<ul class="orderinfo-list">'+
+							'	<li>下单时间：<span>2015-10-25  13:50:06</span></li>'+
+							'	<li>支付方式：<span>线下支付</span></li>'+
+							'</ul>';
+						}else{
+							layer.msg(data.msg);
+						}
+					}
+				});
+				
+			}else{
+                layer.msg(data.msg);
+            }
+		}
+	});
 	
 </script>
 <style type="text/css">

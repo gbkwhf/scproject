@@ -130,7 +130,7 @@
   						}
   					});
 
-  					$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
+//					$(this).parent().parent().parent().find('input[class*=inputNum]').removeAttr("readonly");
   					//取当前的选中的数量
   					var t = $(this).parent().parent().parent().find('input[class*=inputNum]').val();
   					console.log(t);

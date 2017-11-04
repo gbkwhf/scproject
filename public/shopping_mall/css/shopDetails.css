@@ -1,8 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 html,body{
-	/*min-width: 320px;
-	max-width: 640px;*/
 	margin: 0 auto;
 }
 img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
@@ -40,27 +38,6 @@ input[type="button"]{-webkit-appearance: none;}
 	font-weight: bold;
 	border-bottom: solid 5px #ef833b;
 }
-/*-------------页面轮播图----------*/
-/*.shopBanner{
-	height: 370px;
-	position: relative;
-}
-.shopBanner img{
-	height: 370px;
-	width: 100%;
-}
-.imgNum{
-	position: absolute;
-	width: 63px;
-	height: 24px;
-	background-color: #949392;
-	right: 13px;
-	bottom: 13px;
-	border-radius: 25px;
-	line-height: 24px;
-	color: #e4e3e3;
-	text-align: center;
-}*/
 .shopImg{
 	min-height: 300px;
 	overflow: auto;
@@ -88,24 +65,7 @@ input[type="button"]{-webkit-appearance: none;}
 	z-index: 15;
 }
 
-/*.sw1 {
-  width: 100%;
-  background: url(../images/banner1.jpg);
-  background-size: 100% 100%; }
 
-.sw2 {
-  width: 100%;
-   background: url(../images/banner1.jpg);
-  background-size: 100% 100%; }
-
-.sw3 {
-  width: 100%;
-  background: url(../images/banner1.jpg);
-  background-size: 100% 100%; }
-  .sw4 {
-  width: 100%;
-  background: url(../images/banner1.jpg);
-  background-size: 100% 100%; }*/
   /*-----------分页器样式-------------*/
 .swiper-pagination-fraction{
 	width: 10%;
@@ -197,30 +157,7 @@ input[type="button"]{-webkit-appearance: none;}
     bottom: 0;
     z-index: 999;
     text-align: center;
-
 }
-
-/*.addCar{
-	float: left;
-	width: 49%;
-	text-align: center;
-}
-
-.addXian{
-	float: left;
-	width: 1%;
-	border-right:solid 1px #ce4f49;
-	height: 30px;
-	margin-top: 10px;
-}
-.promBuy{
-
-	float: right;
-	width: 49%;
-	
-	text-align: center;
-}*/
-
 /*--------------商品介绍、评价--------*/
 .detailTitle{
 	clear: both;
