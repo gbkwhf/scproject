@@ -104,12 +104,12 @@
 			success:function(data){
 				if(data.code==1){
 					console.log(data);
-					
+					var tzurl = encodeURIComponent(commonsUrl+"shopping_mall/staff_order_details.php?base_order_id="+data.result.order_id);
 					//		生成二维码
 			        $('.qccode').qrcode({
 			            width: 130, //宽度
-			            height:130, //高度
-			            text:commonsUrl+'shopping_mall/staff_order_details.php?base_order_id='+data.result.order_id  //任意内容
+			            height:130, //高度 
+			            text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"  //任意内容
 			        });
 			        
 			        layer.open({
