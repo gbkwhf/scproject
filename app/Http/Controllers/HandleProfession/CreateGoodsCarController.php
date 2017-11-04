@@ -51,13 +51,13 @@ class CreateGoodsCarController extends Controller{
 
         //判断该商品是否已经加入购物车了
         $is_exist = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->first();
+        \DB::beginTransaction(); //开启事务
         if(empty($is_exist)){ //如果为空，则继续插入数据，否则不做任何处理
 
             $http = getenv('HTTP_REQUEST_URL');
             //改变图片链接，使其可以直接访问
             $goods_info->image =  empty($goods_info->image) ? "" : $http. $goods_info->image;
 
-            \DB::beginTransaction(); //开启事务
             //然后把收集到的数据插入数据库:购物车表
             $insert = \DB::table('ys_goods_car')->insert([
 
@@ -75,16 +75,21 @@ class CreateGoodsCarController extends Controller{
                 'updated_at' => \DB::Raw('Now()'),
             ]);
 
-            if ($insert) {
-                \DB::commit();
-                return  $this->respond($this->format([],true));
-            }else {
-                \DB::rollBack();
-                return $this->setStatusCode(9998)->respondWithError($this->message);
-            }
-
         }else{ //如果该商品已经存在购物车，则直接返回成功状态即可
+
+            $insert = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('goods_id',$request->goods_id)->update([
+                'number'=>$is_exist->number + $request->number,
+                'updated_at'=>\DB::Raw('Now()')
+            ]);
+
+        }
+
+        if ($insert) {
+            \DB::commit();
             return  $this->respond($this->format([],true));
+        }else {
+            \DB::rollBack();
+            return $this->setStatusCode(9998)->respondWithError($this->message);
         }
 
 
