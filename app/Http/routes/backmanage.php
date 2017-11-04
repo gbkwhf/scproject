@@ -1,9 +1,9 @@
 <?php
-// 	Route::get('admin', ['as' => 'home','middleware' => 'auth', function () {
+	Route::get('/', ['as' => 'home','middleware' => 'auth', function () {
 
 		
-// 		return view('home');
-// 	}]);
+		return view('home');
+	}]);
 
 	// Authentication routes...
 	Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -60,7 +60,9 @@
         Route::get('goods/goodsedit/{id}', 'GoodsController@GoodsEdit');//编辑商品
         Route::post('goods/goodssave', 'GoodsController@Goodssave');//编辑商品保存
         Route::get('goods/goodsdel/{id}', 'GoodsController@Goodsdel');//删除商品
-        Route::Post('ajax/getgoodsclass', 'AjaxController@getGoodsClass');
+        Route::Post('ajax/getgoodsclass', 'AjaxController@getGoodsClass');        
+        Route::get('manage/orderlist', 'OrderController@OrderList');//订单列表
+        Route::get('manage/orderdetial/{id}', 'OrderController@OrderDetial');//订单详情
         
         
         //供应商功能
