@@ -76,8 +76,7 @@ html,body{
 }
 .swiper-container {
     width: 73%;
-    /*height: 100px;*/
-    margin: 10px 0px 8px 4%; 
+    margin: 20px 0px 8px 4%; 
     float: left; 
 }
 .swiper-slide {
@@ -112,6 +111,7 @@ html,body{
 	color: #d57232;
 	font-size: 13px;
 	line-height: 1.5em;
+	margin-top: 4px;
 }
 .swiper-slide span{
 	display: block;
@@ -201,7 +201,7 @@ footer{
 	font-size: 16px;
 	display: inline-block;
 	float: left;
-	padding: 6px 0px 5px;
+	padding: 5px 0px;
 	width: 60%;
 }
 .buy-operation p span{
@@ -211,7 +211,7 @@ footer{
 .buy-operation i{
 	width: 2px;
 	height: 25px;
-	margin: 12px 0px;
+	margin: 12px 0px 11px;
 	background: #ce4f49;
 	display: inline-block;
 	font-style: normal;

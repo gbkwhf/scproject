@@ -76,6 +76,7 @@ html,body{
 .picbox img{
 	display: block;
 	max-height: 89px;
+	min-height: 65px;
 }
 .commodity-info{
 	float: left;
