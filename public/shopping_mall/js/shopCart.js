@@ -94,6 +94,7 @@
   			$(".input").prop('checked', false);
   			$("label").removeClass("checked");
   			//$(".totalPrice").text("0.00");
+            allsetTotal();
   		}
   	});
 
@@ -186,6 +187,7 @@
   						success: function(data) { //请求成功
   							console.log('这是对的');
   							console.log(data)
+                            allsetTotal();
 
   						}
   					});
@@ -211,7 +213,6 @@
   					console.log(t + '最后的合计');
   					//给合计赋值    
   					//$(".totalPrice").text(t.toFixed(2))
-                    allsetTotal();
   				} else { //当前的复选框没有选中
   					$.ajax({ //判断是否选中的ajax接口
   						type: "post", //请求方式
@@ -224,6 +225,7 @@
   						success: function(data) { //请求成功
   							console.log('这是对的');
   							console.log(data)
+                            allsetTotal();
 
   						}
   					});
@@ -248,7 +250,6 @@
   					console.log(t + '最后的合计');
   					//给合计赋值      
   					//$(".totalPrice").text(t.toFixed(2))
-                    allsetTotal();
   				}
 
   				//判断如果所有的上面框选择，复选框是否选择
@@ -328,7 +329,7 @@
   							tjj.val(1);
   						}
   						tjj.val(parseInt(tjj.val()) - 1)
-  						if(parseInt(tjj.val()) <= 1) {
+  						if(parseInt(tjj.val()) < 1) {
   							tjj.val(1);
   							layer.msg('亲，这个数量不能再少了');
   						}
@@ -342,7 +343,7 @@
   				var val = parseInt($(m).val());
   				console.log(val + '数量+++++++++++++++++++++++++');
   				//判断如果这个框的值为1，就不能再有点击事件
-  				if(val <= 1) {
+  				if(val < 1) {
   					isTrue = false;
   					layer.msg('亲，这个数量不能再少了');
   				}
@@ -354,7 +355,7 @@
   						t.val(1);
   					}
   					//				t.val(parseInt(t.val()) - 1)
-  					if(parseInt(t.val()) <= 1) {
+  					if(parseInt(t.val()) < 1) {
   						t.val(1);
   						layer.msg('亲，这个数量不能再少了');
   					}
