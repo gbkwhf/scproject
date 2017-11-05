@@ -329,7 +329,7 @@
   							tjj.val(1);
   						}
   						tjj.val(parseInt(tjj.val()) - 1)
-  						if(parseInt(tjj.val()) <= 1) {
+  						if(parseInt(tjj.val()) < 1) {
   							tjj.val(1);
   							layer.msg('亲，这个数量不能再少了');
   						}
@@ -343,7 +343,7 @@
   				var val = parseInt($(m).val());
   				console.log(val + '数量+++++++++++++++++++++++++');
   				//判断如果这个框的值为1，就不能再有点击事件
-  				if(val <= 1) {
+  				if(val < 1) {
   					isTrue = false;
   					layer.msg('亲，这个数量不能再少了');
   				}
@@ -355,7 +355,7 @@
   						t.val(1);
   					}
   					//				t.val(parseInt(t.val()) - 1)
-  					if(parseInt(t.val()) <= 1) {
+  					if(parseInt(t.val()) < 1) {
   						t.val(1);
   						layer.msg('亲，这个数量不能再少了');
   					}
