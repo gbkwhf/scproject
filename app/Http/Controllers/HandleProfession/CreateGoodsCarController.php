@@ -283,33 +283,67 @@ class CreateGoodsCarController extends Controller{
 
         $validator = $this->setRules([
             'ss' => 'required|string',
-            'car_id' => 'required|integer' //购物车id
+            'car_id' => 'integer', //购物车id
+            'flag' => 'integer|in:1,2' //1 全不选   2全选中
         ])
             ->_validate($request->all());
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
-        //判断该条记录是否存在
-        $goods_info = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->first();
-        if(empty($goods_info)){ //未找到该条购物车记录
-            return $this->setStatusCode(1043)->respondWithError($this->message);
-        }
+        if(!empty($request->car_id)){ //如果不为空，则表示更改单个的状态
 
-        if($goods_info->state == 1){
-            $state = 0;
-        }else{
-            $state = 1;
-        }
-        \DB::beginTransaction(); //开启事务
-        $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->update(['state'=>$state,'updated_at'=>\DB::Raw('Now()')]);
+            //判断该条记录是否存在
+            $goods_info = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->first();
+            if(empty($goods_info)){ //未找到该条购物车记录
+                return $this->setStatusCode(1043)->respondWithError($this->message);
+            }
 
-        if ($update) {
-            \DB::commit();
-            return  $this->respond($this->format([],true));
-        }else {
-            \DB::rollBack();
-            return $this->setStatusCode(9998)->respondWithError($this->message);
+            if($goods_info->state == 1){
+                $state = 0;
+            }else{
+                $state = 1;
+            }
+            \DB::beginTransaction(); //开启事务
+            $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('id',$request->car_id)->update(['state'=>$state,'updated_at'=>\DB::Raw('Now()')]);
+
+            if ($update) {
+                \DB::commit();
+                return  $this->respond($this->format([],true));
+            }else {
+                \DB::rollBack();
+                return $this->setStatusCode(9998)->respondWithError($this->message);
+            }
+
+
+        }else{ //如果没有购物车id，则说明点击全选或全部选按钮
+
+            if(empty($request->flag)){ //如果没有flag值，则参数错误
+               return $this->setStatusCode(9999)->respondWithError($this->message);
+            }
+            //判断该条记录是否存在
+            $car_id_arr = \DB::table('ys_goods_car')->where('user_id',$user_id)->lists('id'); //state: 1表示选中  0 表示不选
+            if(empty($car_id_arr)){ //未找到该条购物车记录
+                return $this->setStatusCode(1043)->respondWithError($this->message);
+            }
+
+            \DB::beginTransaction(); //开启事务
+            if($request->flag == 1){//1 全不选
+                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->whereIn('id',$car_id_arr)->update(['state'=>0,'updated_at'=>\DB::Raw('Now()')]);
+
+            }elseif($request->flag == 2){ //  2全选中
+                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->whereIn('id',$car_id_arr)->update(['state'=>1,'updated_at'=>\DB::Raw('Now()')]);
+            }
+
+            if ($update) {
+                \DB::commit();
+                return  $this->respond($this->format([],true));
+            }else {
+                \DB::rollBack();
+                return $this->setStatusCode(9998)->respondWithError($this->message);
+            }
+
+
         }
 
     }
