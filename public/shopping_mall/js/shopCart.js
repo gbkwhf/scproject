@@ -211,6 +211,7 @@
   					console.log(t + '最后的合计');
   					//给合计赋值    
   					//$(".totalPrice").text(t.toFixed(2))
+                    allsetTotal();
   				} else { //当前的复选框没有选中
   					$.ajax({ //判断是否选中的ajax接口
   						type: "post", //请求方式
@@ -247,6 +248,7 @@
   					console.log(t + '最后的合计');
   					//给合计赋值      
   					//$(".totalPrice").text(t.toFixed(2))
+                    allsetTotal();
   				}
 
   				//判断如果所有的上面框选择，复选框是否选择
