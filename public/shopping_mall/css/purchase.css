@@ -252,6 +252,7 @@ footer{
 	color: #999;
 	font-size: 12px;
 	padding-left: 37px;
+	padding-right: 15px;
 }
 .xxsk input{
 	display: block;
@@ -261,4 +262,5 @@ footer{
 	line-height: 26px;
 	border: 1px solid #e6e6e6;
 	border-radius: 5px;
+	min-width: 220px;
 }

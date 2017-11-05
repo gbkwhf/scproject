@@ -28,7 +28,7 @@
 				</div>
 				<div class="cashback">
 					<em>¥</em>
-					<p>563.00</p>
+					<p>0</p>
 					<span>昨日返现</span>
 				</div>
 			</div>
@@ -101,11 +101,8 @@
   			success:function(data){
   				if(data.code==1){
   					console.log(data);
-  					if(data.result[0].balance==null || data.result[0].balance==''){
-  						$('.balance p').html('0');
-  					}else{
-  						$('.balance p').html(data.result[0].balance);
-  					}
+  					$('.balance p').html(data.result.balance);
+  					$('.cashback p').html(data.result.yesterday_return_money);
   				}else{
   					layer.msg(data.msg)
   				}

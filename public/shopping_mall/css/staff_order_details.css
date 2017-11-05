@@ -11,19 +11,16 @@ html,body{
 	font-size: 13px;
 	font-weight: 400;
 	color: #999;
-	padding: 25px 0px 15px 40px;
+	padding: 25px 0px 15px 20px;
 }
 .main{
 	border: 1px solid #e6e6e6;
 	border-width: 1px 0px;
 }
-.user-info{
-	padding-left: 40px;
-}
 .user-info p{
 	color: #333;
 	line-height: 1.5em;
-	padding: 13px 0px 5px;
+	padding: 13px 0px 5px 20px;
 	font-weight: bold;
 }
 .user-info p span{
@@ -38,12 +35,13 @@ html,body{
 	line-height: 1.5em;
 	padding-bottom: 18px;
 	padding-right: 15px;
+	padding-left: 40px;
 	display: block;
 }
 .user-info em img{
 	display: block;
 	position: absolute;
-	left: -23px;
+	left: 20px;
 	top: 3px;
 }
 .order-list{

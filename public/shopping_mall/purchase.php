@@ -32,7 +32,7 @@
 			        <div class="swiper-wrapper">
 			            <!--<div class="swiper-slide">
 			            	<img src="images/zyyp.png" width="100%"/>
-			            	<p>￥388.00</p>
+			            	<p>¥388.00</p>
 			            	<span>*7</span>
 			            </div>-->
 			        </div>
@@ -52,7 +52,7 @@
 			</ul>
 		</div>
 		<footer>
-			<p class="actual-payment">实付款：<span>￥3688.00</span></p>
+			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
 			<div class="buy-operation">
 				<p onclick="scancode()" class="scanCode">进店扫码<span>到门店付款</span></p>
 				<p onclick="createOrder()" class="substitute" style="display: none;"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>
@@ -160,7 +160,7 @@
 	for(var i=0;i<shoppingDetails.length;i++){
 		shoppingList+='<div class="swiper-slide">'+
         '	<img src="'+shoppingDetails[i].src+'" width="100%"/>'+
-        '	<p>￥'+shoppingDetails[i].price+'</p>'+
+        '	<p>¥'+shoppingDetails[i].price+'</p>'+
         '	<span>x '+shoppingDetails[i].number+'</span>'+
         '</div>';
         
@@ -173,7 +173,7 @@
 	$('.swiper-wrapper').html(shoppingList);
 	$('.swiper-slide img').height(winW*0.73/3-20);
 	$('.commodity-exp p').html('共'+numbers+'件');
-	$('.actual-payment span').html('￥'+totals.toFixed(2));
+	$('.actual-payment span').html('¥'+totals.toFixed(2));
 	
 	/*Initialize Swiper*/
 	var swiper = new Swiper('.swiper-container', {
@@ -276,73 +276,78 @@
 		var address = $('.address span').html();
 		var	mobile = $('.user-phone p').html();
 		var	name = $('.user-name p').html();
-		//创建订单
-		$.ajax({
-			type:'post',
-			url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
-			data:{
-				'address':address,
-				'flag':2,
-				'mobile':mobile,
-				'name':name,
-				'ss':getCookie('openid')
-			},
-			success:function(data){
-				if(data.code==1){
-					console.log(data);
-					//支付订单
-					$.ajax({
-						type:"post",
-						url:commonsUrl+"api/gxsc/pay/goods"+versioninfos,
-						data:{
-							'base_order_id':data.result.order_id,
-							'filling_type':3,
-							'open_id':getCookie('openid'),
-							'ss':getCookie('openid')
-						},
-						success:function(data){
-							if(data.code==1){
-								console.log(data);
-								data.result.timeStamp = data.result.timeStamp.toString();
-								retStr =data.result;
-								callpay();
-                                //调用微信JS api 支付
-                                function jsApiCall(){
-                                    WeixinJSBridge.invoke(
-                                        'getBrandWCPayRequest',
-                                        retStr,
-                                        function(res){
-                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                                                //支付成功
-                                                location.href='my_orders.php';
-                                            }else{
-//												             alert(res.err_msg);
-                                            }
-                                        }
-                                    );
-                                }
-                                function callpay(){
-                                    if (typeof WeixinJSBridge == "undefined"){
-                                        if( document.addEventListener ){
-                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                                        }else if (document.attachEvent){
-                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                                        }
-                                    }else{
-                                        jsApiCall();
-                                    }
-                                }
-							}else{
-								layer.msg(data.msg);
+		if($('header').find('.address').length>0){
+			//创建订单
+			$.ajax({
+				type:'post',
+				url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
+				data:{
+					'address':address,
+					'flag':2,
+					'mobile':mobile,
+					'name':name,
+					'ss':getCookie('openid')
+				},
+				success:function(data){
+					if(data.code==1){
+						console.log(data);
+						//支付订单
+						$.ajax({
+							type:"post",
+							url:commonsUrl+"api/gxsc/pay/goods"+versioninfos,
+							data:{
+								'base_order_id':data.result.order_id,
+								'filling_type':3,
+								'open_id':getCookie('openid'),
+								'ss':getCookie('openid')
+							},
+							success:function(data){
+								if(data.code==1){
+									console.log(data);
+									data.result.timeStamp = data.result.timeStamp.toString();
+									retStr =data.result;
+									callpay();
+	                                //调用微信JS api 支付
+	                                function jsApiCall(){
+	                                    WeixinJSBridge.invoke(
+	                                        'getBrandWCPayRequest',
+	                                        retStr,
+	                                        function(res){
+	                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+	                                                //支付成功
+	                                                location.href='my_orders.php';
+	                                            }else{
+	//												             alert(res.err_msg);
+	                                            }
+	                                        }
+	                                    );
+	                                }
+	                                function callpay(){
+	                                    if (typeof WeixinJSBridge == "undefined"){
+	                                        if( document.addEventListener ){
+	                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+	                                        }else if (document.attachEvent){
+	                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+	                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+	                                        }
+	                                    }else{
+	                                        jsApiCall();
+	                                    }
+	                                }
+								}else{
+									layer.msg(data.msg);
+								}
 							}
-						}
-					});						
-				}else{
-					layer.msg(data.msg);
+						});						
+					}else{
+						layer.msg(data.msg);
+					}
 				}
-			}
-		})
+			})
+		}else{
+			layer.msg('请添加收货地址');
+		}
+		
 	}
 	
 </script>

@@ -61,8 +61,8 @@
 				console.log(data);
 				html='';
 				for(var i=0;i<data.result.length;i++){
-					html+='<div class="order-module">'+
-					'	<h4>'+data.result[i].create_time+'</h4>'+
+					html+='<div class="order-module" onclick="location.href=\'user_order_details.php?sub_order_id='+data.result[i].sub_order_id+'\'">'+
+					'	<h4>'+data.result[i].create_time.substr(0,10)+'</h4>'+
 					'	<i class="half-line"></i>'+
 					'	<ul class="commodity-list">';
 					for(var j=0;j<data.result[i].goods_info.length;j++){
