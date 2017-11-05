@@ -108,7 +108,7 @@
 					success: function(data) { //请求成功
 						console.log(data);
 						shopCarts();
-						layer.msg("加入购物车成功,请点击购物车进行查看！");
+						layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
 					}
 				});
 			})

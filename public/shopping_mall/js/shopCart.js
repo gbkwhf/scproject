@@ -29,6 +29,9 @@
   						html += "<div class='shopCartList'><div class='shopCartLeft'><label class='label1'><input  type='checkbox'  class='input'   /><input type='checkbox' state=" + state + " url=" + goods_url + " price=" + goods_price + " inNum=" + number + " name=" + goods_name + " id=" + goods_id + " value=" + car_id + " hidden='hidden' class='hiIn'/></label></div><div class='shopCartRight'><div class='catRightTop'><div class='rightCart1'><span class='imgBoxBorder'><img src=" + goods_url + " alt='' class='carImage'/></span></div><div class='rightCart2'><div class='rightTitleCat'><span>" + goods_name + "</span><span class='deleteImg'><img src='images/shopDelete.png' alt='' style='display:inline-block;vertical-align: middle;width:17px;height:18px;'/></span></div><div class='catPrice'><span class='catPrice1'><span style='font-size: 10px;'>￥</span><span class='priceEvery'>" + goods_price + "</span></span></div></div></div><div class='AddJianBox'><span class='jianId minus' id='minus'>-</span><span style='display: inline-block;' class='numkk'><input type='text' name='' id='' value=" + number + " class='inputNum' readonly='readonly'/></span><span class='jianId addClass' id='plus'>+</span></div></div></div>"
   					});
   					$('.shopCartBox').append(html); //动态显示商品
+
+  					pricenum = data.result.no_return + data.result.return
+  					$(".totalPrice").text(pricenum);
   				}
   			}
   		});
@@ -90,7 +93,7 @@
   		} else {
   			$(".input").prop('checked', false);
   			$("label").removeClass("checked");
-  			$(".totalPrice").text("0.00");
+  			//$(".totalPrice").text("0.00");
   		}
   	});
 
@@ -141,19 +144,19 @@
   									allInput.prop('checked', false);
   									allInput.parent().removeClass("checked");
   								}
-  								var nval = $('.totalPrice').text(); //获取总价的值
-  								console.log(nval);
-  								if(nval != 0.00 || nval != 0) {
-  									allsetTotal(); //调用总价
-  								}
+  								//								var nval = $('.totalPrice').text(); //获取总价的值
+  								//								console.log(nval);
+  								//								if(nval != 0.00 || nval != 0) {
+  								//									allsetTotal(); //调用总价
+  								//								}
   								allsetTotal();
-  								setTimeout(function() {
-  									layer.msg('您已经删除该宝贝了');
-  								}, 800)
+  								//								setTimeout(function() {
+  								//									layer.msg('您已经删除该宝贝了');
+  								//								}, 800)
   								layer.closeAll();
   								var numNew = $(".shopCartBox .shopCartList").length;
   								if(numNew == 0) { //判断购物车的数量
-  									$('.totalPrice').text('0.00');
+  									//$('.totalPrice').text('0.00');
   									$('.shopFotter label').removeClass('checked') //移除全选状态
   								}
   							}
@@ -163,7 +166,9 @@
   				})
   				//----------------单选------
   			$(".input").click(function() {
-  				var car_id = $(this).parent().parent().parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
+
+  				var car_id = $(this).parent().parent().parent().find("input[class*=hiIn]").val(); //获取car_id的值
+  				//				console.log( $(this).parent());
   				console.log(car_id + 'kdddddop[p');
 
   				//给单选框添加checked选项
@@ -205,7 +210,8 @@
   					var t = parseFloat(s) + parseFloat(totalParice);
   					console.log(t + '最后的合计');
   					//给合计赋值    
-  					$(".totalPrice").text(t.toFixed(2))
+  					//$(".totalPrice").text(t.toFixed(2))
+                    allsetTotal();
   				} else { //当前的复选框没有选中
   					$.ajax({ //判断是否选中的ajax接口
   						type: "post", //请求方式
@@ -241,7 +247,8 @@
   					var t = parseFloat(totalParice) - parseFloat(s);
   					console.log(t + '最后的合计');
   					//给合计赋值      
-  					$(".totalPrice").text(t.toFixed(2))
+  					//$(".totalPrice").text(t.toFixed(2))
+                    allsetTotal();
   				}
 
   				//判断如果所有的上面框选择，复选框是否选择
@@ -276,7 +283,7 @@
   						var nummm = $(mmThis).parent().find('input[class*=inputNum]');
   						//单品数量增加
   						nummm.val(parseInt(nummm.val()) + 1);
-
+  						allsetTotal();
   					}
   				});
 
@@ -293,8 +300,8 @@
   					var val = parseInt($(num).val());
   					console.log(val + '数量');
   					console.log(goods_price * val + '总价');
-  					var nextVal = parseInt($(".totalPrice").text()) + (goods_price);
-  					$(".totalPrice").text(nextVal.toFixed(2));
+  					//					var nextVal = parseInt($(".totalPrice").text()) + (goods_price);
+  					//					$(".totalPrice").text(nextVal.toFixed(2));
   				}
   			});
 
@@ -325,6 +332,7 @@
   							tjj.val(1);
   							layer.msg('亲，这个数量不能再少了');
   						}
+  						allsetTotal();
   					}
   				});
   				//判断前面的复选框有没有选择
@@ -355,7 +363,7 @@
   					console.log(goods_price + '这是单价--------------------------');
   					var neVal = parseInt($(".totalPrice").text()) - (goods_price);
   					console.log(neVal + '合计的值******************************');
-  					$(".totalPrice").text(neVal.toFixed(2));
+  					//$(".totalPrice").text(neVal.toFixed(2));
   				}
   			});
   		}, 500)
@@ -419,25 +427,39 @@
 
   	//全选的价格计算
   	function allsetTotal() {
-  		var s = 0;
-  		$(".shopCartBox .shopCartList").each(function() {
-  			var isChecked = $(this).find('label[class*=label1]').hasClass("checked");
-  			if(isChecked) {
-  				//计算选中的价格
-  				var t = $(this).find('input[class*=inputNum]').val();
-  				console.log(t + '复选框选择到的数量');
-  				var p = $(this).find('span[class*=priceEvery]').text();
-  				console.log(p + '复选框选择到的单价');
-
-  				if(parseInt(t) == "" || undefined || null || isNaN(t) || isNaN(parseInt(t))) {
-  					t = 0;
+  		//		var s = 0;
+  		//		$(".shopCartBox .shopCartList").each(function() {
+  		//			var isChecked = $(this).find('label[class*=label1]').hasClass("checked");
+  		//			if(isChecked) {
+  		//				//计算选中的价格
+  		//				var t = $(this).find('input[class*=inputNum]').val();
+  		//				console.log(t + '复选框选择到的数量');
+  		//				var p = $(this).find('span[class*=priceEvery]').text();
+  		//				console.log(p + '复选框选择到的单价');
+  		//
+  		//				if(parseInt(t) == "" || undefined || null || isNaN(t) || isNaN(parseInt(t))) {
+  		//					t = 0;
+  		//				}
+  		//				s += parseInt(t) * parseFloat(p);
+  		//				$(".totalPrice").text(s.toFixed(2));
+  		//			} else {
+  		//				$(".totalPrice").text("0.00");
+  		//			}
+  		//		})
+  		$.ajax({
+  			type: "post", //请求方式
+  			dataType: 'json', //数据格式
+  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, //请求地址
+  			data: {
+  				"ss": getCookie('openid') //请求参数  openid
+  			},
+  			success: function(data) {
+  				if(data.code == 1) { //请求成功
+  					pricenum = data.result.no_return + data.result.return
+  					$(".totalPrice").text(pricenum);
   				}
-  				s += parseInt(t) * parseFloat(p);
-  				$(".totalPrice").text(s.toFixed(2));
-  			} else {
-  				$(".totalPrice").text("0.00");
   			}
-  		})
+  		});
 
   	}
 
