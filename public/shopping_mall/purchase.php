@@ -276,73 +276,101 @@
 		var address = $('.address span').html();
 		var	mobile = $('.user-phone p').html();
 		var	name = $('.user-name p').html();
-		//创建订单
-		$.ajax({
-			type:'post',
-			url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
-			data:{
-				'address':address,
-				'flag':2,
-				'mobile':mobile,
-				'name':name,
-				'ss':getCookie('openid')
-			},
-			success:function(data){
-				if(data.code==1){
-					console.log(data);
-					//支付订单
-					$.ajax({
-						type:"post",
-						url:commonsUrl+"api/gxsc/pay/goods"+versioninfos,
-						data:{
-							'base_order_id':data.result.order_id,
-							'filling_type':3,
-							'open_id':getCookie('openid'),
-							'ss':getCookie('openid')
-						},
-						success:function(data){
-							if(data.code==1){
-								console.log(data);
-								data.result.timeStamp = data.result.timeStamp.toString();
-								retStr =data.result;
-								callpay();
-                                //调用微信JS api 支付
-                                function jsApiCall(){
-                                    WeixinJSBridge.invoke(
-                                        'getBrandWCPayRequest',
-                                        retStr,
-                                        function(res){
-                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                                                //支付成功
-                                                location.href='my_orders.php';
-                                            }else{
-//												             alert(res.err_msg);
-                                            }
-                                        }
-                                    );
-                                }
-                                function callpay(){
-                                    if (typeof WeixinJSBridge == "undefined"){
-                                        if( document.addEventListener ){
-                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                                        }else if (document.attachEvent){
-                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                                        }
-                                    }else{
-                                        jsApiCall();
-                                    }
-                                }
-							}else{
-								layer.msg(data.msg);
+		if($('header').find('.address').length>0){
+			//创建订单
+			$.ajax({
+				type:'post',
+				url:commonsUrl + 'api/gxsc/user/create/commodity/order' + versioninfos,
+				data:{
+					'address':address,
+					'flag':2,
+					'mobile':mobile,
+					'name':name,
+					'ss':getCookie('openid')
+				},
+				success:function(data){
+					if(data.code==1){
+						console.log(data);
+						//支付订单
+						$.ajax({
+							type:"post",
+							url:commonsUrl+"api/gxsc/pay/goods"+versioninfos,
+							data:{
+								'base_order_id':data.result.order_id,
+								'filling_type':3,
+								'open_id':getCookie('openid'),
+								'ss':getCookie('openid')
+							},
+							success:function(data){
+								if(data.code==1){
+									console.log(data);
+									data.result.timeStamp = data.result.timeStamp.toString();
+									retStr =data.result;
+									callpay();
+	                                //调用微信JS api 支付
+	                                function jsApiCall(){
+	                                    WeixinJSBridge.invoke(
+	                                        'getBrandWCPayRequest',
+	                                        retStr,
+	                                        function(res){
+	                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+	                                                //支付成功
+	                                                location.href='my_orders.php';
+	                                            }else{
+	//												             alert(res.err_msg);
+	                                            }
+	                                        }
+	                                    );
+	                                }
+	                                function callpay(){
+	                                    if (typeof WeixinJSBridge == "undefined"){
+	                                        if( document.addEventListener ){
+	                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+	                                        }else if (document.attachEvent){
+	                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+	                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+	                                        }
+	                                    }else{
+	                                        jsApiCall();
+	                                    }
+	                                }
+								}else{
+									layer.msg(data.msg);
+								}
 							}
-						}
-					});						
-				}else{
-					layer.msg(data.msg);
+						});						
+					}else{
+						layer.msg(data.msg);
+					}
 				}
-			}
-		})
+			})
+		}else{
+			layer.msg('请添加收货地址');
+		}
+		
+	}
+	
+	//微信返回监测
+    $(function(){  
+        pushHistory();  
+        var bool=false;  
+        setTimeout(function(){  
+              bool=true;  
+        },500);  
+        window.addEventListener("popstate", function(e) {  
+            if(bool){
+                location.href='shopCart.php';
+            }  
+            pushHistory();  
+              
+		}, false);  
+    });  
+	function pushHistory() {  
+        var state = {  
+            title: "title",  
+            url: "#"  
+        };  
+   		window.history.pushState(state, "title", "#");  
 	}
 	
 </script>
