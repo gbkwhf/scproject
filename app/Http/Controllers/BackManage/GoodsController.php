@@ -93,12 +93,13 @@ class GoodsController extends Controller
             if ($request->hasFile('image')){//图片上传
             	$image=[];
             	foreach ($request->file('image') as $file){
+            		$file_name='';
             		if(!empty($file)){
-            			$up_res=uploadPic($file);
-            			$file_name[]=$up_res;
+            			$up_res=uploadPic($file);    		
+            			$file_name=$up_res;
             			$img_params[]=[
-            			'goods_id'=>$res->id,
-            			'image'=>$file_name['0'],
+	            			'goods_id'=>$res->id,
+	            			'image'=>$file_name,
             			];            			
             		}           		 
             	}
@@ -172,12 +173,13 @@ class GoodsController extends Controller
             if ($request->hasFile('image')){//图片上传
             	$image=[];
             	foreach ($request->file('image') as $file){
+            		$file_name='';
             		if(!empty($file)){
             			$up_res=uploadPic($file);
-            			$file_name[]=$up_res;
+            			$file_name=$up_res;
             			$img_params[]=[
-            			'goods_id'=>$input['id'],
-            			'image'=>$file_name['0'],
+	            			'goods_id'=>$input['id'],
+	            			'image'=>$file_name,
             			];
             		}
             	}   

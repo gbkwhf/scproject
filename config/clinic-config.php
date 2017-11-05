@@ -23,6 +23,11 @@ return [
         '4'=>'alipay_web',//网站支付宝支付
         '5'=>'wechatpay_web',//网站微信支付
     ],
+	//邀请返利和经销商返利的比例    
+    'rate'=>[
+		'invice_rate'=>0.3,
+		'agency_rate'=>0.2,
+	]
 
 
 
