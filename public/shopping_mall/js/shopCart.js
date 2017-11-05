@@ -87,14 +87,36 @@
   	var allInput = $(".input1");
   	allInput.click(function() {
   		if(this.checked == true) {
-  			$(".input").prop('checked', true);
-  			$("label").addClass("checked");
-  			allsetTotal();
+            $.ajax({
+                type: "post", //请求方式
+                dataType: 'json', //数据格式
+                url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
+                data: {
+                    "flag": 2, //请求参数
+                    "ss": getCookie('openid') //请求参数  openid
+                },
+                success: function(data) {
+                    $(".input").prop('checked', true);
+                    $("label").addClass("checked");
+                    allsetTotal();
+                }
+            });
   		} else {
-  			$(".input").prop('checked', false);
-  			$("label").removeClass("checked");
-  			//$(".totalPrice").text("0.00");
-            allsetTotal();
+            $.ajax({
+                type: "post", //请求方式
+                dataType: 'json', //数据格式
+                url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
+                data: {
+                    "flag": 1, //请求参数
+                    "ss": getCookie('openid') //请求参数  openid
+                },
+                success: function(data) {
+                    $(".input").prop('checked', false);
+                    $("label").removeClass("checked");
+                    //$(".totalPrice").text("0.00");
+                    allsetTotal();
+                }
+            });
   		}
   	});
 
