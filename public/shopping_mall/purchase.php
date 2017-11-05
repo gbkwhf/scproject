@@ -350,29 +350,6 @@
 		
 	}
 	
-	//微信返回监测
-    $(function(){  
-        pushHistory();  
-        var bool=false;  
-        setTimeout(function(){  
-              bool=true;  
-        },500);  
-        window.addEventListener("popstate", function(e) {  
-            if(bool){
-                location.href='shopCart.php';
-            }  
-            pushHistory();  
-              
-		}, false);  
-    });  
-	function pushHistory() {  
-        var state = {  
-            title: "title",  
-            url: "#"  
-        };  
-   		window.history.pushState(state, "title", "#");  
-	}
-	
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
