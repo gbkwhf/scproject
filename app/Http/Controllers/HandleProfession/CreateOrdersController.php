@@ -706,7 +706,7 @@ class CreateOrdersController extends Controller{
                             ->leftjoin('ys_goods_image as e','d.id','=','e.goods_id')
                             ->select('c.goods_id','c.num','d.name as goods_name','d.price as goods_price','e.image')
                             ->where('b.id',$request->sub_order_id)
-                            ->groupBy('e.goods_id')
+                            ->groupBy('d.id')
                             ->get();
 
         $http = getenv('HTTP_REQUEST_URL');
