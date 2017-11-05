@@ -90,7 +90,7 @@
             $.ajax({
                 type: "post", //请求方式
                 dataType: 'json', //数据格式
-                url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
+                url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
                 data: {
                     "flag": 2, //请求参数
                     "ss": getCookie('openid') //请求参数  openid
@@ -105,7 +105,7 @@
             $.ajax({
                 type: "post", //请求方式
                 dataType: 'json', //数据格式
-                url: commonsUrl + '/api/gxsc/delete/goods/car/commodity' + versioninfos, //请求地址
+                url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
                 data: {
                     "flag": 1, //请求参数
                     "ss": getCookie('openid') //请求参数  openid
