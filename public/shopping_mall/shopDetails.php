@@ -29,7 +29,16 @@
 		<div class="shopPrice">
 			<div class="price"></div>
 			<div class="bor"></div>
-			<div class="super">超级返?</div>
+			<div class="super" onclick="location.href='super_return.php'">超级返?</div>
+		</div>
+		<div class="rebate">
+			<h4>利润共享返利条件：</h4>
+			<div class="rebate-con">
+				<p>用户自购利润共享</p>
+				<span>必须在平台会员区一次性消费1280元/单（含1280）以上，且订单完成（无退货）。</span>
+				<span>利润共享标准：每日平台总利润50%÷会员每日订单基数；利润共享天数：180天，由系统每天自动返还。</span>
+				<p>达到以上条件，平台会根据会员个人所推荐的总人数给予会员个人一定比例的推荐返利，推荐共享的金额每天根据财务数据统计，由系统自动返到会员的平台账户“可用余额”里。</p>
+			</div>
 		</div>
 		<div class="kong"></div>
 		<!-----------底部固定------------->

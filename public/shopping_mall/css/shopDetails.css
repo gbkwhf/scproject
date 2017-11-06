@@ -91,9 +91,8 @@ input[type="button"]{-webkit-appearance: none;}
 .shopPrice{
 	height: 40px;
 	/*background-color: gray;*/
-	margin-top: 5px;
-	line-height: 40px;
-	
+	margin: 5px 0px;
+	line-height: 40px;	
 }
 .super{
 	float: right;
@@ -243,4 +242,26 @@ input[type="button"]{-webkit-appearance: none;}
 	
 }
 .swiper-slide{margin-top: 45px;}
-
+.rebate{
+	padding: 7px 14px 13px;
+	color: #333;
+	padding-bottom: 5px;
+	border-top: 1px solid #efefef;
+}
+.rebate h4{
+	font-weight: 400;
+	font-size: 15px;
+	padding-bottom: 5px;
+}
+.rebate .rebate-con{
+	font-size: 13px;
+	line-height: 1.5em;
+}
+.rebate-con p{
+	padding-bottom: 5px;
+}
+.rebate-con span{
+	display: block;
+	padding-bottom: 5px;
+	text-indent: 2em;
+}
