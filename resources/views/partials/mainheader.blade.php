@@ -1,8 +1,17 @@
 <!-- Main Header -->
 <header class="main-header">
-
+                <?php
+                //获取当前管理员权限  
+ 					if(Auth::user()->role==1){
+ 						$index='admin';
+ 					}elseif(Auth::user()->role==2){//经销商
+ 						$index='agencyadmin';
+ 					}elseif (Auth::user()->role==3){//供应商
+ 						$index='supplieradmin';
+ 					}
+                ?>
     <!-- Logo -->
-    <a href="{{ url('admin') }}" class="logo">
+    <a href="{{ url($index) }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>A</b>LT</span>
         <!-- logo for regular state and mobile devices -->

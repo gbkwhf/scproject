@@ -93,7 +93,7 @@
             </div>
             <!-- /.box-body -->
             
-            <div class="box-footer clearfix">总数：{{$data->total()}}条
+            <div class="box-footer clearfix">总数：{{$data->total()}}条<br>
             	{!! $data->appends($search)->render() !!}
             </div>
           </div>

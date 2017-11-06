@@ -96,7 +96,7 @@ class Kernel extends ConsoleKernel
 
  	if ($user_insert==false || $user_update==false) {
  		\DB::rollBack();
- 		\Log::info('用户返现失败');
+ 		\Log::info('用户返现失败,log_date是'.$log_date);
  	}else {
  		\DB::commit();
  		\Log::info('用户返现成功');
@@ -130,7 +130,7 @@ class Kernel extends ConsoleKernel
 
  	if ($agency_insert==false || $agency_update==false) {
  		\DB::rollBack();
- 		\Log::info('经销商返现失败');
+ 		\Log::info('经销商返现失败,log_date是'.$log_date);
  	}else {
  		\DB::commit();
  		\Log::info('经销商返现成功');
@@ -168,7 +168,7 @@ class Kernel extends ConsoleKernel
 
  	if ($invite_insert==false || $invite_update==false) {
  		\DB::rollBack();
- 		\Log::info('邀请返现失败');
+ 		\Log::info('邀请返现失败,log_date是'.$log_date);
  	}else {
  		\DB::commit();
  		\Log::info('邀请返现成功');

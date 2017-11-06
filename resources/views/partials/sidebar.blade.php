@@ -18,17 +18,18 @@
                  	$route=explode('/',Request::path());
                  	$route1=count($route)>1?$route[1]:'';
                  	$route2=count($route)>2?$route[2]:'';
-                 	$current_route=trim($route[0].'/'.$route1,'/');
+                 	$current_route=trim($route[0]);
+                 	$current_route_2=trim($route[0].'/'.$route1,'/');                 	
                     $type ='';
                 ?>
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li @if (in_array($current_route,['admin','member/memberedit'])) class="active" @endif @if (!in_array(1,$power_arr)) style="display:none"  @endif  ><a href="{{ url('/admin') }}"><i class='fa fa-dashboard'></i> <span>数据统计</span></a></li>
-            <li @if (in_array($current_route,['memberlist','member/memberedit'])) class="active" @endif  @if (!in_array(2,$power_arr)) style="display:none"  @endif  ><a href="{{ url('memberlist') }}"><i class='fa fa-table'></i> <span>会员列表</span></a></li>
-            <li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(3,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplierlist') }}"><i class="fa fa-edit"></i><span>供应商列表</span></a></li>
-            <li @if (in_array($current_route,['agencylist'])) class="active" @endif @if (!in_array(4,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agencylist') }}"><i class="fa fa-edit"></i><span>经销商列表</span></a></li>
-            <li @if (in_array($current_route,['goodslist'])) class="active" @endif @if (!in_array(5,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goodslist') }}"><i class="fa fa-edit"></i><span>商品列表</span></a></li>
-            <li @if (in_array($current_route,['goodslist'])) class="active" @endif @if (!in_array(6,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
+            <li @if (in_array($current_route,['admin'])) class="active" @endif @if (!in_array(1,$power_arr)) style="display:none"  @endif  ><a href="{{ url('/admin') }}"><i class='fa fa-dashboard'></i> <span>数据统计</span></a></li>
+            <li @if (in_array($current_route,['memberlist','memberedit'])) class="active" @endif  @if (!in_array(2,$power_arr)) style="display:none"  @endif  ><a href="{{ url('memberlist') }}"><i class='fa fa-table'></i> <span>会员列表</span></a></li>
+            <li @if (in_array($current_route,['supplierlist','supplieradd','supplieredit'])) class="active" @endif @if (!in_array(3,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplierlist') }}"><i class="fa fa-edit"></i><span>供应商列表</span></a></li>
+            <li @if (in_array($current_route,['agencylist','agencyadd','agencyedit'])) class="active" @endif @if (!in_array(4,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agencylist') }}"><i class="fa fa-edit"></i><span>经销商列表</span></a></li>
+            <li @if (in_array($current_route,['goodslist','goods'])) class="active" @endif @if (!in_array(5,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goodslist') }}"><i class="fa fa-edit"></i><span>商品列表</span></a></li>
+            <li @if (in_array($current_route,['manage'])) class="active" @endif @if (!in_array(6,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
 
             
 
@@ -36,8 +37,8 @@
         	<!-- 供应商功能 -->	    
 			<li @if (in_array($current_route,['supplier'])) class="active" @endif @if (!in_array(30,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplier/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>            
         	<!-- 经销商功能 -->	    
-			<li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(50,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
-			<li @if (in_array($current_route,['supplierlist'])) class="active" @endif @if (!in_array(51,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/setemployee') }}"><i class="fa fa-edit"></i><span>员工管理</span></a></li>            
+			<li @if (in_array($current_route_2,['agency/orderlist','agency/orderdetial'])) class="active" @endif @if (!in_array(50,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
+			<li @if (in_array($current_route_2,['agency/setemployee'])) class="active" @endif @if (!in_array(51,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/setemployee') }}"><i class="fa fa-edit"></i><span>员工管理</span></a></li>            
           
             
             

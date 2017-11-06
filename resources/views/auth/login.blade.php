@@ -36,8 +36,23 @@
         </div>
         <div class="row">
 		  <div class="col-xs-7"><input type="text" name="captcha" class="form-control " placeholder="验证码" ></div>
-          <div class="col-xs-5" style=""><a class="col-sm-6"  onclick="javascript:re_captcha();" ><img src="{{ URL('captcha/1') }}"  alt="验证码" title="刷新图片" width="100" height="34" id="c2c98f0de5a04167a9e427d883690ff6" border="0"></a></div>
-        </div>          
+          <div class="col-xs-5" style=""><a class="col-sm-5"  onclick="javascript:re_captcha();" ><img src="{{ URL('captcha/1') }}"  alt="验证码" title="刷新图片" width="100" height="34" id="c2c98f0de5a04167a9e427d883690ff6" border="0"></a></div>
+        </div>    
+        <div class="row">
+            <div class="col-xs-7">
+                <div class="checkbox icheck">
+					<select name="role_type" class="form-control ">
+						<option value="1" >经销商</option>
+						<option value="2" >供应商</option>
+						<option value="3" >系统管理</option>
+					</select>
+                </div>
+            </div><!-- /.col -->
+            <div class="col-xs-5" style="margin-top:-11px;">
+                <br>
+                <button type="submit" style="width: 100px;height: 34px;right: 14px;position: absolute;" class="btn btn-primary btn-block btn-flat">登陆</button>
+            </div><!-- /.col -->
+        </div>              
 
 
 <script>  
@@ -47,22 +62,7 @@
         document.getElementById('c2c98f0de5a04167a9e427d883690ff6').src=$url;
   }
 </script>        
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icheck">
-					<select name="role_type" class="form-control ">
-						<option value="1" >经销商</option>
-						<option value="2" >供应商</option>
-						<option value="3" >系统管理</option>
-					</select>
-                </div>
-            </div><!-- /.col -->
 
-            <div class="col-xs-4">
-                <br>
-                <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
-            </div><!-- /.col -->
-        </div>
     </form>
 
 </div><!-- /.login-box-body -->

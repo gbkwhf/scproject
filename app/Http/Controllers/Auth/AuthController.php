@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Gregwar\Captcha\CaptchaBuilder;
+use Gregwar\Captcha\PhraseBuilder;
 use Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -80,12 +81,12 @@ class AuthController extends Controller
     {
     	$userInput = $request->get('captcha');
     
-//     	if (Session::get('milkcaptcha') != $userInput) {
-//     		return back()->withErrors([
-//     				$this->loginUsername() => '验证码错误',
-//     				]);
+    	if (Session::get('milkcaptcha') != $userInput) {
+    		return back()->withErrors([
+    				$this->loginUsername() => '验证码错误',
+    				]);
     
-//     	}
+    	}
     	$mobile=trim($request->name);
     	$password=trim($request->password);
     	//验证经销商和供应商验证登录
@@ -147,10 +148,23 @@ class AuthController extends Controller
     }
     public function captcha($tmp)
     {
-    	//生成验证码图片的Builder对象，配置相应属性
-    	$builder = new CaptchaBuilder;
+    	$phrase = new PhraseBuilder;
+        // 设置验证码位数
+        $code = $phrase->build(4);
+        // 生成验证码图片的Builder对象，配置相应属性
+        $builder = new CaptchaBuilder($code, $phrase);
+        
+        
+        $builder->setBackgroundColor(220, 210, 230);
+        $builder->setMaxAngle(25);
+        $builder->setMaxBehindLines(2);
+        $builder->setMaxFrontLines(2);
+        
+
+        
+        
     	//可以设置图片宽高及字体
-    	$builder->build($width = 100, $height = 40, $font = null);
+    	$builder->build($width = 117, $height = 35, $font = null);
     	//获取验证码的内容
     	$phrase = $builder->getPhrase();
     
