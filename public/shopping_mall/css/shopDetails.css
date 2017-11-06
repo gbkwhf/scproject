@@ -91,9 +91,8 @@ input[type="button"]{-webkit-appearance: none;}
 .shopPrice{
 	height: 40px;
 	/*background-color: gray;*/
-	margin-top: 5px;
-	line-height: 40px;
-	
+	margin: 5px 0px;
+	line-height: 40px;	
 }
 .super{
 	float: right;
@@ -243,4 +242,30 @@ input[type="button"]{-webkit-appearance: none;}
 	
 }
 .swiper-slide{margin-top: 45px;}
-
+.rebate{
+	padding: 10px 14px 13px;
+	color: #333;
+	border-top: 1px solid #e6e6e6;
+}
+.rebate h4{
+	font-weight: 400;
+	font-size: 14px;
+	padding-bottom: 5px;
+	color: #939393;
+}
+.rebate .rebate-con{
+	font-size: 12px;
+	line-height: 1.5em;
+	color: #939393;
+}
+.rebate-con li{
+	position: relative;
+	padding-left: 110px;
+}
+.rebate-con li em{
+	display: block;
+	font-style: normal;
+	position: absolute;
+	left: 0;
+	top: 0;
+}

@@ -25,11 +25,30 @@
 			<div class="swiper-wrapper"></div>
 			<div class="swiper-pagination"></div>
 		</div>
+		<!--------商品名称-->
 		<div class="shopIntroduce"></div>
+		<!--------------商品单价------>
 		<div class="shopPrice">
 			<div class="price"></div>
 			<div class="bor"></div>
-			<div class="super">超级返?</div>
+			<div class="super" onclick="location.href='super_return.php'">超级返?</div>
+		</div>
+		<div class="rebate">
+			<h4>利润共享返利条件</h4>
+			<ul class="rebate-con">
+				<li>
+					<em>用户自购利润共享：</em>
+					必须在平台会员区一次性消费1280元/单（含1280）以上，且订单完成（无退货）。
+				</li>
+				<li>
+					<em>利润共享标准：</em>
+					每日平台总利润50%÷会员每日订单基数；
+				</li>
+				<li>
+					<em>利润共享天数：</em>
+					180天，由系统每天自动返还。达到以上条件，平台会根据会员个人所推荐的总人数给予会员个人一定比例的推荐返利，推荐共享的金额每天根据财务数据统计，由系统自动返到会员的平台账户“可用余额”里。
+				</li>
+			</ul>
 		</div>
 		<div class="kong"></div>
 		<!-----------底部固定------------->
@@ -53,15 +72,14 @@
 	<script type="text/javascript" src="js/layer/layer.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			shopCarts();  //页面加载的时候显示购物车的数量
-			var goods_id = $_GET['goods_id'];
-			console.log(goods_id + '+++++');
+			shopCarts(); //页面加载的时候显示购物车的数量
+			var goods_id = $_GET['goods_id']; //获取商品id
 			$.ajax({
 				type: "get",
 				dataType: 'json',
 				url: commonsUrl + 'api/gxsc/get/commodity/info/' + goods_id + versioninfos,
 				data: {
-					"goods_id": goods_id//商品id
+					"goods_id": goods_id //商品id
 				},
 				success: function(data) {
 					console.log(data)
@@ -69,50 +87,59 @@
 						var con = data.result; //
 						var content = con.content; //商品详情
 						var goods_id = con.goods_id; //商品id
-						console.log(goods_id);
 						var goods_name = con.goods_name; //商品名称
-						var img_url = con.img_url; //商品图片
+						var img_url = con.img_url; //商品图片列表
 						var num = con.num; //商品数量
 						var price = con.price; //商品单价
 						var sales = con.sales; //商品销量
 						//------------进行赋值---------------
 						$('.swiper-pagination-total').html(img_url.length); //轮播图计数
 						$('.shopIntroduce').html(goods_name); //商品名
-						$('.price').html('￥' + price); //商品单价
+						$('.price').html('¥' + price); //商品单价
 						$('.shopImg').html(content); //商品内容
-						console.log(img_url);
 						//---------------循环图片（轮播图）-----
+						var t;
 						$.each(img_url, function(k, v) {
 							var src = img_url[k].image;
 							var imgId = img_url[k].img_id;
-							var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
-							$('.swiper-wrapper').append(t)
+							t = "<div class='swiper-slide'><image src=" + src + "/></div>";
 						});
+						$('.swiper-wrapper').append(t);
+
 					}
+					//swiper插件实现轮播图
+					var mySwiper = new Swiper('.swiper-container', {
+						pagination: {   //分页器
+						    el: '.swiper-pagination',
+						    type: 'fraction',
+						},
+						loop: true,
+					});
+
 				}
 			});
+
 			//------------创建购物车------------
 			$(".addCar").click(function() {
 
-				var goods_id = $_GET['goods_id'];
-				console.log(goods_id + '+++++');
-				$.ajax({
-					type: "post", //请求方式
-					dataType: 'json', //数据格式
-					url: commonsUrl + '/api/gxsc/update/goods/car/commodity/number' + versioninfos, //请求地址
-					data: {
-						"symbol": 1, //点击加号传1
-						"goods_id": goods_id, //请求参数
-						"ss": getCookie('openid') //请求参数  openid
-					},
-					success: function(data) { //请求成功
-						console.log(data);
-						shopCarts();
-						layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
-					}
-				});
-			})
-			//获取购物车中的商品数量
+					var goods_id = $_GET['goods_id'];
+					$.ajax({
+						type: "post", //请求方式
+						dataType: 'json', //数据格式
+						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/number' + versioninfos, //请求地址
+						data: {
+							"symbol": 1, //点击加号传1
+							"goods_id": goods_id, //请求参数
+							"ss": getCookie('openid') //请求参数  openid
+						},
+						success: function(data) { //请求成功
+							console.log(data);
+							layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
+							shopCarts();
+						}
+					});
+				})
+				//获取购物车中的商品数量
 			function shopCarts() {
 				$.ajax({
 					type: "post",
