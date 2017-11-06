@@ -24,6 +24,8 @@ ul,li{
 }
 input,textarea{
 	outline:none;
+	-webkit-appearance: none;/*清除 iOS 下 input 表单的阴影*/
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 a{
 	text-decoration: none;
