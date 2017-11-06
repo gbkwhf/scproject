@@ -36,7 +36,7 @@
   			}
   		});
   	}
-
+	//商品状态未选中
   	function te(m) {
   		//		alert(m+'mm0');
   		setTimeout(function() {
@@ -57,7 +57,7 @@
   			}
   		}, 300);
   	}
-
+//商品状态选中
   	function hh(m) {
   		//		alert(m+'mm1');
   		setTimeout(function() {
@@ -87,36 +87,36 @@
   	var allInput = $(".input1");
   	allInput.click(function() {
   		if(this.checked == true) {
-            $.ajax({
-                type: "post", //请求方式
-                dataType: 'json', //数据格式
-                url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
-                data: {
-                    "flag": 2, //请求参数
-                    "ss": getCookie('openid') //请求参数  openid
-                },
-                success: function(data) {
-                    $(".input").prop('checked', true);
-                    $("label").addClass("checked");
-                    allsetTotal();
-                }
-            });
+  			$.ajax({
+  				type: "post", //请求方式
+  				dataType: 'json', //数据格式
+  				url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
+  				data: {
+  					"flag": 2, //请求参数
+  					"ss": getCookie('openid') //请求参数  openid
+  				},
+  				success: function(data) {
+  					$(".input").prop('checked', true);
+  					$("label").addClass("checked");
+  					allsetTotal();
+  				}
+  			});
   		} else {
-            $.ajax({
-                type: "post", //请求方式
-                dataType: 'json', //数据格式
-                url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
-                data: {
-                    "flag": 1, //请求参数
-                    "ss": getCookie('openid') //请求参数  openid
-                },
-                success: function(data) {
-                    $(".input").prop('checked', false);
-                    $("label").removeClass("checked");
-                    //$(".totalPrice").text("0.00");
-                    allsetTotal();
-                }
-            });
+  			$.ajax({
+  				type: "post", //请求方式
+  				dataType: 'json', //数据格式
+  				url: commonsUrl + '/api/gxsc/update/goods/car/commodity/state' + versioninfos, //请求地址
+  				data: {
+  					"flag": 1, //请求参数
+  					"ss": getCookie('openid') //请求参数  openid
+  				},
+  				success: function(data) {
+  					$(".input").prop('checked', false);
+  					$("label").removeClass("checked");
+  					//$(".totalPrice").text("0.00");
+  					allsetTotal();
+  				}
+  			});
   		}
   	});
 
@@ -209,7 +209,7 @@
   						success: function(data) { //请求成功
   							console.log('这是对的');
   							console.log(data)
-                            allsetTotal();
+  							allsetTotal();
 
   						}
   					});
@@ -247,7 +247,7 @@
   						success: function(data) { //请求成功
   							console.log('这是对的');
   							console.log(data)
-                            allsetTotal();
+  							allsetTotal();
 
   						}
   					});
