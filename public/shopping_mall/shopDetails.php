@@ -25,7 +25,9 @@
 			<div class="swiper-wrapper"></div>
 			<div class="swiper-pagination"></div>
 		</div>
+		<!--------商品名称-->
 		<div class="shopIntroduce"></div>
+		<!--------------商品单价------>
 		<div class="shopPrice">
 			<div class="price"></div>
 			<div class="bor"></div>
@@ -53,15 +55,15 @@
 	<script type="text/javascript" src="js/layer/layer.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			shopCarts();  //页面加载的时候显示购物车的数量
-			var goods_id = $_GET['goods_id'];
+			shopCarts(); //页面加载的时候显示购物车的数量
+			var goods_id = $_GET['goods_id']; //获取商品id
 			console.log(goods_id + '+++++');
 			$.ajax({
 				type: "get",
 				dataType: 'json',
 				url: commonsUrl + 'api/gxsc/get/commodity/info/' + goods_id + versioninfos,
 				data: {
-					"goods_id": goods_id//商品id
+					"goods_id": goods_id //商品id
 				},
 				success: function(data) {
 					console.log(data)
@@ -71,7 +73,7 @@
 						var goods_id = con.goods_id; //商品id
 						console.log(goods_id);
 						var goods_name = con.goods_name; //商品名称
-						var img_url = con.img_url; //商品图片
+						var img_url = con.img_url; //商品图片列表
 						var num = con.num; //商品数量
 						var price = con.price; //商品单价
 						var sales = con.sales; //商品销量
@@ -88,31 +90,47 @@
 							var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
 							$('.swiper-wrapper').append(t)
 						});
+
 					}
+					//swiper插件实现轮播图
+					var mySwiper = new Swiper('.swiper-container', {
+						//	        autoplayDisableOnInteraction : false,
+						//	        initialSlide:0,
+						//autoplay: 1000,//可选选项，自动滑动
+						paginationClickable: true,
+						paginationType: 'fraction',//分页器
+						loop: true,
+						pagination: '.swiper-pagination',
+						observer: true, //修改swiper自己或子元素时，自动初始化swiper 
+						observeParents: false, //修改swiper的父元素时，自动初始化swiper 
+
+					});
+
 				}
 			});
+
 			//------------创建购物车------------
 			$(".addCar").click(function() {
 
-				var goods_id = $_GET['goods_id'];
-				console.log(goods_id + '+++++');
-				$.ajax({
-					type: "post", //请求方式
-					dataType: 'json', //数据格式
-					url: commonsUrl + '/api/gxsc/update/goods/car/commodity/number' + versioninfos, //请求地址
-					data: {
-						"symbol": 1, //点击加号传1
-						"goods_id": goods_id, //请求参数
-						"ss": getCookie('openid') //请求参数  openid
-					},
-					success: function(data) { //请求成功
-						console.log(data);
-						shopCarts();
-						layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
-					}
-				});
-			})
-			//获取购物车中的商品数量
+					var goods_id = $_GET['goods_id'];
+					console.log(goods_id + '+++++');
+					$.ajax({
+						type: "post", //请求方式
+						dataType: 'json', //数据格式
+						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/number' + versioninfos, //请求地址
+						data: {
+							"symbol": 1, //点击加号传1
+							"goods_id": goods_id, //请求参数
+							"ss": getCookie('openid') //请求参数  openid
+						},
+						success: function(data) { //请求成功
+							console.log(data);
+							shopCarts();
+							layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
+						}
+					});
+				})
+				//获取购物车中的商品数量
 			function shopCarts() {
 				$.ajax({
 					type: "post",
