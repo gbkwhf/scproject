@@ -74,6 +74,7 @@
 		$(function() {
 			shopCarts(); //页面加载的时候显示购物车的数量
 			var goods_id = $_GET['goods_id']; //获取商品id
+			console.log(goods_id + '+++++');
 			$.ajax({
 				type: "get",
 				dataType: 'json',
@@ -98,22 +99,19 @@
 						$('.price').html('¥' + price); //商品单价
 						$('.shopImg').html(content); //商品内容
 						//---------------循环图片（轮播图）-----
-						var t;
 						$.each(img_url, function(k, v) {
 							var src = img_url[k].image;
 							var imgId = img_url[k].img_id;
-							t = "<div class='swiper-slide'><image src=" + src + "/></div>";
+							var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
+							$('.swiper-wrapper').append(t)
 						});
-						$('.swiper-wrapper').append(t);
 
 					}
 					//swiper插件实现轮播图
 					var mySwiper = new Swiper('.swiper-container', {
-						pagination: {   //分页器
-						    el: '.swiper-pagination',
-						    type: 'fraction',
-						},
+						paginationType: 'fraction',//分页器
 						loop: true,
+						pagination: '.swiper-pagination', 
 					});
 
 				}
