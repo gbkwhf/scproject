@@ -19,7 +19,6 @@ class SupplierManageController  extends Controller
  	$supplier_id=\Session::get('role_userid');
 
  	
- 	
  	$par=\App\SubOrderModel::where('supplier_id','=',$supplier_id)->where('ys_base_order.state','=',1)
  						->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
  						->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','express_num');
@@ -42,15 +41,18 @@ class SupplierManageController  extends Controller
  		$par->where('ys_sub_order.id','like',"%$request->order_id%");
  		$search['order_id']=$request->order_id;
  	} 	
- 	if ($request->state != '-1'){
+ 	if ($request->state!==null && $request->state != '-1'){
  		$par->where('ys_base_order.state','=',$request->state);
  		$search['state']=$request->state;
  	}
  	
+ 	
+
  	$data=$par->paginate(10);
  	$pay_arr=[
  		1=>'微信支付',
  		2=>'线下支付',
+ 		3=>'微信公众号',
  	];
  	foreach ($data as $val){
  		$goods_name=\App\OrderGoodsModel::where('sub_id',$val->order_id)
@@ -62,7 +64,6 @@ class SupplierManageController  extends Controller
  		$val->state=empty($val->express_num)?'未发货':'已发货';
  		
  	}
-
 	return view('supplierorderlist',['data'=>$data,'search'=>$search]);
  }
  //

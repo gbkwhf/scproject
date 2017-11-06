@@ -34,13 +34,14 @@
               <div class="box-body">
                 <div class="form-group">
                   <label class="col-sm-2 control-label" >所购商品</label>
-                  <div class="col-sm-10">
-                  	{{ $data->goods_name or '' }}
+                  <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;" >
+                  		
+                  		<span>	{{ $data->goods_name or '' }}</span>
                   </div>
                 </div>              
                 <div class="form-group">
                   <label class="col-sm-2 control-label" >收货地址</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;">
                   	{{ $data->receive_address or '' }}
                   </div>
                 </div>                                
