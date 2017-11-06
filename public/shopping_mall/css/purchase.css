@@ -7,7 +7,7 @@ html,body{
 }
 .wrapper header{
 	background: #fff;
-	margin: 0px 13px;
+	margin: 0px 4%;
 	overflow: hidden;
 	border-top-left-radius: 5px;	
 	border-top-right-radius: 5px;
@@ -141,7 +141,7 @@ html,body{
 	margin: 3px 0px 0px 3px;
 }
 .explain-buy{
-	padding: 25px 33px;
+	padding: 25px 4%;
 	background: #fff;
 }
 .explain-buy h4{

@@ -74,7 +74,6 @@
 		$(function() {
 			shopCarts(); //页面加载的时候显示购物车的数量
 			var goods_id = $_GET['goods_id']; //获取商品id
-			console.log(goods_id + '+++++');
 			$.ajax({
 				type: "get",
 				dataType: 'json',
@@ -88,7 +87,6 @@
 						var con = data.result; //
 						var content = con.content; //商品详情
 						var goods_id = con.goods_id; //商品id
-						console.log(goods_id);
 						var goods_name = con.goods_name; //商品名称
 						var img_url = con.img_url; //商品图片列表
 						var num = con.num; //商品数量
@@ -97,30 +95,25 @@
 						//------------进行赋值---------------
 						$('.swiper-pagination-total').html(img_url.length); //轮播图计数
 						$('.shopIntroduce').html(goods_name); //商品名
-						$('.price').html('￥' + price); //商品单价
+						$('.price').html('¥' + price); //商品单价
 						$('.shopImg').html(content); //商品内容
-						console.log(img_url);
 						//---------------循环图片（轮播图）-----
+						var t;
 						$.each(img_url, function(k, v) {
 							var src = img_url[k].image;
 							var imgId = img_url[k].img_id;
-							var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
-							$('.swiper-wrapper').append(t)
+							t = "<div class='swiper-slide'><image src=" + src + "/></div>";
 						});
+						$('.swiper-wrapper').append(t);
 
 					}
 					//swiper插件实现轮播图
 					var mySwiper = new Swiper('.swiper-container', {
-						//	        autoplayDisableOnInteraction : false,
-						//	        initialSlide:0,
-						//autoplay: 1000,//可选选项，自动滑动
-						paginationClickable: true,
-						paginationType: 'fraction',//分页器
+						pagination: {   //分页器
+						    el: '.swiper-pagination',
+						    type: 'fraction',
+						},
 						loop: true,
-						pagination: '.swiper-pagination',
-						observer: true, //修改swiper自己或子元素时，自动初始化swiper 
-						observeParents: false, //修改swiper的父元素时，自动初始化swiper 
-
 					});
 
 				}
@@ -130,7 +123,6 @@
 			$(".addCar").click(function() {
 
 					var goods_id = $_GET['goods_id'];
-					console.log(goods_id + '+++++');
 					$.ajax({
 						type: "post", //请求方式
 						dataType: 'json', //数据格式
@@ -142,8 +134,8 @@
 						},
 						success: function(data) { //请求成功
 							console.log(data);
-							shopCarts();
 							layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
+							shopCarts();
 						}
 					});
 				})
