@@ -145,25 +145,16 @@ html,body{
 	background: #fff;
 }
 .explain-buy h4{
-	color: #4d4d4d;
+	color: #939393;
 	font-weight: 400;
-	font-size: 15px;
 	padding-bottom: 7px;
 }
 .xz-list{
-	color: #999;
+	color: #939393;
 }
 .xz-list li{
-	position: relative;
-	line-height: 1.5em;
-	padding-top: 5px;
-	padding-left: 15px;
-}
-.xz-list li em{
-	position: absolute;
-	left: 0;
-	top: 5px;
-	font-style: normal;
+	font-size: 12px;
+	line-height: 24px;
 }
 footer{
 	position: fixed;

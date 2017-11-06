@@ -243,25 +243,29 @@ input[type="button"]{-webkit-appearance: none;}
 }
 .swiper-slide{margin-top: 45px;}
 .rebate{
-	padding: 7px 14px 13px;
+	padding: 10px 14px 13px;
 	color: #333;
-	padding-bottom: 5px;
-	border-top: 1px solid #efefef;
+	border-top: 1px solid #e6e6e6;
 }
 .rebate h4{
 	font-weight: 400;
-	font-size: 15px;
+	font-size: 14px;
 	padding-bottom: 5px;
+	color: #939393;
 }
 .rebate .rebate-con{
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 1.5em;
+	color: #939393;
 }
-.rebate-con p{
-	padding-bottom: 5px;
+.rebate-con li{
+	position: relative;
+	padding-left: 110px;
 }
-.rebate-con span{
+.rebate-con li em{
 	display: block;
-	padding-bottom: 5px;
-	text-indent: 2em;
+	font-style: normal;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
