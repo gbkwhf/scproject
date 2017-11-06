@@ -1,10 +1,5 @@
   $(function() {
-//解决IOS微信webview后退不执行JS的问题
-      window.onpageshow = function(event) {
-          if (event.persisted) {
-              window.location.reload();
-          }
-      };
+
   	function shopCar() {
   		//获取购物车中的商品信息
   		$.ajax({
