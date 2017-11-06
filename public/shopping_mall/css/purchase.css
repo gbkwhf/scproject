@@ -263,5 +263,4 @@ footer{
 	border: 1px solid #e6e6e6;
 	border-radius: 5px;
 	min-width: 220px;
-	-webkit-appearance: none;/*清除 iOS 下 input 表单的阴影*/
 }
