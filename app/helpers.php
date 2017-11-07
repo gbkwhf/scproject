@@ -108,16 +108,21 @@ function  generatorOrderIdNew()
     $time = explode(' ', microtime());
     $num = getRandomID(4,3);
 
-    //return rand(1, 9) .$num.intval(($time[0] + $time[1]) * 100) . rand(0, 9); //做出如下修改，原因是因为中间出现了短横杠-,如：15601-20776480820
-    return rand(1, 9) .$num.substr(intval(($time[0] + $time[1]) * 100),1) . rand(0, 9).substr($num,2);
-//    $str =  rand(1, 9) .$num.substr(intval(($time[0] + $time[1]) * 100),1) . rand(0, 9).substr($num,2);
-//
-//    if(strlen($str) == 16){
-//        return $str;
-//    }else{
-//        $len = 16 - strlen($str);
-//        return $str.substr(getRandomID(10,3),0,$len);
-//    }
+//    return rand(1, 9) .$num.substr(intval(($time[0] + $time[1]) * 100),1) . rand(0, 9).substr($num,2);
+    $str =  rand(1, 9) .$num.substr(intval(($time[0] + $time[1]) * 100),1) . rand(0, 9).substr($num,2);
+
+    if(strlen($str) == 16){
+        return $str;
+
+    }elseif(strlen($str) < 16){
+
+        $len = 16 - strlen($str);
+        return $str.substr(getRandomID(10,3),0,$len);
+
+    }elseif(strlen($str) > 16){
+
+        return substr($str,0,16);
+    }
 
 
 }
