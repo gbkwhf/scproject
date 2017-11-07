@@ -1,10 +1,10 @@
 <?php
 	Route::get('/', ['as' => 'home','middleware' => 'auth', function () {
-
-		
-		return view('home');
+		return redirect('admin');
 	}]);
 
+	
+	
 	// Authentication routes...
 	Route::get('auth/login', 'Auth\AuthController@getLogin');
 	Route::post('auth/login', 'Auth\AuthController@postLogin');
