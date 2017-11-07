@@ -43,6 +43,7 @@ input[type="button"]{-webkit-appearance: none;}
 	overflow: auto;
 	padding-left: 15px;
 	padding-right: 10px;
+	margin-bottom: 60px;
 }
 .swiper-container {
   width: 100%;
