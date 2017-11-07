@@ -15,3 +15,4 @@ public/shopping_mall/js/config.js
 ueditor/php/upload/*
 storage/app/*
 public/rebate_execute.txt
+storage/upload/*
