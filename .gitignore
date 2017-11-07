@@ -11,6 +11,7 @@ test.php
 .settings/
 .DS_Store
 public/upload/*
-public/wxsite/js/common.js
-public/website/js/common.js
+public/shopping_mall/js/config.js
 ueditor/php/upload/*
+storage/app/*
+public/rebate_execute.txt
