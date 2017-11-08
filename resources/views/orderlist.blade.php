@@ -35,14 +35,14 @@
                <br><br>
                   <div class="box-tools2 ">
                       <form class="form-horizontal" id ="form_action" action="{{url('manage/orderlist')}}" method="get">
-                          <div style="width: 800px;" class="input-group input-group-sm row">
+                          <div style="width: 850px;" class="input-group input-group-sm row">
                               <div class="col-lg-2">
                                   <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
                               </div>
                               <div class="col-lg-2">
                                   <input type="text" placeholder="结束日期" id="end" class="inline laydate-icon form-control" style="float:left;" name="end" value="{{ $_GET['end'] or ''}}">
                               </div>
-                             <div class="col-lg-3">
+                             <div class="col-lg-2">
 	                            <select name="agency"  class="form-control pull-right"  style="width: 200px">
 	                                <option value="">订单来源 </option>
 	                                <option value=-1>线上订单 </option>
@@ -51,14 +51,17 @@
 			                          @endforeach
 	                            </select>
                               </div>   
-                             <div class="col-lg-3">
+                             <div class="col-lg-2">
 	                            <select name="supplier"  class="form-control pull-right"  style="width: 200px">
 	                                <option value="">供应商 </option>
 			                          @foreach ($supplier_list as $supplier)
 			                          <option @if(isset($_GET['supplier'])) @if($_GET['supplier'] == $supplier->id) selected="selected" @endif @endif value="{{$supplier->id}}">{{$supplier->name}}</option>
 			                          @endforeach
 	                            </select>
-                              </div>                                                                                                                   
+                              </div>    
+                              <div class="col-lg-2">
+									<input placeholder="用户名" class="form-control  " style="float:left;width:161px" name="name" value="{{ $_GET['name'] or ''}}" type="text">                                                            
+                              </div>                                                                                                                                                 
                               <div class="col-lg-2" style="position:relative">
                                   <input type="hidden" name="search" value="1">
                                   <input type="text" placeholder="用户手机" class="form-control  " style="float:left;width:141px" name="mobile" value="{{ $_GET['mobile'] or ''}}">
@@ -78,7 +81,8 @@
                   <th>金额</th>
                   <th>付款时间</th>
 				  <th>供应商</th>                  
-                  <th>订单来源</th>                  
+                  <th>订单来源</th>
+                  <th>用户名</th>                  
                   <th>用户手机</th>
                   <th>订单利润</th>
                    <th>操作</th>
@@ -91,6 +95,7 @@
 	                  <td>{{ $order->pay_time }}</td>
 	                  <td>{{ $order->supplier_name }}</td>
 	                  <td>{{ $order->order_source }}</td>
+	                  <td>{{ $order->user_name }}</td>
 	                  <td>{{ $order->mobile }}</td>
 	                  <td>{{ $order->all_profit }}</td>	 	                  
 	                  <td>

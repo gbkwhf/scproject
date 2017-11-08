@@ -56,6 +56,10 @@ class OrderController extends Controller
 			$par->where('ys_member.mobile','like',"%$request->mobile%");
 			$search['mobile']=$request->mobile;
 		}
+		if ($request->name != ''){
+			$par->where('ys_member.name','like',"%$request->name%");
+			$search['name']=$request->name;
+		}		
 		
 		$data=$par->groupby('ys_base_order.id')->orderBy('pay_time','desc')->paginate(10);
 		
@@ -68,13 +72,13 @@ class OrderController extends Controller
 				->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
 				->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
 				->get();
-			$val->goods_name=str_limit($goods_name[0]->goods_name,30,'...');
+			$val->goods_name=str_limit($goods_name[0]->goods_name,20,'...');
 			//供应商
 			$supplier_name=\App\SubOrderModel::where('base_id',$val->order_id)
 				->leftjoin('ys_supplier','ys_supplier.id','=','ys_sub_order.supplier_id')
 				->selectRaw("GROUP_CONCAT(ys_supplier.name) as supplier_name")
 				->get();
-			$val->supplier_name=str_limit($supplier_name[0]->supplier_name,30,'...');
+			$val->supplier_name=str_limit($supplier_name[0]->supplier_name,20,'...');
 			//经销商
 			if(empty($val->employee_id)){
 				$val->order_source='线上订单';
