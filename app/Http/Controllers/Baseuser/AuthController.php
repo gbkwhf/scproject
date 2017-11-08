@@ -114,12 +114,12 @@ class AuthController extends Controller
             return $this->setStatusCode(1008)->respondWithError($this->message);
         }
 
-        $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
-        if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
-            $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
-        }else{
-            $user_id = $is_empty->user_id + 1;
-        }
+//        $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
+//        if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
+//            $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
+//        }else{
+//            $user_id = $is_empty->user_id + 1;
+//        }
 
         //检测邀请人是否存在，以及邀请人id是否真实有效
         if(!empty($request->invite_id)){
@@ -134,7 +134,7 @@ class AuthController extends Controller
 
         //验证通过，则插入数据库，并且更改相应逻辑操作
         $insert = \DB::table('ys_member')->insert([
-            'user_id'=>$user_id,
+//            'user_id'=>$user_id,
             'mobile' => $request->un,
             'password' => md5(md5($request->pw)),
             'created_at' => date('Y-m-d H:i:s'),
@@ -860,12 +860,14 @@ class AuthController extends Controller
 
         if(empty($had_mobile)){ //手机号码不存在，则应该为其注册
 
-            $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
-            if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
-                $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
-            }else{
-                $user_id = $is_empty->user_id + 1;
-            }
+//            $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
+//            if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
+//                $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
+//            }
+
+//            else{
+//                $user_id = $is_empty->user_id + 1;
+//            }
 
             //检测邀请人是否存在，以及邀请人id是否真实有效
             if(!empty($request->invite_id)){
@@ -879,7 +881,7 @@ class AuthController extends Controller
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
             $insert1 = \DB::table('ys_member')->insert([
-                'user_id'=>$user_id,
+//                'user_id'=>$user_id,
                 'mobile' => $request->un,
                 'password' => md5(md5('123456789')),
                 'created_at' => date('Y-m-d H:i:s'),
@@ -896,10 +898,10 @@ class AuthController extends Controller
 
             $insert2 = \DB::table('ys_session_info')->insert([
 
-                'user_id'=>$user_id,
+//                'user_id'=>$user_id,
                 'client_type'=>1, //安卓
                 'session'=>'',
-                'mid'=>$user_id,
+                'mid'=>'',
                 'push_service_type'=>2,
                 'mec_ip' => $serverArr['mec_ip'],
                 'mec_port' => $serverArr['mec_port'],
@@ -930,10 +932,10 @@ class AuthController extends Controller
 
                 $update1 = \DB::table('ys_session_info')->insert([
 
-                                'user_id'=>$had_mobile->user_id,
+//                                'user_id'=>$had_mobile->user_id,
                                 'client_type'=>1, //安卓
                                 'session'=>$session,
-                                'mid'=>$had_mobile->user_id,
+                                'mid'=>'',
                                 'push_service_type'=>2,
                                 'mec_ip' => $serverArr['mec_ip'],
                                 'mec_port' => $serverArr['mec_port'],
