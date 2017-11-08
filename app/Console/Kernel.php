@@ -28,9 +28,12 @@ class Kernel extends ConsoleKernel
                  ->hourly();
 
     $schedule->call(function () {
+    	
+    	
+    $path=public_path();
 
     	//读取上次执行时间	
- 	if(file_exists('rebate_execute.txt')){
+ 	if(file_exists($path.'/rebate_execute.txt')){
  		$log_file=unserialize(file_get_contents('rebate_execute.txt'));
  		$log_date=date('Y-m-d',strtotime($log_file['time'])); 		
  		$today_data=date('Y-m-d'); 		
@@ -79,7 +82,7 @@ class Kernel extends ConsoleKernel
  	$data['total']=[
 	 	'total_profit'=>$log_file['total']['total_profit']+$yesterday_profit,
  	];
- 	file_put_contents('rebate_execute.txt', serialize($data));
+ 	file_put_contents($path.'/rebate_execute.txt', serialize($data));
  	$user_insert=true;
  	$user_update=true;
  	foreach ($personal as $val){
