@@ -172,8 +172,7 @@ class Kernel extends ConsoleKernel
  	}else {
  		\DB::commit();
  		\Log::info('邀请返现成功');
- 	}
-    	    	
-       })->everyMinute();
+ 	}    	    	
+       })->dailyAt('00:30');
     }
 }
