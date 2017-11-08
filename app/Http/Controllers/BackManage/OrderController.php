@@ -15,8 +15,7 @@ class OrderController extends Controller
 
 	
 	public  function OrderList (Request $request){
-		
-		
+
 		\DB::enableQueryLog();
 		
 		$par=\App\BaseOrderModel::where('ys_base_order.state',1)
