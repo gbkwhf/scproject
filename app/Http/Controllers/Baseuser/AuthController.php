@@ -880,8 +880,8 @@ class AuthController extends Controller
             \DB::beginTransaction(); //开启事务
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
-            $insert1 = \DB::table('ys_member')->insert([
-//                'user_id'=>$user_id,
+            $insert1 = \DB::table('ys_member')->insertGetId([
+
                 'mobile' => $request->un,
                 'password' => md5(md5('123456789')),
                 'created_at' => date('Y-m-d H:i:s'),
@@ -889,6 +889,7 @@ class AuthController extends Controller
                 'sex' =>0,
                 'invite_id' => $invite_id,
             ]);
+
 
             $update1 =  UserPincodeHistoryModel::where('id',$max->id)->update([
 
@@ -898,10 +899,10 @@ class AuthController extends Controller
 
             $insert2 = \DB::table('ys_session_info')->insert([
 
-//                'user_id'=>$user_id,
+                'user_id'=>$insert1,
                 'client_type'=>1, //安卓
                 'session'=>'',
-                'mid'=>'',
+                'mid'=>$insert1,
                 'push_service_type'=>2,
                 'mec_ip' => $serverArr['mec_ip'],
                 'mec_port' => $serverArr['mec_port'],
@@ -932,10 +933,10 @@ class AuthController extends Controller
 
                 $update1 = \DB::table('ys_session_info')->insert([
 
-//                                'user_id'=>$had_mobile->user_id,
+                                'user_id'=>$had_mobile->user_id,
                                 'client_type'=>1, //安卓
                                 'session'=>$session,
-                                'mid'=>'',
+                                'mid'=>$had_mobile->user_id,
                                 'push_service_type'=>2,
                                 'mec_ip' => $serverArr['mec_ip'],
                                 'mec_port' => $serverArr['mec_port'],
