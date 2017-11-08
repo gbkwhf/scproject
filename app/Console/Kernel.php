@@ -40,6 +40,7 @@ class Kernel extends ConsoleKernel
  		} 		
  	}else{ 		
  		$log_date=date('Y-m-d',strtotime('-1 days'));
+ 		$log_file['total']['total_profit']=0;
  	}
  	$data=['time'=>date('Y-m-d H:i:s',time())];
  	
