@@ -40,6 +40,7 @@
 	<script>
 	    
 			
+		var winW = $(window).width();
 		var winH = $(window).height();
 		$('.content').height(winH-15);
 					
@@ -105,13 +106,16 @@
 		    				html+='<ul>';
 			    			for(var i=0;i<data.result.length;i++){
 			    				html+='<li goods_id="'+data.result[i].goods_id+'" onclick="location.href=\'shopDetails.php?goods_id='+data.result[i].goods_id+'\'">'+
-					                '<img src="'+data.result[i].image+'" alt="">'+
+					                '<div class="picbox"><img src="'+data.result[i].image+'" alt=""></div>'+
 					                '<em>'+data.result[i].goods_name+'</em>'+
 					                '<i>¥'+data.result[i].price+'</i>'+
 					            '</li>';
 			    			}
 			    			html+='</ul>';
 			    			$('.right_content').html(html);
+			    			var rightW = $('.right_content').width();
+			    			$('.picbox').css({'width':(rightW-60)/2,'height':(rightW-60)/2});
+			    			$('.picbox img').css({'max-height':(rightW-60)/2});
 						}
 		    		}else{
 	                    layer.msg(data.msg);
