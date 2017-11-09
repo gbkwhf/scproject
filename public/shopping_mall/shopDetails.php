@@ -53,13 +53,13 @@
 		<div class="kong"></div>
 		<!-----------底部固定------------->
 		<div class="shopBuy">
-			<div class="addCar">加入购物车</div>
+			<div class="addCar" id="addCar">加入购物车</div>
 		</div>
 		<!------------商品详情------------>
 		<div class="detailTitle aa" id="002">商品详情</div>
 		<div class="shopImg"></div>
 		<!--购物车-->
-		<div class="shopping-cart" onclick="location.href='shopCart.php'">
+		<div class="shopping-cart" id="shopping-cart" onclick="location.href='shopCart.php'">
 			<img src="images/shopping-cart.png" />
 			<span></span>
 		</div>
@@ -70,6 +70,8 @@
 	<script type="text/javascript" src="js/swiper-3.4.0.min.js"></script>
 	<script type="text/javascript" src="js/shopDetails.js"></script>
 	<script type="text/javascript" src="js/layer/layer.js"></script>
+	<script type="text/javascript" src="js/jquery.fly.min.js"></script>
+	<script type="text/javascript" src="js/requestAnimationFrame.js"></script>
 	<script type="text/javascript">
 	//根据商品id获取商品详情
 		$(function() {
@@ -106,6 +108,7 @@
 							var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
 							$('.swiper-wrapper').append(t)
 						});
+						$('.addCar').attr('pic',img_url[0].image);
 
 					}
 					//swiper插件实现轮播图
@@ -117,10 +120,13 @@
 
 				}
 			});
-
+			
+			var offset = $("#shopping-cart").offset();  //结束的地方的元素
 			//------------创建购物车------------
-			$(".addCar").click(function() {
-
+			$(".addCar").click(function(event) {
+				console.log($(document).scrollTop());
+				console.log(offset.top);
+					var addcar = $(this);
 					var goods_id = $_GET['goods_id'];
 					$.ajax({
 						type: "post", //请求方式
@@ -133,7 +139,25 @@
 						},
 						success: function(data) { //请求成功
 							console.log(data);
-							layer.msg("亲，加入购物车成功,请点击购物车进行查看！");
+							
+							//获取该商品的图片
+							var img = addcar.attr('pic');
+							var flyer = $('<img class="u-flyer" src="'+img+'">');
+							flyer.fly({
+							    start: {
+							        left: event.pageX,
+							        top: event.pageY
+							    },
+							    end: {
+							        left: offset.left + 10,
+							        top: offset.top + 10,
+							        width: 0,
+							        height: 0
+							    },
+							    onEnd: function(){
+									this.destory();
+								}
+							});
 							shopCarts();
 						}
 					});
@@ -162,6 +186,7 @@
 				});
 			};
 		});
+		
 	</script>
 	<script type="text/javascript">
 		function click_scroll1() {
