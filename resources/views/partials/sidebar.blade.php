@@ -30,6 +30,7 @@
             <li @if (in_array($current_route,['agencylist','agencyadd','agencyedit'])) class="active" @endif @if (!in_array(4,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agencylist') }}"><i class="fa fa-edit"></i><span>经销商列表</span></a></li>
             <li @if (in_array($current_route,['goodslist','goods'])) class="active" @endif @if (!in_array(5,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goodslist') }}"><i class="fa fa-edit"></i><span>商品列表</span></a></li>
             <li @if (in_array($current_route,['manage'])) class="active" @endif @if (!in_array(6,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
+            <li @if (in_array($current_route_2,['manage/sendmemberbalance'])) class="active" @endif @if (!in_array(7,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/sendmemberbalance') }}"><i class="fa fa-edit"></i><span>会员返现</span></a></li>
 
             
 

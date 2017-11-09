@@ -73,6 +73,7 @@
 	<script type="text/javascript" src="js/jquery.fly.min.js"></script>
 	<script type="text/javascript" src="js/requestAnimationFrame.js"></script>
 	<script type="text/javascript">
+	//根据商品id获取商品详情
 		$(function() {
 			shopCarts(); //页面加载的时候显示购物车的数量
 			var goods_id = $_GET['goods_id']; //获取商品id

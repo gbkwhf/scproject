@@ -90,7 +90,7 @@
                         </tbody></table>
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">总共：{{$data->total()}}件<br>
+                <div class="box-footer clearfix">总数：{{$data->total()}}<br>
                     {!! $data->appends($search)->render() !!}
              </div>
             </div>

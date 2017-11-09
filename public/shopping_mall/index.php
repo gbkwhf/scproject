@@ -33,28 +33,9 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-    
-//	if(getCookie("openid")){
-//		checkBind();
-//	}else{
-//		//获取openid
-//		$.ajax({
-//			type:"get",
-//			url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
-//			data:{
-//				"code":$_GET['code']
-//			},success:function(data){
-//				if(data.code==1){
-//					setCookie("openid",data.result.openId);
-//					setCookie("is_member",data.result.is_member);
-//					checkBind();
-//				}else{
-//                    layer.msg(data.msg);
-//                }
-//			}
-//		});
-//	}
+
     //权限请求
+
     //获取openid
     $.ajax({
         type:"get",
@@ -76,22 +57,23 @@
             }
         }
     });
-    
-    function checkBind(){
-        //验证openid是否绑定
-        $.ajax({
-            type:'post',
-            url: commonsUrl + 'api/gxsc/scan/this/phone/bind/openId' +versioninfos,
-            data:{'openId':getCookie("openid")},
-            success:function(data){
-                if(data.code==1){
-                    console.log(data);
-                    if(data.result.state==0){ //未绑定
-                        location.href = 'register.php';
-                    }else if(data.result.state==1){ //已绑定
-                        
-                    }
-                }else{
+
+	
+	function checkBind(){
+		//验证openid是否绑定
+		$.ajax({
+			type:'post',
+			url: commonsUrl + 'api/gxsc/scan/this/phone/bind/openId' +versioninfos,
+			data:{'openId':getCookie("openid")},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					if(data.result.state==0){ //未绑定
+						location.href = 'register.php';
+					}else if(data.result.state==1){ //已绑定
+						
+					}
+				}else{
                     layer.msg(data.msg);
                 }
             }

@@ -1,10 +1,10 @@
 <?php
 	Route::get('/', ['as' => 'home','middleware' => 'auth', function () {
-
-		
-		return view('home');
+		return redirect('admin');
 	}]);
 
+	
+	
 	// Authentication routes...
 	Route::get('auth/login', 'Auth\AuthController@getLogin');
 	Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -63,6 +63,8 @@
         Route::Post('ajax/getgoodsclass', 'AjaxController@getGoodsClass');        
         Route::get('manage/orderlist', 'OrderController@OrderList');//订单列表
         Route::get('manage/orderdetial/{id}', 'OrderController@OrderDetial');//订单详情
+        Route::get('manage/sendmemberbalance', 'MemberController@SendMemberBalance');//后台给用户返现
+        Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现
         
         
         //供应商功能
