@@ -46,8 +46,9 @@ class Kernel extends ConsoleKernel
 			$log_date=date('Y-m-d',strtotime('-1 days'));
 			$log_file['total']['total_profit']=0;
 		}
+		$data=[];
 		//执行时间
-		$data=['time'=>date('Y-m-d H:i:s',time())];
+		$data['time']=date('Y-m-d H:i:s',time());
 		
 		
 		//返利比例
@@ -56,7 +57,7 @@ class Kernel extends ConsoleKernel
 		//时间节点
 		$start_time=date('Y-m-d H:i:s',strtotime(date('Y-m-d',strtotime($log_date))));
 		$end_time=date('Y-m-d',strtotime(date('Y-m-d',strtotime('-1 days')))).' 23:59:59';
-		$data=['time_section'=>"开始时间$start_time ,结束时间$end_time"];
+		$data['time_section']="开始时间$start_time ,结束时间$end_time";
 		//返现计算
 		$time=date('Y-m-d H:i:s',strtotime(date('Y-m-d',strtotime('-180 days',strtotime($log_date)))));
 		$yesterday_profit=\App\BaseOrderModel::where('state',1)
