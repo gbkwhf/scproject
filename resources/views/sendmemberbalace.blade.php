@@ -30,9 +30,9 @@
              	<form class="form-horizontal" action="{{ url('manage/sendmemberbalancesave') }}" method="post"  >
               <div class="box-body">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" >金额</label>
+                  <label class="col-sm-2 control-label" >每份金额</label>
                   <div class="col-sm-10">
-                    <input type="text"  name="balance"  placeholder="Enter ..." class="form-control" value="">
+                    <input type="text"  name="balance"  placeholder="Enter ..." class="form-control" value=""><b style="color: red">系统当前符合条件的共{{ $total}}份</b>
                   </div>
                 </div>                                                                                                                                                                                          
               </div>

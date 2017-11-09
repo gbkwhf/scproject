@@ -83,48 +83,59 @@ class MemberController  extends Controller
  
  public  function SendMemberBalance (Request $request){
  
+ 	$start_time=date('Y-m-d',strtotime('-30 days')).' 00:00:00';
+ 	$end_time=date('Y-m-d',strtotime(date('Y-m-d',strtotime('-1 days')))).' 23:59:59';
+ 	
+ 	
+ 	$total_num=\App\BaseOrderModel::where('state',1)->where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)->sum('rebate_num');
 
  	
- 	return view('sendmemberbalace');
+ 	return view('sendmemberbalace',['total'=>$total_num]);
  }
  
  public  function SendMemberBalanceSave (Request $request){
  
  	
- 	$money=trim($request->balance);
- 	//增加余额，写流水
- 	\DB::beginTransaction(); //(开启事务)
+ 	$percent=trim($request->balance);
+ 	if($percent<=0){
+ 		return back() -> with('errors','金额必须大于0');
+ 	}
  	
- 	$data=\App\MemberModel::where('ys_member.state',1)
- 				->leftjoin('ys_base_order','ys_base_order.user_id','=','ys_member.user_id')
- 				->where('ys_base_order.state',1)
- 				->where('ys_base_order.rebate_num','>',0)
- 				->groupBy('ys_member.user_id')
- 				->get();
- 	$params=[];
- 	$user_ids=[];
-	foreach ($data as $val){
-		$params[]=[
- 				'user_id'=>$val->user_id,
- 				'amount'=>$money,
- 				'pay_describe'=>'系统返现',
- 				'created_at'=>date('Y-m-d H:i:s',time()),
- 				'type'=>3,
-			];
-		$user_ids[]=$val->user_id;
-	}	 	
-	$user_insert=true;
-	$user_update=true;
-	$user_insert=\App\BillModel::insert($params);
-	$user_update=\App\MemberModel::whereIn('user_id',$user_ids)->increment('balance',$money);
-	
+ 	$start_time=date('Y-m-d',strtotime('-30 days')).' 00:00:00';
+ 	$end_time=date('Y-m-d',strtotime(date('Y-m-d',strtotime('-1 days')))).' 23:59:59';
+ 	
+ 	\DB::beginTransaction(); //(开启事务)
+ 	//指定用户返利
+ 	$personal=\App\BaseOrderModel::where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)
+		 	->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+		 	->where('ys_base_order.state',1)
+		 	->where('rebate_num','>',0)
+		 	->groupBy('ys_base_order.user_id')
+		 	->selectRaw('ys_base_order.user_id,sum(ys_base_order.rebate_num) as rebate_num')
+		 	->get();
+ 	
+ 	$user_insert=true;
+ 	$user_update=true;
+ 	foreach ($personal as $val){
+ 		$user_money=$val->rebate_num*$percent;
+ 		$params=[
+	 		'user_id'=>$val->user_id,
+	 		'amount'=>$user_money,
+	 		'pay_describe'=>'系统返利',
+	 		'created_at'=>date('Y-m-d H:i:s',time()),
+	 		'type'=>1,
+ 		];
+ 		$user_insert=\App\BillModel::insert($params);
+ 		$user_update=\App\MemberModel::where('user_id',$val->user_id)->increment('balance',$user_money);
+ 	}
+ 	
 
-	if ($user_insert==false || $user_update==false) {
-		\DB::rollBack();
-		return back() -> with('errors','返现失败');
-	}else {
-		\DB::commit();
-		return redirect('manage/sendmemberbalance');
-	}
+ 	if ($user_insert==false || $user_update==false) {
+ 		\DB::rollBack();
+ 		return back() -> with('errors','返现失败');
+ 	}else {
+ 		\DB::commit();
+ 		return redirect('manage/sendmemberbalance');
+ 	}
  }
 }
