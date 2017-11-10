@@ -25,8 +25,9 @@ return [
     ],
 	//邀请返利和经销商返利的比例    
     'rate'=>[
-		'invice_rate'=>0.3,
-		'agency_rate'=>0.2,
+    	'user_rate'=>0.5,
+		'invice_rate'=>0.1,
+		'agency_rate'=>0,
 	]
 
 

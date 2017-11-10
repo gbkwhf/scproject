@@ -68,7 +68,7 @@
                 <tbody><tr>
                   <th>订单号</th>
                   <th>商品名</th>
-                  <th>订单金额</th>
+               
                   <th>付款方式</th>
                   <th>付款时间</th>
                   <th>收货人手机</th>
@@ -79,7 +79,7 @@
 	    			<tr>
 	                  <td>{{ $order->order_id }}</td>
 	                  <td>{{ $order->goods_name }}</td>
-	                  <td>{{ $order->price }}</td>	                  
+	                                 
 	                  <td>{{ $order->pay_type }}</td>
 	                  <td>{{ $order->pay_time }}</td>
 	                  <td>{{ $order->receive_mobile }}</td>

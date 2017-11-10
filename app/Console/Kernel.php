@@ -73,9 +73,8 @@ class Kernel extends ConsoleKernel
 		->groupBy('ys_base_order.user_id')
 		->selectRaw('ys_base_order.user_id,sum(ys_base_order.rebate_num) as rebate_num')
 		->get();
-		if($yesterday_profit>0 && $total_num>0){
-				
-			$percent=round($yesterday_profit/$total_num,2);
+		if($yesterday_profit>0 && $total_num>0){			
+			$percent=round(($yesterday_profit*$rate['user_rate'])/$total_num,2);
 			$user_insert=true;
 			$user_update=true;
 			foreach ($personal as $val){
