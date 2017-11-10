@@ -69,7 +69,7 @@
 	<!--线下收款-->
 	<div class="xxsk">
 		<h4>线下收款</h4>
-		<p>员工输入会员手机号直接完成付款（<span style="color:#ff0000">请收到用户款后点击确认，确认通过即完成订单，不可取消！</span>）</p>
+		<p style="line-height: 21px;">员工输入会员手机号直接完成付款（<span style="color:#ff0000">请收到用户款后点击确认，确认通过即完成订单，不可取消！</span>）</p>
 		<input type="text" placeholder="请输入会员手机号" maxlength="11" onkeyup="value=value.replace(/[^0-9.]/g,'') "  />
 		<div class="btn-box-pop">
 			<a href="javascript:void(0);" class="cancel" onclick="cancelPop()">取消</a>
