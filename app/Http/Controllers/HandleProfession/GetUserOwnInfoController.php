@@ -78,6 +78,7 @@ class GetUserOwnInfoController extends Controller{
             return $this->setStatusCode(1102)->respondWithError($this->message);
         }
 
+        $order_id = generatorOrderIdNew();
         $insert_data = [
                 'user_id' => $is_member->user_id,
                 'amount' => "-".$request->money,
@@ -86,15 +87,33 @@ class GetUserOwnInfoController extends Controller{
                 'type'=>1,
                 'state'=>0, //0提现中    1提现成功
                 'employee_id'=>$employee_id,
-                'operate_order_id'=>generatorOrderIdNew()
+                'operate_order_id'=>$order_id,
             ];
 
+        $phone =\DB::table('ys_member')->where('user_id',$employee_id)->first()->mobile; //员工手机号
         \DB::beginTransaction(); //开启事务
         //写流水
          $insert = \DB::table('ys_operate_bills')->insert($insert_data);
 
         if ($insert){
             \DB::commit();
+            $SMSApiPath = env("sendurl");
+            $apikey = env("yunpianAPIKEY");
+            //发短信
+            $params = array(
+                "apikey" => $apikey,
+                "mobile" => $request->mobile,
+                "text"	=>	"【双创共享】正在为您进行提现操作，操作者联系方式为：".$phone.",订单号为：".$order_id.",提现金额为：".$request->money."。"
+            );
+
+            $res = PostCURL($SMSApiPath, $params);
+            \Log::info(var_export($res, true));
+            $resData=$res->getData();
+            if($res->isSuccess() && $resData['code']==0){
+                \Log::info('发送短信成功');
+            }else{
+                \Log::info('发送短信失败');
+            }
             return $this->respond($this->format([],true));
         }else {
             \DB::rollBack();
