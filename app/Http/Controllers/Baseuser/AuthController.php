@@ -673,7 +673,7 @@ class AuthController extends Controller
         //查一下昨日返利的金额
         $date = date("Y-m-d",strtotime("-1 day"));
 
-        $res = \DB::table('ys_bills')->where('user_id',$user_id)->where('created_at','like','%'.$date.'%')->get();
+        $res = \DB::table('ys_bills')->where('user_id',$user_id)->where('created_at','like','%'.$date.'%')->whereIn('type',[1,2,3])->get();
 
         if(empty($res)){
             $return_money = 0;

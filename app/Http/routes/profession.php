@@ -110,7 +110,10 @@ Route::group([
              //1.获取我邀请的用户列表
              Route::post('get/invite/user/info/list','GetUserOwnInfoController@getInviteList');
              //2.获取我的物流信息
-
+             //3.替用户提现（员工才具有该功能）
+             Route::post('replace/user/withdraw/deposit','GetUserOwnInfoController@replaceUserMoney');
+             //4.获取我的体现记录（流水）
+             Route::post('get/user/withdraw/deposit/bills/list','GetUserOwnInfoController@getBillsList');
 
 
 
