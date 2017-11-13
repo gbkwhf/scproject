@@ -58,7 +58,6 @@ Route::group([
         Route::post('delete/delivery/goods/address','AddressManageController@deleteAddress');
 
 
-
      /**
       * 商品分类以及商品详情模块  登陆状态才可以访问
       */
@@ -112,10 +111,12 @@ Route::group([
              //2.获取我的物流信息
              //3.替用户提现（员工才具有该功能）
              Route::post('replace/user/withdraw/deposit','GetUserOwnInfoController@replaceUserMoney');
-             //4.获取我的体现记录（流水）
+             //4.获取我的操作记录（流水） ----员工
+             Route::post('get/own/operate/bills/list','GetUserOwnInfoController@getOwnOpeBill');
+             //5.获取我的体现记录（流水） --->会员
              Route::post('get/user/withdraw/deposit/bills/list','GetUserOwnInfoController@getBillsList');
-
-
+             //6.确认收款（会员）
+             Route::post('user/ack/get/money','GetUserOwnInfoController@ackGetMoney');
 
 
 

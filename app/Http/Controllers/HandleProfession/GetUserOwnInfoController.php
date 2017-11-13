@@ -79,35 +79,21 @@ class GetUserOwnInfoController extends Controller{
         }
 
         $insert_data = [
-
-            [
                 'user_id' => $is_member->user_id,
                 'amount' => "-".$request->money,
                 'pay_describe' => "用户提现",
                 'created_at' => date("Y-m-d H:i:s"),
-                'type'=>4
-            ],
-            [
-                'user_id' => $is_member->user_id,
-                'amount' => "-".($request->money / 100 * 3),
-                'pay_describe' => "提现扣除手续费",
-                'created_at' => date("Y-m-d H:i:s"),
-                'type'=>5
-            ]
-
-        ];
+                'type'=>1,
+                'state'=>0, //0提现中    1提现成功
+                'employee_id'=>$employee_id,
+                'operate_order_id'=>generatorOrderIdNew()
+            ];
 
         \DB::beginTransaction(); //开启事务
-        //(4)从余额中扣除手续费和提现金额
-         //扣余额
-         $is_true = \DB::table('ys_member')->where('mobile',$request->mobile)->update([
-              'balance' =>  $is_member->balance - $require_money,
-              'updated_at' => \DB::Raw('Now()')
-         ]);
-          //写流水
-          $insert = \DB::table('ys_bills')->insert($insert_data);
+        //写流水
+         $insert = \DB::table('ys_operate_bills')->insert($insert_data);
 
-        if ($is_true && $insert){
+        if ($insert){
             \DB::commit();
             return $this->respond($this->format([],true));
         }else {
@@ -116,10 +102,37 @@ class GetUserOwnInfoController extends Controller{
         }
 
     }
-    //4.获取我的体现记录（流水）
+
+    //4.获取我的操作记录（流水） ----员工
+    public function getOwnOpeBill(Request $request)
+    {
+        $validator = $this->setRules([
+            'ss' => 'required|string', //员工session
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $employee_id = $this->getUserIdBySession($request->ss); //获取员工id
+        //（1）首先判定角色身份，必须是员工才可以调用该接口
+        $is_employee = \DB::table('ys_employee')->where('user_id',$employee_id)->first();
+        if(empty($is_employee)){ //表示不是员工
+            return $this->setStatusCode(1045)->respondWithError($this->message);
+        }
+        //获取我的操作流水记录
+        $info = \DB::table('ys_operate_bills')
+                 ->where('employee_id',$employee_id)
+                 ->where('type',1)
+                 ->select('operate_order_id as bill_id','employee_id','user_id','amount','pay_describe','created_at','type','state')
+                 ->orderBy('created_at','desc')
+                 ->get();
+        $data = empty($info) ? [] : $info;
+        return $this->respond($this->format($data));
+
+    }
+
+    //5.获取我的体现记录（流水） -----会员
     public function getBillsList(Request $request)
     {
-
         $validator = $this->setRules([
             'ss' => 'required|string', //会员session
         ])
@@ -127,15 +140,78 @@ class GetUserOwnInfoController extends Controller{
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
-        $info = \DB::table('ys_bills')->where('user_id',$user_id)->whereIn('type',[4,5])->select('id as bill_id','amount','pay_describe','created_at','type')->orderBy('created_at','desc')->get();
+        $info = \DB::table('ys_operate_bills')
+               ->where('user_id',$user_id)
+               ->whereIn('type',[1,2])
+               ->select('operate_order_id as bill_id','employee_id','user_id','amount','pay_describe','created_at','type','state')
+               ->orderBy('created_at','desc')
+               ->get();
 
         $data = empty($info) ? [] : $info;
         return $this->respond($this->format($data));
-
     }
 
+   //6.确认收款（会员）
+    public function ackGetMoney(Request $request)
+    {
 
+        $validator = $this->setRules([
+            'ss' => 'required|string', //会员session
+            'bills_id'=>'required|string' //流水号
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
+        //（1）判断操作流水记录是否存在
+        $bills_info = \DB::table('ys_operate_bills')
+                    ->where('user_id',$user_id)
+                    ->where('operate_order_id',$request->bills_id)
+                    ->where('state',0) //0提现中    1提现成功
+                    ->first();
+
+        if(empty($bills_info)){ //未找到该记录 1048
+            return $this->setStatusCode(1048)->respondWithError($this->message);
+        }
+        //继续判断用户余额是否充足
+        //(2)判断用户所 提现金额手续费(提现金额的3%) + 提现金额   是否小于等于 用户余额
+        $member_info  = \DB::table('ys_member')->where('user_id',$user_id)->first();
+        $require_money = abs($bills_info->amount) + (abs($bills_info->amount) / 100 * 3);
+        if($require_money >  $member_info->balance){ //余额不足 1102
+            return $this->setStatusCode(1102)->respondWithError($this->message);
+        }
+
+        //（3）扣余额，写手续费流水，并且更改提现流水的状态为已完成
+        $insert_data = [
+            'user_id' => $user_id,
+            'amount' => "-".(abs($bills_info->amount) / 100 * 3),
+            'pay_describe' => "提现扣除手续费",
+            'created_at' => date("Y-m-d H:i:s"),
+            'type'=>2, //1用户提现, 2扣除手续费
+            'state'=>1, //0提现中    1提现成功
+            'employee_id'=>$bills_info->employee_id,
+            'operate_order_id'=>$request->bills_id
+        ];
+
+        \DB::beginTransaction(); //开启事务
+        //(4)从余额中扣除手续费和提现金额
+        //扣余额
+         $is_true = \DB::table('ys_member')->where('user_id',$user_id)->update([
+              'balance' =>  $member_info->balance - $require_money,
+              'updated_at' => \DB::Raw('Now()')
+         ]);
+        //写流水
+        $insert = \DB::table('ys_operate_bills')->insert($insert_data);
+        $update = \DB::table('ys_operate_bills')->where('operate_order_id',$request->bills_id)->update(['state'=>1,'created_at'=>\DB::Raw('Now()')]);
+
+        if ($is_true && $insert && $update){
+            \DB::commit();
+            return $this->respond($this->format([],true));
+        }else {
+            \DB::rollBack();
+            return $this->setStatusCode(9998)->respondWithError($this->message);
+        }
+    }
 
 
 }
