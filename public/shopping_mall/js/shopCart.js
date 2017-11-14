@@ -394,54 +394,60 @@
   	$(".jiesuanStyle").click(function() {
   		//循环这些数组，判断前面的复选框选中之后，
   		var nval = $('.totalPrice').text();
+        var returnprice = $('#returnprice').val();
+        var noreturnprice = $('#noreturnprice').val();
   		console.log(nval);
   		if(nval != 0.00 || nval != 0) {
-  			var arrId = []; //car_id,
-  			var shopArrId = []; //商品id
-  			var nameArr = []; //名称
-  			var priceArr = []; //单价
-  			var imgUrl = []; //商品图片
-  			var shopNum = []; //商品数量
-  			var len = $(".checked input[class*=hiIn]").length;
-  			$(".checked input").each(function() {
-  				if($(this).hasClass("hiIn")) {
-  					for(var i = 0; i < len; i++) {
-  						var thisVal = $(this).val(); //car_id
-  						var shopId = $(this).attr('id'); ////商品id
-  						var thisNum = $(this).parent().parent().parent().find('input[class*=inputNum]').val(); //商品数量
-  						var thisName = $(this).attr('name'); //商品名称
-  						var thisPrice = $(this).attr('price'); //商品单价
-  						var thisImg = $(this).attr('url'); //商品图片
-  					}
-  					shopArrId.push(shopId); //商品id
-  					arrId.push(thisVal); //car_id
-  					nameArr.push(thisName); //商品名称
-  					priceArr.push(thisPrice); //单价
-  					imgUrl.push(thisImg); //商品图片
-  					shopNum.push(thisNum); //商品数量
-  				}
-  			})
-  			console.log(shopArrId);
-  			console.log(arrId);
-  			console.log(nameArr);
-  			console.log(priceArr);
-  			console.log(imgUrl);
-  			console.log(shopNum);
-  			var dataArr = [];
-  			for(var i = 0; i < arrId.length; i++) {
-  				var param = {
-  					"id": arrId[i],
-  					"shopId": shopArrId[i],
-  					"name": nameArr[i],
-  					"price": priceArr[i],
-  					"src": imgUrl[i],
-  					"number": shopNum[i]
-  				}
-  				dataArr.push(param);
-  			}
-  			console.log(dataArr);
-  			localStorage.setItem("moneyArr", JSON.stringify(dataArr));
-  			window.location.href = 'purchase.php';
+            if(returnprice>=1280){
+                var arrId = []; //car_id,
+                var shopArrId = []; //商品id
+                var nameArr = []; //名称
+                var priceArr = []; //单价
+                var imgUrl = []; //商品图片
+                var shopNum = []; //商品数量
+                var len = $(".checked input[class*=hiIn]").length;
+                $(".checked input").each(function() {
+                    if($(this).hasClass("hiIn")) {
+                        for(var i = 0; i < len; i++) {
+                            var thisVal = $(this).val(); //car_id
+                            var shopId = $(this).attr('id'); ////商品id
+                            var thisNum = $(this).parent().parent().parent().find('input[class*=inputNum]').val(); //商品数量
+                            var thisName = $(this).attr('name'); //商品名称
+                            var thisPrice = $(this).attr('price'); //商品单价
+                            var thisImg = $(this).attr('url'); //商品图片
+                        }
+                        shopArrId.push(shopId); //商品id
+                        arrId.push(thisVal); //car_id
+                        nameArr.push(thisName); //商品名称
+                        priceArr.push(thisPrice); //单价
+                        imgUrl.push(thisImg); //商品图片
+                        shopNum.push(thisNum); //商品数量
+                    }
+                })
+                //console.log(shopArrId);
+                //console.log(arrId);
+                //console.log(nameArr);
+                //console.log(priceArr);
+                //console.log(imgUrl);
+                //console.log(shopNum);
+                var dataArr = [];
+                for(var i = 0; i < arrId.length; i++) {
+                    var param = {
+                        "id": arrId[i],
+                        "shopId": shopArrId[i],
+                        "name": nameArr[i],
+                        "price": priceArr[i],
+                        "src": imgUrl[i],
+                        "number": shopNum[i]
+                    }
+                    dataArr.push(param);
+                }
+                console.log(dataArr);
+                localStorage.setItem("moneyArr", JSON.stringify(dataArr));
+                window.location.href = 'purchase.php';
+            }else{
+                layer.msg('您返利区的价钱为'+returnprice+",需大于等于1280");
+            }
 
   		} else {
   			layer.msg('请选择你要结算的宝贝');
@@ -478,8 +484,10 @@
   			},
   			success: function(data) {
   				if(data.code == 1) { //请求成功
-  					pricenum = data.result.no_return + data.result.return
+  					pricenum = data.result.no_return + data.result.return;
   					$(".totalPrice").text(pricenum);
+                    $("#returnprice").val(data.result.return);
+                    $("#noreturnprice").val(data.result.no_return);
   				}
   			}
   		});
