@@ -83,6 +83,12 @@
   	$('#cancelsId').click(function() {
   			layer.closeAll()
   		})
+    $('#cancelsubmit').click(function(){
+        layer.closeAll()
+    })
+    $('#confirmsubmit').click(function(){
+        window.location.href = 'purchase.php';
+    })
   		//全选
   	var allInput = $(".input1");
   	allInput.click(function() {
@@ -446,7 +452,7 @@
                 localStorage.setItem("moneyArr", JSON.stringify(dataArr));
                 window.location.href = 'purchase.php';
             }else{
-                //layer.msg('您返利区的价钱为'+returnprice+",需大于等于1280");
+                $('.submitbox').text('您返利区的价钱为'+returnprice+",需大于等于1280");
                 var Layer = layer.open({
                     type: 1,
                     title: false,
@@ -454,15 +460,7 @@
                     btnAlign: 'c',
                     area: ["278px", "97px"],
                     closeBtn: 0,
-                    shadeClose: true, //点击遮罩层消失
-                    yes: function() {
-                        //vm.updateGoodsClass();
-                        window.location.href = 'purchase.php';
-                    },
-                    //关闭按钮的回调函数
-                    cancel: function() {
-                        layer.close();
-                    }
+                    shadeClose: true
                 });
             }
 
