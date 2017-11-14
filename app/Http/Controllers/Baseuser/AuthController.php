@@ -779,8 +779,9 @@ class AuthController extends Controller
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
         $tmp = $request->all();
+
         foreach($tmp as $k=>$v){
-            if(($k == 'ss') || empty($v)){
+            if(($k == 'ss') || empty($v) || ($k == 'os_type') || ($k == 'version')){
                 unset($tmp[$k]);
             }else{
                 $tmp[$k] = addslashes($v);

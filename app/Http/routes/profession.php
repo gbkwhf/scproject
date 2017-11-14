@@ -117,7 +117,8 @@ Route::group([
              Route::post('get/user/withdraw/deposit/bills/list','GetUserOwnInfoController@getBillsList');
              //6.确认收款（会员）
              Route::post('user/ack/get/money','GetUserOwnInfoController@ackGetMoney');
-
+             //7.根据用户手机号码获取余额
+             Route::post('get/balance/by/mobile','GetUserOwnInfoController@getBalance');
 
 
 
