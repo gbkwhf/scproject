@@ -28,8 +28,8 @@ class AjaxController  extends Controller
  	if(!$user_info){
  		return 3;//人员不存在
  	} 	
- 	if($user_info->agency_id>0){ 		
- 		if($user_info->agency_id==$request->agency_id){
+ 	if($user_info->agency_id>0 && empty($user_info->deleted_at)){ 		
+ 		if(($user_info->agency_id==$request->agency_id) && empty($user_info->deleted_at)){
  			return 1;//已在本店
  		}
  		return 2;//已在其他店

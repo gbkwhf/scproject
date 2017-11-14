@@ -668,7 +668,7 @@ class AuthController extends Controller
         }
 
         //接着检查是否是员工
-        $is_employee = \DB::table('ys_employee')->where('user_id',$user_id)->first();
+        $is_employee = \App\EmployeeModel::where('user_id',$user_id)->first();
         $member = empty($is_employee) ? 0 : 1; //0会员  1员工
 
 
