@@ -21,19 +21,65 @@ html,body{
 	color: #333;
 	float: left;
 	line-height: 1.5em;
+	margin: 0;
+}
+.record-con p span{
+	font-size: 14px;
+	font-weight: 400;
+	color: #464646;
 }
 .record-con span{
 	float: right;
 	display: block;
-	font-size: 15px;
+	/*font-size: 15px;*/
 	color: #88c5be;
 	line-height: 1.5em;
 }
-.withdrawals-record  em{
+.record-box{
+	overflow: hidden;
+}
+.record-box a{
+	color: #fff;
+	background-color: #59c7ae;
+	float: right;
+	margin-top: 8px;
+	font-size: 13px;
+	padding: 1px 5px 2px;
+	border-radius: 8px;
+}
+.record-box  em{
+	float: left;
+}
+.record-box  em,.withdrawals-id{
 	display: block;
 	font-size: 13px;
 	font-style: normal;
 	color: #999;
 	line-height: 1.5em;
 	padding-top: 10px;
+}
+.layui-layer-title {
+    font-size: 15px !important;
+    font-weight: bold;
+}
+.qrsk{
+	display: none;
+	background: #fff;
+	border-radius: 5px;
+}
+.explain-list{
+	padding: 15px 12px;
+}
+.explain-list li{
+	position: relative;
+	color: #464646;
+	padding: 3px 0px 3px 17px;
+	line-height: 1.5em;
+	font-size: 13px;
+}
+.explain-list li em{
+	position: absolute;
+	left: 0;
+	top: 3px;
+	font-style: normal;
 }

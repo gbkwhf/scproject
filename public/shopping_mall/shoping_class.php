@@ -65,9 +65,9 @@
 					<img src="images/health_shoping.png"/>
 					<em>健康商城</em>
 				</li>
-				<li onclick="waitting()">
+				<li  onclick="location.href='lyg_index.php?first_id=5'">
 					<img src="images/linyi_shop.png"/>
-					<em>聆医管</em>
+					<em>聆医馆</em>
 				</li>
 				<li style="margin-right:9px;" onclick="waitting()">
 					<img src="images/life.png"/>
