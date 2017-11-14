@@ -782,7 +782,7 @@ class AuthController extends Controller
         foreach($tmp as $k=>$v){
             if(($k == 'ss') || empty($v)){
                 unset($tmp[$k]);
-            }else{
+            }elseif(($k == 'sex_id') || ($k == 'address') || ($k == 'name') || ($k == 'birthday')){
                 $tmp[$k] = addslashes($v);
             }
         }
