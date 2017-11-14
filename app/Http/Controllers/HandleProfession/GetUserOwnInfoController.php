@@ -103,7 +103,7 @@ class GetUserOwnInfoController extends Controller{
             $params = array(
                 "apikey" => $apikey,
                 "mobile" => $request->mobile,
-                "text"	=>	"【双创共享】正在为您进行提现操作，操作者联系方式为：".$phone.",订单号为：".$order_id.",提现金额为：".$request->money."。"
+                "text"	=>	"【双创共享】正在为您进行提现操作，操作者联系方式为：".$phone.",订单号为：".$order_id.",提现金额为：".$request->money."元。"
             );
 
             $res = PostCURL($SMSApiPath, $params);
