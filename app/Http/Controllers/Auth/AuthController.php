@@ -92,7 +92,12 @@ class AuthController extends Controller
     	//验证经销商和供应商验证登录
     	if($request->role_type==1){//经销商
     		$had=\App\AgencyModel::where('mobile',$mobile)->where('password',md5($password))->first();
-    		if($had){    			
+    		if($had){   
+    			if($had->state<1){
+    				return back()->withErrors([
+    						$this->loginUsername() => '账号禁用',
+    						]);
+    			}    			 			
     			Auth::loginUsingId(2);
     			\Session::put('role_userid', $had->id);
     			return redirect('agencyadmin');
@@ -104,6 +109,11 @@ class AuthController extends Controller
     	}elseif($request->role_type==2){//供应商
     		$had=\App\SupplierModel::where('mobile',$mobile)->where('password',md5($password))->first();
     		if($had){
+    			if($had->state<1){
+    				return back()->withErrors([
+    						$this->loginUsername() => '账号禁用',
+    						]);    				
+    			}
     			Auth::loginUsingId(3);
     			\Session::put('role_userid', $had->id);
     			return redirect('supplieradmin');
