@@ -20,6 +20,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+//use App\Http\Controllers\Weixin;
+
 
 
 use Carbon\Carbon;
@@ -839,7 +841,7 @@ class AuthController extends Controller
             ->_validate($request->all());
         if (!$validator) throw new ValidationErrorException;
 
-
+/*
         //手机验证码的验证
         $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',5)->orderBy('id','desc')->first();//获取id最大值
         if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
@@ -851,7 +853,7 @@ class AuthController extends Controller
         if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
             return $this->setStatusCode(1008)->respondWithError($this->message);
         }
-
+*/
         //首先判断该用户是否是系统内用户
         $had_mobile=\DB::table('ys_member')->where('mobile',$request->un)->first();
 
@@ -859,15 +861,6 @@ class AuthController extends Controller
         $serverArr = $this->getDispatchServerInfo('ys');
 
         if(empty($had_mobile)){ //手机号码不存在，则应该为其注册
-
-//            $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
-//            if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
-//                $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
-//            }
-
-//            else{
-//                $user_id = $is_empty->user_id + 1;
-//            }
 
             //检测邀请人是否存在，以及邀请人id是否真实有效
             if(!empty($request->invite_id)){
@@ -877,6 +870,13 @@ class AuthController extends Controller
                 $invite_id = "";
             }
 
+            /**
+             * 这里请求微信服务器，获取用户头像和姓名，然后把头像下载下来放到本地服务器
+             */
+             $weixin_info = $this->getWeiXin($request->openId);
+
+
+die('11111111');
             \DB::beginTransaction(); //开启事务
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
@@ -923,6 +923,10 @@ class AuthController extends Controller
 
 
         }else{ //否则，直接绑定openId即可
+
+
+            die('22222');
+
             $session = (new Session)->createSession($had_mobile->user_id);
             $is_exist = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->first();
 
@@ -966,6 +970,21 @@ class AuthController extends Controller
 
     }
 
+
+    private function getWeiXin($openId){
+
+        $appId = getenv('appId');
+        $appSecret = getenv('appSecret');
+
+        $jssdk = new \App\Http\Controllers\Weixin\JSSDK($appId,$appSecret);
+
+        $data = $jssdk->getUserInfo($openId);
+
+        print_r($data);die();
+
+
+
+    }
 
 
 
