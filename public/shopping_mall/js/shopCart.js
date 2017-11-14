@@ -452,7 +452,7 @@
                 localStorage.setItem("moneyArr", JSON.stringify(dataArr));
                 window.location.href = 'purchase.php';
             }else{
-                $('.submitbox').children('p').text('您返利区的价钱为￥'+returnprice+"，非返利区的价钱为￥"+noreturnprice+",返利区商品需大于等于￥1280才有返利，确认提交吗?");
+                $('.submitbox').children('p').text('您返利区的价钱为￥'+returnprice+"，非返利区的价钱为￥"+noreturnprice+"，返利区商品需大于等于￥1280才有返利，确认提交吗？");
                 var Layer = layer.open({
                     type: 1,
                     title: false,
