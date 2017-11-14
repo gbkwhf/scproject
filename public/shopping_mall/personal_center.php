@@ -14,7 +14,7 @@
 
 	<div class="wrapper">
 		<header>
-			<div class="user-info">
+			<div class="user-info" onclick="location.href='personal_data.php'">
 				<div class="head-portrait">
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
@@ -38,10 +38,18 @@
 				我的订单
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<!--<li onclick="location.href='invitation.php'">
+			<li onclick="location.href='invitation.php'">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
-			</li>-->
+			</li>
+			<li onclick="location.href='withdrawals_record.php?identity=0'">
+				提现记录
+				<img src="images/right-arrow.png" width="8"/>
+			</li>
+			<li class="substitute" onclick="location.href='destoon_finance_cash.php?identity=1'">
+				替用户提现
+				<img src="images/right-arrow.png" width="8"/>
+			</li>
 		</ul>
 	</div>
 	<!--购物车-->
@@ -55,7 +63,12 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-		//获取个人信息
+	
+		if(getCookie('is_member')==1){
+			$('.substitute').show();
+		}
+	
+		//获取微信个人信息
 		$.ajax({
 			type:'post',
 			url:commonsUrl+ 'api/gxsc/get/user/weixin/info' +versioninfos,
@@ -70,6 +83,7 @@
   				}
 			}
 		})
+		
 		
 		//获取购物车中的商品数量
   		$.ajax({
