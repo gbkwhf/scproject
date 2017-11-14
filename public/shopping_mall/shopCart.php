@@ -52,6 +52,8 @@
 			</div>
 			<div class="shopForLeft1 jiesuanStyle">结算</div>
 		</div>
+        <input type="hidden" id="returnprice"/>
+        <input type="hidden" id="noreturnprice"/>
 	</body>
 
 </html>
