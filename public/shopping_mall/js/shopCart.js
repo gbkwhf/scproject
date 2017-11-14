@@ -136,7 +136,7 @@
   						title: false,
   						content: $('.popBox'),
   						btnAlign: 'c',
-  						area: ["278px", "97px"],
+  						area: ["278px", ""],
   						closeBtn: 0,
   						shadeClose: true, //点击遮罩层消失
   						yes: function(Layer) {
