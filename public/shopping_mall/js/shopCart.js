@@ -458,7 +458,7 @@
                     title: false,
                     content: $('.submitbox'),
                     btnAlign: 'c',
-                    area: ["278px", "146px"],
+                    area: ["278px", "137px"],
                     closeBtn: 0,
                     shadeClose: true
                 });
