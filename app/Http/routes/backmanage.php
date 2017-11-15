@@ -72,6 +72,7 @@
 			Route::get('supplier/orderlist', 'SupplierManageController@orderList');//订单列表
 			Route::get('supplier/orderdetial/{id}', 'SupplierManageController@orderDetial');//订单发货
 			Route::post('supplier/ordersend', 'SupplierManageController@orderSend');//订单发货
+			Route::post('supplier/getorderexcel', 'SupplierManageController@getOrderExcel');//导出订单列表
 		});
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:2']], function () {
 			//经销商功能
