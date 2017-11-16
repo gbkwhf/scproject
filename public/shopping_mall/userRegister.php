@@ -41,7 +41,27 @@
     <script type="text/javascript" src="js/config.js"></script>
     <script type="text/javascript" src="js/layer/layer.js"></script>
     <script>
-		
+		var user_id = $_GET['user_id'];
+		console.log($_GET['code']); 
+		console.log($_GET['user_id']);
+		$.ajax({
+	        type:"get",
+	        url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
+	        data:{
+	            "code":$_GET['code']
+	        },success:function(data){
+	            if(data.code==1){
+	                if(getCookie("openid")){
+	                    setCookie("is_member",data.result.is_member);
+	                }else{
+	                    setCookie("openid",data.result.openId);
+	                    setCookie("is_member",data.result.is_member);
+	                }
+	            }else{
+	                layer.msg(data.msg);
+	            }
+	        }
+    	});
         //获取验证码
         function getcode(){
             mobile = $('#inpmobile').val();
@@ -111,16 +131,11 @@
                     success:function(data){
                         layer.closeAll();
                         if(data.code==1){
-							layer.msg("注册成功");
+                        	setTimeout(function(){
+                        		layer.msg("注册成功");
+                        	},300);
 							
-							var lastpage = window.document.referrer;
-							setTimeout(function(){
-								if (/(iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
-	                                window.location.href = window.document.referrer;
-	                            } else {
-	                                window.history.go(-1);	 
-	                        	}
-							},1000)
+						    location.href="index.php";
                             
                         }else{
                             layer.msg(data.msg);
