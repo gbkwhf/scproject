@@ -19,10 +19,10 @@ class AgencyManageController  extends Controller
  	$agency_id=\Session::get('role_userid');
 
 
- 	$emp=\App\EmployeeModel::where('agency_id',$agency_id)->leftjoin('ys_member','ys_member.user_id','=','ys_employee.user_id')->get();
+ 	$emp=\App\EmployeeModel::withTrashed()->where('agency_id',$agency_id)->leftjoin('ys_member','ys_member.user_id','=','ys_employee.user_id')->get();
  	
  	
- 	$employees=\App\EmployeeModel::where('agency_id',$agency_id)->selectRaw('GROUP_CONCAT(user_id) as employees')->get();
+ 	$employees=\App\EmployeeModel::withTrashed()->where('agency_id',$agency_id)->selectRaw('GROUP_CONCAT(user_id) as employees')->get();
  	
  	if($employees && $employees[0]->employees){
  		
@@ -112,29 +112,28 @@ class AgencyManageController  extends Controller
  public  function setEmployeeSave (Request $request){
  
  	$agency_id=\Session::get('role_userid');
- 	$user_info=DB::table('ys_member')->where('ys_member.mobile',$request->phone)
+ 	$user_info=\App\MemberModel::where('ys_member.mobile',$request->phone)
  	->leftJoin('ys_employee','ys_member.user_id','=','ys_employee.user_id')
- 	->select('ys_member.user_id','ys_employee.agency_id')
+ 	->select('ys_member.user_id','ys_employee.agency_id','ys_employee.deleted_at')
  	->first();
  	if(!$user_info){
  	 	session()->flash('message','人员不存在');
  		return back();
  	}
- 	if($user_info->agency_id>0){
- 		if($user_info->agency_id==$request->agency_id){
+ 	if($user_info->agency_id>0 && empty($user_info->deleted_at)){
+ 		if($user_info->agency_id==$request->agency_id && empty($user_info->deleted_at)){
 	 		session()->flash('message','已是其他店员工');
 	 		return back();
  		}
  		session()->flash('message','已是本店员工');
  		return back();
  	}
-
- 
  	$params=array(
  			'user_id'=>	$user_info->user_id,
  			'agency_id'=>$agency_id,
+ 			'deleted_at'=>null,
  	);
- 	$result=\App\EmployeeModel::updateOrcreate(['user_id'=>$user_info->user_id],$params);
+ 	$result=\App\EmployeeModel::withTrashed()->updateOrcreate(['user_id'=>$user_info->user_id],$params);
  	return redirect('agency/setemployee');
  }
  //删除员工

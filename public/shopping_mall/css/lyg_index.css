@@ -1,0 +1,87 @@
+html,body{
+	background: #e1e8f1;
+}
+.wrapper{
+	padding: 15px 12px;
+}
+.shopping-box{
+	padding-top: 80px;
+	text-align: center;
+	box-shadow: 0px 0px 15px #999;
+	border-radius: 8px;
+}
+.shopping-box.dmzy{
+	background: url(../images/dmzy-bgimg.png) no-repeat;
+	background-size: 100% 100%;
+}
+.shopping-box .tit-font{
+	display: block;
+	margin: 0px auto;
+}
+.shopping-box h4{
+	color: #fff;
+	font-size: 12px;
+	font-weight: 400;
+	padding: 12px 0px;
+}
+.shopping-box.dmzy .price-box{
+	border: 1px solid rgba(45,70,92,0.6);
+	display: inline-block;
+}
+.dmzy .price-box p{
+	background: rgba(45,70,92,0.6);
+	margin: 1px;
+	padding: 0px 7px;
+	color: #fff;
+	font-size: 12px;
+}
+.price-box p span{
+	font-size: 14px;
+}
+.shopping-box em{
+	font-style: normal;
+	display: block;
+	font-size: 12px;
+	color: #fff;
+	width: 90%;
+	margin: 0px auto;
+	padding: 12px 0px 20px;
+	line-height: 1.5em;
+	transform: scale(.95);
+}
+.baffle{
+	overflow: hidden;
+	margin: 12px auto;
+	width: 90%;
+}
+.baffle span{
+	display: block;
+	height: 1px;
+	width: 45%;
+	background: rgba(141,141,141,0.4);
+	float: left;
+	margin-top: 2px;
+}
+.baffle .circular{
+	float: left;
+	width: 10%;
+}
+.circular img{
+	display: block;
+	margin: 0px auto;
+}
+.shopping-box.zyc{
+	background: url(../images/zyc-bgimg.png) no-repeat;
+	background-size: 100% 100%;
+}
+.shopping-box.zyc .price-box{
+	border: 1px solid rgba(226,40,0,0.77);
+	display: inline-block;
+}
+.zyc .price-box p{
+	background: rgba(226,40,0,0.77);
+	margin: 1px;
+	padding: 0px 7px;
+	color: #fff;
+	font-size: 12px;
+}

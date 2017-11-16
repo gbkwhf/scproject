@@ -2,28 +2,26 @@ body{
 	background-color: #f3f5f7;
 }
 .popBox{text-align: center;}
+.submitbox{text-align: center;}
 .cancels{width: 90px;
-	color:#ffffff;
-	height: 28px;
-	margin-left:40px;
-	margin-bottom:10px;
-	line-height:28px;
-	background-color: #999999;
-	border-radius: 5px;
-	border: none;
-	float: left;
+    width: 49%;
+    color: #9c9c9c;
+    line-height: 1.5em;
+    background-color: #fff;
+    border-top:1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    float: left;
+    padding: 11px 0;
+
 }
 .confirm{
-	width: 90px;
-	color:#ffffff;
-	height: 28px;
-	margin-left:8px;
-	margin-bottom:10px;
-	margin-right:40px;
-	line-height:28px;
-	background-color: #ff4400;
-	border-radius: 5px;
-	float: left;
+    width: 50%;
+    color: #88c5be;
+    line-height: 1.5em;
+    background-color: #fff;
+    float: left;
+    padding: 11px 0;
+    border-top:1px solid #e6e6e6;
 }
 .shopHeader{
 	width: 100%;

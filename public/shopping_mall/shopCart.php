@@ -39,6 +39,11 @@
 			<div class="cancels" id="cancelsId">取消</div>
 			<div class="confirm" id="confirmId">确定</div>
 		</div>
+        <div class="submitbox" style="display: none;">
+            <p style="text-align: left;margin-top: 14px;margin-bottom: 14px;padding: 11px 15px;">返利区不够1280 确认提交吗？</p>
+            <div class="cancels" style="text-align: center" id="cancelsubmit">取消</div>
+            <div class="confirm" style="text-align: center" id="confirmsubmit">确定</div>
+        </div>
 		<!--底部-->
 		<div class="shopFotter">
 			<div class="shopForLeft0">

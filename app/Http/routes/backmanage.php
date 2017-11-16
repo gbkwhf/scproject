@@ -23,11 +23,10 @@
 	
 	
 	
-	Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth']], function () {
+	Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:1']], function () {
 		
-		Route::get('admin', 'HomeController@HomeList');
-		Route::get('agencyadmin', 'HomeController@agencyIndex');
-		Route::get('supplieradmin', 'HomeController@supplierIndex');
+		Route::get('admin', 'HomeController@HomeList');		
+
 
 		Route::Post('ajax/citylist', 'AjaxController@cityList');
 		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
@@ -66,37 +65,24 @@
         Route::get('manage/orderdetial/{id}', 'OrderController@OrderDetial');//订单详情
         Route::get('manage/sendmemberbalance', 'MemberController@SendMemberBalance');//后台给用户返现
         Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现
-        
-        
-        //供应商功能
-        Route::get('supplier/orderlist', 'SupplierManageController@orderList');//订单列表
-        Route::get('supplier/orderdetial/{id}', 'SupplierManageController@orderDetial');//订单发货
-        Route::post('supplier/ordersend', 'SupplierManageController@orderSend');//订单发货
-        
-        
-        //经销商功能
-        Route::get('agency/orderlist', 'AgencyManageController@orderList');//订单列表
-        Route::get('agency/orderdetial/{id}', 'AgencyManageController@orderDetial');//订单发货
-        Route::get('agency/setemployee', 'AgencyManageController@setEmployee');
-		Route::post('agency/setemployeesave', 'AgencyManageController@setEmployeeSave');
-		Route::get('agency/deleteemployee/{id}', 'AgencyManageController@DeleteEmployee');	
-        
-		
-
-    });
-	
-
-// 		Route::group(['namespace' => 'BackManage', 'middleware'=> ['auth']], function () {
-		
-// 		Route::get('testsupplier', 'SupplierController@test');
-		
-		
-		
-// 		});	
-	
-	
-	
-
+    });	
+		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
+			//供应商功能			
+			Route::get('supplieradmin', 'HomeController@supplierIndex');
+			Route::get('supplier/orderlist', 'SupplierManageController@orderList');//订单列表
+			Route::get('supplier/orderdetial/{id}', 'SupplierManageController@orderDetial');//订单发货
+			Route::post('supplier/ordersend', 'SupplierManageController@orderSend');//订单发货
+			Route::post('supplier/getorderexcel', 'SupplierManageController@getOrderExcel');//导出订单列表
+		});
+		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:2']], function () {
+			//经销商功能
+			Route::get('agencyadmin', 'HomeController@agencyIndex');
+			Route::get('agency/orderlist', 'AgencyManageController@orderList');//订单列表
+			Route::get('agency/orderdetial/{id}', 'AgencyManageController@orderDetial');//订单发货
+			Route::get('agency/setemployee', 'AgencyManageController@setEmployee');
+			Route::post('agency/setemployeesave', 'AgencyManageController@setEmployeeSave');
+			Route::get('agency/deleteemployee/{id}', 'AgencyManageController@DeleteEmployee');	
+		});
 
 
 
