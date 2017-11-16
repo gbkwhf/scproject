@@ -137,7 +137,7 @@ function getWxConfig(requesturl){
     $.ajax({
         type:'post',
         url:commonsUrl + 'api/gxsc/get/user/sign/package' + versioninfos,
-        data:requesturl,
+        data:{'url':requesturl},
         success:function(data){
             wx.config({
                 debug: false,
