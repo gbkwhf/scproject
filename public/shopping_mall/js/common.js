@@ -132,3 +132,29 @@ function closewin(){
 function cancelPop(){
 	layer.closeAll();
 }
+
+function getWxConfig(){
+    $.ajax({
+        type:'get',
+        url:commonsUrl + 'api/gxsc/get/user/sign/package' + versioninfos,
+        success:function(data){
+            wx.config({
+                debug: false,
+                appId: data.result.appId,
+                timestamp: data.result.timestamp,
+                nonceStr: data.result.nonceStr,
+                signature: data.result.signature,
+                jsApiList: [
+                    // 所有要调用的 API 都要加到这个列表中
+                    'getLocation',//经纬度
+                    'scanQRCode',//微信扫一扫
+                    'onMenuShareTimeline',//分享到朋友圈
+                    'onMenuShareAppMessage',//分享给朋友
+                    'onMenuShareQQ',//分享到QQ
+                    'onMenuShareWeibo',//分享到腾讯微博
+                    'onMenuShareQZone',//分享到QQ空间
+                ]
+            });
+        }
+    })
+}
