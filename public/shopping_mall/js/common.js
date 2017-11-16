@@ -133,17 +133,18 @@ function cancelPop(){
 	layer.closeAll();
 }
 
-function getWxConfig(){
+function getWxConfig(requesturl){
     $.ajax({
-        type:'get',
+        type:'post',
         url:commonsUrl + 'api/gxsc/get/user/sign/package' + versioninfos,
+        data:requesturl,
         success:function(data){
             wx.config({
                 debug: false,
-                appId: "wxc8575ef91eb4ec2b",
-                timestamp: "1510820143",
-                nonceStr: "9PYhzesoYkNp5R9N",
-                signature: "08905dc5c080af757dd43b08bdf127538423cbbd",
+                appId: data.result.appId,
+                timestamp: data.result.timestamp.toString(),
+                nonceStr: data.result.nonceStr,
+                signature: data.result.signature,
                 jsApiList: [
                     // 所有要调用的 API 都要加到这个列表中
                     'getLocation',//经纬度
@@ -157,29 +158,4 @@ function getWxConfig(){
             });
         }
     })
-
-
-    //$.ajax({
-    //    type:'get',
-    //    url:commonsUrl + 'api/gxsc/get/user/sign/package' + versioninfos,
-    //    success:function(data){
-    //        wx.config({
-    //            debug: false,
-    //            appId: data.result.appId,
-    //            timestamp: data.result.timestamp.toString(),
-    //            nonceStr: data.result.nonceStr,
-    //            signature: data.result.signature,
-    //            jsApiList: [
-    //                // 所有要调用的 API 都要加到这个列表中
-    //                'getLocation',//经纬度
-    //                'scanQRCode',//微信扫一扫
-    //                'onMenuShareTimeline',//分享到朋友圈
-    //                'onMenuShareAppMessage',//分享给朋友
-    //                'onMenuShareQQ',//分享到QQ
-    //                'onMenuShareWeibo',//分享到腾讯微博
-    //                'onMenuShareQZone',//分享到QQ空间
-    //            ]
-    //        });
-    //    }
-    //})
 }
