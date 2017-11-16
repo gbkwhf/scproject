@@ -49,9 +49,9 @@ class WeixinInfoController  extends Controller{
         $appId = getenv('appId');
         $appSecret = getenv('appSecret');
 
-        $redirect_uri = urlencode(getenv('CALL_BACK_URL'));
+//        $redirect_uri = urlencode(getenv('CALL_BACK_URL'));
 
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appId."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+//        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appId."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 
 
         $jssdk = new JSSDK($appId,$appSecret);
@@ -59,28 +59,31 @@ class WeixinInfoController  extends Controller{
 
 
        //data 菜单数据
-//        $data = '{
-//                    "button": [
-//                        {
-//                            "type": "view",
-//                            "name": "双创商城",
-//                            "url": $url
-//                        }
-//                    ]
-//                }'; 双创商城
-
-
-        $data_tmp = [
-                    "button"=>[
-                        [
-                            "type"=>"view",
-                            "name"=>"shuanghcuang",
-                            "url"=>$url
-                        ]
+        $data = '{
+                    "button": [
+                        {
+                            "type": "view",
+                            "name": "双创商城",
+                            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc8575ef91eb4ec2b&redirect_uri=http%3A%2F%2Fgxdev.yxjk99.com%2Fshopping_mall%2Findex.php&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+                        }
                     ]
-                ];
+                }';
 
-         $data = json_encode($data_tmp);
+
+//        $data_tmp = [
+//                    "button"=>[
+//                        [
+//                            "type"=>"view",
+//                            "name"=>"shuanghcuang",
+//                            "url"=>$url
+//                        ]
+//                    ]
+//                ];
+//
+//         $data = json_encode($data_tmp);
+
+
+//        print_r($data);die();
 
 // "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri=http%3A%2F%2Fgx.yxjk99.com%2Fshopping_mall%2Findex.php&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
 
