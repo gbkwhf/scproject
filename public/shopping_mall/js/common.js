@@ -140,7 +140,7 @@ function getWxConfig(requesturl){
         data:{'url':requesturl},
         success:function(data){
             wx.config({
-                debug: false,
+                debug: true,
                 appId: data.result.appId,
                 timestamp: data.result.timestamp.toString(),
                 nonceStr: data.result.nonceStr,
