@@ -44,13 +44,13 @@ class WeixinInfoController  extends Controller{
 //        define("TOKEN", "shuangchuanggxzhengshi");
 //        echo urlencode('http://gxdev.yxjk99.com/shopping_mall/index.php');die();
 
-
         $wx = new wechatCallbackapiTest();
 
         $appId = getenv('appId');
         $appSecret = getenv('appSecret');
 
         $redirect_uri = urlencode(getenv('CALL_BACK_URL'));
+
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appId."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 
 
@@ -67,14 +67,14 @@ class WeixinInfoController  extends Controller{
 //                            "url": $url
 //                        }
 //                    ]
-//                }';
+//                }'; 双创商城
 
 
         $data_tmp = [
                     "button"=>[
                         [
                             "type"=>"view",
-                            "name"=>"双创商城",
+                            "name"=>"shuanghcuang",
                             "url"=>$url
                         ]
                     ]
