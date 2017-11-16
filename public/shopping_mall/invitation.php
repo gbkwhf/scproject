@@ -46,7 +46,7 @@ $(function(){
         url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
         data:{'ss':getCookie('openid')},
         success:function(data){
-            requesturl = commonsUrl+'/shopping_mall/invitation.php';
+            requesturl = commonsUrl+'shopping_mall/invitation.php';
             getWxConfig(requesturl);
             var user_id = data.result.user_id;//用户id
             console.log(user_id);
