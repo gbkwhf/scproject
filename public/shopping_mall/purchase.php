@@ -227,7 +227,7 @@
 	
 	//替用户创建订单
 	function createOrder(){
-		layer.open({
+		indexpop = layer.open({
 			type:1,
 			closeBtn:false,
 			shadeClose:false,
@@ -238,36 +238,45 @@
 	
 	//员工替会员购买
 	$('.confirm').click(function(){
-		var address = $('.address span').html();
-		var	mobile = $('.user-phone p').html();
-		var	name = $('.user-name p').html();
-		var	phone = $('.xxsk input').val();
-		if(testTel(phone)){
-			$.ajax({
-				type:'post',
-				url:commonsUrl + 'api/gxsc/employee/give/user/create/commodity/order' + versioninfos,
-				data:{
-					'address':address,
-					'flag':2,
-					'mobile':mobile,
-					'name':name,
-					'ss':getCookie('openid'),
-					'phone':phone
-				},
-				success:function(data){
-					if(data.code==1){
-						console.log(data);
-						layer.msg('提交成功');
-						setTimeout(function(){layer.closeAll();},1000);						
-					}else{
-						layer.msg(data.msg);
-						setTimeout(function(){layer.closeAll();},1000);
+		
+		if($('header').find('.address').length>0){
+			var address = $('.address span').html();
+			var	mobile = $('.user-phone p').html();
+			var	name = $('.user-name p').html();
+			var	phone = $('.xxsk input').val();
+			if(testTel(phone)){
+				$.ajax({
+					type:'post',
+					url:commonsUrl + 'api/gxsc/employee/give/user/create/commodity/order' + versioninfos,
+					data:{
+						'address':address,
+						'flag':2,
+						'mobile':mobile,
+						'name':name,
+						'ss':getCookie('openid'),
+						'phone':phone
+					},
+					success:function(data){
+						if(data.code==1){
+							console.log(data);
+							layer.msg('提交成功');
+							setTimeout(function(){layer.closeAll();},1000);						
+						}else{
+							layer.msg(data.msg);
+							setTimeout(function(){layer.closeAll();},1000);
+						}
 					}
-				}
-			})
+				})
+			}else{
+				layer.msg('请填写正确的手机号')
+			}
+			
 		}else{
-			layer.msg('请填写正确的手机号')
+			layer.close(indexpop);
+			layer.msg('请添加收货地址');
 		}
+		
+		
 		
 	})
 	
