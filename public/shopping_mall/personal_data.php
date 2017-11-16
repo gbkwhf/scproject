@@ -8,22 +8,36 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/common.css">
     <style>
+        html{
+        	padding-top:10px;
+        }
+    	
         body{
         	background: #f3f5f7;
+        	
+        	padding-bottom:30px;
+        	
         }
     	.container{
-    		width:100%;
+    		
+    		margin: 0 auto;
+    		
+    		
+    		
     			
     	}
+    	
     	.container>ul{
     		height:56px;
     		line-height:56px ;
-    		padding:0 28px ;
-    		margin-top:10px;
+    		padding:0 20px ;
+    		/*margin-top:10px;*/
     		border-top:1px solid #e6e6e6;
-    		border-top-left-radius:8px ;
-    		border-top-right-radius:8px;
+    		border-top-left-radius:7px 25px ;
+    		border-top-right-radius:7px 25px;
     		background:#fff;
+    		
+    		
     				
     	}
     	.container>ul>li{
@@ -52,12 +66,15 @@
 
 <body>
 	<div class="container">
-		<ul onclick="location.href='update_data.php'">
-			<li>
-				<p>用户名称</p>
-				<span></span>
-			</li>		
-		</ul>
+		
+			<ul onclick="location.href='update_data.php'">
+				<li>
+					<p>用户名称</p>
+					<span></span>
+				</li>		
+			</ul>
+		
+		
 		
 	</div>
 	
@@ -68,6 +85,8 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+	var windowH=$(window).height();
+    $(".container>ul").height(windowH-40);
 	var windowW= $(window).width();
 	var pW=$(".container>ul>li>p").width();
 	$(".container>ul>li>span").width(windowW-pW-71);
