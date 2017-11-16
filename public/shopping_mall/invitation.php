@@ -44,6 +44,7 @@ $(function(){
     $.ajax({
         type:'post',
         url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
+        data:{'ss':getCookie('openid')}
         success:function(data){
             getWxConfig();
             var user_id = data.result.user_id;//用户id
