@@ -10,10 +10,12 @@
 	float: left;
 	border: 2px solid #fff;
     border-radius: 50%;
+    -moz-border-radius: 50%;
 }
 .head-portrait img{
 	display: block;
 	border-radius: 50%;
+	-moz-border-radius: 50%;
 }
 .user-info p{
 	float: left;
