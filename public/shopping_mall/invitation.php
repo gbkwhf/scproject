@@ -42,24 +42,7 @@
 
     requesturl = commonsUrl+'shopping_mall/invitation.php';
     getWxConfig(requesturl);
-    wx.ready(function () {
-//        var tzurl = encodeURIComponent(commonsUrl+'/shopping_mall/userRegister.php?user_id='+user_id);
-        wx.onMenuShareAppMessage({
-            title: '双创共享商城', // 分享标题
-            desc: '双创共享商城免费注册送大礼', // 分享描述
-            link: commonsUrl+'/shopping_mall/userRegister.php', // 分享链接
-            imgUrl: commonsUrl+'/shopping_mall/images/logoimg.png', // 分享图标
-            type: '', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                layer.msg("分享成功！");
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
-        });
-    });
+
     $.ajax({
         type:'post',
         url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
@@ -68,7 +51,40 @@
 
             var user_id = data.result.user_id;//用户id
             console.log(user_id);
+            wx.ready(function () {
+//        var tzurl = encodeURIComponent(commonsUrl+'/shopping_mall/userRegister.php?user_id='+user_id);
+                wx.onMenuShareAppMessage({
+                    title: '双创共享商城', // 分享标题
+                    desc: '双创共享商城免费注册送大礼', // 分享描述
+                    link: commonsUrl+'/shopping_mall/userRegister.php?user_id='+user_id, // 分享链接
+                    imgUrl: commonsUrl+'/shopping_mall/images/logoimg.png', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        layer.msg("分享成功！");
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
 
+                wx.onMenuShareTimeline({
+                    title: '双创共享商城', // 分享标题
+                    desc: '双创共享商城免费注册送大礼', // 分享描述
+                    link: commonsUrl+'/shopping_mall/userRegister.php?user_id='+user_id, // 分享链接
+                    imgUrl: commonsUrl+'/shopping_mall/images/logoimg.png', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        layer.msg("分享成功！");
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
         }
     })
 
