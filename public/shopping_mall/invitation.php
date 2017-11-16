@@ -40,29 +40,38 @@
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 $(function(){
-    getWxConfig();
-    var user_id = $_GET['user_id'];//用户id
-    console.log(user_id);
 
-    wx.ready(function () {
-        var tzurl = encodeURIComponent(commonUrl+'/wx/shopping_mall/userRegister.php?user_id='+user_id);
-        // 分享给朋友
-        wx.onMenuShareAppMessage({
-            title: '双创共享商城', // 分享标题
-            desc: getCookie("is_member")+'双创共享商城免费注册送大礼', // 分享描述
-            link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect", // 分享链接
-            imgUrl: commonUrl+'/shopping_mall/images/logoimg.png', // 分享图标
-            type: '', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-                // 用户确认分享后执行的回调函数
+    $.ajax({
+        type:'post',
+        url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
+        success:function(data){
+            getWxConfig();
+            var user_id = data.result.user_id;//用户id
+            console.log(user_id);
+
+            wx.ready(function () {
+                var tzurl = encodeURIComponent(commonUrl+'/wx/shopping_mall/userRegister.php?user_id='+user_id);
+                // 分享给朋友
+                wx.onMenuShareAppMessage({
+                    title: '双创共享商城', // 分享标题
+                    desc: getCookie("is_member")+'双创共享商城免费注册送大礼', // 分享描述
+                    link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect", // 分享链接
+                    imgUrl: commonUrl+'/shopping_mall/images/logoimg.png', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
 //                    layer.msg("分享成功！");
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
-        });
-    });
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+        }
+    })
+
+
 
 
 	$(".inviBtn1").click(function(){
