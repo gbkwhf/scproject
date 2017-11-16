@@ -1,0 +1,113 @@
+html,body{
+	background: #dd3d3e;
+	height: 100%;
+}
+img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
+input[type="button"]{-webkit-appearance: none;}
+.usregHead{
+	min-height: 180px;
+	background: url(../images/regBj_02.png) no-repeat;
+	background-size: 100% 100%;
+	/*background-size: cover;*/
+}
+.registerBox{
+	height: 218px;
+	background-color: #dd3d3e;
+	overflow: hidden;
+}
+.userMobil{}
+.inpmobile{
+	width: 83%;
+	height: 39px;
+	line-height: 39px;
+	border-radius: 5px;
+	border: none;
+	margin-left: 27px;
+	margin-top: 31px;
+	padding-left: 6px;
+	/*color: #999999;*/
+	outline: none;
+}
+.verify{
+	width: 54%;
+	height: 39px;
+	border-radius: 5px;
+	border: none;
+	/*color: #999999;*/
+	outline: none;
+	float: left;
+	margin-top: 17px;
+	margin-left: 27px;
+	padding-left: 6px;
+}
+.getCode{
+	width: 23%;
+	height: 39px;
+	background-color: #fc7500;
+	color: #ffffff;
+	float: right;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 39px;
+	margin-top: 17px;
+	margin-right: 30px;
+}
+.registerBtn{
+	clear: both;
+	width: 42%;
+	height: 43.5px;
+	background: url(../images/btnBj.png) no-repeat;
+	background-size: 100% 100%;
+	line-height: 43.5px;
+	text-align: center;
+	margin-left: 27%;
+	margin-top: 25px;
+	float: left;
+	color: #ffffff;
+}
+.regFooter{
+	height: 280px;
+	background-color: #dd3d3e;
+	overflow: hidden;
+}
+.activeBox{
+	width: 85%;
+	min-height: 150px;
+	/*background-color: greenyellow;*/
+	margin-top: 10px;
+	margin: 0 auto;
+	border: 1px solid #fc7500;
+	border-radius: 13px;
+	position: relative;
+}
+.inviTitle{
+	height: 30px;
+	line-height: 30px;
+	color: #ffffff;
+	background-color: #fc7500;
+	padding-left: 20px;
+	border-radius: 11px 11px 0 0;
+	font-size: 16px;
+}
+.nativeNav{
+	color: #ffffff;
+	padding-top: 10px;
+	padding-left: 9px;
+	padding-right: 9px;
+}
+.maImg{
+	height: 118px;
+	background: url(../images/footBj_02.png) no-repeat;
+	background-size: 100% 100%;
+}
+.maImg img{
+	width: 18%;
+	/*height: 57px;*/
+	margin-left: 68%;
+	/*margin-right: 62px;*/
+	margin-top: 10px;
+	display: block;
+}
+.peopleImg img{
+	position: absolute;bottom: 0;width: 100%;
+}
