@@ -49,7 +49,7 @@ $(function(){
 	
 </script>
 <script>
-        	var user_id = $_GET['user_id'];
+        	var user_id = $_GET['user_id'];//用户id
         	console.log(user_id);
         	
           	wx.ready(function () {
@@ -59,7 +59,7 @@ $(function(){
                 title: '双创共享商城', // 分享标题
                 desc: getCookie("is_member")+'双创共享商城免费注册送大礼', // 分享描述
                 link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect", // 分享链接
-                imgUrl: '/wx/shopping_mall/images/invitation.php', // 分享图标
+                imgUrl: '/wx/shopping_mall/images/logoimg.png', // 分享图标
                 type: '', // 分享类型,music、video或link，不填默认为link
                 dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                 success: function () {

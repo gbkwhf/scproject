@@ -41,9 +41,10 @@
     <script type="text/javascript" src="js/config.js"></script>
     <script type="text/javascript" src="js/layer/layer.js"></script>
     <script>
-		var user_id = $_GET['user_id'];
+		var user_id = $_GET['user_id'];//用户id
 		console.log($_GET['code']); 
 		console.log($_GET['user_id']);
+		//获取openId
 		$.ajax({
 	        type:"get",
 	        url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,

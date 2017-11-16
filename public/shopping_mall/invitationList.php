@@ -30,7 +30,7 @@
 <script src="js/config.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$.ajax({
+		$.ajax({//获取邀请伙伴信息
 				type: "post",
 				dataType: 'json',
 				url: commonsUrl + '/api/gxsc/get/invite/user/info/list'+ versioninfos,
