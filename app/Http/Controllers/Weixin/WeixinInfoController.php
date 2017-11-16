@@ -24,14 +24,22 @@ class WeixinInfoController  extends Controller{
 
 
     //获取微信签名包
-    public function GetSingPackage(){
+    public function GetSingPackage(Request $request){
+
+        $validator = $this->setRules([
+            'url'  => 'required|string',
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $url = $request->url;
 
         $appId = getenv('appId');
         $appSecret = getenv('appSecret');
 
         $jssdk = new JSSDK($appId,$appSecret);
 
-        $data = $jssdk->getSignPackage();
+        $data = $jssdk->getSignPackage($url);
         return $this->respond($this->format($data));
 
     }
