@@ -141,7 +141,7 @@ function getWxConfig(){
             wx.config({
                 debug: false,
                 appId: data.result.appId,
-                timestamp: data.result.timestamp,
+                timestamp: data.result.timestamp.toString(),
                 nonceStr: data.result.nonceStr,
                 signature: data.result.signature,
                 jsApiList: [
