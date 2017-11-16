@@ -140,6 +140,7 @@
                             
                         }else{
                             layer.msg(data.msg);
+                            $('#verify').val("");
                         }
                     },
                     type:'JSON'

@@ -20,7 +20,7 @@
 			<div>被推荐人必须在平台商城消费，且订单完成后（无退货）；如推荐人未在平台会员区消费，其被推荐人在会员区消费订单达到基数要求，推荐人将不能享受推荐共享返利。</div>
 			<div>推荐共享标准：每日平台（被推荐人平台交易的订单）总利润10%；</div>
 			<div>利润共享天数：永久（备注：只要被推荐人进行线上下单交易就可以享受推荐返利）。达到以上条件，平台会根据会员个人所推荐的总人数给予会员个人一定比例的推荐返利，推荐共享的金额每天根据财务数据统计，由系统自动返到会员的平台账户“可用余额”里。</div>
-			<h6> 备注：被推荐人消费达到自购消费基数，同样可享受会员自购利润共享返利。</h6>
+			<div style="font-size: 12px;"> 备注：被推荐人消费达到自购消费基数，同样可享受会员自购利润共享返利。</div>
 		</div>
 		</div>
 		<div class="inviBtn1">邀请好友</div>
@@ -51,7 +51,6 @@ $(function(){
 <script>
         	var user_id = $_GET['user_id'];//用户id
         	console.log(user_id);
-        	
           	wx.ready(function () {
           		var tzurl = encodeURIComponent(commonUrl+'/wx/shopping_mall/userRegister.php?user_id='+user_id);
             // 分享给朋友
