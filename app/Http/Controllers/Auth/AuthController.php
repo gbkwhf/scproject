@@ -92,9 +92,15 @@ class AuthController extends Controller
     	//验证经销商和供应商验证登录
     	if($request->role_type==1){//经销商
     		$had=\App\AgencyModel::where('mobile',$mobile)->where('password',md5($password))->first();
-    		if($had){    			
+    		if($had){   
+    			if($had->state<1){
+    				return back()->withErrors([
+    						$this->loginUsername() => '账号禁用',
+    						]);
+    			}    			 			
     			Auth::loginUsingId(2);
     			\Session::put('role_userid', $had->id);
+    			\Session::put('role', 2);
     			return redirect('agencyadmin');
     		}else{
     			return back()->withErrors([
@@ -104,8 +110,14 @@ class AuthController extends Controller
     	}elseif($request->role_type==2){//供应商
     		$had=\App\SupplierModel::where('mobile',$mobile)->where('password',md5($password))->first();
     		if($had){
+    			if($had->state<1){
+    				return back()->withErrors([
+    						$this->loginUsername() => '账号禁用',
+    						]);    				
+    			}
     			Auth::loginUsingId(3);
     			\Session::put('role_userid', $had->id);
+    			\Session::put('role', 3);
     			return redirect('supplieradmin');
     		}else{
     			return back()->withErrors([
@@ -117,7 +129,7 @@ class AuthController extends Controller
     	$this->validate($request, [
     			$this->loginUsername() => 'required', 'password' => 'required',
     			]);
-    
+    	\Session::put('role', 1);
     	// If the class is using the ThrottlesLogins trait, we can automatically throttle
     	// the login attempts for this application. We'll key this by the username and
     	// the IP address of the client making these requests into this application.
@@ -139,7 +151,6 @@ class AuthController extends Controller
     	if ($throttles) {
     		$this->incrementLoginAttempts($request);
     	}
-    
     	return redirect($this->loginPath())
     	->withInput($request->only($this->loginUsername(), 'remember'))
     	->withErrors([

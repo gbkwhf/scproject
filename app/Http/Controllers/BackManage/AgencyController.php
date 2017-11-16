@@ -63,7 +63,7 @@ class AgencyController  extends Controller
                 'state'=>$request->state,
         		'account'=>$request->account,
         );
-        if(isset($request->password)){
+        if(!empty($request->password)){
             $params['password']=md5($request->password);
         }
          $res = \App\AgencyModel::where('id',$request->id)->update($params);

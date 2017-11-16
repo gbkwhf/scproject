@@ -82,7 +82,7 @@ class OrderController extends Controller
 			if(empty($val->employee_id)){
 				$val->order_source='线上订单';
 			}else{
-				$agency_name=\App\EmployeeModel::where('user_id',$val->employee_id)
+				$agency_name=\App\EmployeeModel::withTrashed()->where('user_id',$val->employee_id)
 					->leftjoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')				
 					->first();
 				$val->order_source=$agency_name->name;				
@@ -179,7 +179,7 @@ class OrderController extends Controller
 			if(empty($val->employee_id)){
 				$val->employee_id='线上订单';
 			}else{
-				$agency_name=\App\EmployeeModel::where('user_id',$val->employee_id)
+				$agency_name=\App\EmployeeModel::withTrashed()->where('user_id',$val->employee_id)
 				->leftjoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')
 				->first();
 				$val->employee_id=$agency_name->name;

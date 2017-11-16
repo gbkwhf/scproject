@@ -57,7 +57,8 @@
                                   <input type="text" placeholder="订单号" class="form-control  " style="float:left;width:141px" name="order_id" value="{{ $_GET['order_id'] or ''}}">
                                   <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>                                  
                               </div>
-
+                              <div style="position:absolute;right:-80px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
+                              
                           </div>
                       </form>
                   </div>
@@ -109,5 +110,12 @@
             elem: '#end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
             event: 'focus' //响应事件。如果没有传入event，则按照默认的click
         });
+        function getOrderExcel(){
+        	$("#form_action").attr('action',"{{ url('supplier/getorderexcel') }}");
+        	$("#form_action").attr('method','post');	
+        	$("#form_action").submit();
+        	$("#form_action").attr('action',"{{ url('supplier/orderlist') }}");
+        	$("#form_action").attr('method','get');	        	        	
+        }          
     </script>
 @endsection

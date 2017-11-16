@@ -37,5 +37,6 @@ class Kernel extends HttpKernel
         'check.version' => \App\Http\Middleware\CheckSoftVersion::class,
         'check.ManageSession' => \App\Http\Middleware\CheckManageSession::class,
         'print.request' => \App\Http\Middleware\PrintRequestInLog::class,
+        'role' => \App\Http\Middleware\Role::class,
     ];
 }

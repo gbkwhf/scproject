@@ -62,7 +62,7 @@ class SupplierController  extends Controller
                 'mobile'=>$request->mobile,
                 'state'=>$request->state,
         );
-        if(isset($request->password)){
+        if(!empty($request->password)){
             $params['password']=md5($request->password);
         }
          $res = \App\SupplierModel::where('id',$request->id)->update($params);
