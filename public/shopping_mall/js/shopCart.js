@@ -87,7 +87,46 @@
         layer.closeAll()
     })
     $('#confirmsubmit').click(function(){
-        window.location.href = 'purchase.php';
+    	var arrId = []; //car_id,
+	    var shopArrId = []; //商品id
+	    var nameArr = []; //名称
+	    var priceArr = []; //单价
+	    var imgUrl = []; //商品图片
+	    var shopNum = []; //商品数量
+	    var len = $(".checked input[class*=hiIn]").length;
+	    $(".checked input").each(function() {
+	        if($(this).hasClass("hiIn")) {
+	            for(var i = 0; i < len; i++) {
+	                var thisVal = $(this).val(); //car_id
+	                var shopId = $(this).attr('id'); ////商品id
+	                var thisNum = $(this).parent().parent().parent().find('input[class*=inputNum]').val(); //商品数量
+	                var thisName = $(this).attr('name'); //商品名称
+	                var thisPrice = $(this).attr('price'); //商品单价
+	                var thisImg = $(this).attr('url'); //商品图片
+	            }
+	            shopArrId.push(shopId); //商品id
+	            arrId.push(thisVal); //car_id
+	            nameArr.push(thisName); //商品名称
+	            priceArr.push(thisPrice); //单价
+	            imgUrl.push(thisImg); //商品图片
+	            shopNum.push(thisNum); //商品数量
+	        }
+	    })
+	    var dataArr = [];
+	    for(var i = 0; i < arrId.length; i++) {
+	        var param = {
+	            "id": arrId[i],
+	            "shopId": shopArrId[i],
+	            "name": nameArr[i],
+	            "price": priceArr[i],
+	            "src": imgUrl[i],
+	            "number": shopNum[i]
+	        }
+	        dataArr.push(param);
+	    }
+	    console.log(dataArr);
+	    localStorage.setItem("moneyArr", JSON.stringify(dataArr));
+      window.location.href = 'purchase.php';
     })
   		//全选
   	var allInput = $(".input1");
@@ -468,7 +507,8 @@
   			layer.msg('请选择你要结算的宝贝');
   		}
   	})
-
+		
+		
   	//全选的价格计算
   	function allsetTotal() {
   		//		var s = 0;
