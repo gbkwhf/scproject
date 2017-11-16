@@ -48,7 +48,6 @@ $(function(){
             getWxConfig();
             var user_id = data.result.user_id;//用户id
             console.log(user_id);
-
             wx.ready(function () {
                 var tzurl = encodeURIComponent(commonUrl+'/wx/shopping_mall/userRegister.php?user_id='+user_id);
                 // 分享给朋友
