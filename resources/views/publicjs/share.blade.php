@@ -37,6 +37,7 @@
 </html>
 <script type="text/javascript" src="/shopping_mall/js/jquery.min.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/jquery.min.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/common.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/config.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/layer/layer.js"></script>
 <script>
