@@ -44,7 +44,7 @@ class JsApiPay  extends Controller
 //        $tmp = json_decode($info);
 //        $open_id = $tmp['result']['openId'];
 
-        return view('publicjs.share',['open_id'=>$info]);
+        return view('publicjs.share',['open_id'=>json_decode($info)]);
     }
 
 
