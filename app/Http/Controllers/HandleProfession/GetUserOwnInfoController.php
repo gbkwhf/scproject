@@ -32,7 +32,7 @@ class GetUserOwnInfoController extends Controller{
 
       $user_id = $this->getUserIdBySession($request->ss); //获取员工id
 
-      $list = \DB::table('ys_member')->select('user_id','mobile','sex','name','address','image as thumbnail_image_url')->where('invite_id',$user_id)->get();
+      $list = \DB::table('ys_member')->select('user_id','mobile','sex','name','address','image as thumbnail_image_url','created_at')->where('invite_id',$user_id)->orderBy('created_at','desc')->get();
 
       $http = getenv('HTTP_REQUEST_URL'); //获取域名
        if(!empty($list)){
