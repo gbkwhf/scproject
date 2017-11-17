@@ -7,7 +7,7 @@ html,body{
 img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
 input[type="button"]{-webkit-appearance: none;}
 .inviHead{
-	min-height: 180px;
+	height: 160px;
 	background: url(../images/inviHead.png) no-repeat;
 	background-size: 100% 100%;
 }
@@ -20,7 +20,7 @@ input[type="button"]{-webkit-appearance: none;}
 }
 .wrapNav{
 	width: 88%;
-	min-height: 260px;
+	min-height: 200px;
 	margin: 0 auto;
 	margin-top: 20px;
 	border: 1px solid #fc7500;
