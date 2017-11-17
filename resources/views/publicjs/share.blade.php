@@ -36,8 +36,8 @@
 </div>
 </body>
 </html>
-<script type="text/javascript" src="../../../public/js/jquery.min.js"></script>
-<script type="text/javascript" src="../../../public/js/common.js"></script>
+<script type="text/javascript" src="{{public_path('/js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{public_path('/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="../../../public/js/config.js"></script>
 <script type="text/javascript" src="../../../public/js/layer/layer.js"></script>
 <script>
