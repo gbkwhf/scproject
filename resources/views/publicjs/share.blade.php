@@ -81,10 +81,10 @@
                 un:mobile
             },
             success:function(data){
-                $('.getCode').attr('onclick','');
                 layer.closeAll();
                 if(data.code==1){
                     downtime();
+                    $('.getCode').attr('onclick','');
                 }else{
                     layer.msg(data.msg);
                 }
