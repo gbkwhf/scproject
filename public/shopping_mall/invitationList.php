@@ -57,8 +57,9 @@
 								var sex = con[k].sex; //用户性别
 								var thumbnail_image_url = con[k].thumbnail_image_url; //用户头像
 								var user_id = con[k].user_id; //用户id
+								var created_at = con[k].created_at;//注册时间
 								console.log(user_id);
-								html += "<div class='inviter' url=" + thumbnail_image_url + " name=" + name + " id=" + user_id + "><div class='photo'><img src='+thumbnail_image_url+' width='55'/></div><p class='invi_userName'>" + name + "</p><p class='invi_date'>2017.11.14</p></div>"
+								html += "<div class='inviter' url=" + thumbnail_image_url + " name=" + name + " id=" + user_id + "><div class='photo'><img src="+thumbnail_image_url+" width='55'/></div><p class='invi_userName'>" + name + "</p><p class='invi_date'>"+created_at+"</p></div>"
 							});
 							$('.wrapper').append(html); //动态显示邀请列表
 						} else {
