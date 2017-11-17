@@ -38,9 +38,11 @@ class JsApiPay  extends Controller
     //邀请分享
     public function inviteRegister(){
 
-        session_start();
-//        !$_SESSION['openid']{code-token-openid-($_SESSION['openid']=openid)};
-        if($_SESSION['openid']){
+
+
+       $session_id = session_id();
+
+        if(is_null(session($session_id))){
 
             $info = $this->GetOpenid();
 
@@ -50,13 +52,12 @@ class JsApiPay  extends Controller
 
             $tmp = json_decode($response);
             $open_id = $tmp->result->openId;
-            $_SESSION['openid'] = $open_id;
+            session($session_id,$open_id);
+
         }else{
 
-            $open_id =$_SESSION['openid'];
+            $open_id = session($session_id);
         }
-
-
 
 
         return view('publicjs.share',['open_id'=>$open_id]);
