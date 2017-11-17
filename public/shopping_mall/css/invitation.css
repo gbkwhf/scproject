@@ -7,25 +7,25 @@ html,body{
 img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
 input[type="button"]{-webkit-appearance: none;}
 .inviHead{
-	min-height: 184px;
+	min-height: 180px;
 	background: url(../images/inviHead.png) no-repeat;
 	background-size: 100% 100%;
 }
 .inviNav{
-	min-height: 400px;
+	/*min-height: 400px;*/
 	background: url(../images/inviNav.png) no-repeat;
 	background-size: 100% 100%;
 	/*background-size: cover;*/
 	overflow: hidden;
 }
 .wrapNav{
-	width: 90%;
-	height: 280px;
+	width: 85%;
+	min-height: 280px;
 	margin: 0 auto;
 	margin-top: 20px;
 	border: 1px solid #fc7500;
 	border-radius: 13px;
-	font-size: 12px;
+	/*font-size: 12px;*/
 }
 .inviTitle{
 	height: 30px;
@@ -98,13 +98,10 @@ input[type="button"]{-webkit-appearance: none;}
 	font-size: 16px;
 	
 }
-#layui-layer1{
-	top: 20px;
-	left: 200px;
-}
+
 @media screen and (max-width: 320px) {
 	.inviHead{
-	min-height: 170px;
+	min-height: 165px;
 	background: url(../images/inviHead.png) no-repeat;
 	background-size: 100% 100%;
 }
@@ -116,5 +113,29 @@ input[type="button"]{-webkit-appearance: none;}
 	border: 1px solid #fc7500;
 	border-radius: 13px;
 	font-size: 12px;
+}
+}
+@media screen and (min-width: 410px) {
+	.wrapNav{
+	width: 85%;
+	height: 378px;
+	margin: 0 auto;
+	margin-top: 30px;
+	border: 1px solid #fc7500;
+	border-radius: 13px;
+	/*font-size: 12px;*/
+}
+.conNav{
+	padding-left: 12px;
+	padding-right: 12px;
+	padding-top: 25px;
+	/*padding-bottom: 8px;*/
+	color: #ffffff;
+	/*font-size: 12px;*/
+}
+.inviHead{
+	min-height: 200px;
+	background: url(../images/inviHead.png) no-repeat;
+	background-size: 100% 100%;
 }
 }
