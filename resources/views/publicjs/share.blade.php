@@ -38,7 +38,7 @@
 </html>
 <script type="text/javascript" src="{{base_path('js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{base_path('js/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{$_SERVER['SERVER_NAME']}}/shopping_mall/js/config.js"></script>
+<script type="text/javascript" src="{{$_SERVER['HTTP_HOST']}}/shopping_mall/js/config.js"></script>
 <script type="text/javascript" src="../../../public/js/layer/layer.js"></script>
 <script>
     var user_id = $_GET['user_id'];//用户id
