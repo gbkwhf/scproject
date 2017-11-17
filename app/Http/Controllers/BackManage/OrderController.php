@@ -168,13 +168,13 @@ class OrderController extends Controller
 			->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
 			->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
 			->get();
-			$val->goods_name=str_limit($goods_name[0]->goods_name,20,'...');
+			$val->goods_name=$goods_name[0]->goods_name;
 			//供应商
 			$supplier_name=\App\SubOrderModel::where('base_id',$val->order_id)
 			->leftjoin('ys_supplier','ys_supplier.id','=','ys_sub_order.supplier_id')
 			->selectRaw("GROUP_CONCAT(ys_supplier.name) as supplier_name")
 			->get();
-			$val->supplier_name=str_limit($supplier_name[0]->supplier_name,20,'...');
+			$val->supplier_name=$supplier_name[0]->supplier_name;
 			//经销商
 			if(empty($val->employee_id)){
 				$val->employee_id='线上订单';

@@ -166,7 +166,7 @@ class SupplierManageController  extends Controller
  		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
  		->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
  		->get();
- 		$val->goods_name=str_limit($goods_name[0]->goods_name,10,'...');
+ 		$val->goods_name=$goods_name[0]->goods_name;
  	}
  
  	$arr_data=$data->toArray();
