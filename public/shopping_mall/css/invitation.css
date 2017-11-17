@@ -19,8 +19,8 @@ input[type="button"]{-webkit-appearance: none;}
 	/*overflow: hidden;*/
 }
 .wrapNav{
-	width: 85%;
-	min-height: 280px;
+	width: 88%;
+	min-height: 260px;
 	margin: 0 auto;
 	margin-top: 20px;
 	border: 1px solid #fc7500;
@@ -55,7 +55,7 @@ input[type="button"]{-webkit-appearance: none;}
 	margin-top: 21px;
 	float: left;
 	color: #ffffff;
-	margin-bottom: 50px;
+	/*margin-bottom: 50px;*/
 }
 .inviBtn2{
 	width: 42%;
@@ -68,7 +68,7 @@ input[type="button"]{-webkit-appearance: none;}
 	margin-top: 21px;
 	float: left;
 	color: #ffffff;
-	margin-bottom: 50px;
+	/*margin-bottom: 50px;*/
 }
 .popBox{
 	position: fixed;
