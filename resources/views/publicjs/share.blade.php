@@ -41,30 +41,9 @@
 <script type="text/javascript" src="/shopping_mall/js/config.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/layer/layer.js"></script>
 <script>
-    var user_id = $_GET['user_id'];//用户id
-    console.log($_GET['user_id']);
-    console.log('{{$open_id}}');
+    var user_id = $_GET['user_id'].split('user_id')[0];//用户id
     setCookie("openid",'{{$open_id}}');
 
-    //获取openId
-//    $.ajax({
-//        type:"get",
-//        url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
-//        data:{
-//            "code":$_GET['code']
-//        },success:function(data){
-//            if(data.code==1){
-//                if(getCookie("openid")){
-//                    setCookie("is_member",data.result.is_member);
-//                }else{
-//                    setCookie("openid",data.result.openId);
-//                    setCookie("is_member",data.result.is_member);
-//                }
-//            }else{
-//                layer.msg(data.msg);
-//            }
-//        }
-//    });
     //获取验证码
     function getcode(){
         mobile = $('#inpmobile').val();
