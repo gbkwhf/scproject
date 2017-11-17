@@ -123,6 +123,7 @@ Route::group([
 
 
 
+
 });
 
 
@@ -135,3 +136,7 @@ Route::group([
     Route::get('api/gxsc/get/commodity/lists/{second_id}','HandleProfession\GetShopsInfoController@getCommodityLists');
     //3.根据商品id获取商品详情
     Route::get('api/gxsc/get/commodity/info/{goods_id}','HandleProfession\GetShopsInfoController@getCommodityInfo');
+
+
+  //邀请分享
+   Route::get('api/gxsc/invite/others/register','Weixin\JsApiPay@inviteRegister');

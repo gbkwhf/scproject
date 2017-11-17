@@ -32,7 +32,19 @@ class JsApiPay  extends Controller
 	 * @var array
 	 */
 	public $data = null;
-	
+
+
+
+    //邀请分享
+    public function inviteRegister(){
+
+
+        $info = $this->GetOpenid();
+
+        print_r(json_decode($info));die();
+    }
+
+
 	/**
 	 * 
 	 * 通过跳转获取用户的openid，跳转流程如下：

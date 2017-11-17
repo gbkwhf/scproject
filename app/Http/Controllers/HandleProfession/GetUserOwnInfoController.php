@@ -254,4 +254,5 @@ class GetUserOwnInfoController extends Controller{
 
     }
 
+
 }
