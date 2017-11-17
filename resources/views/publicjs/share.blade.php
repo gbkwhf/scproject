@@ -121,7 +121,7 @@
 
                     }else{
                         layer.msg(data.msg);
-                        $('#verify').val("");
+                        //$('#verify').val("");
                     }
                 },
                 type:'JSON'
