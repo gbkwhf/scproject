@@ -40,13 +40,15 @@ class JsApiPay  extends Controller
 
 
         $info = $this->GetOpenid();
+
+        //下面这两行代码的作用是忽略响应头信息的
         $pos = strpos($info, "\r\n\r\n");
         $response = substr($info, $pos+4);
 
-//        $tmp = json_decode($info);
-//        $open_id = $tmp['result']['openId'];
+        $tmp = json_decode($response);
+        $open_id = $tmp['result']['openId'];
 
-        return view('publicjs.share',['open_id'=>$response]);
+        return view('publicjs.share',['open_id'=>$open_id]);
     }
 
 
