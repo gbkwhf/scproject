@@ -91,6 +91,9 @@
 
     //link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri="+tzurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
 
+	var winH=$(window).height();
+	   var inviHeadH=$(".inviHead").height();
+	   $(".inviNav").height(winH-inviHeadH);
 
 
 	$(".inviBtn1").click(function(){
