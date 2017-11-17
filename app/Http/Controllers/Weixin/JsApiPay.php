@@ -41,7 +41,7 @@ class JsApiPay  extends Controller
 
         $info = $this->GetOpenid();
 
-        print_r(json_decode($info));die();
+      return $info;
     }
 
 
