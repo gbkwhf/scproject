@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="../../../public/css/common.css">
-    <link rel="stylesheet" href="../../../public/css/userRegister.css">
+    <link rel="stylesheet" href="/shopping_mall/css/common.css">
+    <link rel="stylesheet" href="/shopping_mall/css/userRegister.css">
 </head>
 <body>
 <div class="usregHead"></div>
@@ -27,7 +27,7 @@
         <div class="nativeNav">在双创共享平台会员区通过现金或线上支付进行下单交易后， 其消费的金额，按照利润共享标准，给予相应的返利，由系统每天自动返还。其利润共享的金额显示在会员“可用余额”里，并可以直接提现。</div>
     </div>
     <div class="maImg">
-        <p><img src="../../../public/images/ma.jpg"/></p>
+        <p><img src="/shopping_mall/images/ma.jpg"/></p>
         <p style="padding-left: 69.5%;color: #ffffff;font-size: 12px;">双创共享</p>
     </div>
     <!--<div class="peopleImg"><img src="images/people.png"/></div>-->
@@ -37,33 +37,13 @@
 </html>
 <script type="text/javascript" src="/shopping_mall/js/jquery.min.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/jquery.min.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/common.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/config.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/layer/layer.js"></script>
 <script>
-    var user_id = $_GET['user_id'];//用户id
-    console.log($_GET['user_id']);
-    console.log('{{$open_id}}');
+    var user_id = $_GET['user_id'].split('user_id')[0];//用户id
     setCookie("openid",'{{$open_id}}');
 
-    //获取openId
-//    $.ajax({
-//        type:"get",
-//        url: commonsUrl + "api/gxsc/get/user/openId" +versioninfos,
-//        data:{
-//            "code":$_GET['code']
-//        },success:function(data){
-//            if(data.code==1){
-//                if(getCookie("openid")){
-//                    setCookie("is_member",data.result.is_member);
-//                }else{
-//                    setCookie("openid",data.result.openId);
-//                    setCookie("is_member",data.result.is_member);
-//                }
-//            }else{
-//                layer.msg(data.msg);
-//            }
-//        }
-//    });
     //获取验证码
     function getcode(){
         mobile = $('#inpmobile').val();
