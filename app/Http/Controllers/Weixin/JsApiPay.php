@@ -39,14 +39,25 @@ class JsApiPay  extends Controller
     public function inviteRegister(){
 
 
-        $info = $this->GetOpenid();
+//        !$_SESSION['openid']{code-token-openid-($_SESSION['openid']=openid)};
+        if($_SESSION['openid']){
 
-        //下面这两行代码的作用是忽略响应头信息的
-        $pos = strpos($info, "\r\n\r\n");
-        $response = substr($info, $pos+4);
+            $info = $this->GetOpenid();
 
-        $tmp = json_decode($response);
-        $open_id = $tmp->result->openId;
+            //下面这两行代码的作用是忽略响应头信息的
+            $pos = strpos($info, "\r\n\r\n");
+            $response = substr($info, $pos+4);
+
+            $tmp = json_decode($response);
+            $open_id = $tmp->result->openId;
+            $_SESSION['openid']=$open_id;
+        }else{
+
+            $open_id =$_SESSION['openid'];
+        }
+
+
+
 
         return view('publicjs.share',['open_id'=>$open_id]);
     }
