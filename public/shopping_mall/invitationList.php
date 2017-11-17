@@ -66,7 +66,7 @@
 							$('.wrapper').html('<p>还没有邀请的伙伴哦!</p>');
 							$('.wrapper p').css({
 								'text-align': 'center',
-								'color': '#333',
+								'color': '#c6bfbf',
 								'line-height': winH + 'px'
 							});
 						}
