@@ -41,7 +41,9 @@ class JsApiPay  extends Controller
 
         $info = $this->GetOpenid();
 
-      return $info;
+        $open_id = json_decode($info)['result']['openId'];
+
+        return $open_id;
     }
 
 
