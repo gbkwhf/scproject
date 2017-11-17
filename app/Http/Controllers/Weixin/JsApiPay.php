@@ -52,7 +52,8 @@ class JsApiPay  extends Controller
 
             $tmp = json_decode($response);
             $open_id = $tmp->result->openId;
-            session($session_id,$open_id);
+//            session($session_id,$open_id);
+            session([$session_id => $open_id]);
 
         }else{
 
