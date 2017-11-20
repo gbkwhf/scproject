@@ -1012,250 +1012,107 @@ class AuthController extends Controller
         $return_code = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
         return $return_content;
     }
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws ValidationErrorException
-     * 重置密码前发送短信
-     **************/
-//    public function resetPasswordBySMS(Request $request)
-//    {
-//
-//        $validator = $this->setRules([
-//            'un' => 'required|regex:/^1[34578][0-9]{9}$/',
-//           // 'service_type' => 'required'//1:注册3：手机找回密码
-//        ])
-//            ->_validate($request->only('un'));
-//        if (!$validator) throw new ValidationErrorException;
-//
-//        $user = Member::where('mobile',$request->un)->first();
-//        if ($user || $request->type == '1'){//如果用户存在，或者type=1代表从注册前发短信跳转过来
-//            $res_un = UserPincodeHistoryModel::where('mobile',$request->un)->get();
-//            $max = $res_un[count($res_un)-1]['pin_made_time'];//最后一条验证码创建时间
-//            $interval_f = date('Y-m-d H:i:s',strtotime("$max+5 minute"));//间隔时间
-//            $datetime = date('Y-m-d H:i:s',time());//当前时间
-//            if (count($res_un)>='6'){//如果该手机号码申请的注册码超过六条
-//                $min = $res_un[count($res_un)-'6']['pin_made_time'];//倒数第六条验证码创建时间
-//                $time = date('Y-m-d 00:00:00');//当天时间零点
-//                if ($min>=$time){//如果倒数第六条验证码时间，不小于当天时间零点，说明今天发满6条验证码
-//                    $data['msg'] = '今天申请过6次验证码，请明天再试';
-//                    return $this->respond($data);
-//                }else{
-//                    if ($datetime>$interval_f){ //如果申请时间超过上一条5分钟
-//                        $pin = rand('100000','999999');
-//                        sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//                        $params = array(
-//                            'pin_code'=>$pin,
-//                            'mobile'=>$request->un,
-//                            'service_type'=>'3',
-//                            'pin_made_time'=>date('Y-m-d H:i:s',time()),
-//                        );
-//                        $res = UserPincodeHistoryModel::insert($params);
-//                        $data['msg'] = '您的验证码是:'.$pin;
-//                        if($res){
-//                            return $this->respond($this->format($data));
-//                        }else{
-//                            return $this->setStatusCode(9998)->respondWithError($this->message);
-//                        }
-//                    }else{
-//                        $data['msg'] = '5分钟之内已经产生过一次验证码';
-//                        return $this->respond($data);
-//                    }
-//                }
-//            }else{//该手机号申请验证码不超过6条
-//                if ($datetime>$interval_f){ //如果申请时间超过上一条5分钟
-//                    $pin = rand('100000','999999');
-//                    sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//                    $params = array(
-//                        'pin_code'=>$pin,
-//                        'mobile'=>$request->un,
-//                        'service_type'=>'3',
-//                        'pin_made_time'=>date('Y-m-d H:i:s',time()),
-//                    );
-//                    $res = UserPincodeHistoryModel::insert($params);
-//                    if($res){
-//                        $data['msg'] = '短信已发送:'.$pin;
-//                        return $this->respond($this->format($data));
-//                    }else{
-//                        return $this->setStatusCode(9998)->respondWithError($this->message);
-//                    }
-//                }else{
-//                    $data['msg'] = '5分钟之内已经产生过一次验证码';
-//                    return $this->respond($data);
-//                }
-//            }
-//        }else{
-//         return $this->setStatusCode(1014)->respondWithError($this->message);
-//        }
-//    }
+
+
+    //邀请用户注册
+    public function inviteUserRegister(Request $request){
+
+        $validator = $this->setRules([
+            'un'  => 'required|regex:/^1[34578][0-9]{9}$/',
+            'pin' => 'required|string',
+            'openId' => 'required|string',
+            'invite_id'=>'required|string' //邀请人的id，必填
+
+        ])
+            ->_validate($request->all());
+        if (!$validator) throw new ValidationErrorException;
+
+        //手机验证码的验证
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',6)->orderBy('id','desc')->first();//获取id最大值
+        if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
+            return $this->setStatusCode(1007)->respondWithError($this->message);
+        }
+        //进行验证码校验，如果验证码超过10分钟，那么则失效了，其次，该验证码状态必须是未被验证状态，否则也视为失效
+        $minute=floor((time()-strtotime($max->pin_made_time))%86400/60);
+        $userful_time = env('USEFUL_TIME'); //有效时间，单位是分钟
+        if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
+            return $this->setStatusCode(1008)->respondWithError($this->message);
+        }
+
+        //首先判断该用户是否是系统内用户
+        $had_mobile=\DB::table('ys_member')->where('mobile',$request->un)->first();
+        if(!empty($had_mobile)){ //表示该用户已经存在
+            return $this->setStatusCode(1050)->respondWithError($this->message);
+        }
+
+        //手机号码不存在，则应该为其注册
+         $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
+         $invite_id  = $request->invite_id;
+         if(empty($is_true)){ //表示该邀请人不存在
+             return $this->setStatusCode(1051)->respondWithError($this->message);
+         }
+         //判断该openId是否在系统内存在
+        $is_exist = \DB::table('ys_session_info')->where('openId',$request->openId)->first();
+        if(empty($is_exist)){ //不存在，则直接绑定
+            $openId = $request->openId;
+        }else{ //存在，则该openId置空
+            $openId = "";
+        }
+
+        //获取分配服务器信息
+        $serverArr = $this->getDispatchServerInfo('ys');
+            /**
+             * 这里请求微信服务器，获取用户头像和姓名，然后把头像下载下来放到本地服务器
+             */
+            $weixin_info = $this->getWeiXin($request->openId);
+
+
+            \DB::beginTransaction(); //开启事务
+
+            //验证通过，则插入数据库，并且更改相应逻辑操作
+            $insert1 = \DB::table('ys_member')->insertGetId([
+
+                'mobile' => $request->un,
+                'password' => md5(md5('123456789')),
+                'created_at' => date('Y-m-d H:i:s'),
+                'name' => $weixin_info['name'],
+                'image' => $weixin_info['image_name'],
+                'sex' =>$weixin_info['sex'],
+                'invite_id' => $invite_id,
+            ]);
+
+            $update1 =  UserPincodeHistoryModel::where('id',$max->id)->update([
+                'is_succ' => '1',
+                'pin_accmulation_time' =>\DB::Raw('now()')
+            ]);
+
+            $insert2 = \DB::table('ys_session_info')->insert([
+
+                'user_id'=>$insert1,
+                'client_type'=>1, //安卓
+                'session'=>'',
+                'mid'=>$insert1,
+                'push_service_type'=>2,
+                'mec_ip' => $serverArr['mec_ip'],
+                'mec_port' => $serverArr['mec_port'],
+                'lps_ip' => $serverArr['lps_ip'],
+                'lps_port' => $serverArr['lps_port'],
+                'last_get_session_date' => Carbon::now(),
+                'session_hash' => '',
+                'openId'=>$openId,
+            ]);
+
+            if ($insert1 && $update1 && $insert2) {
+                DB::commit();
+                return $this->respond($this->format([],true));
+            }else {
+                DB::rollBack();
+                return $this->setStatusCode(1040)->respondWithError($this->message);
+            }
 
 
 
+    }
 
-
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws ValidationErrorException
-     * 重发短信
-     ***************/
-//    public function sendSMSAgain(Request $request)
-//    {
-//
-//        $validator = $this->setRules([
-//            'un' => 'required|regex:/^1[34578][0-9]{9}$/',
-//            'service_type' => 'integer'
-//        ])
-//            ->_validate($request->all());
-//        if (!$validator) throw new ValidationErrorException;
-//
-//        $user = Member::where('mobile',$request->un)->first();
-//        $is_sicc = UserPincodeHistoryModel::where('is_succ','1')->first();
-//
-//        if ($request->service_type == '1' || $request->service_type ==''){
-//            $service_type='1';
-//            if ($user){
-//        		return $this->setStatusCode(1002)->respondWithError($this->message);
-//            }
-//        }else{
-//        	if (!$user){
-//        		return $this->setStatusCode(1014)->respondWithError($this->message);
-//        	}
-//            $service_type=3;
-//        }
-//        $res_un = UserPincodeHistoryModel::where('mobile',$request->un)->get();
-//        if(count($res_un)>0){
-//        	$max = $res_un[count($res_un)-1]['pin_made_time'];//最后一条验证码创建时间
-//        	$interval_f = date('Y-m-d H:i:s',strtotime("$max+5 minute"));//间隔时间
-//        	$datetime = date('Y-m-d H:i:s',time());//当前时间
-//
-//        	//如果该手机号码申请的注册码超过六条
-//        	if (count($res_un)>='6'){
-//        		$min = $res_un[count($res_un)-'6']['pin_made_time'];//倒数第六条验证码创建时间
-//        		$time = date('Y-m-d 00:00:00');//当天时间零点
-//        		//如果倒数第六条验证码时间，不小于当天时间零点，说明今天发满6条验证码
-//        		if ($min>=$time){
-//        			$data['msg'] = '今天申请过6次验证码，请明天再试';
-//        			return $this->respond($data);
-//        		}else{
-//        			if ($datetime>$interval_f){ //如果申请时间超过上一条5分钟
-//        				$pin = rand('100000','999999');
-//        				sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//        				$params = array(
-//        						'pin_code'=>$pin,
-//        						'mobile'=>$request->un,
-//        						'service_type'=>$service_type,
-//        						'pin_made_time'=>date('Y-m-d H:i:s',time()),
-//        				);
-//        				$res = UserPincodeHistoryModel::insert($params);
-//        				$data['msg'] = '短信已发送:'.$pin;
-//        				if($res){
-//        					return $this->respond($this->format($data));
-//        				}else{
-//        					return $this->setStatusCode(9998)->respondWithError($this->message);
-//        				}
-//        			}else{
-//        				$data['msg'] = '5分钟之内已经产生过一次验证码';
-//        				return $this->respond($data);
-//        			}
-//        		}
-//        	}else{//该手机号申请验证码不超过6条
-//        		if ($datetime>$interval_f){ //如果申请时间超过上一条5分钟
-//        			$pin = rand('100000','999999');
-//        			sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//        			$params = array(
-//        					'pin_code'=>$pin,
-//        					'mobile'=>$request->un,
-//        					'service_type'=>$service_type,
-//        					'pin_made_time'=>date('Y-m-d H:i:s',time()),
-//        			);
-//        			$res = UserPincodeHistoryModel::insert($params);
-//        			$data['msg'] = '短信已发送:'.$pin;
-//        			if($res){
-//        				return $this->respond($this->format($data));
-//        			}else{
-//        				return $this->setStatusCode(9998)->respondWithError($this->message);
-//        			}
-//        		}else{
-//        			$data['msg'] = '5分钟之内已经产生过一次验证码';
-//        			return $this->respond($data);
-//        		}
-//        	}
-//
-//
-//        }else{
-//
-//        	$pin = rand('100000','999999');
-//        	sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//        	$params = array(
-//        			'pin_code'=>$pin,
-//        			'mobile'=>$request->un,
-//        			'service_type'=>$service_type,
-//        			'pin_made_time'=>date('Y-m-d H:i:s',time()),
-//        	);
-//        	$res = UserPincodeHistoryModel::insert($params);
-//        	$data['msg'] = '短信已发送:'.$pin;
-//        	if($res){
-//        		return $this->respond($this->format($data));
-//        	}else{
-//        		return $this->setStatusCode(9998)->respondWithError($this->message);
-//        	}
-//
-//
-//
-//        }
-//
-//
-//    }
-
-
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws ValidationErrorException
-     * 注册之前发送短信
-     **************/
-
-//    public function beforeRegisterSendSMS(Request $request)
-//    {
-//        $validator = $this->setRules([
-//            'un' => 'required|regex:/^1[34578][0-9]{9}$/'
-//        ])
-//            ->_validate($request->only('un'));
-//        if (!$validator) throw new ValidationErrorException;
-//        $user = Member::where('mobile',$request->un)->first();
-//        if (!$user){//如果用户不存在
-//            $res_un = UserPincodeHistoryModel::where('mobile',$request->un)->get()->toArray();
-//            if ($res_un){//如果该用户已申请过验证码
-//                $res_id = UserPincodeHistoryModel::where('mobile',$request->un)->max('id');
-//                $res_pin = UserPincodeHistoryModel::where('id',$res_id)->first();
-//                $pin = $res_pin['original']['pin_code'];
-//                sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//                $data['msg'] = '短信已发送'.$pin;
-//                return $this->respond($this->format($data));
-//            }else{
-//                $pin = rand('100000','999999');
-//                sendSms($request->un,'您的验证码是'.$pin.'');//发送短信
-//                $params = array(
-//                    'pin_code'=>$pin,
-//                    'mobile'=>$request->un,
-//                    'service_type'=>'1',
-//                    'pin_made_time'=>date('Y-m-d H:i:s',time()),
-//                );
-//                $res = UserPincodeHistoryModel::insert($params);
-//                $data['msg'] = '短信已发送:'.$pin;
-//                if($res){
-//                    return $this->respond($this->format($data));
-//                }else{
-//                    return $this->setStatusCode(9998)->respondWithError($this->message);
-//                }
-//            }
-//        }else{
-//            $data['msg'] = '用户已存在，直接登录';
-//            return $this->respond($data);
-//        }
-//    }
 
 }

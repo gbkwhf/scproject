@@ -19,6 +19,9 @@ Route::get('api/gxsc/show-ico/{fileName}','Baseuser\AuthController@showIco');
 //绑定openId
 Route::post('api/gxsc/bind/user/openId','Baseuser\AuthController@bindOpenId');
 
+//邀请用户注册
+Route::post('api/gxsc/invite/user/register','Baseuser\AuthController@inviteUserRegister');
+
 
 Route::group([
 
