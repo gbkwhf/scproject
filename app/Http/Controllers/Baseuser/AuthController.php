@@ -766,7 +766,7 @@ class AuthController extends Controller
     {
         $validator = $this->setRules([
             'ss' => 'required|string',
-            'sex_id' => 'integer|in:1,2', // 1男  2 女
+            'sex' => 'integer|in:1,2', // 1男  2 女
             'address' => 'string',
             'name' => 'string',
         	'birthday'=> [
@@ -778,14 +778,15 @@ class AuthController extends Controller
         if (!$validator) throw new ValidationErrorException;
         $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
-        $tmp = $request->all();
-
-        foreach($tmp as $k=>$v){
-            if(($k == 'ss') || empty($v) || ($k == 'os_type') || ($k == 'version')){
-                unset($tmp[$k]);
-            }else{
-                $tmp[$k] = addslashes($v);
+        $tmp = [];
+        $params_arr = ["sex","address","name","birthday"];
+        foreach($request->all() as $k=>$v){
+            if(in_array($k,$params_arr)){
+                  $tmp[$k] = $v;
             }
+        }
+        if(empty($tmp)){ //没有要更新的内容 1049
+            return $this->setStatusCode(1049)->respondWithError($this->message);
         }
 
         $res = \DB::table('ys_member')->where('user_id',$user_id)->update($tmp);
