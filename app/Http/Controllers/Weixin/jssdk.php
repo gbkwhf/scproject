@@ -88,12 +88,8 @@ class JSSDK{
     public function getUserInfo($openId) {
 
         $accessToken = $this->getAccessToken();
-
-        print_r($accessToken);die();
-
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$accessToken&openid=$openId&lang=zh_CN";
         $res = json_decode($this->httpGet($url));
-
         return $res;
     }
 
