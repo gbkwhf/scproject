@@ -9,7 +9,14 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/personal_center.css">
 </head>
-
+<script>
+    //解决IOS微信webview后退不执行JS的问题
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
 <body>
 
 	<div class="wrapper">
