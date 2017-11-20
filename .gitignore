@@ -16,3 +16,4 @@ ueditor/php/upload/*
 storage/app/*
 public/rebate_execute.txt
 storage/upload/*
+app/Http/Controllers/Weixin/WeixinInfoController.php
