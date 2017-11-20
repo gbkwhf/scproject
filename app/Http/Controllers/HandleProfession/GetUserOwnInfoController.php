@@ -90,7 +90,11 @@ class GetUserOwnInfoController extends Controller{
                 'operate_order_id'=>$order_id,
             ];
 
+        $tixian_money = number_format($request->money,2);
+
         $phone =\DB::table('ys_member')->where('user_id',$employee_id)->first()->mobile; //员工手机号
+
+
         \DB::beginTransaction(); //开启事务
         //写流水
          $insert = \DB::table('ys_operate_bills')->insert($insert_data);
@@ -103,7 +107,7 @@ class GetUserOwnInfoController extends Controller{
             $params = array(
                 "apikey" => $apikey,
                 "mobile" => $request->mobile,
-                "text"	=>	"【双创共享】正在为您进行提现操作，操作者联系方式为：".$phone.",订单号为：".$order_id.",提现金额为：".number_format($request->money,2)."元。"
+                "text"	=>	"【双创共享】正在为您进行提现操作，操作者联系方式为：".$phone.",订单号为：".$order_id.",提现金额为：".$tixian_money."元。"
             );
 
             $res = PostCURL($SMSApiPath, $params);
