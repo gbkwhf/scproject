@@ -122,7 +122,9 @@
   			success:function(data){
   				if(data.code==1){
   					console.log(data);
-  					$('.head-portrait img').attr('src',data.result.thumbnail_image_url);
+  					if(data.result.thumbnail_image_url!=""){
+  						$('.head-portrait img').attr('src',data.result.thumbnail_image_url);  						
+  					}
 					$('.user-info p').html(data.result.name);
   					$('.balance p').html(data.result.balance);
   					$('.cashback p').html(data.result.yesterday_return_money);
