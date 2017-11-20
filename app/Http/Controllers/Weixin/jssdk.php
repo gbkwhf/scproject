@@ -90,9 +90,6 @@ class JSSDK{
         $accessToken = $this->getAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$accessToken&openid=$openId&lang=zh_CN";
         $res = json_decode($this->httpGet($url));
-
-        echo $url;
-        print_r($res);die();
         return $res;
     }
 
