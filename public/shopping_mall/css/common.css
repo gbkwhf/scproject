@@ -31,6 +31,9 @@ a{
 a:active{
 	-webkit-tap-highlight-color:transparent;  /*a链接点击消除蓝色背景*/
 }
+img{
+	border: none;
+}
 /*弹框  确定取消样式*/
 .btn-box-pop{	
 	font-size: 15px;
