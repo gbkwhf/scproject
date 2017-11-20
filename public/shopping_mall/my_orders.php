@@ -63,7 +63,7 @@
 				html='';
 				if(data.result.length==0){
 					$('.wrapper').html('<p>暂无记录哦！</p>');
-					$('.wrapper p').css({'line-height':winH+'px','text-align': 'center'});
+					$('.wrapper p').css({'line-height':winH+'px','text-align': 'center','color':'#8f8f94'});
 				}else{
 					for(var i=0;i<data.result.length;i++){
 						html+='<div class="order-module" onclick="location.href=\'user_order_details.php?sub_order_id='+data.result[i].sub_order_id+'\'">'+
