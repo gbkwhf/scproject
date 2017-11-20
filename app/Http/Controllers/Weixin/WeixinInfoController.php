@@ -57,10 +57,6 @@ class WeixinInfoController  extends Controller{
         $appId = getenv('appId');
         $appSecret = getenv('appSecret');
 
-//        $redirect_uri = urlencode(getenv('CALL_BACK_URL'));
-
-//        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appId."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
-
 
         $jssdk = new JSSDK($appId,$appSecret);
         $getAccessToken = $jssdk->getAccessToken();
@@ -77,23 +73,6 @@ class WeixinInfoController  extends Controller{
                     ]
                 }';
 
-
-//        $data_tmp = [
-//                    "button"=>[
-//                        [
-//                            "type"=>"view",
-//                            "name"=>"shuanghcuang",
-//                            "url"=>$url
-//                        ]
-//                    ]
-//                ];
-//
-//         $data = json_encode($data_tmp);
-
-
-//        print_r($data);die();
-
-// "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97bfadf3a81d8206&redirect_uri=http%3A%2F%2Fgx.yxjk99.com%2Fshopping_mall%2Findex.php&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
 
         if(isset($_GET['echostr'])){
             $wx->valid(); //如果发来了echostr则进行验证
