@@ -837,16 +837,16 @@ class AuthController extends Controller
         if (!$validator) throw new ValidationErrorException;
 
         //手机验证码的验证
-//        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',5)->orderBy('id','desc')->first();//获取id最大值
-//        if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
-//            return $this->setStatusCode(1007)->respondWithError($this->message);
-//        }
-//        //进行验证码校验，如果验证码超过10分钟，那么则失效了，其次，该验证码状态必须是未被验证状态，否则也视为失效
-//        $minute=floor((time()-strtotime($max->pin_made_time))%86400/60);
-//        $userful_time = env('USEFUL_TIME'); //有效时间，单位是分钟
-//        if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
-//            return $this->setStatusCode(1008)->respondWithError($this->message);
-//        }
+        $max = UserPincodeHistoryModel::where('mobile',$request->un)->where('service_type',5)->orderBy('id','desc')->first();//获取id最大值
+        if(empty($max) || ($max->pin_code != $request->pin)){ //如果为空或者验证码不一致，则报错，提示验证码错误
+            return $this->setStatusCode(1007)->respondWithError($this->message);
+        }
+        //进行验证码校验，如果验证码超过10分钟，那么则失效了，其次，该验证码状态必须是未被验证状态，否则也视为失效
+        $minute=floor((time()-strtotime($max->pin_made_time))%86400/60);
+        $userful_time = env('USEFUL_TIME'); //有效时间，单位是分钟
+        if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
+            return $this->setStatusCode(1008)->respondWithError($this->message);
+        }
 
         //首先判断该用户是否是系统内用户
         $had_mobile=\DB::table('ys_member')->where('mobile',$request->un)->first();
@@ -869,7 +869,7 @@ class AuthController extends Controller
              */
              $weixin_info = $this->getWeiXin($request->openId);
 
-die('11111111');
+
             \DB::beginTransaction(); //开启事务
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
@@ -878,8 +878,9 @@ die('11111111');
                 'mobile' => $request->un,
                 'password' => md5(md5('123456789')),
                 'created_at' => date('Y-m-d H:i:s'),
-                'name' => '游客',
-                'sex' =>0,
+                'name' => $weixin_info['name'],
+                'image' => $weixin_info['image_name'],
+                'sex' =>$weixin_info['sex'],
                 'invite_id' => $invite_id,
             ]);
 
@@ -917,8 +918,6 @@ die('11111111');
 
         }else{ //否则，直接绑定openId即可
 
-
-die('22222');
 
             $session = (new Session)->createSession($had_mobile->user_id);
             $is_exist = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->first();
@@ -973,27 +972,30 @@ die('22222');
 
         $data = $jssdk->getUserInfo($openId);
 
-        $info = $this->setBaseInfo($data->headimgurl);
-        print_r($data);die();
+        $image_name = $this->setBaseInfo($data->headimgurl);
 
+        $result['image_name'] = $image_name;
+        $result['name'] = $data->nickname;
+        $result['sex'] = $data->sex;
 
+         return $result;
 
     }
 
+
+
     private function setBaseInfo($url){
 
+//        $url = "http://wx.qlogo.cn/mmopen/INk4JvWfe8UG9jaylKafuIdVAibcM6rVj9qVLlkXCnoPsJZZe3Ys8oNXbGgWBuMjEvlOYs6icJjqSQG5r0wSNNbw/0";
         $return_content = $this->http_get_data($url);
+        //上传图片
+        $new_entension='jpg';
+        $new_name=time().rand(100,999).'.'.$new_entension;
 
-        echo $return_content;die();
+        file_put_contents(storage_path('app/avatars/').$new_name, $return_content);
+        Image::make(storage_path('app/avatars/').$new_name)->resize(100, 100)->save(storage_path('app/avatars/').'thu_'.$new_name);
 
-//        $filename = 'test.jpg';
-//        $fp= @fopen($filename,"a"); //将文件绑定到流 
-//        fwrite($fp,$return_content); //写入文件
-
-
-
-
-
+        return $new_name;
     }
 
     private  function http_get_data($url) {
