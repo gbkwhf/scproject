@@ -28,7 +28,7 @@
 				<div class="inMoney">+86<input type="text" maxlength="11" class="applyPhone" onkeyup="value=value.replace(/[^0-9.]/g,'') "/></div>
 				<div class="tel_number"></div>
 				<div class="desMoney" style="padding-top: 30px;">提现金额</div>
-				<div class="inMoney">¥<input type="text" class="applyMoney" onkeyup="value=value.replace(/[^0-9.]/g,'') " /></div>
+				<div class="inMoney">¥<input type="text" class="applyMoney" onkeyup="this.value=this.value.replace(/\D/g,'')" /></div>
 				<div class="balance">
 					<!--可提现金额：¥<span class="balanceMoney"></span>-->
 				</div>
