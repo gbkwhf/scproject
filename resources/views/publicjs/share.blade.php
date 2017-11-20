@@ -81,10 +81,10 @@
                 un:mobile
             },
             success:function(data){
-                $('.getCode').attr('onclick','');
                 layer.closeAll();
                 if(data.code==1){
                     downtime();
+                    $('.getCode').attr('onclick','');
                 }else{
                     layer.msg(data.msg);
                 }
@@ -114,11 +114,11 @@
                 success:function(data){
                     layer.closeAll();
                     if(data.code==1){
+                        layer.msg("注册成功");
                         setTimeout(function(){
-                            layer.msg("注册成功");
+                            location.href='/shopping_mall/index.php';
                         },300);
 
-                        location.href='index.php';
 
                     }else{
                         layer.msg(data.msg);

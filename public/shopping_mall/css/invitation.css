@@ -7,7 +7,7 @@ html,body{
 img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
 input[type="button"]{-webkit-appearance: none;}
 .inviHead{
-	min-height: 180px;
+	height: 160px;
 	background: url(../images/inviHead.png) no-repeat;
 	background-size: 100% 100%;
 }
@@ -16,11 +16,11 @@ input[type="button"]{-webkit-appearance: none;}
 	background: url(../images/inviNav.png) no-repeat;
 	background-size: 100% 100%;
 	/*background-size: cover;*/
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 .wrapNav{
-	width: 85%;
-	min-height: 280px;
+	width: 88%;
+	min-height: 200px;
 	margin: 0 auto;
 	margin-top: 20px;
 	border: 1px solid #fc7500;
@@ -42,7 +42,7 @@ input[type="button"]{-webkit-appearance: none;}
 	padding-top: 10px;
 	padding-bottom: 8px;
 	color: #ffffff;
-	/*font-size: 12px;*/
+	font-size: 13px;
 }
 .inviBtn1{
 	width: 42%;
@@ -55,6 +55,7 @@ input[type="button"]{-webkit-appearance: none;}
 	margin-top: 21px;
 	float: left;
 	color: #ffffff;
+	/*margin-bottom: 50px;*/
 }
 .inviBtn2{
 	width: 42%;
@@ -67,6 +68,7 @@ input[type="button"]{-webkit-appearance: none;}
 	margin-top: 21px;
 	float: left;
 	color: #ffffff;
+	/*margin-bottom: 50px;*/
 }
 .popBox{
 	position: fixed;
@@ -99,7 +101,7 @@ input[type="button"]{-webkit-appearance: none;}
 	
 }
 
-@media screen and (max-width: 320px) {
+/*@media screen and (max-width: 320px) {
 	.inviHead{
 	min-height: 165px;
 	background: url(../images/inviHead.png) no-repeat;
@@ -114,8 +116,8 @@ input[type="button"]{-webkit-appearance: none;}
 	border-radius: 13px;
 	font-size: 12px;
 }
-}
-@media screen and (min-width: 410px) {
+}*/
+/*@media screen and (min-width: 410px) {
 	.wrapNav{
 	width: 85%;
 	height: 378px;
@@ -123,19 +125,19 @@ input[type="button"]{-webkit-appearance: none;}
 	margin-top: 30px;
 	border: 1px solid #fc7500;
 	border-radius: 13px;
-	/*font-size: 12px;*/
+	
 }
 .conNav{
 	padding-left: 12px;
 	padding-right: 12px;
 	padding-top: 25px;
-	/*padding-bottom: 8px;*/
+
 	color: #ffffff;
-	/*font-size: 12px;*/
+	
 }
 .inviHead{
 	min-height: 200px;
 	background: url(../images/inviHead.png) no-repeat;
 	background-size: 100% 100%;
 }
-}
+}*/
