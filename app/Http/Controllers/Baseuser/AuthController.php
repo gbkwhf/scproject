@@ -116,13 +116,6 @@ class AuthController extends Controller
             return $this->setStatusCode(1008)->respondWithError($this->message);
         }
 
-//        $is_empty = \DB::table('ys_member')->orderBy('created_at','desc')->first();
-//        if(empty($is_empty)){ //如果为空，则表示一个用户都没有，那么初始user_id从配置文件中读取，否则的话每次给系统最大用户id加1
-//            $user_id = getenv('USER_ID') ? getenv('USER_ID') : '260000';
-//        }else{
-//            $user_id = $is_empty->user_id + 1;
-//        }
-
         //检测邀请人是否存在，以及邀请人id是否真实有效
         if(!empty($request->invite_id)){
             $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
@@ -136,7 +129,7 @@ class AuthController extends Controller
 
         //验证通过，则插入数据库，并且更改相应逻辑操作
         $insert = \DB::table('ys_member')->insert([
-//            'user_id'=>$user_id,
+
             'mobile' => $request->un,
             'password' => md5(md5($request->pw)),
             'created_at' => date('Y-m-d H:i:s'),
