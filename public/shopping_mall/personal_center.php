@@ -76,20 +76,20 @@
 		}
 	
 		//获取微信个人信息
-		$.ajax({
-			type:'post',
-			url:commonsUrl+ 'api/gxsc/get/user/weixin/info' +versioninfos,
-			data:{'ss':getCookie('openid')},
-			success:function(data){
-				if(data.code==1){
-					console.log(data);					
-					$('.head-portrait img').attr('src',data.result.headimgurl);
-					$('.user-info p').html(data.result.nickname);
-				}else{
-  					layer.msg(data.msg);
-  				}
-			}
-		})
+//		$.ajax({
+//			type:'post',
+//			url:commonsUrl+ 'api/gxsc/get/user/weixin/info' +versioninfos,
+//			data:{'ss':getCookie('openid')},
+//			success:function(data){
+//				if(data.code==1){
+//					console.log(data);					
+//					$('.head-portrait img').attr('src',data.result.headimgurl);
+//					$('.user-info p').html(data.result.nickname);
+//				}else{
+//					layer.msg(data.msg);
+//				}
+//			}
+//		})
 		
 		
 		//获取购物车中的商品数量
@@ -122,6 +122,10 @@
   			success:function(data){
   				if(data.code==1){
   					console.log(data);
+  					if(data.result.thumbnail_image_url!=""){
+  						$('.head-portrait img').attr('src',data.result.thumbnail_image_url);  						
+  					}
+					$('.user-info p').html(data.result.name);
   					$('.balance p').html(data.result.balance);
   					$('.cashback p').html(data.result.yesterday_return_money);
   				}else{
