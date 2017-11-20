@@ -867,10 +867,9 @@ class AuthController extends Controller
             /**
              * 这里请求微信服务器，获取用户头像和姓名，然后把头像下载下来放到本地服务器
              */
-//             $weixin_info = $this->getWeiXin($request->openId);
-//
-//
-//die('11111111');
+             $weixin_info = $this->getWeiXin($request->openId);
+
+die('11111111');
             \DB::beginTransaction(); //开启事务
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
@@ -919,7 +918,7 @@ class AuthController extends Controller
         }else{ //否则，直接绑定openId即可
 
 
-//            die('22222');
+            die('22222');
 
             $session = (new Session)->createSession($had_mobile->user_id);
             $is_exist = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->first();
