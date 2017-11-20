@@ -49,7 +49,7 @@
 <body>	
 	<ul class="nickname">
 		<li>
-			<input type="text"  class="name" onkeyup="this.value=this.value.replace(/\s/g, '')" autofocus="autofocus" val="" />
+			<input type="text"  class="name" onkeyup="this.value=this.value.replace(/(^\s*)|(\s*$)/g, '')" autofocus="autofocus" val="" maxlength="6" />
 		</li>
 	</ul>
 	<a href="javascript:void(0)" class="save_nickname">保存</a>
