@@ -18,7 +18,7 @@
 				<img src="images/dmzy-font.png" width="101" class="tit-font" />
 				<h4>养脊柱·保健康</h4>
 				<div class="price-box">
-					<p>¥：<span>200元/次</span></p>
+					<p>¥：<span>400元/次</span></p>
 				</div>
 				<em>督脉正阳理疗能明显提高人体代谢能力，激发人体自愈功能，增强人体免疫能力。</em>
 			</div>
@@ -33,7 +33,7 @@
 				<img src="images/zyc-font.png" width="101" class="tit-font" />
 				<h4 style="height: 10px;"></h4>
 				<div class="price-box">
-					<p>¥：<span>60元/次</span></p>
+					<p>¥：<span>80元/次</span></p>
 				</div>
 				<em>正阳仓理疗能改善微循环，促进血液循环和新陈代谢，温阳补气，提高免疫，袪寒除湿，排毒养颜</em>
 			</div>
