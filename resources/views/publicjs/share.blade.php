@@ -77,7 +77,7 @@
             timeout:TIMEOUT,
             method:'POST',
             data:{
-                service_type:5,
+                service_type:6,
                 un:mobile
             },
             success:function(data){
