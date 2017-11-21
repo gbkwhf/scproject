@@ -45,10 +45,10 @@
 				我的订单
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<!--<li onclick="location.href='invitation.php'">
+			<li onclick="location.href='invitation.php'">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
-			</li>-->
+			</li>
 			<li onclick="location.href='withdrawals_record.php?identity=0'">
 				提现记录
 				<img src="images/right-arrow.png" width="8"/>
