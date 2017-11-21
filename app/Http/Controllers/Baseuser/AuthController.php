@@ -1070,7 +1070,7 @@ class AuthController extends Controller
             \DB::beginTransaction(); //开启事务
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
-           if(empty($openId)){ //如果系统内未找到该openId，表示用户自己主动注册，,因此该openId其实就是用户本身的
+           if(empty($is_exist)){ //如果系统内未找到该openId，表示用户自己主动注册,因此该openId其实就是用户本身的
                $insert1 = \DB::table('ys_member')->insertGetId([
 
                    'mobile' => $request->un,
@@ -1105,7 +1105,7 @@ class AuthController extends Controller
                    'mobile' => $request->un,
                    'password' => md5(md5('123456789')),
                    'created_at' => date('Y-m-d H:i:s'),
-                   'name' => "游客",
+                   'name' => "游客".substr(time(),0,5),
                    'sex' =>0,
                    'invite_id' => $invite_id,
                ]);
