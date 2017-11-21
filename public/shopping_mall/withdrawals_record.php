@@ -64,6 +64,8 @@
 						if(data.result.length==0){
 							$('.wrapper').html('<p>暂无记录哦！</p>');
 							$('.wrapper p').css({'line-height':winH+'px','text-align': 'center'});
+							//禁止下拉刷新
+							mui('#refreshContainer').pullRefresh().endPulldownToRefresh(true);
 						}else{
 							var html='';
 							for(var i=0;i<data.result.length;i++){
@@ -112,6 +114,8 @@
 						if(data.result.length==0){
 							$('.wrapper').html('<p>暂无记录哦！</p>');
 							$('.wrapper p').css({'line-height':winH+'px','text-align': 'center'});
+							//禁止下拉刷新
+							mui('#refreshContainer').pullRefresh().endPulldownToRefresh(true);
 						}else{
 							var html='';
 							for(var i=0;i<data.result.length;i++){

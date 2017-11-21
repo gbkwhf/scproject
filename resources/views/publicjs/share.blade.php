@@ -77,7 +77,7 @@
             timeout:TIMEOUT,
             method:'POST',
             data:{
-                service_type:5,
+                service_type:6,
                 un:mobile
             },
             success:function(data){
@@ -102,8 +102,7 @@
             verify = $('#verify').val();
             inpmobile = $('#inpmobile').val();
             $.ajax({
-                url:commonsUrl+'api/gxsc/bind/user/openId'+versioninfos,
-                timeout:TIMEOUT,
+                url:commonsUrl+'api/gxsc/invite/user/register'+versioninfos,
                 method:'POST',
                 data:{
                     'pin':verify,

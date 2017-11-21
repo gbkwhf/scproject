@@ -32,9 +32,9 @@ html,body{
 }
 .inviter .invi_date{
 	float: right;
-	padding-right: 15px;
+	padding-right: 0px;
 	font-size: 15px;
-	color: #333;
+	color: #676767;
 	line-height: 1.5em;
 	padding-top: 18px;
 }
