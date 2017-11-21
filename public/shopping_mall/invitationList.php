@@ -32,7 +32,7 @@
 	<script src="js/config.js"></script>
 	<script type="text/javascript">
 		var winH = $(window).height();
-		$('.wrapper').height(winH);thumbnail_image_url
+		$('.wrapper').height(winH);
 		$(function() {
 			$.ajax({ //获取邀请伙伴信息
 				type: "post",
