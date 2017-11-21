@@ -102,8 +102,7 @@
             verify = $('#verify').val();
             inpmobile = $('#inpmobile').val();
             $.ajax({
-                url:commonsUrl+'api/gxsc/bind/user/openId'+versioninfos,
-                timeout:TIMEOUT,
+                url:commonsUrl+'api/gxsc/invite/user/register'+versioninfos,
                 method:'POST',
                 data:{
                     'pin':verify,
