@@ -53,7 +53,7 @@ class SupplierManageController  extends Controller
  	
  	
 
- 	$data=$par->paginate(10);
+ 	$data=$par->orderBy('ys_base_order.pay_time','desc')->paginate(10);
  	$pay_arr=[
  		1=>'微信支付',
  		2=>'线下支付',
@@ -160,15 +160,32 @@ class SupplierManageController  extends Controller
  	
  	
  	
- 	$data=$par->get();
+ 	$data=$par->orderBy('ys_base_order.pay_time','desc')->get();
+ 	$count_goods=[];
  	foreach ($data as $val){
+ 		
+ 		
+ 		
+ 		//商品总数统计
+ 		$total_goods=\App\OrderGoodsModel::where('sub_id',$val->order_id)
+ 		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
+ 		->selectRaw("ys_goods.name,sum(ys_order_goods.num) as goods_num")
+ 		->groupBy('name')
+ 		->get();
+ 		foreach ($total_goods as $v){
+ 			if(empty($count_goods["$v->name"])){
+ 				$count_goods[strval("$v->name")]=(int)$v->goods_num;
+ 			}else{
+ 				$count_goods[strval("$v->name")]+=(int)$v->goods_num;
+ 			}
+ 		}
  		$goods_name=\App\OrderGoodsModel::where('sub_id',$val->order_id)
  		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
  		->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
  		->get();
  		$val->goods_name=$goods_name[0]->goods_name;
  	}
- 
+
  	$arr_data=$data->toArray();
  	if (empty($arr_data)){
  		return back();
@@ -206,6 +223,14 @@ class SupplierManageController  extends Controller
  			$new[$k] = iconv('utf-8', 'gbk', $v);
  		}
  		fputcsv($fp, $new);
+ 	}
+ 	
+ 	$null=array('','','','','','','','');
+ 	//统计信息
+ 	fputcsv($fp,$null);
+ 	fputcsv($fp,$null);
+ 	foreach ($count_goods as $c_k=>$c_goods){
+ 		fputcsv($fp, array(iconv('utf-8', 'gbk', $c_k.'('.$c_goods.'件)')));
  	}
  }
  
