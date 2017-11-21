@@ -27,7 +27,7 @@ class SendToUserSMSController  extends  Controller{
 
         $validator = $this->setRules([
             'un' => 'required|regex:/^1[34578][0-9]{9}$/',
-            'service_type' => 'required|integer|in:1,3,4,5，6', //1注册   2邮箱找回密码  3手机重置密码    4.短信登陆（免密登陆）  5绑定openId  6邀请注册
+            'service_type' => 'required|integer|in:1,3,4,5,6', //1注册   2邮箱找回密码  3手机重置密码    4.短信登陆（免密登陆）  5绑定openId  6邀请注册
         ])
             ->_validate($request->all());
         if (!$validator) return $this->setStatusCode(9999)->respondWithError($this->message);

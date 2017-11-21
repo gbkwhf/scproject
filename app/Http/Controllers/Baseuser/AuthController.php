@@ -1070,37 +1070,69 @@ class AuthController extends Controller
             \DB::beginTransaction(); //开启事务
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
-            $insert1 = \DB::table('ys_member')->insertGetId([
+           if(empty($is_exist)){ //如果系统内未找到该openId，表示用户自己主动注册,因此该openId其实就是用户本身的
+               $insert1 = \DB::table('ys_member')->insertGetId([
 
-                'mobile' => $request->un,
-                'password' => md5(md5('123456789')),
-                'created_at' => date('Y-m-d H:i:s'),
-                'name' => $weixin_info['name'],
-                'image' => $weixin_info['image_name'],
-                'sex' =>$weixin_info['sex'],
-                'invite_id' => $invite_id,
-            ]);
+                   'mobile' => $request->un,
+                   'password' => md5(md5('123456789')),
+                   'created_at' => date('Y-m-d H:i:s'),
+                   'name' => $weixin_info['name'],
+                   'image' => $weixin_info['image_name'],
+                   'sex' =>$weixin_info['sex'],
+                   'invite_id' => $invite_id,
+               ]);
+
+               $insert2 = \DB::table('ys_session_info')->insert([
+
+                   'user_id'=>$insert1,
+                   'client_type'=>1, //安卓
+                   'session'=>'',
+                   'mid'=>$insert1,
+                   'push_service_type'=>2,
+                   'mec_ip' => $serverArr['mec_ip'],
+                   'mec_port' => $serverArr['mec_port'],
+                   'lps_ip' => $serverArr['lps_ip'],
+                   'lps_port' => $serverArr['lps_port'],
+                   'last_get_session_date' => Carbon::now(),
+                   'session_hash' => '',
+                   'openId'=>$openId,
+               ]);
+
+
+           }else{ //如果系统内已经有该openId，则表示是员工替用户注册的,因此该openId其实是员工的
+               $insert1 = \DB::table('ys_member')->insertGetId([
+
+                   'mobile' => $request->un,
+                   'password' => md5(md5('123456789')),
+                   'created_at' => date('Y-m-d H:i:s'),
+                   'name' => "游客".substr(time(),0,5),
+                   'sex' =>0,
+                   'invite_id' => $invite_id,
+               ]);
+
+               $insert2 = \DB::table('ys_session_info')->insert([
+
+                   'user_id'=>$insert1,
+                   'client_type'=>1, //安卓
+                   'session'=>'',
+                   'mid'=>$insert1,
+                   'push_service_type'=>2,
+                   'mec_ip' => $serverArr['mec_ip'],
+                   'mec_port' => $serverArr['mec_port'],
+                   'lps_ip' => $serverArr['lps_ip'],
+                   'lps_port' => $serverArr['lps_port'],
+                   'last_get_session_date' => Carbon::now(),
+                   'session_hash' => '',
+                   'openId'=>'',
+               ]);
+
+           }
 
             $update1 =  UserPincodeHistoryModel::where('id',$max->id)->update([
                 'is_succ' => '1',
                 'pin_accmulation_time' =>\DB::Raw('now()')
             ]);
 
-            $insert2 = \DB::table('ys_session_info')->insert([
-
-                'user_id'=>$insert1,
-                'client_type'=>1, //安卓
-                'session'=>'',
-                'mid'=>$insert1,
-                'push_service_type'=>2,
-                'mec_ip' => $serverArr['mec_ip'],
-                'mec_port' => $serverArr['mec_port'],
-                'lps_ip' => $serverArr['lps_ip'],
-                'lps_port' => $serverArr['lps_port'],
-                'last_get_session_date' => Carbon::now(),
-                'session_hash' => '',
-                'openId'=>$openId,
-            ]);
 
             if ($insert1 && $update1 && $insert2) {
                 DB::commit();
