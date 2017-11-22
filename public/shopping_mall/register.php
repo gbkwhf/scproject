@@ -65,7 +65,6 @@
         }
         //获取验证码
         function getCodeajax(){
-            $('.getCode').attr('onclick','');
             layer.load(2);
             $.ajax({
                 url:commonsUrl+'api/gxsc/auth/send/user/sms'+versioninfos,
@@ -78,6 +77,7 @@
                 success:function(data){
                     layer.closeAll();
                     if(data.code==1){
+                        $('.getCode').attr('onclick','');
                         downtime();
                     }else{
                         layer.msg(data.msg);
