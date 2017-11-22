@@ -990,8 +990,7 @@ class AuthController extends Controller
 
 //        $url = "http://wx.qlogo.cn/mmopen/INk4JvWfe8UG9jaylKafuIdVAibcM6rVj9qVLlkXCnoPsJZZe3Ys8oNXbGgWBuMjEvlOYs6icJjqSQG5r0wSNNbw/0";
         $return_content = $this->http_get_data($url);
-        $size = filesize($return_content);
-        if($size != 0){ //如果文件大小为空，则不生成图片
+        if(!empty($return_content)){ //如果文件大小为空，则不生成图片
             //上传图片
             $new_entension='jpg';
             $new_name=time().rand(100,999).'.'.$new_entension;
