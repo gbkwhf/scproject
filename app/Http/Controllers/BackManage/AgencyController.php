@@ -226,7 +226,7 @@ class AgencyController  extends Controller
  	$head = array('会员名','注册手机','金额','提现时间','经销商');
  	foreach ($head as $i => $v) {
  		// CSV的Excel支持GBK编码，一定要转换，否则乱码
- 		$head[$i] = iconv('utf-8', 'gbk', $v);
+ 		$head[$i] = iconv('utf-8', 'gbk',$v);
  	}
  	// 将数据通过fputcsv写到文件句柄
  	fputcsv($fp, $head);
@@ -237,7 +237,7 @@ class AgencyController  extends Controller
  			// 				if($k=='user_name'){
  			// 					$v=preg_replace("/[^\x{4e00}-\x{9fa5}a-zA-Z0-9]/iu",'',$v);
  			// 				}
- 			$new[$k] = iconv('utf-8', 'gbk', $v); 			
+ 			$new[$k] = iconv('utf-8', 'gbk', strval($v)."\t"); 			
  		}
  		fputcsv($fp, $new);
  	}
