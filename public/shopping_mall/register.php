@@ -88,6 +88,7 @@
         }
         //绑定
         function reg(){
+            layer.load(2);
             verify = $('#verify').val();
             inpmobile = $('#inpmobile').val();
             if(!verify||!inpmobile){
