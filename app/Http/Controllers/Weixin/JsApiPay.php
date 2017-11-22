@@ -167,6 +167,8 @@ class JsApiPay  extends Controller
 		//取出openid
 		$data = json_decode($res,true);
 
+        \Log::info("this openId is ".var_export($data,true));
+
 		$this->data = $data;
 		$openid = $data['openid'];
 		return $openid;
