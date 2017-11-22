@@ -1,5 +1,5 @@
 <?php
-	Route::get('/', ['as' => 'home','middleware' => 'auth', function () {
+	Route::get('/', ['as' => 'admin','middleware' => 'auth', function () {
 		return redirect('admin');
 	}]);
 
@@ -51,7 +51,9 @@
 		Route::Post('agencysave', 'AgencyController@agencySave');
 		Route::get('agencyadd', 'AgencyController@agencyAdd');
 		Route::Post('agencycreate', 'AgencyController@agencyCreate');
-		Route::get('agencydelete/{id}', 'AgencyController@agencyDelete');		
+		Route::get('agencydelete/{id}', 'AgencyController@agencyDelete');	
+		Route::get('manage/membercashlist', 'AgencyController@MemberCashList');
+		Route::post('manage/membercashexcel', 'AgencyController@MemberCashExcel');
 		//商品
         Route::get('goodslist', 'GoodsController@Goodslist');//商品列表
         Route::get('goods/goodsadd', 'GoodsController@Goodsadd');//添加商品
@@ -64,7 +66,7 @@
         Route::post('manage/getorderexcel', 'OrderController@getOrderExcel');//导出订单列表
         Route::get('manage/orderdetial/{id}', 'OrderController@OrderDetial');//订单详情
         Route::get('manage/sendmemberbalance', 'MemberController@SendMemberBalance');//后台给用户返现
-        Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现
+        Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现        
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
 			//供应商功能			
@@ -82,6 +84,8 @@
 			Route::get('agency/setemployee', 'AgencyManageController@setEmployee');
 			Route::post('agency/setemployeesave', 'AgencyManageController@setEmployeeSave');
 			Route::get('agency/deleteemployee/{id}', 'AgencyManageController@DeleteEmployee');	
+			Route::get('agency/membercashlist', 'AgencyManageController@MemberCashList');
+			Route::post('agency/membercashexcel', 'AgencyManageController@MemberCashExcel');			
 		});
 
 

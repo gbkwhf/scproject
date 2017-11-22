@@ -108,8 +108,11 @@
   					}
 					$('.shopping-cart span').html(numberShop);
   					
+  				}else if(data.code==1011){
+  					layer.msg('身份已失效，请重新绑定');
+  					setTimeout(function(){location.href='register.php';},1000);
   				}else{
-  					layer.msg(data.msg);
+  					layer.msg(data.msg);  					
   				}
   			}
   		});
@@ -128,6 +131,9 @@
 					$('.user-info p').html(data.result.name);
   					$('.balance p').html(data.result.balance);
   					$('.cashback p').html(data.result.yesterday_return_money);
+  				}else if(data.code==1011){
+  					layer.msg('身份已失效，请重新绑定');
+  					setTimeout(function(){location.href='register.php';},1000);
   				}else{
   					layer.msg(data.msg)
   				}

@@ -43,7 +43,6 @@
 				},
 				success: function(data) {
 					console.log(data)
-					console.log('ddddddddddd');
 					if(data.code == 1) { //请求成功
 						var con = data.result;
 						if(con.length != 0) {
@@ -56,6 +55,9 @@
 								var name = con[k].name; //用户名
 								var sex = con[k].sex; //用户性别
 								var thumbnail_image_url = con[k].thumbnail_image_url; //用户头像
+                                if(thumbnail_image_url==''){
+                                    thumbnail_image_url='images/head-portrait.png'
+                                }
 								var user_id = con[k].user_id; //用户id
 								var created_at = con[k].created_at;//注册时间
 								console.log(user_id);

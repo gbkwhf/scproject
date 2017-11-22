@@ -160,8 +160,22 @@ class OrderController extends Controller
 		
 		$data=$par->groupby('ys_base_order.id')->orderBy('pay_time','desc')->get();
 
-
-		foreach ($data as $val){
+		$count_goods=[];
+		foreach ($data as &$val){
+			//商品总数统计
+			$total_goods=\App\SubOrderModel::where('base_id',$val->order_id)
+			->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+			->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
+			->selectRaw("ys_goods.name,sum(ys_order_goods.num) as goods_num")
+			->groupBy('name')
+			->get();			
+			foreach ($total_goods as $v){	
+				if(empty($count_goods["$v->name"])){
+					$count_goods[strval("$v->name")]=(int)$v->goods_num;
+				}else{
+					$count_goods[strval("$v->name")]+=(int)$v->goods_num;
+				}							
+			}
 			//商品名，供应商，订单来源
 			$goods_name=\App\SubOrderModel::where('base_id',$val->order_id)
 			->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
@@ -185,7 +199,6 @@ class OrderController extends Controller
 				$val->employee_id=$agency_name->name;
 			}
 		}
-
 			$arr_data=$data->toArray();
 			if (empty($arr_data)){					 		
 	 				return back();			
@@ -211,15 +224,23 @@ class OrderController extends Controller
 			// 将数据通过fputcsv写到文件句柄
 			fputcsv($fp, $head);
 			foreach ($new_arr as $key => $val) {
-				//var_dump($val);
 				foreach($val as $k=>$v){
 					// 				if($k=='user_name'){
 					// 					$v=preg_replace("/[^\x{4e00}-\x{9fa5}a-zA-Z0-9]/iu",'',$v);
 					// 				}
-					$new[$k] = iconv('utf-8', 'gbk', $v);
+					$new[$k] = iconv('utf-8', 'gbk', strval($v)."\t");
 				}
 				fputcsv($fp, $new);
-			}			
+			}	
+
+			$null=array('','','','','','','','');
+			//统计信息
+			fputcsv($fp,$null);
+			fputcsv($fp,$null);
+			foreach ($count_goods as $c_k=>$c_goods){
+				fputcsv($fp, array(iconv('utf-8', 'gbk', $c_k.'('.$c_goods.'件)')));
+			}
+			
 	}
 	
 	
