@@ -976,14 +976,18 @@ class AuthController extends Controller
 
         if(!empty($data)){
 
-            if(isset($data->headimgurl)){
+            if(isset($data->headimgurl) && isset($data->nickname) && isset($data->sex)){
                 $image_name = $this->setBaseInfo($data->headimgurl);
+                $nickname = $data->$nickname;
+                $sex = $data->sex;
             }else{
                 $image_name = "";
+                $nickname = "";
+                $sex = 0;
             }
             $result['image_name'] = $image_name;
-            $result['name'] = $data->nickname;
-            $result['sex'] = $data->sex;
+            $result['name'] = $nickname;
+            $result['sex'] = $sex;
 
         }else{
 
