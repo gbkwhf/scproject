@@ -49,7 +49,14 @@
 			                          <option @if(isset($_GET['agency'])) @if($_GET['agency'] == $agency->id) selected="selected" @endif @endif value="{{$agency->id}}">{{$agency->name}}</option>
 			                          @endforeach
 	                            </select>
-                              </div>                               
+                              </div>   
+                             <div class="col-lg-2">
+	                            <select name="state"  class="form-control pull-right"  style="width: 135px">
+	                                <option value=-1>状态</option>
+	                                <option @if(isset($_GET['state'])) @if($_GET['state'] == 0) selected="selected" @endif @endif  value=0>申请中</option>
+	                                <option @if(isset($_GET['state'])) @if($_GET['state'] == 1) selected="selected" @endif @endif  value=1>已完成</option>
+	                            </select>
+                              </div>                                                           
                               <div class="col-lg-2">
 									<input placeholder="手机号" class="form-control  " style="float:left;width:161px" name="mobile" value="{{ $_GET['mobile'] or ''}}" type="text">                                                            
                               </div>                                                            
@@ -58,7 +65,7 @@
                                   <input type="text" placeholder="会员名" class="form-control  " style="float:left;width:141px" name="name" value="{{ $_GET['name'] or ''}}">
                                   <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>                                  
                               </div>
-                              <div style="position:absolute;right:-10px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
+                              <div style="position:absolute;right:-120px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
                               
                           </div>
                       </form>
@@ -72,6 +79,7 @@
                   <th>注册手机</th>
                   <th>金额</th>
                   <th>提现时间</th>
+                  <th>状态</th>
                   <th>经销商</th>
                 </tr>                
                 @foreach ($data as $member)    				
@@ -80,6 +88,7 @@
 	                  <td>{{ $member->mobile }}</td>
 	                  <td>{{ $member->amount }}</td>	                  
 	                  <td>{{ $member->created_at }}</td>
+	                  <td>{{ $member->state }}</td>
 	                  <td>{{ $member->agency_id }}</td>		
 	                </tr>                
 				@endforeach               

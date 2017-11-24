@@ -151,11 +151,10 @@ class AgencyManageController  extends Controller
  	$agency_id=\Session::get('role_userid');
  	//时间，用户名，经销商
  	$bills=\App\OperateBillsModel::where('ys_operate_bills.type',1)
- 	->where('ys_operate_bills.state',1)
  	->where('ys_employee.agency_id',$agency_id)
  	->leftjoin('ys_member','ys_member.user_id','=','ys_operate_bills.user_id')
  	->leftjoin('ys_employee','ys_employee.user_id','=','ys_operate_bills.employee_id')
- 	->selectRaw('ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.employee_id');
+ 	->selectRaw('ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.state,ys_operate_bills.employee_id');
  	$search=[];
  	if ($request->start != ''){
  		$bills->where('ys_operate_bills.created_at','>=',$request->start.' 00:00:00');
@@ -173,10 +172,18 @@ class AgencyManageController  extends Controller
  		$bills->where('ys_member.name','like','%'.$request->name.'%');
  		$search['name']=$request->name;
  	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$bills->where('ys_operate_bills.state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	} 	
  	$data = $bills->orderBy('ys_operate_bills.created_at','desc')->paginate(10);
  
- 
+ 	$state_arr=[
+	 	0=>'申请中',
+	 	1=>'已完成',
+ 	];
  	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state]; 			
  		$employee=\App\MemberModel::where('user_id',$val->employee_id)->first();
  		$val->employee_id=$employee->name;
  			
@@ -193,11 +200,10 @@ class AgencyManageController  extends Controller
  	$agency_id=\Session::get('role_userid');
  	//时间，用户名，经销商
  	$bills=\App\OperateBillsModel::where('ys_operate_bills.type',1)
- 	->where('ys_operate_bills.state',1)
  	->where('ys_employee.agency_id',$agency_id)
  	->leftjoin('ys_member','ys_member.user_id','=','ys_operate_bills.user_id')
  	->leftjoin('ys_employee','ys_employee.user_id','=','ys_operate_bills.employee_id')
- 	->selectRaw('ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.employee_id');
+ 	->selectRaw('ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.state,ys_operate_bills.employee_id');
  	$search=[];
  	if ($request->start != ''){
  		$bills->where('ys_operate_bills.created_at','>=',$request->start.' 00:00:00');
@@ -215,10 +221,18 @@ class AgencyManageController  extends Controller
  		$bills->where('ys_member.name','like','%'.$request->name.'%');
  		$search['name']=$request->name;
  	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$bills->where('ys_operate_bills.state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	} 	
  	$data = $bills->orderBy('ys_operate_bills.created_at','desc')->get();
  
- 
+ 	$state_arr=[
+	 	0=>'申请中',
+	 	1=>'已完成',
+ 	];
  	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state]; 			
  		$employee=\App\MemberModel::where('user_id',$val->employee_id)->first();
  		$val->employee_id=$employee->name;
  	}
@@ -240,7 +254,7 @@ class AgencyManageController  extends Controller
  	$fp = fopen('php://output', 'a');
  
  	// 输出Excel列名信息
- 	$head = array('会员名','注册手机','金额','提现时间','经销商');
+ 	$head = array('会员名','注册手机','金额','提现时间','状态','经销商');
  	foreach ($head as $i => $v) {
  		// CSV的Excel支持GBK编码，一定要转换，否则乱码
  		$head[$i] = iconv('utf-8', 'gbk', $v);
