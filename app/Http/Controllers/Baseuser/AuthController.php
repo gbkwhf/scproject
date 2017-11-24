@@ -975,8 +975,12 @@ class AuthController extends Controller
         \Log::info("this params openId is ".$openId);
 
         if(!empty($data)){
-            $image_name = $this->setBaseInfo($data->headimgurl);
 
+            if(isset($data->headimgurl)){
+                $image_name = $this->setBaseInfo($data->headimgurl);
+            }else{
+                $image_name = "";
+            }
             $result['image_name'] = $image_name;
             $result['name'] = $data->nickname;
             $result['sex'] = $data->sex;
