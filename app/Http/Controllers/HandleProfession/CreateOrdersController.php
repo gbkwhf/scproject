@@ -153,7 +153,9 @@ class CreateOrdersController extends Controller{
                     'receive_mobile'=>$request->mobile, //收货人手机号码
                     'receive_name'=>$request->name,//收货人姓名
                     'rebate_num'=>$copies, //支持返现的份数
-                    'all_profit'=>$return_all_profit //该笔订单的所有商品总利润
+                    'all_profit'=>$return_all_profit, //该笔订单的所有商品总利润
+                    'user_remark'=>$request->user_remark
+                    
               ];
 
              //2.子订单 （主订单号 子订单号  子订单总金额 供应商id）
@@ -392,7 +394,8 @@ class CreateOrdersController extends Controller{
             'receive_name'=>$request->name,//收货人姓名
             'require_amount'=>$require_amount,//需要的总金额
             'rebate_num'=>$copies, //支持返现的份数
-            'all_profit'=>$return_all_profit //该笔订单的所有商品总利润
+            'all_profit'=>$return_all_profit, //该笔订单的所有商品总利润
+            'user_remark'=>$request->user_remark            
         ];
 
         //2.子订单 （主订单号 子订单号  子订单总金额 供应商id）

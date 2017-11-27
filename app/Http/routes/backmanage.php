@@ -44,6 +44,10 @@
 		Route::get('supplieradd', 'SupplierController@supplierAdd');
 		Route::Post('suppliercreate', 'SupplierController@supplierCreate');
 		Route::get('supplierdelete/{id}', 'SupplierController@supplierDelete');
+		Route::get('manage/suppliercashlist', 'SupplierController@SupplierCashList');
+		Route::post('manage/suppliercashexcel', 'SupplierController@SupplierCashExcel');
+		Route::get('manage/suppliercashedit/{id}', 'SupplierController@SupplierCashEdit');
+		Route::post('manage/suppliercashsave', 'SupplierController@SupplierCashSave');
 		
 		//经销商
 		Route::get('agencylist', 'AgencyController@agencyList');
@@ -75,6 +79,9 @@
 			Route::get('supplier/orderdetial/{id}', 'SupplierManageController@orderDetial');//订单发货
 			Route::post('supplier/ordersend', 'SupplierManageController@orderSend');//订单发货
 			Route::post('supplier/getorderexcel', 'SupplierManageController@getOrderExcel');//导出订单列表
+			Route::get('supplier/supplierbillslist', 'SupplierManageController@billsList');//提现记录
+			Route::get('supplier/suppliercashadd', 'SupplierManageController@supplierCashAdd');//申请提现
+			Route::post('supplier/suppliercash', 'SupplierManageController@supplierCash');//提交
 		});
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:2']], function () {
 			//经销商功能

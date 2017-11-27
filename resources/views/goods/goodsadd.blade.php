@@ -66,6 +66,12 @@
                             <input type="text"  name="cost_price"  placeholder="Enter ..." class="form-control" value="{{ $data->cost_price or '' }}">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >供应商结算价</label>
+                        <div class="col-sm-10">
+                            <input type="text"  name="supplier_price"  placeholder="Enter ..." class="form-control" value="{{ $data->supplier_price or '' }}">
+                        </div>
+                    </div>                    
 	                <div class="form-group">
 	                  <label class="col-sm-2 control-label" for="inputEmail3">所属供应商</label>
 	                  <div class="col-sm-10">	                  

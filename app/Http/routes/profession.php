@@ -121,6 +121,8 @@ Route::group([
              Route::post('get/balance/by/mobile','GetUserOwnInfoController@getBalance');
 
 
+             //供应商加盟
+             Route::post('joinsupplier','JoinManageController@joinSupplier');
 
 
 
