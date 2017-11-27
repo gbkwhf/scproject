@@ -730,6 +730,7 @@ class CreateOrdersController extends Controller{
         $data['express_name'] = is_null($base_info->express_name) ? "" : $base_info->express_name; //快递名称
         $data['express_num'] = is_null($base_info->express_num) ? "" : $base_info->express_num; //快递单号
         $data['goods_list'] = $goods_info; //子订单包含的商品列表
+        $data['user_remark'] =$base_info->user_remark; //用户备注
 
         return  $this->respond($this->format($data));
 
@@ -813,6 +814,7 @@ class CreateOrdersController extends Controller{
         $data['pay_type'] = $base_info[0]->pay_type; //付款方式：1微信，2线下支付
         $data['state'] = $base_info[0]->state; //订单状态：0未付款，1，已付款
         $data['info'] = $tmp_info;
+        $data['user_remark'] =$base_info[0]->user_remark; //用户备注
 
         return  $this->respond($this->format($data));
     }
