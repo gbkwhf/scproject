@@ -58,7 +58,7 @@ class AgencyManageController  extends Controller
  			$search['mobile']=$request->mobile;
  		}
  	
- 		$data=$par->paginate(10);
+ 		$data=$par->orderBy('ys_base_order.pay_time','desc')->paginate(10);
  		
 
  		foreach ($data as $val){

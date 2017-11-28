@@ -815,10 +815,56 @@ class CreateOrdersController extends Controller{
         $data['state'] = $base_info[0]->state; //订单状态：0未付款，1，已付款
         $data['info'] = $tmp_info;
         $data['user_remark'] =$base_info[0]->user_remark; //用户备注
+        //用户信息
+        $u_info=\App\MemberModel::where('user_id',$base_info[0]->user_id)->first();
+        $data['user_name'] =$u_info->name; //用户名
+        $data['user_mobile'] =$u_info->mobile; //用户名
 
         return  $this->respond($this->format($data));        
     }
 
+    //员工给顾客下单记录
+    public function getEmployeeOrder(Request $request)
+    {
+    
+    
+    	$validator = $this->setRules([
+    			'ss' => 'required|string',
+    			//'page' => '' 
+    			])
+    			->_validate($request->all());
+    	if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+    
+    	$user_id = $this->getUserIdBySession($request->ss); //获取用户id
+    	$start = $request->page <= 1 ? 0 : (($request->page) - 1) * 10;//分页
+    	
+ 		$orders=\App\BaseOrderModel::where('employee_id',$user_id)
+ 				->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+ 				->orderBy('ys_base_order.pay_time','desc')
+ 				->select('ys_base_order.id','ys_base_order.pay_time','ys_base_order.amount','ys_member.name','ys_member.mobile')
+ 				->skip($start)->take(10)
+ 				->get();
 
+ 		
+ 		$http = getenv('HTTP_REQUEST_URL'); 		
+ 		foreach ($orders as &$val){
+ 			
+ 			$val['goods_total']=0; 			
+ 			$val['goods_list']=\App\SubOrderModel::where('base_id',$val->id)
+	 			->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+	 			->leftjoin('ys_goods','ys_goods.id','=','ys_order_goods.goods_id')
+	 			->leftjoin('ys_goods_image','ys_goods_image.goods_id','=','ys_goods.id')
+	 			->selectRaw("ys_order_goods.num,ys_goods.name,concat('$http',ys_goods_image.image) as image")
+	 			->groupBy('ys_order_goods.goods_id')
+	 			->orderBy('ys_goods_image.id','asc')
+	 			->get()->toArray();
+ 			foreach ($val['goods_list'] as $v){ 				
+ 				$val['goods_total']+=$v['num'];
+ 			}
+ 			
+ 		}
+
+    	return  $this->respond($this->format($orders));
+    }
 
 }

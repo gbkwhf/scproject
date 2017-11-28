@@ -107,6 +107,13 @@ class SupplierManageController  extends Controller
                 'express_num'=>trim($request->express_num),
         );
          $res = \App\SubOrderModel::where('id',$request->id)->update($params);
+         
+         $info = \App\SubOrderModel::where('id',$request->id)
+         		->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+         		->sum('');
+         
+         //更新余额
+         //$res = \App\SupplierModel::where('id',$request->id)->increment('',$info->price);
          if($res === false){
              return back() -> with('errors','数据更新失败');
          }else{
