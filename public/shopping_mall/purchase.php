@@ -43,6 +43,9 @@
 			    </div>
 			</div>	
 		</div>
+		<div class="note">
+			<p>备注：</p><input type="text" placeholder="给商家留言（选填）" />
+		</div>
 		<div class="explain-buy">
 			<h4>利润共享返利条件</h4>
 			<ul class="xz-list">
@@ -86,6 +89,7 @@
 <script>
 	
 	var winW = $(window).width();
+	$('.note input').width(winW-(winW*0.04)*2-36);
 	
 	//获取收货地址
 	if($_GET['address_id']){
@@ -244,6 +248,7 @@
 			var	mobile = $('.user-phone p').html();
 			var	name = $('.user-name p').html();
 			var	phone = $('.xxsk input').val();
+			var user_remark = $('.note input').val();
 			if(testTel(phone)){
 				$.ajax({
 					type:'post',
@@ -254,7 +259,8 @@
 						'mobile':mobile,
 						'name':name,
 						'ss':getCookie('openid'),
-						'phone':phone
+						'phone':phone,
+						'user_remark':user_remark
 					},
 					success:function(data){
 						if(data.code==1){
@@ -286,6 +292,7 @@
 		var address = $('.address span').html();
 		var	mobile = $('.user-phone p').html();
 		var	name = $('.user-name p').html();
+		var user_remark = $('.note input').val();
 		if($('header').find('.address').length>0){
 			//创建订单
 			$.ajax({
@@ -296,7 +303,8 @@
 					'flag':2,
 					'mobile':mobile,
 					'name':name,
-					'ss':getCookie('openid')
+					'ss':getCookie('openid'),
+					'user_remark':user_remark
 				},
 				success:function(data){
 					if(data.code==1){

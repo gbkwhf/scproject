@@ -32,8 +32,10 @@
 			</ul>
 			<i class="half-line" style="float: right;"></i>
 			<div class="summary">
-				<p>实付款：<em>¥388.00</em></p>
-				<span>共11件</span>
+				<div class="order-info">
+					<span>共11件</span>
+					<p>实付款：<em>¥3888.00</em></p>
+				</div>
 			</div>
 			<div class="state-box">
 				<p>已完成</p>
@@ -86,8 +88,10 @@
 						html+='	</ul>'+
 						'	<i class="half-line" style="float: right;"></i>'+
 						'	<div class="summary">'+
-						'		<p>实付款：<em>¥'+data.result[i].price+'</em></p>'+
-						'		<span>共'+data.result[i].number+'件</span>'+
+						'		<div class="order-info">'+
+						'			<span>共'+data.result[i].number+'件</span>'+
+						'			<p>实付款：<em>¥'+data.result[i].price+'</em></p>'+
+						'		</div>'+
 						'	</div>'+
 						'	<div class="state-box">'+
 						'		<p>已完成</p>'+
@@ -95,7 +99,7 @@
 						'</div>';
 					}
 					$('.wrapper').html(html);
-					$('.commodity-info').width(winW-155);
+					$('.commodity-info').width(winW-143);
 				}
 				
 				

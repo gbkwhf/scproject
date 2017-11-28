@@ -140,6 +140,25 @@ html,body{
 	vertical-align: text-bottom;
 	margin: 3px 0px 0px 3px;
 }
+.note{
+	padding: 15px 4%;
+	background: #fff;
+	overflow: hidden;
+	margin-bottom: 5px;
+	color: #757575;
+}
+.note p{
+	font-size: 12px;
+	float: left;
+}
+.note input{
+	display: block;
+	float: left;
+	border: none;
+	font-size: 12px;
+	padding-top: 2px;
+	color: #757575;
+}
 .explain-buy{
 	padding: 25px 4%;
 	background: #fff;
