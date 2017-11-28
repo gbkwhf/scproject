@@ -20,7 +20,7 @@ class JoinManageController  extends Controller
 		
 
 		$validator = $this->setRules([
-            'ss' => 'required|string', 
+            //'ss' => 'required|string', 
             'name' => 'required|string',
 			'mobile' => 'required|string',
 			'company_name' => 'string',
