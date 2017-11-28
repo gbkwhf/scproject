@@ -70,7 +70,8 @@
         Route::post('manage/getorderexcel', 'OrderController@getOrderExcel');//导出订单列表
         Route::get('manage/orderdetial/{id}', 'OrderController@OrderDetial');//订单详情
         Route::get('manage/sendmemberbalance', 'MemberController@SendMemberBalance');//后台给用户返现
-        Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现        
+        Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现
+        Route::post('manage/manageremarksave', 'OrderController@manageRemarkSave');//客服订单备注
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
 			//供应商功能			

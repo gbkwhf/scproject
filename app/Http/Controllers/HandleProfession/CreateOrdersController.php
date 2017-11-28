@@ -816,7 +816,7 @@ class CreateOrdersController extends Controller{
         $data['info'] = $tmp_info;
         $data['user_remark'] =$base_info[0]->user_remark; //用户备注
 
-        return  $this->respond($this->format($data));
+        return  $this->respond($this->format($data));        
     }
 
 

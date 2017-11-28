@@ -64,9 +64,9 @@ class JoinManageController  extends Controller
 	        'goods_descript'=>$request->goods_descript,
 	        'state'=>0,
 	        'created_at'=>date('Y-m-d H:i:s',time()),
-	        'img_1'=>$file_name[0],
-	        'img_2'=>$file_name[1],
-	        'img_3'=>$file_name[2],
+	        'img_1'=>empty($file_name[0])?'':$file_name[0],
+	        'img_2'=>empty($file_name[1])?'':$file_name[1],
+	        'img_3'=>empty($file_name[2])?'':$file_name[2],
         ];        
         $res=\App\JoinSupplierModel::insert($params);
         if($res){
