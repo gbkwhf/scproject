@@ -19,7 +19,7 @@ class GoodsController extends Controller
     	$search=[];
         $data = GoodsModel::orderBy('sort','asc')->orderBy('created_at','desc')
         		->join('ys_supplier','ys_goods.supplier_id','=','ys_supplier.id')
-        		->selectRaw('ys_goods.id,ys_goods.name,num,sort,price,cost_price,sales,ys_goods.state,ys_supplier.name as supplier_id');        
+        		->selectRaw('ys_goods.id,ys_goods.name,num,sort,price,cost_price,supplier_price,sales,ys_goods.state,ys_supplier.name as supplier_id');        
         if($request->name !=''){
             $data->where('ys_goods.name','like','%'.$request->name.'%');
             $search['name']=$request->name;
@@ -58,6 +58,7 @@ class GoodsController extends Controller
             'num'=> 'required|regex:/^[0-9]{1,9}$/',
             'price'=> 'required',
             'cost_price'=> 'required',
+            'supplier_price'=> 'required',
             'content'=> 'required',
             'sort'=> 'required',
             'supplier_id'=> 'required',
@@ -70,6 +71,7 @@ class GoodsController extends Controller
             'num.regex' =>'商品库存必须大于0，且长度小于9位',
             'price.required' =>'销售价不能为空',
             'cost_price.required' =>'成本价不能为空',
+            'supplier_price.required' =>'供应商结算价不能为空',
             'content.required' =>'商品详情不能为空',
             'sort.required' =>'商品排序不能为空',
             'supplier_id.required' =>'供应商不能为空',
@@ -83,6 +85,7 @@ class GoodsController extends Controller
                 'num'=>$request->num,
                 'price'=>$request->price,
             	'cost_price'=>$request->cost_price,
+            	'supplier_price'=>$request->supplier_price,
                 'content'=>$request->content,
                 'sort'=>$request->sort,
                 'state'=>$request->state>0?$request->state:0,
@@ -137,6 +140,7 @@ class GoodsController extends Controller
             'num'=> 'required|regex:/^[0-9]{1,9}$/',
             'price'=> 'required',
             'cost_price'=> 'required',
+            'supplier_price'=> 'required',
             'content'=> 'required',
             'sort'=> 'required',
             'supplier_id'=> 'required',
@@ -149,6 +153,7 @@ class GoodsController extends Controller
             'num.regex' =>'商品库存必须大于0，且长度小于9位',
             'price.required' =>'销售价不能为空',
             'cost_price.required' =>'成本价不能为空',
+            'supplier_price.required' =>'供应商结算价不能为空',
             'content.required' =>'商品详情不能为空',
             'sort.required' =>'商品排序不能为空',
             'supplier_id.required' =>'供应商不能为空',
@@ -164,6 +169,7 @@ class GoodsController extends Controller
                 'sort'=>$input['sort'],
                 'price'=>$input['price'],
                 'cost_price'=>$input['cost_price'],
+            	'supplier_price'=>$input['supplier_price'],
                 'state'=>$request->state>0?$request->state:0,
             	'supplier_id'=>$input['supplier_id'],
             	'class_id'=>$input['class_id'],

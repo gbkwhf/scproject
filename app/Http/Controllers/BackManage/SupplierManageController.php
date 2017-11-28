@@ -107,6 +107,13 @@ class SupplierManageController  extends Controller
                 'express_num'=>trim($request->express_num),
         );
          $res = \App\SubOrderModel::where('id',$request->id)->update($params);
+         
+         $info = \App\SubOrderModel::where('id',$request->id)
+         		->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+         		->sum('');
+         
+         //更新余额
+         //$res = \App\SupplierModel::where('id',$request->id)->increment('',$info->price);
          if($res === false){
              return back() -> with('errors','数据更新失败');
          }else{
@@ -234,5 +241,92 @@ class SupplierManageController  extends Controller
  	}
  }
  
+ //体现记录
+ public  function billsList (Request $request){
+ 
+ 	$supplier_id=\Session::get('role_userid');
 
+ 	$par=\App\SupplierBillsModel::where('supplier_id',$supplier_id);
+ 		
+
+  	$search=array();
+ 	if ($request->start != ''){
+ 		$par->where('created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$par->where('created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$par->where('state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	}
+ 	
+ 	$data=$par->orderBy('created_at','desc')->paginate(10);
+ 	
+ 	$state_arr=[
+  		0=>'申请中',
+  		1=>'已完成',
+ 	];
+ 	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state];
+ 	}
+ 	
+
+ 	
+ 	return view('supplierbillslist',['data'=>$data,'search'=>$search]);
+ }
+ 
+ 
+ public  function supplierCashAdd (Request $request){
+ 
+ 	$supplier_id=\Session::get('role_userid'); 	
+ 	$data=\App\SupplierModel::where('id',$supplier_id)->first();
+ 	
+ 	$res=0;
+ 	$res = \App\SupplierBillsModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
+	$data->apply_amount=$res;
+	$data->balance=$data->balance-$res;
+ 	return view('supplierbilladd',['data'=>$data]);
+ }
+ 
+ public  function supplierCash (Request $request){
+ 	$supplier_id=\Session::get('role_userid');
+ 	$data=\App\SupplierModel::where('id',$supplier_id)->first();
+ 	
+	if($request->amount<=0){
+		return back() -> with('errors','提现金额必须大于0');		
+	}
+
+ 		$res=0;
+ 		$res = \App\SupplierBillsModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
+ 		$data->apply_amount=$res;
+ 		$data->balance=$data->balance-$res;
+ 		
+ 		if($request->amount>$data->balance){//申请金额大于可提现金额
+ 			return back() -> with('errors','大于可提现金额'.$data->balance); 			
+ 		}
+ 		 		
+ 		$params=array(
+ 				'supplier_id'=>$supplier_id,
+ 				'amount'=>trim($request->amount),
+ 				'created_at'=>date('Y-m-d H:i:m',time()),
+ 				'state'=>0,
+ 				'pay_describe'=>'供应商申请提现',
+ 				'bank_name'=>$data->bank_name,
+ 				'bank_address'=>$data->bank_address,
+ 				'bank_num'=>$data->bank_num,
+ 				'real_name'=>$data->real_name,
+ 		);
+ 		$res = \App\SupplierBillsModel::insert($params);
+ 		
+ 		if($res === false){
+ 			return back() -> with('errors','数据更新失败');
+ 		}else{
+ 			Session()->flash('message','保存成功');
+ 			return redirect('supplier/supplierbillslist');
+ 		}
+ 
+ }
 }

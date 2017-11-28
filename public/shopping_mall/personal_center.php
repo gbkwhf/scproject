@@ -49,12 +49,16 @@
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
+			<li class="substitute" onclick="location.href='destoon_finance_cash.php?identity=1'">
+				替用户提现
+				<img src="images/right-arrow.png" width="8"/>
+			</li>
 			<li onclick="location.href='withdrawals_record.php?identity=0'">
 				提现记录
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li class="substitute" onclick="location.href='destoon_finance_cash.php?identity=1'">
-				替用户提现
+			<li class="substitute" onclick="location.href='sale_record.php'">
+				销售记录
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
 		</ul>

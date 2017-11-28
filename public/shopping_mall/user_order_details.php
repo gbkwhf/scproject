@@ -105,6 +105,11 @@
 				}else if(data.result.pay_type==2){
 					html+='	<li>支付方式：<span>线下支付</span></li>';
 				}
+				if(data.result.user_remark==''||data.result.user_remark==null){
+					
+				}else{
+					html+='	<li>备注：<span>'+data.result.user_remark+'</span></li>';
+				}
 				html+='</ul>';
 				$('.order-details').html(html);
 				

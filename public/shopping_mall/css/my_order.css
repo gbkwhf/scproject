@@ -16,7 +16,9 @@ html,body{
 	font-weight: 400;
 	color: #999;
 	line-height: 1.5em;
-	padding: 10px 15px 8px;
+	padding: 10px 8px 8px;
+	margin: 0;
+	font-size: 14px;
 }
 .half-line{
 	width: 50%;
@@ -25,18 +27,19 @@ html,body{
 	display: block;
 }
 .commodity-list{
-	padding: 15px 15px 0px;
+	padding: 15px 8px 0px;
 }
 .commodity-list li{
 	overflow: hidden;
 	padding-bottom: 10px;	
 }
 .commodity-list li .picbox {
-    border: 1px solid #e6e6e6;
+    /*border: 1px solid #e6e6e6;*/
     margin-right: 8px;
     width: 89px;
     height: 89px;
-    background: #f6f2f3;
+    /*background: #f6f2f3;*/
+    background: transparent;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -91,26 +94,48 @@ html,body{
 	overflow: hidden;
 	width: 100%;
 }
-.summary span{
-	display: block;
+.summary .user-info{
+	float: left;
+}
+.summary .order-info{
 	float: right;
+}
+.user-info{
+	overflow: hidden;
+	font-size: 12px;
+	color: #666;
+	line-height: 46px;
+	padding-left: 10px;
+}
+.user-info p{
+	float: left;
+	padding-right: 5px;
+	margin: 0;
+	font-size: 12px;
+	color: #666;
+}
+.user-info span{
+	float: left;
+}
+.order-info span{
+	display: inline-block;
 	font-size: 12px;
 	color: #666;
 	line-height: 44px;
 	padding-top: 1px;
-	padding-right: 10px;
 }
-.summary p{
-	float: right;
+.order-info p{
+	display: inline-block;
 	font-size: 12px;
 	color: #666;
 	line-height: 44px;
-	padding-right: 10px;
+	padding-right: 8px;
+	margin: 0;
 }
-.summary p em{
+.order-info p em{
 	font-style: normal;
 	color: #d57232;
-	font-size: 16px;
+	font-size: 15px;
 }
 .state-box{
 	background: #ccc;
@@ -131,5 +156,6 @@ html,body{
 	text-align: center;
 	padding-top: 30px;
 	padding-bottom: 8px;
+	margin: 0px;
 }
 

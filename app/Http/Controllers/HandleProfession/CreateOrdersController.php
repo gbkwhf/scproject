@@ -153,7 +153,9 @@ class CreateOrdersController extends Controller{
                     'receive_mobile'=>$request->mobile, //收货人手机号码
                     'receive_name'=>$request->name,//收货人姓名
                     'rebate_num'=>$copies, //支持返现的份数
-                    'all_profit'=>$return_all_profit //该笔订单的所有商品总利润
+                    'all_profit'=>$return_all_profit, //该笔订单的所有商品总利润
+                    'user_remark'=>$request->user_remark
+                    
               ];
 
              //2.子订单 （主订单号 子订单号  子订单总金额 供应商id）
@@ -392,7 +394,8 @@ class CreateOrdersController extends Controller{
             'receive_name'=>$request->name,//收货人姓名
             'require_amount'=>$require_amount,//需要的总金额
             'rebate_num'=>$copies, //支持返现的份数
-            'all_profit'=>$return_all_profit //该笔订单的所有商品总利润
+            'all_profit'=>$return_all_profit, //该笔订单的所有商品总利润
+            'user_remark'=>$request->user_remark            
         ];
 
         //2.子订单 （主订单号 子订单号  子订单总金额 供应商id）
@@ -691,7 +694,7 @@ class CreateOrdersController extends Controller{
         $base_info = \DB::table('ys_sub_order as a')->leftjoin('ys_base_order as b','a.base_id','=','b.id')
                       ->select('a.id as sub_order_id','a.base_id','a.price','a.express_name','a.express_num',
                           'b.user_id','b.create_time','b.pay_type','b.employee_id','b.state','b.receive_address',
-                          'b.require_amount','b.receive_mobile','b.receive_name')
+                          'b.require_amount','b.receive_mobile','b.receive_name','b.user_remark')
                       ->where('a.id',$request->sub_order_id)->first();
 
         if(empty($base_info)){ //提示：该订单不存在
@@ -727,6 +730,7 @@ class CreateOrdersController extends Controller{
         $data['express_name'] = is_null($base_info->express_name) ? "" : $base_info->express_name; //快递名称
         $data['express_num'] = is_null($base_info->express_num) ? "" : $base_info->express_num; //快递单号
         $data['goods_list'] = $goods_info; //子订单包含的商品列表
+        $data['user_remark'] =$base_info->user_remark; //用户备注
 
         return  $this->respond($this->format($data));
 
@@ -750,7 +754,7 @@ class CreateOrdersController extends Controller{
         $base_info = \DB::table('ys_base_order as a')->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
             ->select('b.id as sub_order_id','b.base_id','b.express_name','b.express_num',
                 'a.user_id','a.create_time','a.pay_type','a.employee_id','a.state','a.receive_address',
-                'a.require_amount','a.receive_mobile','a.receive_name')
+                'a.require_amount','a.receive_mobile','a.receive_name','a.user_remark')
             ->where('a.id',$request->base_order_id)->get();
 
         if(empty($base_info)){ //提示：该订单不存在
@@ -810,10 +814,57 @@ class CreateOrdersController extends Controller{
         $data['pay_type'] = $base_info[0]->pay_type; //付款方式：1微信，2线下支付
         $data['state'] = $base_info[0]->state; //订单状态：0未付款，1，已付款
         $data['info'] = $tmp_info;
+        $data['user_remark'] =$base_info[0]->user_remark; //用户备注
+        //用户信息
+        $u_info=\App\MemberModel::where('user_id',$base_info[0]->user_id)->first();
+        $data['user_name'] =$u_info->name; //用户名
+        $data['user_mobile'] =$u_info->mobile; //用户名
 
-        return  $this->respond($this->format($data));
+        return  $this->respond($this->format($data));        
     }
 
+    //员工给顾客下单记录
+    public function getEmployeeOrder(Request $request)
+    {
+    
+    
+    	$validator = $this->setRules([
+    			'ss' => 'required|string',
+    			//'page' => '' 
+    			])
+    			->_validate($request->all());
+    	if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+    
+    	$user_id = $this->getUserIdBySession($request->ss); //获取用户id
+    	$start = $request->page <= 1 ? 0 : (($request->page) - 1) * 10;//分页
+    	
+ 		$orders=\App\BaseOrderModel::where('employee_id',$user_id)
+ 				->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+ 				->orderBy('ys_base_order.pay_time','desc')
+ 				->select('ys_base_order.id','ys_base_order.pay_time','ys_base_order.amount','ys_member.name','ys_member.mobile')
+ 				->skip($start)->take(10)
+ 				->get();
 
+ 		
+ 		$http = getenv('HTTP_REQUEST_URL'); 		
+ 		foreach ($orders as &$val){
+ 			
+ 			$val['goods_total']=0; 			
+ 			$val['goods_list']=\App\SubOrderModel::where('base_id',$val->id)
+	 			->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+	 			->leftjoin('ys_goods','ys_goods.id','=','ys_order_goods.goods_id')
+	 			->leftjoin('ys_goods_image','ys_goods_image.goods_id','=','ys_goods.id')
+	 			->selectRaw("ys_order_goods.num,ys_goods.name,concat('$http',ys_goods_image.image) as image")
+	 			->groupBy('ys_order_goods.goods_id')
+	 			->orderBy('ys_goods_image.id','asc')
+	 			->get()->toArray();
+ 			foreach ($val['goods_list'] as $v){ 				
+ 				$val['goods_total']+=$v['num'];
+ 			}
+ 			
+ 		}
+
+    	return  $this->respond($this->format($orders));
+    }
 
 }

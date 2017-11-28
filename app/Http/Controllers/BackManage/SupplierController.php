@@ -122,9 +122,165 @@ class SupplierController  extends Controller
  	return redirect('supplierlist');
  }
  
-//  function test(Request $request){
+//申请提现列表
+ public  function SupplierCashList (Request $request){
+ 
+
+
+ 	$par=\App\SupplierBillsModel::leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_bills.supplier_id')
+ 					->select('ys_supplier_bills.id','ys_supplier.name','ys_supplier_bills.amount','ys_supplier_bills.created_at','ys_supplier_bills.state','ys_supplier_bills.finish_at');
+ 		
+
+  	$search=array();
+ 	if ($request->start != ''){
+ 		$par->where('created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$par->where('created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$par->where('ys_supplier_bills.state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	}
+ 	if ($request->supplier != ''){
+ 		$par->where('supplier_id',$request->supplier);
+ 		$search['supplier']=$request->supplier;
+ 	} 	
+ 	
+ 	$data=$par->orderBy('created_at','desc')->paginate(10);
+ 	
+ 	$state_arr=[
+  		0=>'申请中',
+  		1=>'已完成',
+ 	];
+ 	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state];
+ 	}
+ 	
+ 	$suppliers=\App\SupplierModel::where('state',1)->get(); 	
+ 	return view('managesupplierbillslist',['data'=>$data,'search'=>$search,'suppliers'=>$suppliers]);
+ }
+ 
+ 
+ 
+ 
+ 
+
+ public function SupplierCashExcel(Request $request){
+ 
+  	$par=\App\SupplierBillsModel::leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_bills.supplier_id')
+ 					->select('ys_supplier.name','ys_supplier_bills.amount','ys_supplier_bills.bank_name','ys_supplier_bills.bank_address','ys_supplier_bills.bank_num','ys_supplier_bills.real_name','ys_supplier_bills.state','ys_supplier_bills.created_at','ys_supplier_bills.finish_at');
+ 		
+  	 
+  	$search=array();
+ 	if ($request->start != ''){
+ 		$par->where('created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$par->where('created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$par->where('ys_supplier_bills.state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	}
+ 	if ($request->supplier != ''){
+ 		$par->where('supplier_id',$request->supplier);
+ 		$search['supplier']=$request->supplier;
+ 	} 	
+ 	
+ 	$data=$par->orderBy('created_at','desc')->get();
+ 	
+ 	$state_arr=[
+  		0=>'申请中',
+  		1=>'已完成',
+ 	];
+ 	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state];
+ 	}
+ 	
+ 
+ 	$arr_data=$data->toArray();
+ 	if (empty($arr_data)){
+ 		return back();
+ 	}
+ 	//，
+ 	foreach($arr_data as $k=>$v){
+ 		$new_arr[$k]=$v;
+ 	}
+ 	// 输出Excel文件头，可把user.csv换成你要的文件名
+ 	header('Content-Type: application/vnd.ms-excel');
+ 	header('Content-Disposition: attachment;filename="供应商提现流水.csv"');
+ 	header('Cache-Control: max-age=0');
+ 
+ 	// 打开PHP文件句柄，php://output 表示直接输出到浏览器
+ 	$fp = fopen('php://output', 'a');
+ 
+ 	// 输出Excel列名信息
+ 	$head = array('供应商名','金额','开户行名','开户行地址','卡号','持卡人','状态','申请时间','完成时间');
+ 	foreach ($head as $i => $v) {
+ 		// CSV的Excel支持GBK编码，一定要转换，否则乱码
+ 		$head[$i] = iconv('utf-8', 'gbk',$v);
+ 	}
+ 	// 将数据通过fputcsv写到文件句柄
+ 	fputcsv($fp, $head);
+ 	$total_amount=0;
+ 	foreach ($new_arr as $key => $val) {
+ 		$total_amount+=$val['amount'];
+ 		foreach($val as $k=>$v){
+ 			// 				if($k=='user_name'){
+ 			// 					$v=preg_replace("/[^\x{4e00}-\x{9fa5}a-zA-Z0-9]/iu",'',$v);
+ 			// 				}
+ 			$new[$k] = iconv('utf-8', 'gbk', strval($v)."\t");
+ 		}
+ 		fputcsv($fp, $new);
+ 	}
+ 	$null=array('','','','','','','','');
+ 	//统计信息
+ 	fputcsv($fp,$null);
+ 	fputcsv($fp,$null);
+ 	fputcsv($fp, array(iconv('utf-8', 'gbk', '总金额'.$total_amount)));
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ public  function supplierCashEdit (Request $request){
+ 
  	
  	
-//  	dd(1);
-//  }
+ 	$data=\App\SupplierBillsModel::where('ys_supplier_bills.id',$request->id)
+ 		->leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_bills.supplier_id')
+	 	->select('ys_supplier.name','ys_supplier_bills.*')
+ 		->first();
+ 	return view('supplierbilledit',['data'=>$data]);
+ }
+ 
+ public  function supplierCashSave (Request $request){
+ 	$data=\App\SupplierBillsModel::where('id',$request->id)->first();
+
+ 	if($request->state==1){
+ 		$res=\App\SupplierBillsModel::where('id',$request->id)->update(['state'=>1,'finish_at'=>date('Y-m-d H:i:s')]);
+ 		$res=\App\SupplierModel::where('id',$data->supplier_id)->decrement('balance',$data->amount);
+ 		if($res === false){
+ 			return back() -> with('errors','数据更新失败');
+ 		}else{
+ 			Session()->flash('message','保存成功');
+ 			return redirect('manage/suppliercashlist');
+ 		} 		
+ 	}else{
+ 		return back() -> with('errors','请选择状态');
+ 	}
+ 
+ }
+ 
 }

@@ -106,14 +106,22 @@ class OrderController extends Controller
 		->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
 		->get();
 	
-	
+		$data['order_id']=$request->id;
 		$data['goods_name']=$goods_name[0]->goods_name;
 		$data['receive_address']=$data['receive_name'].'，'.$data['receive_mobile'].'，'.$data['receive_address'];
 	
 	
 		return view('orderdetial',['data'=>$data]);
 	}
-	
+	public  function manageRemarkSave (Request $request){
+				
+		$res=\App\BaseOrderModel::where('id',$request->id)->update(['manage_remark'=>$request->manage_remark]);
+		if($res === false){
+			return back() -> with('errors','数据更新失败');
+		}else{
+			return redirect('manage/orderdetial/'.$request->id);
+		}		
+	}	
 	public function getOrderExcel(Request $request){
 		
 		$par=\App\BaseOrderModel::where('ys_base_order.state',1)
