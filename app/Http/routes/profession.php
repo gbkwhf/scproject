@@ -101,6 +101,9 @@ Route::group([
            Route::post('get/commodity/sub_order/info','CreateOrdersController@getSubOrderInfo');
            //6.获取订单详情（根据主订单id获取详情----拆分前）
            Route::post('get/commodity/base_order/info','CreateOrdersController@getBaseOrderInfo');
+           
+           //员工给顾客下单记录
+           Route::post('get/employeeorder','CreateOrdersController@getEmployeeOrder');
 
 
         /**
@@ -121,12 +124,14 @@ Route::group([
              Route::post('get/balance/by/mobile','GetUserOwnInfoController@getBalance');
 
 
-             //供应商加盟
-             Route::post('joinsupplier','JoinManageController@joinSupplier');
+
 
 
 
 });
+
+//申请加盟
+Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinSupplier');
 
 
 /**

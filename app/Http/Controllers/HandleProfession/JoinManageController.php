@@ -30,18 +30,8 @@ class JoinManageController  extends Controller
             ->_validate($request->all());
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
-        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+        //$user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
-                
-        $params=[
-			'user_id'=>$user_id,
-			'name'=>$request->name,
-			'mobile'=>$request->mobile,
-			'company_name'=>$request->company_name,
-			'goods_name'=>$request->goods_name,
-			'goods_descript'=>$request->goods_descript,
-        ];
-        
         
         $file_name=array();
         $count = count($_FILES);
@@ -56,7 +46,7 @@ class JoinManageController  extends Controller
         	}
         }
         $params=[
-	        'user_id'=>$user_id,
+	        //'user_id'=>$user_id,
 	        'name'=>$request->name,
 	        'mobile'=>$request->mobile,
 	        'company_name'=>$request->company_name,
