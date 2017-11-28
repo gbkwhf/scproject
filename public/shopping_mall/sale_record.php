@@ -85,6 +85,7 @@
 					console.log(data);
 					html='';
 					if(data.result.length==0 && page == 1){
+						layer.closeAll();
 						$('.wrapper').html('<p>暂无记录哦！</p>');
 						$('.wrapper p').css({'line-height':winH+'px','text-align': 'center','color':'#8f8f94'});
 					}else{
