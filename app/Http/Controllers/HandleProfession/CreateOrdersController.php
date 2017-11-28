@@ -694,7 +694,7 @@ class CreateOrdersController extends Controller{
         $base_info = \DB::table('ys_sub_order as a')->leftjoin('ys_base_order as b','a.base_id','=','b.id')
                       ->select('a.id as sub_order_id','a.base_id','a.price','a.express_name','a.express_num',
                           'b.user_id','b.create_time','b.pay_type','b.employee_id','b.state','b.receive_address',
-                          'b.require_amount','b.receive_mobile','b.receive_name')
+                          'b.require_amount','b.receive_mobile','b.receive_name','b.user_remark')
                       ->where('a.id',$request->sub_order_id)->first();
 
         if(empty($base_info)){ //提示：该订单不存在
@@ -754,7 +754,7 @@ class CreateOrdersController extends Controller{
         $base_info = \DB::table('ys_base_order as a')->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
             ->select('b.id as sub_order_id','b.base_id','b.express_name','b.express_num',
                 'a.user_id','a.create_time','a.pay_type','a.employee_id','a.state','a.receive_address',
-                'a.require_amount','a.receive_mobile','a.receive_name')
+                'a.require_amount','a.receive_mobile','a.receive_name','a.user_remark')
             ->where('a.id',$request->base_order_id)->get();
 
         if(empty($base_info)){ //提示：该订单不存在
