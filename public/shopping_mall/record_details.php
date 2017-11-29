@@ -184,13 +184,13 @@
 	<body>
 		<div class="wraper">
 			<div class="header">
-				<p class="receipt_address">收货地址</p>
+				<p class="receipt_address">收货信息</p>
 				<div class="user_name">
 					<em>张某某</em>
 					<i>18829783382</i>
 				</div>
 				<p class="address">陕西省.西安市.高新区.绿地蓝海<p>
-				<p class="remarks_info">备注信息</p>
+				<p class="remarks_info">备注信息：</p>
 			</div>
 			<div class="section">
 				<p class="good_detail">商品信息</p>
@@ -201,7 +201,7 @@
 							<img src="images/rices.png" />
 						</div>
 						<div class="info_box">	
-							<span >长城红酒长 长城红酒长长城红酒长长城红酒长长城红酒长长城红酒长长城红酒长长城红酒长长城红酒长长城红酒长</span>
+							<span >长城红酒长 </span>
 							<div class="name_price">
 								<em>￥388.00</em>
 								<i>x 1</i>
@@ -225,15 +225,15 @@
 			</div>
 			<div class="order_list">
 				<ol>
-					<li>
+					<li class="pay_mode">
 						<span>支付方式</span>
 						<em>线下支付</em>
 					</li>
-					<li>
+					<li class="order_num">
 						<span>订单编号</span>
 						<i>2152555966685</i>
 					</li>
-					<li style="border: none;">
+					<li style="border: none;" class="buy_time">
 						<span>购买时间</span>
 						<i>2017-11-27 10:00</i>
 					</li>
@@ -253,6 +253,9 @@
 		var phone=$(".user_name>i").html();
 		var mphone = phone.substr(0,3) + '*****' + phone.substr(8,11);
 		$('.user_name>i').html(mphone);
+		
+		var base_order_id=$_GET['base_order_id'];
+		
 		
 	</script>
 </html>
