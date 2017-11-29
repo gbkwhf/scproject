@@ -85,18 +85,28 @@
     			margin-bottom:10px;
     		}
     		.pic_box{
-    			width:90px;
-    			height:90px;
-    			padding: 20px 9px;
+    			width:89px;
+    			height:89px;
     			box-sizing: border-box;
-    			border:1px solid #E6E6E6 ;
+    			border:1px solid #e6e6e6 ;
     			margin-right:10px;
     			background:#f6f2f3 ;
     			float: left;
-    			
+			    display: -webkit-box;
+			    display: -ms-flexbox;
+			    display: -webkit-flex;
+			    display: flex;
+			    -webkit-display: -webkit-flex;
+			    display: flex;
+			    -webkit-align-items: center;
+			    align-items: center;
+			    -webkit-justify-content: center;
+			    justify-content: center;
     		}
     		.pic_box>img{
     			width: 100%;
+    			max-height: 89px;
+    			min-height: 65px;
     		}
     		.info_box{
     			padding:6px 0 ;
@@ -186,17 +196,17 @@
 			<div class="header">
 				<p class="receipt_address">收货信息</p>
 				<div class="user_name">
-					<em>张某某</em>
-					<i>18829783382</i>
+					<em></em>
+					<i></i>
 				</div>
-				<p class="address">陕西省.西安市.高新区.绿地蓝海<p>
+				<p class="address"><p>
 				<p class="remarks_info">备注信息：</p>
 			</div>
 			<div class="section">
 				<p class="good_detail">商品信息</p>
 				<em class="divider"></em>
 				<ul class="goods_list">
-					<li>
+					<!--<li>
 						<div class="pic_box">
 							<img src="images/rices.png" />
 						</div>
@@ -207,35 +217,24 @@
 								<i>x 1</i>
 							</div>
 						</div>
-					</li>
-					<li>
-						<div class="pic_box">
-							<img src="images/rices.png" />
-						</div>
-						<div class="info_box">	
-							<span >长城红酒  </span>
-							<div class="name_price">
-								<em>￥388.00</em>
-								<i>x 1</i>
-							</div>
-						</div>
-					</li>
+					</li>-->
 				</ul>
-				<p class="total">总金额：<span>￥388.00</span></p>
+				<em class="divider" style="float: right;"></em>
+				<p class="total">总金额：<span></span></p>
 			</div>
 			<div class="order_list">
 				<ol>
 					<li class="pay_mode">
 						<span>支付方式</span>
-						<em>线下支付</em>
+						<em></em>
 					</li>
 					<li class="order_num">
 						<span>订单编号</span>
-						<i>2152555966685</i>
+						<i></i>
 					</li>
 					<li style="border: none;" class="buy_time">
 						<span>购买时间</span>
-						<i>2017-11-27 10:00</i>
+						<i></i>
 					</li>
 				</ol>
 			</div>
@@ -247,15 +246,53 @@
 	<script src="js/common.js"></script>
 	<script src="js/config.js"></script>
 	<script type="text/javascript">
+		
 		var winW=$(window).width();
-		$(".info_box").width(winW-148);
-		//手机号中间用省略号代替
-		var phone=$(".user_name>i").html();
-		var mphone = phone.substr(0,3) + '*****' + phone.substr(8,11);
-		$('.user_name>i').html(mphone);
-		
-		var base_order_id=$_GET['base_order_id'];
-		
+
+		$.ajax({
+			type:"post",
+			url:commonsUrl + "api/gxsc/get/commodity/base_order/info" + versioninfos,
+			data:{'ss':getCookie('openid'),'base_order_id':$_GET['base_order_id']},
+			success:function(data){
+				if(data.code==1){
+					console.log(data);
+					$('.user_name em').html(data.result.name);
+					$('.user_name i').html(data.result.mobile.substr(0,3)+'*****'+data.result.mobile.substr(data.result.mobile.length-3,data.result.mobile.length));
+					$('.address').html(data.result.address);
+					$('.remarks_info').append(data.result.user_remark);
+					html='';
+					for(var i=0;i<data.result.info.length;i++){
+						for(var j=0;j<data.result.info[i].goods_list.length;j++){
+							html+='<li>'+
+							'	<div class="pic_box">'+
+							'		<img src="'+data.result.info[i].goods_list[j].image+'" />'+
+							'	</div>'+
+							'	<div class="info_box">	'+
+							'		<span >'+data.result.info[i].goods_list[j].goods_name+' </span>'+
+							'		<div class="name_price">'+
+							'			<em>¥'+data.result.info[i].goods_list[j].goods_price+'</em>'+
+							'			<i>x '+data.result.info[i].goods_list[j].num+'</i>'+
+							'		</div>'+
+							'	</div>'+
+							'</li>';
+						}
+					}
+					$('.goods_list').html(html);
+					$(".info_box").width(winW-148);
+					$('.order_num i').html(data.result.base_order_id);
+					$('.total span').html('¥'+data.result.price);
+					if(data.result.pay_type==1){
+						$('.pay_mode em').html('微信');						
+					}else{
+						$('.pay_mode em').html('线下支付');
+					}
+					$('.buy_time i').html(data.result.create_time);
+					
+				}else{
+					layer.msg(data.msg);
+				}
+			}
+		});
 		
 	</script>
 </html>

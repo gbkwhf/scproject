@@ -90,7 +90,7 @@
 						$('.wrapper p').css({'line-height':winH+'px','text-align': 'center','color':'#8f8f94'});
 					}else{
 						for(var i=0;i<data.result.length;i++){
-							html+='<div class="order-module" onclick="location.href=\'record_details.php?base_order_id='+data.result[i].id+'\'">'+
+							html+='<div class="order-module" base_order_id="'+data.result[i].id+'">'+
 							'	<h4>'+data.result[i].pay_time.substr(0,10)+'</h4>'+
 							'	<i class="half-line"></i>'+
 							'	<ul class="commodity-list">';
@@ -157,6 +157,10 @@
             }
         }        
     });
+    
+    mui('.wrapper').on('tap','.order-module',function(){
+    	location.href='record_details.php?base_order_id=' + $(this).attr('base_order_id')
+    })
 	
 </script>
 <style type="text/css">
