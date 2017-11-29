@@ -266,7 +266,7 @@
 						if(data.code==1){
 							console.log(data);
 							layer.msg('提交成功');
-							setTimeout(function(){layer.closeAll();},1000);						
+							setTimeout(function(){location.href='index.php'},1000);						
 						}else{
 							layer.msg(data.msg);
 							setTimeout(function(){layer.closeAll();},1000);

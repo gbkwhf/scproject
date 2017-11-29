@@ -68,9 +68,10 @@
 	
 	page=1;
     showajax(page);
-    layer.ready(function(){ layer.load(2); })
+    
     
     function showajax(page){
+    	layer.ready(function(){ layer.load(2); })
     	//员工为用户下单记录
 		$.ajax({
 			type:"post",
