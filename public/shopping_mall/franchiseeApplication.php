@@ -58,6 +58,7 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script type="text/javascript">
+//------------上传图片-------
 	$(function() {
 		var img = [];//创建一个空对象用来保存传入的图片
 		$("#inputs").change(function() {
@@ -76,6 +77,7 @@
 			}
 		}
 		$('.confirmApply').click(function() {
+			//获取input框输入的值
 			inputForName = $('.inputForName').val();
 			inputForNum = $('.inputForNum').val();
 			inputProductName = $('.inputProductName').val();
@@ -86,7 +88,7 @@
 			console.log(inputProductName + 'ddddd');
 			console.log(inputCompany + 'ddddd');
 			console.log(inputAttributes + 'ddddd');
-			if(inputForName == "" || inputForName == undefined) {
+			if(inputForName == "" || inputForName == undefined) {//对输入的值进行判断
 				layer.msg("姓名不能为空");
 			} else if(!testTel(inputForNum) || inputForNum == '' || inputForNum == undefined || inputForNum == null) {
 				layer.msg("请输入正确的手机号码");
@@ -109,7 +111,7 @@
 				formData.append("mobile", inputForNum);
 				formData.append("name", inputForName);
 				$.ajax({ //申请加盟
-					type: "post",
+					type: "post",//请求方式
 					dataType: 'json',
 					url: commonsUrl + 'api/gxsc/joinsupplier' + versioninfos,//请求接口
 					data: formData,//请求参数（这里将参数都保存在formData对象中）
