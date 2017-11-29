@@ -54,7 +54,8 @@
     		}
     		.section{
     			width:100%;
-    			padding:14px 12px 14px 0;
+    			/*padding:14px 12px 14px 0;*/
+    			padding:14px 0;
     			background: #fff;
     			box-sizing: border-box;
     			margin-top:10px;
@@ -76,8 +77,7 @@
     		}
     		.goods_list{
     			width:100%;
-    			padding-left: 14px;
-    			padding-top: 14px;
+    			padding: 14px 14px 0px;
     			box-sizing: border-box;
     		}
     		.goods_list>li{
@@ -147,7 +147,7 @@
     			font-size:12px ;
     			color: #666;
 				text-align: right;
-				padding: 10px 0px 0px 14px;
+				padding: 10px 14px 0px;
 				line-height: 1.5em;
     		}
     		.total>span{
@@ -278,7 +278,7 @@
 						}
 					}
 					$('.goods_list').html(html);
-					$(".info_box").width(winW-148);
+					$(".info_box").width(winW-149);
 					$('.order_num i').html(data.result.base_order_id);
 					$('.total span').html('¥'+data.result.price);
 					if(data.result.pay_type==1){
