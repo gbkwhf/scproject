@@ -45,41 +45,37 @@
 					</div>
 
 					<div class="uploadDIv">
-						<span>+</span><input type="file" name="file" multiple id="inputs" accept="image/*" class='fileTest' multiple="multiple"/>
+						<span>+</span><input type="file" name="file" multiple id="inputs" accept="image/*" class='fileTest' multiple="multiple" />
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="confirmApply">确定申请</div>
 	</body>
-
 </html>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script type="text/javascript">
-//	$(document).ready(function() {
-//	
-//	}
-</script>
-<script type="text/javascript">
 	$(function() {
-			$("#inputs").change(function() {
-				var fil = this.files;
-				for(var i = 0; i < fil.length; i++) {
-					reads(fil[i]);
-				}
-	 	    });
-		   function reads(fil) {
-				var reader = new FileReader();
-				reader.readAsDataURL(fil);
-				reader.onload = function() {
-					document.getElementById("uploadBox").innerHTML += "<div class='divImg' id='uploadImg'><img src='" + reader.result + "' class='imgBiMG'></div>";
-				}
+		var img = [];//创建一个空对象用来保存传入的图片
+		$("#inputs").change(function() {
+			var fil = this.files;
+			for(var i = 0; i < fil.length; i++) {
+				reads(fil[i]);
+				img.push($('#inputs')[i].files[0]);//将传入的图片push到空对象中
 			}
+			console.log(img);
+		});
+		function reads(fil) {
+			var reader = new FileReader();
+			reader.readAsDataURL(fil);
+			reader.onload = function() {
+				document.getElementById("uploadBox").innerHTML += "<div class='divImg' id='uploadImg'><img src='" + reader.result + "' class='imgBiMG'></div>";
+			}
+		}
 		$('.confirmApply').click(function() {
-			
 			inputForName = $('.inputForName').val();
 			inputForNum = $('.inputForNum').val();
 			inputProductName = $('.inputProductName').val();
@@ -97,34 +93,33 @@
 			} else if(inputProductName == "" || inputProductName == undefined) {
 				layer.msg("产品名称不能为空");
 			} else {
-				var formData = new FormData();
-				var arrhh= $('#inputs')[0].files; //问问那个哇哇这个为什么每次上传的就把前面的覆盖了就这么问
-				console.log(arrhh);
-				img1 = $('.fileTest')[0].files[0];
-//				img2 = $('.fileTest')[0].files[0];
-//				img3 = $('.fileTest')[0].files[0];
-				formData.append("img_1",img1);
-//				formData.append("img_2",img2);
-//				formData.append("img_3",img3);
-				formData.append("company_name",inputCompany);
-				formData.append("goods_descript",inputAttributes);
-				formData.append("goods_name",inputProductName);
-				formData.append("mobile",inputForNum);
-				formData.append("name",inputForName);
-				console.log(formData);
-				
-				$.ajax({//申请加盟
+				var formData = new FormData();//创建一个空的formData对象用来保存变量参数
+				//				var arrhh= $('#inputs')[0].files[0]; //
+				//				console.log(arrhh);
+				//				img1 = $('.fileTest')[0].files[0];
+				//				img2 = $('.fileTest')[0].files[0];
+				//				img3 = $('.fileTest')[0].files[0];
+				//              console.log(img[0]);
+				formData.append("img_1", img[0]);//以键值对的形式将这些值保存到formData对象中
+				formData.append("img_2", img[1]);
+				formData.append("img_3", img[2]);
+				formData.append("company_name", inputCompany);
+				formData.append("goods_descript", inputAttributes);
+				formData.append("goods_name", inputProductName);
+				formData.append("mobile", inputForNum);
+				formData.append("name", inputForName);
+				$.ajax({ //申请加盟
 					type: "post",
 					dataType: 'json',
-					url: commonsUrl + 'api/gxsc/joinsupplier' + versioninfos,
-					data: formData,
-					processData : false,
-					contentType : false,
+					url: commonsUrl + 'api/gxsc/joinsupplier' + versioninfos,//请求接口
+					data: formData,//请求参数（这里将参数都保存在formData对象中）
+					processData: false,//因为data值是FormData对象，不需要对数据做处理。
+					contentType: false,//默认为true,不设置Content-type请求头
 					success: function(data) {
 						console.log(data)
 						if(data.code == 1) { //请求成功
-//							layer.msg('上传成功');
-						}else{
+							//							layer.msg('上传成功');
+						} else {
 							layer.msg(data.msg);
 						}
 
