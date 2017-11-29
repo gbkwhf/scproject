@@ -45,8 +45,6 @@ html,body{
     width: 100%;
     padding: 15px 8px 3px 15px;
     box-sizing: border-box;
-    
-  
 }
 
 .right_content>ul>li>.picbox{
@@ -92,9 +90,8 @@ html,body{
     font-style: normal;
     color: #d57232;
     font-size: 12px;
-   
     display:block;  
-    text-align: right;
+    text-align: left;
     padding-top: 5px;
    
 }

@@ -46,15 +46,16 @@
     		.address{
     			font-size:14px ;
     			color:#333;
+    			margin-bottom: 8px;
     		}
     		.remarks_info{
-    			margin-top:13px;
+    			padding-top:5px;
     			font-size:14px ;
     			color:#333;
+    			border-top: 1px solid #e6e6e6;
     		}
     		.section{
     			width:100%;
-    			/*padding:14px 12px 14px 0;*/
     			padding:14px 0;
     			background: #fff;
     			box-sizing: border-box;
@@ -199,7 +200,7 @@
 					<em></em>
 					<i></i>
 				</div>
-				<p class="address"><p>
+				<p class="address"></p>
 				<p class="remarks_info">备注信息：</p>
 			</div>
 			<div class="section">
@@ -221,6 +222,18 @@
 				</ul>
 				<em class="divider" style="float: right;"></em>
 				<p class="total">总金额：<span></span></p>
+			</div>
+			<div class="order_list">
+				<ol>
+					<li class="customer_name">
+						<span>顾客姓名</span>
+						<i></i>
+					</li>
+					<li class="customer_phone">
+						<span>顾客手机号</span>
+						<i></i>
+					</li>
+				</ol>
 			</div>
 			<div class="order_list">
 				<ol>
@@ -246,7 +259,8 @@
 	<script src="js/common.js"></script>
 	<script src="js/config.js"></script>
 	<script type="text/javascript">
-		
+		setCookie('is_member','1');
+		setCookie("openid",'oMLi1w5pdjro95tKhH1PeVZZ3mhM');
 		var winW=$(window).width();
 
 		$.ajax({
@@ -281,6 +295,8 @@
 					$(".info_box").width(winW-149);
 					$('.order_num i').html(data.result.base_order_id);
 					$('.total span').html('¥'+data.result.price);
+					$('.customer_name i').html(data.result.user_name);
+					$('.customer_phone i').html(data.result.user_mobile);
 					if(data.result.pay_type==1){
 						$('.pay_mode em').html('微信');						
 					}else{

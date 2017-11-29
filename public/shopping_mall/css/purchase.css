@@ -141,7 +141,7 @@ html,body{
 	margin: 3px 0px 0px 3px;
 }
 .note{
-	padding: 15px 4%;
+	padding: 14px 4%;
 	background: #fff;
 	overflow: hidden;
 	margin-bottom: 5px;
@@ -156,8 +156,9 @@ html,body{
 	float: left;
 	border: none;
 	font-size: 12px;
-	padding-top: 2px;
+	/*padding-top: 2px;*/
 	color: #757575;
+	line-height: 18px;
 }
 .explain-buy{
 	padding: 25px 4%;
