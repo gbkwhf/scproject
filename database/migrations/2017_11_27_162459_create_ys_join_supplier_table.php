@@ -16,7 +16,7 @@ class CreateYsJoinSupplierTable extends Migration
             $table->increments('id');
             $table->bigInteger('user_id')->comment="用户id";         
             $table->dateTime('created_at')->comment="提交时间";
-            $table->tinyInteger('state')->comment="状态0申请中，1已完成";
+            $table->tinyInteger('state')->comment="状态0未处理，1已处理";
             $table->string('name',100)->comment="联系人";
             $table->string('mobile', 50)->comment="联系电话";
             $table->string('company_name',100)->nullable()->comment="公司名";

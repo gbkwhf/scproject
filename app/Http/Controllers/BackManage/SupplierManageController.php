@@ -60,14 +60,18 @@ class SupplierManageController  extends Controller
  		3=>'微信公众号',
  	];
  	foreach ($data as $val){
- 		$goods_name=\App\OrderGoodsModel::where('sub_id',$val->order_id)
+ 		$goods_name='';
+ 		$goods_list=\App\OrderGoodsModel::where('sub_id',$val->order_id)
  						->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
- 						->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
- 						->get(); 		
- 		$val->goods_name=str_limit($goods_name[0]->goods_name,10,'...');
+ 						->selectRaw("ys_goods.name,ys_goods.supplier_price,ys_order_goods.num") 						
+ 						->get(); 	
  		$val->pay_type=$pay_arr[$val->pay_type];
  		$val->state=empty($val->express_num)?'未发货':'已发货';
- 		
+ 		foreach ($goods_list as $v){
+ 		 		$val->supplier_amount+=$v->supplier_price*$v->num;
+ 		 		$goods_name.=$v->name.'('.$v->num.'),';
+ 		 } 		
+ 		$val->goods_name=str_limit(trim($goods_name,','),15,'...');
  	}
 	return view('supplierorderlist',['data'=>$data,'search'=>$search]);
  }
@@ -108,12 +112,24 @@ class SupplierManageController  extends Controller
         );
          $res = \App\SubOrderModel::where('id',$request->id)->update($params);
          
-         $info = \App\SubOrderModel::where('id',$request->id)
+         $info = \App\SubOrderModel::where('ys_sub_order.id',$request->id)
          		->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
-         		->sum('');
-         
-         //更新余额
-         //$res = \App\SupplierModel::where('id',$request->id)->increment('',$info->price);
+         		->leftjoin('ys_goods','ys_goods.id','=','ys_order_goods.goods_id')
+         		->select('ys_sub_order.supplier_id','ys_goods.supplier_price','ys_order_goods.num')         		
+         		->get();
+         $supplier_amount=0;
+		foreach ($info as $val){
+			$supplier_amount+=$val->supplier_price*$val->num;
+		}
+         $params=[
+        	'supplier_id'=>$info[0]->supplier_id,	
+        	'amount'=>+$supplier_amount,
+        	'created_at'=>date('Y-m-d H:i:s',time()),
+        	'pay_describe'=>'销售收入',
+        	'type'=>1
+         ];
+         $res=\App\SupplierBillsModel::insert($params);
+         $res = \App\SupplierModel::where('id',$info[0]->supplier_id)->increment('balance',$supplier_amount);          
          if($res === false){
              return back() -> with('errors','数据更新失败');
          }else{
@@ -135,7 +151,7 @@ class SupplierManageController  extends Controller
  	
  	$par=\App\SubOrderModel::where('supplier_id','=',$supplier_id)->where('ys_base_order.state','=',1)
  	->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
- 	->select('ys_sub_order.id as order_id','ys_sub_order.id as goods_name','pay_time','receive_name','receive_mobile','receive_address','express_name','express_num');
+ 	->select('ys_sub_order.id as order_id','ys_sub_order.id as goods_name','ys_sub_order.id as supplier_amount','pay_time','receive_name','receive_mobile','receive_address','express_name','express_num');
  	
  	//'订单号','商品名','付款时间','收货人','收货人手机','收货地址','快递名称','快递单号'
  	$search=array();
@@ -186,11 +202,19 @@ class SupplierManageController  extends Controller
  				$count_goods[strval("$v->name")]+=(int)$v->goods_num;
  			}
  		}
- 		$goods_name=\App\OrderGoodsModel::where('sub_id',$val->order_id)
+ 		$goods_name='';
+ 		$supplier_amount=0;
+ 		$goods_list=\App\OrderGoodsModel::where('sub_id',$val->order_id)
  		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
- 		->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
+ 		->selectRaw("ys_goods.name,ys_goods.supplier_price,ys_order_goods.num")
  		->get();
- 		$val->goods_name=$goods_name[0]->goods_name;
+ 		foreach ($goods_list as $g){
+ 			$supplier_amount+=$g->supplier_price*$g->num;
+ 			$goods_name.=$g->name.'('.$g->num.'),';
+ 		}
+ 		$val->goods_name=trim($goods_name,',');
+ 		$val->supplier_amount=$supplier_amount;
+
  	}
 
  	$arr_data=$data->toArray();
@@ -199,9 +223,6 @@ class SupplierManageController  extends Controller
  	}
  	
  	
- 	
-
-
  	foreach($arr_data as $k=>$v){
  		$new_arr[$k]=$v;
  	}
@@ -214,7 +235,7 @@ class SupplierManageController  extends Controller
  	$fp = fopen('php://output', 'a');
  
  	// 输出Excel列名信息
- 	$head = array('订单号','商品名','付款时间','收货人','收货人手机','收货地址','快递名称','快递单号');
+ 	$head = array('订单号','商品名','金额','付款时间','收货人','收货人手机','收货地址','快递名称','快递单号');
  	foreach ($head as $i => $v) {
  		// CSV的Excel支持GBK编码，一定要转换，否则乱码
  		$head[$i] = iconv('utf-8', 'gbk', $v);
@@ -246,7 +267,7 @@ class SupplierManageController  extends Controller
  
  	$supplier_id=\Session::get('role_userid');
 
- 	$par=\App\SupplierBillsModel::where('supplier_id',$supplier_id);
+ 	$par=\App\SupplierCashApplyModel::where('supplier_id',$supplier_id);
  		
 
   	$search=array();
@@ -285,7 +306,7 @@ class SupplierManageController  extends Controller
  	$data=\App\SupplierModel::where('id',$supplier_id)->first();
  	
  	$res=0;
- 	$res = \App\SupplierBillsModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
+ 	$res = \App\SupplierCashApplyModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
 	$data->apply_amount=$res;
 	$data->balance=$data->balance-$res;
  	return view('supplierbilladd',['data'=>$data]);
@@ -300,7 +321,7 @@ class SupplierManageController  extends Controller
 	}
 
  		$res=0;
- 		$res = \App\SupplierBillsModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
+ 		$res = \App\SupplierCashApplyModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
  		$data->apply_amount=$res;
  		$data->balance=$data->balance-$res;
  		
@@ -319,8 +340,8 @@ class SupplierManageController  extends Controller
  				'bank_num'=>$data->bank_num,
  				'real_name'=>$data->real_name,
  		);
- 		$res = \App\SupplierBillsModel::insert($params);
- 		
+ 		$res = \App\SupplierCashApplyModel::insert($params);
+
  		if($res === false){
  			return back() -> with('errors','数据更新失败');
  		}else{

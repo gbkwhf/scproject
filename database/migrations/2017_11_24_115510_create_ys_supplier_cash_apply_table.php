@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateYsSupplierBillsTable extends Migration
+class CreateYsSupplierCashApplyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateYsSupplierBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ys_supplier_bills', function (Blueprint $table) {
+        Schema::create('ys_supplier_cash_apply', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('supplier_id')->comment="供应商id";
             $table->decimal('amount',10,2)->comment="金额";            
@@ -34,6 +34,6 @@ class CreateYsSupplierBillsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ys_supplier_bills');
+        Schema::drop('ys_supplier_cash_apply');
     }
 }

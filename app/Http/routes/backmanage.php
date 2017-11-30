@@ -47,7 +47,13 @@
 		Route::get('manage/suppliercashlist', 'SupplierController@SupplierCashList');
 		Route::post('manage/suppliercashexcel', 'SupplierController@SupplierCashExcel');
 		Route::get('manage/suppliercashedit/{id}', 'SupplierController@SupplierCashEdit');
-		Route::post('manage/suppliercashsave', 'SupplierController@SupplierCashSave');
+		Route::post('manage/suppliercashsave', 'SupplierController@SupplierCashSave');				
+		Route::get('manage/joinsupplier', 'SupplierController@joinSupplierList');		
+		Route::get('manage/joinsupplierdetial/{id}', 'SupplierController@joinSupplierDetial');
+		Route::post('manage/joinsupplierexcel', 'SupplierController@joinSupplierExcel');
+		Route::post('manage/joinsuppliersave', 'SupplierController@joinSupplierSave');
+		
+		
 		
 		//经销商
 		Route::get('agencylist', 'AgencyController@agencyList');

@@ -127,8 +127,8 @@ class SupplierController  extends Controller
  
 
 
- 	$par=\App\SupplierBillsModel::leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_bills.supplier_id')
- 					->select('ys_supplier_bills.id','ys_supplier.name','ys_supplier_bills.amount','ys_supplier_bills.created_at','ys_supplier_bills.state','ys_supplier_bills.finish_at');
+ 	$par=\App\SupplierCashApplyModel::leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_cash_apply.supplier_id')
+ 					->select('ys_supplier_cash_apply.id','ys_supplier.name','ys_supplier_cash_apply.amount','ys_supplier_cash_apply.created_at','ys_supplier_cash_apply.state','ys_supplier_cash_apply.finish_at');
  		
 
   	$search=array();
@@ -141,7 +141,7 @@ class SupplierController  extends Controller
  		$search['end']=$request->end;
  	}
  	if (isset($request->state) && $request->state != -1){
- 		$par->where('ys_supplier_bills.state','=',$request->state);
+ 		$par->where('ys_supplier_cash_apply.state','=',$request->state);
  		$search['state']=$request->state;
  	}
  	if ($request->supplier != ''){
@@ -170,8 +170,8 @@ class SupplierController  extends Controller
 
  public function SupplierCashExcel(Request $request){
  
-  	$par=\App\SupplierBillsModel::leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_bills.supplier_id')
- 					->select('ys_supplier.name','ys_supplier_bills.amount','ys_supplier_bills.bank_name','ys_supplier_bills.bank_address','ys_supplier_bills.bank_num','ys_supplier_bills.real_name','ys_supplier_bills.state','ys_supplier_bills.created_at','ys_supplier_bills.finish_at');
+  	$par=\App\SupplierCashApplyModel::leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_cash_apply.supplier_id')
+ 					->select('ys_supplier.name','ys_supplier_cash_apply.amount','ys_supplier_cash_apply.bank_name','ys_supplier_cash_apply.bank_address','ys_supplier_cash_apply.bank_num','ys_supplier_cash_apply.real_name','ys_supplier_cash_apply.state','ys_supplier_cash_apply.created_at','ys_supplier_cash_apply.finish_at');
  		
   	 
   	$search=array();
@@ -184,7 +184,7 @@ class SupplierController  extends Controller
  		$search['end']=$request->end;
  	}
  	if (isset($request->state) && $request->state != -1){
- 		$par->where('ys_supplier_bills.state','=',$request->state);
+ 		$par->where('ys_supplier_cash_apply.state','=',$request->state);
  		$search['state']=$request->state;
  	}
  	if ($request->supplier != ''){
@@ -248,29 +248,33 @@ class SupplierController  extends Controller
  
  
  
- 
- 
- 
- 
- 
- 
  public  function supplierCashEdit (Request $request){
  
  	
  	
- 	$data=\App\SupplierBillsModel::where('ys_supplier_bills.id',$request->id)
- 		->leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_bills.supplier_id')
-	 	->select('ys_supplier.name','ys_supplier_bills.*')
+ 	$data=\App\SupplierCashApplyModel::where('ys_supplier_cash_apply.id',$request->id)
+ 		->leftjoin('ys_supplier','ys_supplier.id','=','ys_supplier_cash_apply.supplier_id')
+	 	->select('ys_supplier.name','ys_supplier_cash_apply.*')
  		->first();
  	return view('supplierbilledit',['data'=>$data]);
  }
  
  public  function supplierCashSave (Request $request){
- 	$data=\App\SupplierBillsModel::where('id',$request->id)->first();
+ 	$data=\App\SupplierCashApplyModel::where('id',$request->id)->first();
 
  	if($request->state==1){
- 		$res=\App\SupplierBillsModel::where('id',$request->id)->update(['state'=>1,'finish_at'=>date('Y-m-d H:i:s')]);
+ 		$res=\App\SupplierCashApplyModel::where('id',$request->id)->update(['state'=>1,'finish_at'=>date('Y-m-d H:i:s')]);
  		$res=\App\SupplierModel::where('id',$data->supplier_id)->decrement('balance',$data->amount);
+ 		
+ 		$params=[
+	 		'supplier_id'=>$data->supplier_id,
+	 		'amount'=>-trim($data->amount),
+	 		'created_at'=>date('Y-m-d H:i:s',time()),
+	 		'pay_describe'=>'提现扣除',
+	 		'type'=>2
+ 		];
+ 		$res=\App\SupplierBillsModel::insert($params);
+ 		
  		if($res === false){
  			return back() -> with('errors','数据更新失败');
  		}else{
@@ -282,5 +286,128 @@ class SupplierController  extends Controller
  	}
  
  }
+ 
+ public  function joinSupplierList (Request $request){
+ 
+ 	$par=\App\JoinSupplierModel::select();
+
+ 	$data=$par->orderBy('id','desc')->paginate(10);
+   	$search=array();
+ 	if ($request->start != ''){
+ 		$par->where('created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$par->where('created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$par->where('state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	}	
+ 	
+ 	$data=$par->orderBy('created_at','desc')->paginate(10);
+ 	
+ 	$state_arr=[
+  		0=>'未处理',
+  		1=>'已处理',
+ 	];
+ 	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state];
+ 	}
+ 
+ 	return view('joinsupplierlist',['data'=>$data,'search'=>$search]);
+ }
+ 
+ 
+ public function joinsupplierexcel(Request $request){
+ 
+  	$par=\App\JoinSupplierModel::select('name','mobile','company_name','goods_name','goods_descript','img_1','img_2','img_3','state');
+
+ 	$data=$par->orderBy('id','desc')->paginate(10);
+   	$search=array();
+ 	if ($request->start != ''){
+ 		$par->where('created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$par->where('created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if (isset($request->state) && $request->state != -1){
+ 		$par->where('state','=',$request->state);
+ 		$search['state']=$request->state;
+ 	}	
+ 	
+ 	$data=$par->orderBy('created_at','desc')->get();
+ 	
+ 	$state_arr=[
+  		0=>'未处理',
+  		1=>'已处理',
+ 	];
+ 	$http = getenv('HTTP_REQUEST_URL');
+ 	foreach ($data as &$val){
+ 		$val->state=$state_arr[$val->state];
+ 		$val->img_1=empty($val->img_1)?'':$http.$val->img_1;
+ 		$val->img_2=empty($val->img_2)?'':$http.$val->img_2;
+ 		$val->img_3=empty($val->img_3)?'':$http.$val->img_3;
+ 	}
+
+ 	$arr_data=$data->toArray();
+ 	if (empty($arr_data)){
+ 		return back();
+ 	}
+ 	//，
+ 	foreach($arr_data as $k=>$v){
+ 		$new_arr[$k]=$v;
+ 	}
+ 	// 输出Excel文件头，可把user.csv换成你要的文件名
+ 	header('Content-Type: application/vnd.ms-excel');
+ 	header('Content-Disposition: attachment;filename="供应商申请加盟.csv"');
+ 	header('Cache-Control: max-age=0');
+ 
+ 	// 打开PHP文件句柄，php://output 表示直接输出到浏览器
+ 	$fp = fopen('php://output', 'a');
+ 
+ 	// 输出Excel列名信息
+ 	$head = array('联系人','联系电话','公司名','商品名','商品描述','图1','图2','图3','状态');
+ 	foreach ($head as $i => $v) {
+ 		// CSV的Excel支持GBK编码，一定要转换，否则乱码
+ 		$head[$i] = iconv('utf-8', 'gbk',$v);
+ 	}
+ 	// 将数据通过fputcsv写到文件句柄
+ 	fputcsv($fp, $head);
+ 	foreach ($new_arr as $key => $val) {
+ 		foreach($val as $k=>$v){
+ 			$new[$k] = iconv('utf-8', 'gbk', strval($v)."\t");
+ 		}
+ 		fputcsv($fp, $new);
+ 	}
+
+ }
+ 
+ public  function joinSupplierDetial (Request $request){
+ 	$http = getenv('HTTP_REQUEST_URL');
+ 	$data=\App\JoinSupplierModel::where('id',$request->id)->first();
+ 	$data->img_1=empty($data->img_1)?'':$http.$data->img_1;
+ 	$data->img_2=empty($data->img_2)?'':$http.$data->img_2;
+ 	$data->img_3=empty($data->img_3)?'':$http.$data->img_3;
+
+ 	return view('joinsupplierdetial',['data'=>$data]);
+ }
+ public  function joinSupplierSave (Request $request){
+
+ 	if($request->state==1){
+ 		$res=\App\JoinSupplierModel::where('id',$request->id)->update(['state'=>1]);
+ 		if($res === false){
+ 			return back() -> with('errors','数据更新失败');
+ 		}else{
+ 			Session()->flash('message','保存成功');
+ 			return redirect('manage/joinsupplier');
+ 		} 		
+ 	}else{
+ 		return back() -> with('errors','请选择状态');
+ 	}
+ } 
  
 }
