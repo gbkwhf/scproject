@@ -107,15 +107,19 @@
 			    			for(var i=0;i<data.result.length;i++){
 			    				html+='<li goods_id="'+data.result[i].goods_id+'" onclick="location.href=\'shopDetails.php?goods_id='+data.result[i].goods_id+'\'">'+
 					                '<div class="picbox"><img src="'+data.result[i].image+'" alt=""></div>'+
-					                '<em>'+data.result[i].goods_name+'</em>'+
-					                '<i>¥'+data.result[i].price+'</i>'+
+					                 '<div class="con_box">'+
+					                 	'<em>'+data.result[i].goods_name+'</em>'+
+					                 	'<i>¥'+data.result[i].price+'</i>'+
+					                 '</div>'+
+					                
 					            '</li>';
 			    			}
 			    			html+='</ul>';
 			    			$('.right_content').html(html);
 			    			var rightW = $('.right_content').width();
-			    			$('.picbox').css({'width':(rightW-60)/2,'height':(rightW-60)/2});
-			    			$('.picbox img').css({'max-height':(rightW-60)/2});
+//			    			$('.picbox').css({'width':(rightW-60)/2,'height':(rightW-60)/2});
+			    			$('.con_box').width(rightW-128);
+			    			
 						}
 		    		}else{
 	                    layer.msg(data.msg);
