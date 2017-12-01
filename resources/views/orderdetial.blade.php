@@ -44,7 +44,13 @@
                   <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;">
                   	{{ $data->receive_address or '' }}
                   </div>
-                </div>                                
+                </div>      
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >用户备注</label>
+                  <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;">
+                  	{{ $data->user_remark or '' }}
+                  </div>
+                </div>                                                            
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="inputEmail3">客服备注</label>
                   <div class="col-sm-10">

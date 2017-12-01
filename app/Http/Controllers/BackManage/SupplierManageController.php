@@ -21,7 +21,7 @@ class SupplierManageController  extends Controller
  	
  	$par=\App\SubOrderModel::where('supplier_id','=',$supplier_id)->where('ys_base_order.state','=',1)
  						->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
- 						->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','express_num');
+ 						->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','express_num','ys_base_order.user_remark','ys_base_order.manage_remark');
  					 					 	
  	//付款时间，订单号，用户手机，订单状态，
  	$search=array();
@@ -81,7 +81,7 @@ class SupplierManageController  extends Controller
  	$data=\App\SubOrderModel::where('ys_sub_order.id',$request->id)
  							->where('ys_base_order.state','=',1)
  							->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
- 							->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','receive_address','receive_name','express_num','express_name')						
+ 							->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','receive_address','receive_name','express_num','express_name','ys_base_order.user_remark','ys_base_order.manage_remark')						
  							->first(); 	
  	$goods_name=\App\OrderGoodsModel::where('sub_id',$request->id)
  							->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
@@ -151,7 +151,7 @@ class SupplierManageController  extends Controller
  	
  	$par=\App\SubOrderModel::where('supplier_id','=',$supplier_id)->where('ys_base_order.state','=',1)
  	->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
- 	->select('ys_sub_order.id as order_id','ys_sub_order.id as goods_name','ys_sub_order.id as supplier_amount','pay_time','receive_name','receive_mobile','receive_address','express_name','express_num');
+ 	->select('ys_sub_order.id as order_id','ys_sub_order.id as goods_name','ys_sub_order.id as supplier_amount','pay_time','receive_name','receive_mobile','receive_address','express_name','express_num','ys_base_order.user_remark','ys_base_order.manage_remark');
  	
  	//'订单号','商品名','付款时间','收货人','收货人手机','收货地址','快递名称','快递单号'
  	$search=array();
@@ -235,7 +235,7 @@ class SupplierManageController  extends Controller
  	$fp = fopen('php://output', 'a');
  
  	// 输出Excel列名信息
- 	$head = array('订单号','商品名','金额','付款时间','收货人','收货人手机','收货地址','快递名称','快递单号');
+ 	$head = array('订单号','商品名','金额','付款时间','收货人','收货人手机','收货地址','快递名称','快递单号','用户备注','客服备注');
  	foreach ($head as $i => $v) {
  		// CSV的Excel支持GBK编码，一定要转换，否则乱码
  		$head[$i] = iconv('utf-8', 'gbk', $v);

@@ -128,7 +128,7 @@ class OrderController extends Controller
 		->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
 		->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
 		->leftjoin('ys_employee','ys_employee.user_id','=','ys_base_order.employee_id')
-		->select('ys_base_order.id as order_id','ys_member.name as user_name','ys_member.mobile','amount','pay_time','ys_base_order.employee_id','ys_base_order.all_profit','ys_base_order.receive_name','ys_base_order.receive_mobile','ys_base_order.receive_address');
+		->select('ys_base_order.id as order_id','ys_member.name as user_name','ys_member.mobile','amount','pay_time','ys_base_order.employee_id','ys_base_order.all_profit','ys_base_order.receive_name','ys_base_order.receive_mobile','ys_base_order.receive_address','ys_base_order.user_remark','ys_base_order.manage_remark');
 		
 	
 		
@@ -224,7 +224,7 @@ class OrderController extends Controller
 			$fp = fopen('php://output', 'a');
 				
 			// 输出Excel列名信息
-			$head = array('订单号','用户名','手机号','金额','付款时间','订单来源','利润','收货人','收货手机','收货地址','商品名','供应商');
+			$head = array('订单号','用户名','手机号','金额','付款时间','订单来源','利润','收货人','收货手机','收货地址','用户备注','客服备注','商品名','供应商');
 			foreach ($head as $i => $v) {
 				// CSV的Excel支持GBK编码，一定要转换，否则乱码
 				$head[$i] = iconv('utf-8', 'gbk', $v);
