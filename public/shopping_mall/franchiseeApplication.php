@@ -77,6 +77,7 @@
 			}
 		}
 		$('.confirmApply').click(function() {
+			layer.load(2);
 			//获取input框输入的值
 			inputForName = $('.inputForName').val();
 			inputForNum = $('.inputForNum').val();
@@ -110,6 +111,7 @@
 				formData.append("goods_name", inputProductName);
 				formData.append("mobile", inputForNum);
 				formData.append("name", inputForName);
+				 
 				$.ajax({ //申请加盟
 					type: "post",//请求方式
 					dataType: 'json',
@@ -119,8 +121,10 @@
 					contentType: false,//默认为true,不设置Content-type请求头
 					success: function(data) {
 						console.log(data)
+						layer.closeAll();
 						if(data.code == 1) { //请求成功
 							//							layer.msg('上传成功');
+							location.href="subSuccess.html";
 						} else {
 							layer.msg(data.msg);
 						}
