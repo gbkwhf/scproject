@@ -18,7 +18,7 @@
 			</div>
 			<div class="inforMobil">
 				<div class="phoneNum"><span class="symol">*</span>电话：</div>
-				<div class="inNum"><input type="text" placeholder="请输入联系电话" class="inputForNum" maxlength="11" onkeyup="value=value.replace(/[^0-9.]/g,'') " /></div>
+				<div class="inNum"><input type="tel" placeholder="请输入联系电话" class="inputForNum" maxlength="11" onkeyup="value=value.replace(/[^0-9.]/g,'') " /></div>
 			</div>
 			<div class="inforCompany">
 				<div class="companys">公司名称：</div>
@@ -77,7 +77,7 @@
 			}
 		}
 		$('.confirmApply').click(function() {
-			layer.load(2);
+			
 			//获取input框输入的值
 			inputForName = $('.inputForName').val();
 			inputForNum = $('.inputForNum').val();
@@ -111,7 +111,7 @@
 				formData.append("goods_name", inputProductName);
 				formData.append("mobile", inputForNum);
 				formData.append("name", inputForName);
-				 
+				 layer.load(2);
 				$.ajax({ //申请加盟
 					type: "post",//请求方式
 					dataType: 'json',
@@ -124,7 +124,7 @@
 						layer.closeAll();
 						if(data.code == 1) { //请求成功
 							//							layer.msg('上传成功');
-							location.href="subSuccess.html";
+							location.href="subSuccess.php";
 						} else {
 							layer.msg(data.msg);
 						}
