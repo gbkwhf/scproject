@@ -167,6 +167,7 @@ input[type="button"] {
 	/*margin-left: 22px;*/
 	margin-right: 11px;
 	float: left;
+	margin-bottom: 15px;
 }
 
 .imgBiMG{
@@ -197,6 +198,7 @@ input[type="button"] {
 	top: 0px;
 	z-index: 4;
 	padding: 0;
+	
 }
 
 .confirmApply {
