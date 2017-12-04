@@ -61,14 +61,22 @@
 //------------上传图片-------
 	$(function() {
 		var img = [];//创建一个空对象用来保存传入的图片
-		$("#inputs").change(function() {
-			var fil = this.files;
-			for(var i = 0; i < fil.length; i++) {
-				reads(fil[i]);
-				img.push($('#inputs')[i].files[0]);//将传入的图片push到空对象中
-			}
-			console.log(img);
-		});
+		
+			$("#inputs").change(function() {
+				var fil = this.files;
+				for(var i = 0; i < fil.length; i++) {
+					reads(fil[i]);
+					img.push($('#inputs')[i].files[0]);//将传入的图片push到空对象中
+				}
+				if(img.length>=3){
+			        $('.uploadDIv').hide();
+		         }else{
+		         	 $('.uploadDIv').show();
+		         }
+				console.log(img);
+			});	
+		
+		
 		function reads(fil) {
 			var reader = new FileReader();
 			reader.readAsDataURL(fil);
