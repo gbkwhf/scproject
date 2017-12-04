@@ -68,7 +68,8 @@
 				for(var i = 0; i < fil.length; i++) {
 	                var curr =$('#inputs')[i].files[0].size;
 	                 if(curr > AllowImgFileSize*1024)  {  //当图片大于80kb提示
-	                 	layer.msg("图片文件大小超过限制 请上传小于"+AllowImgFileSize+"KB的文件");
+//	                 	layer.msg("图片文件大小超过限制 请上传小于"+AllowImgFileSize+"KB的文件");
+						layer.msg("图片文件大小超过限制 请上传小于1M的文件");
 	                 }else{
 	                 	reads(fil[i]);
 	                 	img.push($('#inputs')[i].files[0]);//将传入的图片push到空对象中
