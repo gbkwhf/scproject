@@ -62,7 +62,7 @@
 	$(function() {
 
 		var img = [];//创建一个空对象用来保存传入的图片
-		var AllowImgFileSize='1024';  //1kb
+		var AllowImgFileSize='100';  //1kb
 			$("#inputs").change(function() {
 				var fil = this.files;
 				for(var i = 0; i < fil.length; i++) {
