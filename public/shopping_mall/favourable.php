@@ -59,7 +59,7 @@
 					<p class="giveaway2">土鸡一只<span>蜂蜜一公斤</span></p>
 					<p class="giveaway2">大雁一只<span>瓜子五斤</span></p>
 					<p class="giveaway2">带鱼一箱<span>餐具一套</span></p>
-					<p class="giveaway2">五粮液两瓶</p>
+					<p class="giveaway2">茅台两瓶</p>
 				</div>
 				<div class="gives">赠送</div>
 			</div>
