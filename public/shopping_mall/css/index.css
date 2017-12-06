@@ -45,19 +45,16 @@ html,body{
 	width: 34px;
 	height: 34px;
 	float: right;
-	/*background-color: greenyellow;*/
 	background: url(../images/close.png) no-repeat;
 	background-size: 100% 100%;
-	margin-top: 170px;
+	margin-top: 160px;
 	margin-right: 35px;
 }
 .favourable{
 	width: 84%;
 	height: 225px;
-	/*background: url(../images/tankBg.png) no-repeat;
-	background-size: 100% 100%;*/
 	margin: 0 auto;
-	margin-top: 190px;
+	margin-top: 180px;
 	
 }
 .favourable img{

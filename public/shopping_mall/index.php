@@ -31,7 +31,6 @@
     	<div class="close"></div>
     	<div class="favourable" onclick="location.href='favourable.php'">
     		<img src="images/tankBg.png"/>
-    		<!--<div class="receive"></div>-->
     	</div>
     </div>
     
