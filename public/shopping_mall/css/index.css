@@ -31,3 +31,36 @@ html,body{
 	line-height: 48px;
 	background: #fff;
 }
+/*--------------弹出层----------------*/
+.popBox{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.5);
+	
+}
+.close{
+	width: 34px;
+	height: 34px;
+	float: right;
+	/*background-color: greenyellow;*/
+	background: url(../images/close.png) no-repeat;
+	background-size: 100% 100%;
+	margin-top: 170px;
+	margin-right: 35px;
+}
+.favourable{
+	width: 84%;
+	height: 225px;
+	/*background: url(../images/tankBg.png) no-repeat;
+	background-size: 100% 100%;*/
+	margin: 0 auto;
+	margin-top: 190px;
+	
+}
+.favourable img{
+	width: 100%;
+}
+

@@ -1,0 +1,178 @@
+html,
+body {
+	background: #edf0f2;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*----------------内容开始-------------*/
+.favBanner{
+	height: 131px;
+	background: url(../images/scBanner.png) no-repeat;
+	background-size: 100% 100%;
+}
+.navBox{
+	height: 45px;
+	background: url(../images/navigationBj.png) no-repeat;
+	background-size: 100% 100%;
+	overflow: hidden;
+}
+.silverMember{
+	width: 60px;
+	height: 28px;
+	background: url(../images/member.png) no-repeat;
+	background-size: 100% 100%;
+	margin-top: 8px;
+	margin-left: 44px;
+	font-size: 12px;
+	line-height: 28px;
+	text-align: center;
+	color: #ffffff;
+	float: left;
+}
+.goldMember,.platinumMember,.drillMember{
+	width: 60px;
+	height: 28px;
+	background: url(../images/member.png) no-repeat;
+	background-size: 100% 100%;
+	margin-top: 8px;
+	margin-left: 16px;
+	font-size: 12px;
+	line-height: 28px;
+	text-align: center;
+	color: #ffffff;
+	float: left;
+}
+.concentBox{
+	background: url(../images/nrBg_02.png) no-repeat;
+	background-size: 100% 100%;
+	overflow: hidden;
+	
+}
+.conHead{
+	width: 138px;
+	height: 26px;
+	background-color: #f2cf6a;
+	margin: 0 auto;
+	border-radius: 15px;
+	margin-top: 15px;
+	font-size: 12px;
+	text-align: center;
+	line-height: 26px;
+	color: #d0121e;
+}
+.sliverBox{
+	width: 250px;
+	height: 74px;
+	background: url(../images/memBox.png) no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+	margin-top: 21px;
+}
+.messages{
+	float: left;
+	padding-left: 45px;
+}
+.messages p span{
+	padding-left: 17px;
+}
+.titles{
+	padding-top:21px ;
+	font-size: 10px;
+	color: #000000;
+}
+.giveaway{
+	color: #fd2e25;
+	font-size: 13px;
+	padding-top: 8px;
+	font-weight: bold;
+}
+.gives{
+	width: 34px;
+	height: 34px;
+	float: right;
+	background: url(../images/zeng.png) no-repeat;
+	background-size: 100% 100%;
+	margin-top: 17px;
+	margin-right: 33px;
+	font-size: 12px;
+	line-height: 34px;
+	text-align: center;
+	color: #ffffff;
+	
+}
+.goldBox{
+	width: 250px;
+	height: 101px;
+	background: url(../images/give2.png) no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+.giveaway2{
+	color: #fd2e25;
+	font-size: 13px;
+/*	padding-top: 4px;*/
+	font-weight: bold;
+}
+.platBox{
+	width: 250px;
+	height: 144px;
+	background: url(../images/give3.png) no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+.dirBox{
+	width: 250px;
+	height: 193px;
+	background: url(../images/give4.png) no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-bottom: 22px;
+}
+.footerBox{
+	width: 120px;
+	height: 61px;
+	/*background-color: greenyellow;*/
+	float: right;
+	margin-right: 10px;
+	margin-bottom: 35px;
+}
+.comPanyLogo{
+	width: 60px;
+	height: 60px;
+	float: left;
+}
+.comPanyLogo img{
+	width: 100%;
+}
+.comName{
+	font-size: 12px;
+	color: #ffffff;
+	line-height: 60px;
+	padding-left: 5px;
+	float: left;
+	font-weight: bold;
+}
+/*.footerBox img{
+	width: 20%;
+	margin-bottom: 80px;
+	float: right;
+	margin-right: 50px;
+}
+.companyName{
+	float: right;
+}*/

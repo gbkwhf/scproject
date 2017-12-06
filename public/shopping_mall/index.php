@@ -26,6 +26,14 @@
             <h4>个人中心</h4>
         </div>
     </div>
+    <!------------弹出层------------>
+    <div class="popBox" style="display: none;">
+    	<div class="close"></div>
+    	<div class="favourable" onclick="location.href='favourable.php'">
+    		<img src="images/tankBg.png"/>
+    		<!--<div class="receive"></div>-->
+    	</div>
+    </div>
     
 </body>
 <script src="js/jquery.min.js"></script>
@@ -79,7 +87,12 @@
             }
         })
     }
-    
+    $(function(){
+    	$(".popBox").show();
+    	$(".close").click(function(){
+    		$(".popBox").hide();
+    	})
+    })
 </script>
 <style type="text/css">
     .layui-layer.layui-anim.layui-layer-page{
