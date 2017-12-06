@@ -53,6 +53,30 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" >持卡人</label>
+                  <div class="col-sm-10">
+                    <input type="text"  name="real_name"  placeholder="Enter ..." class="form-control" value="{{ $data->real_name or '' }}">
+                  </div>
+                </div>  
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >银行名</label>
+                  <div class="col-sm-10">
+                    <input type="text"  name="bank_name"  placeholder="Enter ..." class="form-control" value="{{ $data->bank_name or '' }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >支行地址</label>
+                  <div class="col-sm-10">
+                    <input type="text"  name="bank_address"  placeholder="Enter ..." class="form-control" value="{{ $data->bank_address or '' }}">
+                  </div>
+                </div>  
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >卡号</label>
+                  <div class="col-sm-10">
+                    <input type="text"  name="bank_num"  placeholder="Enter ..." class="form-control" value="{{ $data->bank_num or '' }}">
+                  </div>
+                </div>                                                                    
+                <div class="form-group">
                   <label class="col-sm-2 control-label" for="inputEmail3">状态</label>
                   <div class="col-sm-10">
                       <select name="state"  class="form-control  " style="float:left;width:100px">

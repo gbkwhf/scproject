@@ -61,6 +61,10 @@ class SupplierController  extends Controller
                 'name'=>$request->name,
                 'mobile'=>$request->mobile,
                 'state'=>$request->state,
+        		'bank_name'=>$request->bank_name,
+        		'bank_address'=>$request->bank_address,
+        		'bank_num'=>$request->bank_num,
+        		'real_name'=>$request->real_name,
         );
         if(!empty($request->password)){
             $params['password']=md5($request->password);
@@ -102,6 +106,10 @@ class SupplierController  extends Controller
                 'mobile'=>$request->mobile,
                 'password'=>md5($request->password),
         		'state'=>$request->state,
+        		'bank_name'=>$request->bank_name,
+        		'bank_address'=>$request->bank_address,
+        		'bank_num'=>$request->bank_num,
+        		'real_name'=>$request->real_name,
         );
          //dd($params);
          $res = \App\SupplierModel::create($params);
