@@ -51,14 +51,17 @@
             "code":$_GET['code']
         },success:function(data){
             if(data.code==1){
-                if(getCookie("openid")){
-                    setCookie("is_member",data.result.is_member);
-                    checkBind();
-                }else{
-                    setCookie("openid",data.result.openId);
-                    setCookie("is_member",data.result.is_member);
-                    checkBind();
-                }
+//                if(getCookie("openid")){
+//                    setCookie("is_member",data.result.is_member);
+//                    checkBind();
+//                }else{
+//                    setCookie("openid",data.result.openId);
+//                    setCookie("is_member",data.result.is_member);
+//                    checkBind();
+//                }
+                setCookie("openid",data.result.openId);
+                setCookie("is_member",data.result.is_member);
+                checkBind();
             }else{
                 layer.msg(data.msg);
             }
