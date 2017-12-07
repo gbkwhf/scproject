@@ -259,8 +259,7 @@
 	<script src="js/common.js"></script>
 	<script src="js/config.js"></script>
 	<script type="text/javascript">
-		setCookie('is_member','1');
-		setCookie("openid",'oMLi1w5pdjro95tKhH1PeVZZ3mhM');
+
 		var winW=$(window).width();
 
 		$.ajax({
