@@ -251,8 +251,12 @@ class OrderController extends Controller
 			// 将数据通过fputcsv写到文件句柄
 			fputcsv($fp, $head);
 			foreach ($new_arr as $key => $val) {
-				foreach($val as $k=>$v){
-					$new[$k] = iconv('utf-8', 'gbk//IGNORE', strval($v)."\t");
+				foreach($val as $k=>$v){					
+					if($k=='amount' || $k=='all_profit'){
+						$new[$k] = iconv('utf-8', 'gbk//IGNORE',$v);
+					}else{
+						$new[$k] = iconv('utf-8', 'gbk//IGNORE', strval($v)."\t");
+					}
 				}
 				fputcsv($fp, $new);
 			}	

@@ -239,10 +239,11 @@ class SupplierController  extends Controller
  	foreach ($new_arr as $key => $val) {
  		$total_amount+=$val['amount'];
  		foreach($val as $k=>$v){
- 			// 				if($k=='user_name'){
- 			// 					$v=preg_replace("/[^\x{4e00}-\x{9fa5}a-zA-Z0-9]/iu",'',$v);
- 			// 				}
- 			$new[$k] = iconv('utf-8', 'gbk', strval($v)."\t");
+ 			if($k=='amount'){
+					$new[$k] = iconv('utf-8', 'gbk//IGNORE',$v);
+			}else{
+					$new[$k] = iconv('utf-8', 'gbk//IGNORE', strval($v)."\t");
+			}
  		}
  		fputcsv($fp, $new);
  	}
