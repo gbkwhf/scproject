@@ -21,8 +21,8 @@ class OrderController extends Controller
 		$par=\App\BaseOrderModel::where('ys_base_order.state',1)
 					->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
 					->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
-					->leftjoin('ys_employee','ys_employee.user_id','=','ys_base_order.employee_id')
-					->select('ys_base_order.id as order_id','ys_member.name as user_name','ys_member.mobile','amount','pay_time','ys_base_order.employee_id','ys_base_order.all_profit');
+					->leftjoin('ys_employee','ys_employee.user_id','=','ys_base_order.employee_id');
+					
 		
 		//，金额，付款时间，，用户名，手机号，总利润，
 	
@@ -60,10 +60,19 @@ class OrderController extends Controller
 			$search['name']=$request->name;
 		}		
 		
-		$data=$par->groupby('ys_base_order.id')->orderBy('pay_time','desc')->paginate(10);
+		$total_par=$par;
+		$data_par=$par;
 		
-		//dd(\DB::getQueryLog());
-		
+
+		$total=$total_par->groupby('ys_base_order.id')->get();
+		$total_amount=0;
+		foreach ($total as $t){
+			$total_amount+=$t->amount;
+		}
+		$data=$data_par->select('ys_base_order.id as order_id','ys_member.name as user_name','ys_member.mobile','amount','pay_time','ys_base_order.employee_id','ys_base_order.all_profit')
+				  ->groupby('ys_base_order.id')
+				  ->orderBy('pay_time','desc')
+				  ->paginate(10);
 		foreach ($data as $val){
 			//商品名，供应商，订单来源
 			$goods_name=\App\SubOrderModel::where('base_id',$val->order_id)
@@ -92,7 +101,7 @@ class OrderController extends Controller
 		$agency_list=\App\AgencyModel::get();		
 		//所有供应商
 		$supplier_list=\App\SupplierModel::get();
-		return view('orderlist',['data'=>$data,'search'=>$search,'agency_list'=>$agency_list,'supplier_list'=>$supplier_list]);
+		return view('orderlist',['data'=>$data,'search'=>$search,'agency_list'=>$agency_list,'supplier_list'=>$supplier_list,'total_amount'=>$total_amount]);
 	}
 	//
 	public  function orderDetial (Request $request){
@@ -166,7 +175,17 @@ class OrderController extends Controller
 			$search['name']=$request->name;
 		}
 		
+
+		
+		
 		$data=$par->groupby('ys_base_order.id')->orderBy('pay_time','desc')->get();
+		
+		$total_amount=0;
+		foreach ($data as $t){
+			$total_amount+=$t->amount;
+		}
+		
+
 
 		$count_goods=[];
 		foreach ($data as &$val){
@@ -233,10 +252,7 @@ class OrderController extends Controller
 			fputcsv($fp, $head);
 			foreach ($new_arr as $key => $val) {
 				foreach($val as $k=>$v){
-					// 				if($k=='user_name'){
-					// 					$v=preg_replace("/[^\x{4e00}-\x{9fa5}a-zA-Z0-9]/iu",'',$v);
-					// 				}
-					$new[$k] = iconv('utf-8', 'gbk', strval($v)."\t");
+					$new[$k] = iconv('utf-8', 'gbk//IGNORE', strval($v)."\t");
 				}
 				fputcsv($fp, $new);
 			}	
@@ -245,9 +261,16 @@ class OrderController extends Controller
 			//统计信息
 			fputcsv($fp,$null);
 			fputcsv($fp,$null);
+			
+			fputcsv($fp, array(iconv('utf-8', 'gbk','总金额'.$total_amount)));
+			
+			fputcsv($fp,$null);
+			fputcsv($fp,$null);
 			foreach ($count_goods as $c_k=>$c_goods){
 				fputcsv($fp, array(iconv('utf-8', 'gbk', $c_k.'('.$c_goods.'件)')));
 			}
+			
+			
 			
 	}
 	

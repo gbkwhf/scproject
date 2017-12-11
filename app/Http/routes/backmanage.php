@@ -17,9 +17,12 @@
 
     //Route::get('home', 'BackManage\HomeController@HomeList',['as' => 'home','middleware' => 'auth']);
     
-	
 
-	
+
+	Route::group(['namespace' => 'BackManage'], function () {
+		Route::Post('ajax/citylist', 'AjaxController@cityList');
+		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
+	});
 	
 	
 	
@@ -28,8 +31,7 @@
 		Route::get('admin', 'HomeController@HomeList');		
 
 
-		Route::Post('ajax/citylist', 'AjaxController@cityList');
-		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
+
 
 		//用户列表
 		Route::get('memberlist', 'MemberController@memberList');
@@ -94,6 +96,7 @@
 			//经销商功能
 			Route::get('agencyadmin', 'HomeController@agencyIndex');
 			Route::get('agency/orderlist', 'AgencyManageController@orderList');//订单列表
+			Route::post('agency/orderlistexcel', 'AgencyManageController@orderListExcel');			
 			Route::get('agency/orderdetial/{id}', 'AgencyManageController@orderDetial');//订单发货
 			Route::get('agency/setemployee', 'AgencyManageController@setEmployee');
 			Route::post('agency/setemployeesave', 'AgencyManageController@setEmployeeSave');

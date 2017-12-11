@@ -55,7 +55,8 @@
                                   <input type="text" placeholder="收货人手机" class="form-control  " style="float:left;width:141px" name="mobile" value="{{ $_GET['mobile'] or ''}}">
                                   <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>                                  
                               </div>
-
+                              <div style="position:absolute;right:-10px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
+                              
                           </div>
                       </form>
                   </div>
@@ -68,7 +69,8 @@
                   <th>商品名</th>
                   <th>订单金额</th>
                   <th>付款时间</th>
-                  <th>收货人手机</th>
+                  <th>用户名</th>
+                  <th>用户手机</th>
                    <th>操作</th>
                 </tr>                
                 @foreach ($data as $order)    				
@@ -77,7 +79,8 @@
 	                  <td>{{ $order->goods_name }}</td>
 	                  <td>{{ $order->amount }}</td>	                  
 	                  <td>{{ $order->pay_time }}</td>
-	                  <td>{{ $order->receive_mobile }}</td>
+	                  <td>{{ $order->user_id }}</td>
+	                  <td>{{ $order->user_mobile }}</td>
 	                  <td>
 	                  		<a href="{{ url('agency/orderdetial',['id'=>$order->id]) }}"><button class="btn bg-orange margin" type="button">订单详情</button></a>
 	                  </td>
@@ -87,7 +90,7 @@
             </div>
             <!-- /.box-body -->
             
-            <div class="box-footer clearfix">总数：{{$data->total()}}条<br>
+            <div class="box-footer clearfix">总数：{{$data->total()}}条 ,总金额：{{$total_amount or 0}}元<br>
             	{!! $data->appends($search)->render() !!}
             </div>
           </div>
@@ -103,5 +106,13 @@
             elem: '#end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
             event: 'focus' //响应事件。如果没有传入event，则按照默认的click
         });
+
+        function getOrderExcel(){
+        	$("#form_action").attr('action',"{{ url('agency/orderlistexcel') }}");
+        	$("#form_action").attr('method','post');	
+        	$("#form_action").submit();
+        	$("#form_action").attr('action',"{{ url('agency/orderlist') }}");
+        	$("#form_action").attr('method','get');	        	        	
+        }         
     </script>
 @endsection
