@@ -267,7 +267,7 @@ class OrderController extends Controller
 			fputcsv($fp,$null);
 			fputcsv($fp,$null);
 			foreach ($count_goods as $c_k=>$c_goods){
-				fputcsv($fp, array(iconv('utf-8', 'gbk', $c_k.'('.$c_goods.'件)')));
+				fputcsv($fp, array(iconv('utf-8', 'gbk//IGNORE', $c_k.'('.$c_goods.'件)')));
 			}
 			
 			
