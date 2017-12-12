@@ -162,4 +162,32 @@ class HomeController extends Controller
     	
     	return view('supplierindex',['data'=>$data,'order_num'=>$order_num]);
     }
+    
+    
+    public function managePassword(){
+    	
+    	
+    	return view('changepassword');
+    }
+    
+    
+    public  function managePasswordSave (Request $request){
+    
+    	
+
+    	
+    	if(isset($request->password) && $request->password!=''){
+    		$params['password']=Bcrypt(trim($request->password));
+    	}else{
+    		return back() -> with('errors','密码不能为空');
+    	}
+    	\App\User::where('id',1)->update($params);
+    
+    
+    	Session()->flash('message','保存成功');
+    
+    	return redirect('manage/managepassword');
+    }
+    
+    
 }

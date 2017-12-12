@@ -83,7 +83,7 @@ class MemberController  extends Controller
  
  public  function SendMemberBalance (Request $request){
  
- 	$start_time=date('Y-m-d',strtotime('-30 days')).' 00:00:00';
+ 	$start_time=date('Y-m-d',strtotime('-180 days')).' 00:00:00';
  	$end_time=date('Y-m-d',strtotime(date('Y-m-d',strtotime('-1 days')))).' 23:59:59';
  	
  	
@@ -101,7 +101,7 @@ class MemberController  extends Controller
  		return back() -> with('errors','金额必须大于0');
  	}
  	
- 	$start_time=date('Y-m-d',strtotime('-30 days')).' 00:00:00';
+ 	$start_time=date('Y-m-d',strtotime('-180 days')).' 00:00:00';
  	$end_time=date('Y-m-d',strtotime(date('Y-m-d',strtotime('-1 days')))).' 23:59:59';
  	
  	\DB::beginTransaction(); //(开启事务)

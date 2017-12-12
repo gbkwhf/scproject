@@ -158,6 +158,9 @@ class AgencyController  extends Controller
  		$search['state']=$request->state;
  	} 	
 
+ 	
+ 	$total_amount=$bills->sum('ys_operate_bills.amount');
+ 	
  	$data = $bills->orderBy('ys_operate_bills.created_at','desc')->paginate(10);
 
 
@@ -173,7 +176,7 @@ class AgencyController  extends Controller
  	}
  	//所有经销商
  	$agency_list=\App\AgencyModel::get();
- 	return view('operatebills',['data'=>$data,'search'=>$search,'agency_list'=>$agency_list]);
+ 	return view('operatebills',['data'=>$data,'search'=>$search,'agency_list'=>$agency_list,'total_amount'=>$total_amount]);
  }
  
  

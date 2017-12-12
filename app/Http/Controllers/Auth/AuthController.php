@@ -129,6 +129,7 @@ class AuthController extends Controller
     	$this->validate($request, [
     			$this->loginUsername() => 'required', 'password' => 'required',
     			]);
+    	    	
     	\Session::put('role', 1);
     	// If the class is using the ThrottlesLogins trait, we can automatically throttle
     	// the login attempts for this application. We'll key this by the username and

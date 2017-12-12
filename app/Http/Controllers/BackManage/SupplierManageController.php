@@ -69,7 +69,7 @@ class SupplierManageController  extends Controller
  		$val->state=empty($val->express_num)?'未发货':'已发货';
  		foreach ($goods_list as $v){
  		 		$val->supplier_amount+=$v->supplier_price*$v->num;
- 		 		$goods_name.=$v->name.'('.$v->num.'),';
+ 		 		$goods_name.=$v->name.'('.$v->num.'件),';
  		 } 		
  		$val->goods_name=str_limit(trim($goods_name,','),15,'...');
  	}
@@ -210,7 +210,7 @@ class SupplierManageController  extends Controller
  		->get();
  		foreach ($goods_list as $g){
  			$supplier_amount+=$g->supplier_price*$g->num;
- 			$goods_name.=$g->name.'('.$g->num.'),';
+ 			$goods_name.=$g->name.'('.$g->num.'件),';
  		}
  		$val->goods_name=trim($goods_name,',');
  		$val->supplier_amount=$supplier_amount;

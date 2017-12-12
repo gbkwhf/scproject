@@ -80,6 +80,9 @@
         Route::get('manage/sendmemberbalance', 'MemberController@SendMemberBalance');//后台给用户返现
         Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现
         Route::post('manage/manageremarksave', 'OrderController@manageRemarkSave');//客服订单备注
+        
+        Route::get('manage/managepassword', 'HomeController@managePassword');//管理员密码修改
+        Route::post('manage/managepasswordsave', 'HomeController@managePasswordSave');//管理员密码修改
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
 			//供应商功能			
