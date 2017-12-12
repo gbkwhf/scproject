@@ -6,7 +6,8 @@
 	box-shadow: 0px 0px 15px #d2d2d2;
 }
 .user-info{
-	padding: 35px 27px;
+	padding-top: 35px;
+	margin: 0px 27px 35px;
 	overflow: hidden;
 }
 .head-portrait{
