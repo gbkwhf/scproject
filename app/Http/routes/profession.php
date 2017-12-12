@@ -122,7 +122,8 @@ Route::group([
              Route::post('user/ack/get/money','GetUserOwnInfoController@ackGetMoney');
              //7.根据用户手机号码获取余额
              Route::post('get/balance/by/mobile','GetUserOwnInfoController@getBalance');
-
+             //用户返现记录
+             Route::post('get/cashbacklist','GetUserOwnInfoController@cashBackList');
 
 
 

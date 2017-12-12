@@ -210,6 +210,7 @@ class GetUserOwnInfoController extends Controller{
             'amount' => "-".(abs($bills_info->amount) / 100 * 3),
             'pay_describe' => "提现扣除手续费",
             'created_at' => date("Y-m-d H:i:s"),
+            'finished_at' => date("Y-m-d H:i:s"),
             'type'=>2, //1用户提现, 2扣除手续费
             'state'=>1, //0提现中    1提现成功
             'employee_id'=>$bills_info->employee_id,
@@ -225,7 +226,7 @@ class GetUserOwnInfoController extends Controller{
          ]);
         //写流水
         $insert = \DB::table('ys_operate_bills')->insert($insert_data);
-        $update = \DB::table('ys_operate_bills')->where('operate_order_id',$request->bills_id)->update(['state'=>1,'created_at'=>\DB::Raw('Now()')]);
+        $update = \DB::table('ys_operate_bills')->where('operate_order_id',$request->bills_id)->update(['state'=>1,'finished_at'=>\DB::Raw('Now()')]);
 
         if ($is_true && $insert && $update){
             \DB::commit();
@@ -258,5 +259,26 @@ class GetUserOwnInfoController extends Controller{
 
     }
 
+    //员工给顾客下单记录
+    public function cashBackList(Request $request)
+    {
+        
+    	$validator = $this->setRules([
+    			'ss' => 'required|string',
+    			//'page' => ''
+    			])
+    			->_validate($request->all());
+    	if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+    
+    	$user_id = $this->getUserIdBySession($request->ss); //获取用户id
+    	$start = $request->page <= 1 ? 0 : (($request->page) - 1) * 10;//分页
+    	 
+    	$bills=\App\BillModel::where('user_id',$user_id)
+    			->select('amount','pay_describe','created_at')    	 
+    			->orderBy('created_at','desc')
+    			->skip($start)->take(10)
+    			->get();
+    	return  $this->respond($this->format($bills));
+    }
 
 }
