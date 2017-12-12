@@ -43,7 +43,6 @@
     
     function showajax(page){
     	layer.ready(function(){ layer.load(2); })
-    	//员工为用户下单记录
 		$.ajax({
 			type:"post",
 			url:commonsUrl+"api/gxsc/get/cashbacklist"+versioninfos,
@@ -58,7 +57,7 @@
 					html='';
 					if(data.result.length==0 && page == 1){
 						layer.closeAll();
-						$('.wrapper').html('<p>暂无返现记录哦！</p>');
+						$('.wrapper').html('<p>暂无返利记录哦！</p>');
 						$('.wrapper p').css({'line-height':winH+'px','text-align': 'center','color':'#8f8f94'});
 					}else{
 						for(var i=0;i<data.result.length;i++){
