@@ -83,3 +83,6 @@ html,body{
 	top: 3px;
 	font-style: normal;
 }
+.mui-pull-bottom-pocket {
+    display: none !important;
+}

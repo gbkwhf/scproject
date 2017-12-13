@@ -33,7 +33,7 @@
 					<p>0</p>
 					<span>余额（可提现）</span>
 				</div>
-				<div class="cashback">
+				<div class="cashback" onclick="location.href='cashback.php'">
 					<em>¥</em>
 					<p>0</p>
 					<span>昨日返现</span>
