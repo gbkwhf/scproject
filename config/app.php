@@ -151,7 +151,7 @@ return [
         /*
          * Test Service Providers...
          */
-        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+      //  Clockwork\Support\Laravel\ClockworkServiceProvider::class,
 //        App\Acme\Extensions\Facades\ApiResponse::class,
 
         //pay
