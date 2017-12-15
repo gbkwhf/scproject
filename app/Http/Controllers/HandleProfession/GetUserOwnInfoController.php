@@ -191,6 +191,7 @@ class GetUserOwnInfoController extends Controller{
                     ->where('user_id',$user_id)
                     ->where('operate_order_id',$request->bills_id)
                     ->where('state',0) //0提现中    1提现成功
+                    ->where('type',1)
                     ->first();
 
         if(empty($bills_info)){ //未找到该记录 1048

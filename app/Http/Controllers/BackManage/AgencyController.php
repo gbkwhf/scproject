@@ -131,14 +131,14 @@ class AgencyController  extends Controller
  	$bills=\App\OperateBillsModel::where('ys_operate_bills.type',1)
  				->leftjoin('ys_member','ys_member.user_id','=','ys_operate_bills.user_id')
  				->leftjoin('ys_employee','ys_employee.user_id','=','ys_operate_bills.employee_id') 
- 				->selectRaw('ys_operate_bills.state,ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.employee_id,ys_employee.agency_id');		
+ 				->selectRaw('ys_operate_bills.state,ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.finished_at,ys_operate_bills.employee_id,ys_employee.agency_id');		
  	$search=[];
  	if ($request->start != ''){
- 		$bills->where('ys_operate_bills.created_at','>=',$request->start.' 00:00:00');
+ 		$bills->where('ys_operate_bills.finished_at','>=',$request->start.' 00:00:00');
  		$search['start']=$request->start;
  	}
  	if ($request->end != ''){
- 		$bills->where('ys_operate_bills.created_at','<',$request->end.' 59:59:59');
+ 		$bills->where('ys_operate_bills.finished_at','<',$request->end.' 59:59:59');
  		$search['end']=$request->end;
  	}
  	if ($request->mobile != ""){
@@ -187,14 +187,14 @@ class AgencyController  extends Controller
  	$bills=\App\OperateBillsModel::where('ys_operate_bills.type',1)
  	->leftjoin('ys_member','ys_member.user_id','=','ys_operate_bills.user_id')
  	->leftjoin('ys_employee','ys_employee.user_id','=','ys_operate_bills.employee_id')
- 	->selectRaw('ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.state,ys_employee.agency_id');
+ 	->selectRaw('ys_member.name,ys_member.mobile,ys_operate_bills.amount,ys_operate_bills.created_at,ys_operate_bills.finished_at,ys_operate_bills.state,ys_employee.agency_id');
  	$search=[];
  	if ($request->start != ''){
- 		$bills->where('ys_operate_bills.created_at','>=',$request->start.' 00:00:00');
+ 		$bills->where('ys_operate_bills.finished_at','>=',$request->start.' 00:00:00');
  		$search['start']=$request->start;
  	}
  	if ($request->end != ''){
- 		$bills->where('ys_operate_bills.created_at','<',$request->end.' 59:59:59');
+ 		$bills->where('ys_operate_bills.finished_at','<',$request->end.' 59:59:59');
  		$search['end']=$request->end;
  	}
  	if ($request->mobile != ""){
@@ -242,7 +242,7 @@ class AgencyController  extends Controller
  	$fp = fopen('php://output', 'a');
  
  	// 输出Excel列名信息
- 	$head = array('会员名','注册手机','金额','提现时间','状态','经销商');
+ 	$head = array('会员名','注册手机','金额','提现时间','完成时间','状态','经销商');
  	foreach ($head as $i => $v) {
  		// CSV的Excel支持GBK编码，一定要转换，否则乱码
  		$head[$i] = iconv('utf-8', 'gbk',$v);

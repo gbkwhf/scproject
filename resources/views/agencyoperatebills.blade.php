@@ -37,10 +37,10 @@
                       <form class="form-horizontal" id ="form_action" action="{{url('agency/membercashlist')}}" method="get">
                           <div style="width: 800px;" class="input-group input-group-sm row">
                               <div class="col-lg-2">
-                                  <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
+                                  <input type="text"  placeholder="完成起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
                               </div>
                               <div class="col-lg-2">
-                                  <input type="text" placeholder="结束日期" id="end" class="inline laydate-icon form-control" style="float:left;" name="end" value="{{ $_GET['end'] or ''}}">
+                                  <input type="text" placeholder="完成结束日期" id="end" class="inline laydate-icon form-control" style="float:left;" name="end" value="{{ $_GET['end'] or ''}}">
                               </div>    
                              <div class="col-lg-2">
 	                            <select name="state"  class="form-control pull-right"  style="width: 135px">
@@ -71,6 +71,7 @@
                   <th>注册手机</th>
                   <th>金额</th>
                   <th>提现时间</th>
+                  <th>完成时间</th>
                   <th>状态</th>
                   <th>员工名</th>
                 </tr>                
@@ -80,6 +81,7 @@
 	                  <td>{{ $member->mobile }}</td>
 	                  <td>{{ $member->amount }}</td>	                  
 	                  <td>{{ $member->created_at }}</td>
+	                  <td>{{ $member->finished_at }}</td>
 	                  <td>{{ $member->state }}</td>
 	                  <td>{{ $member->employee_id }}</td>		
 	                </tr>                
