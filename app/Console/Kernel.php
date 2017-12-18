@@ -36,11 +36,15 @@ class Kernel extends ConsoleKernel
     	
     	//读取上次执行时间
     	if(file_exists($path.'/rebate_execute.txt')){
-    		$log_file=unserialize(file_get_contents('rebate_execute.txt'));
+    		
+    		\Log::info('进入邀请进去');
+    		$log_file=unserialize(file_get_contents($path.'/rebate_execute.txt'));
     		$log_date=date('Y-m-d',strtotime($log_file['time']));
     		$today_data=date('Y-m-d');
+    		\Log::info('邀请返现读取文件内容，'.serialize($log_file));
     		//检查重复执行
     		if($log_date==$today_data){
+    			\Log::info('邀请返现同一天内重复执行，已退出');
     			exit();
     		}
     	}else{
