@@ -89,7 +89,44 @@ class GetShopsInfoController extends Controller{
         return  $this->respond($this->format($goods));
     }
 
+	//搜索商品
+    public function searchGoods(Request $request){
+    	
+    	$validator = $this->setRules([
+    				'vip' => 'required|integer',
+    				'name' => 'required|string',
+    			])
+    			->_validate($request->all());
+    	if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+    	
+    	
+    	if($request->vip==1){
+    		$cl=[1,2,3,5];
+    	}else{
+    		$cl=[4];
+    	}
 
+    	$data = \DB::table('ys_goods as a')->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
+    	->leftjoin('ys_goods_class as gclass','gclass.id','=','a.class_id')
+    	->select('a.id as goods_id','a.name as goods_name','a.num','a.price','a.sales','b.image')
+    	->whereIn('gclass.first_id',$cl)
+    	->where('a.name','like','%'.trim($request->name).'%') //0下架1上架
+    	->where('a.state',1) //0下架1上架
+    	->groupBy('a.id')
+    	->orderBy('a.sort','asc')
+    	->orderBy('a.id','asc')
+    	->get();
+    	
+    	$result = empty($data) ? [] : $data;
+    	$http = getenv('HTTP_REQUEST_URL');
+    	//改变图片链接，使其可以直接访问
+    	if(!empty($result)){
+    		foreach($result as $k=>$v){
+    			$result[$k]->image = empty($v->image) ? "" : $http.$v->image;
+    		}
+    	}
+    	return  $this->respond($this->format($result));
+    }
 
 
 

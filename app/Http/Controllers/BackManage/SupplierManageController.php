@@ -90,8 +90,9 @@ class SupplierManageController  extends Controller
  	$data['goods_name']=$goods_name[0]->goods_name;
  	$data['receive_address']=$data['receive_name'].'，'.$data['receive_mobile'].'，'.$data['receive_address'];
  	
-
-	return view('supplierorderdetial',['data'=>$data]);
+ 	//dd($data);
+ 	$express=\App\ExpressModel::get();
+	return view('supplierorderdetial',['data'=>$data,'express'=>$express]);
  } 
  public  function orderSend (Request $request){
 

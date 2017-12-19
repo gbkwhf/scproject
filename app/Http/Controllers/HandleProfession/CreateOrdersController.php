@@ -716,7 +716,11 @@ class CreateOrdersController extends Controller{
         foreach($goods_info as $k=>$v){
             $goods_info[$k]->image = empty($v->image) ? "" : $http.$v->image;
         }
-
+        if($base_info->express_name !=''){
+        	$express=\App\ExpressModel::where('id',$base_info->express_name)->first();
+        }
+        
+  
         $data = [];
         $data['address'] = $base_info->receive_address; //收货地址
         $data['mobile']  = $base_info->receive_mobile; //收货人电话
@@ -727,10 +731,16 @@ class CreateOrdersController extends Controller{
         $data['price'] =$base_info->price; //子订单总价
         $data['pay_type'] = $base_info->pay_type; //付款方式：1微信，2线下支付
         $data['state'] = $base_info->state; //订单状态：0未付款，1，已付款
-        $data['express_name'] = is_null($base_info->express_name) ? "" : $base_info->express_name; //快递名称
+        $data['express_name'] =empty($base_info->express_num) ? "" : $express->name; //快递名称
         $data['express_num'] = is_null($base_info->express_num) ? "" : $base_info->express_num; //快递单号
         $data['goods_list'] = $goods_info; //子订单包含的商品列表
         $data['user_remark'] =$base_info->user_remark; //用户备注
+        
+        $express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$base_info->express_num));
+        
+
+        //物流信息
+        $data['express']=$express_arr?$express_arr->data:'';
 
         return  $this->respond($this->format($data));
 
@@ -780,11 +790,20 @@ class CreateOrdersController extends Controller{
 
         $tmp_info = [];
         foreach($base_info as $k=>$v) {
+        	
+        	
+        	if($v->express_name !=''){
+        		$express=\App\ExpressModel::where('id',$v->express_name)->first();
+        	}
+        	
+        	$express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$v->express_num));
+
             $make_arr = [
                 'sub_order_id' => $v->sub_order_id, //子订单id
-                'express_name' => is_null($v->express_name) ? "" : $v->express_name, //快递名称
+                'express_name' => empty($v->express_name) ? "" : $express->name, //快递名称
                 'express_num' => is_null($v->express_num) ? "" : $v->express_num, //快递单号
-                'goods_list' =>[] //子订单包含的商品列表
+                'goods_list' =>[], //子订单包含的商品列表
+                'express'=>$express_arr?$express_arr->data:''
             ];
             array_push($tmp_info,$make_arr);
         }

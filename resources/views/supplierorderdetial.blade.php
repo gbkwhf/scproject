@@ -59,7 +59,12 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="inputEmail3">快递公司</label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control" name="express_name" placeholder="Enter ..." value="{{ $data->express_name or '' }}">
+	                  <select name="express_name"  class="form-control " >
+                          <option value="">请选择快递公司</option>
+                          @foreach ($express as $ex)
+                          <option @if(isset($data)) @if($data->express_name == $ex['id']) selected="selected" @endif @endif value="{{$ex['id']}}">{{$ex['name']}}</option>
+                          @endforeach
+                      </select>
                   </div>
                 </div>   
                 <div class="form-group">
