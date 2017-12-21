@@ -740,12 +740,17 @@ class CreateOrdersController extends Controller{
         $express_arr=null;
         if($express){
         	$express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$base_info->express_num));
+        	
+        	//0：在途中,1：已发货，2：疑难件，3： 已签收 ，4：已退货
+        	$state_arr=[0=>'在途中',1=>'已发货',2=>'疑难件',3=>'已签收',4=>'已退货'];
+        	$express_info['state']=$state_arr[$express_arr->state];
+        	$express_info['data']=$express_arr->data;
         }
         
         
 
         //物流信息
-        $data['express']=$express_arr?$express_arr->data:'';
+        $data['express']=$express_arr?$express_info:'';
 
         return  $this->respond($this->format($data));
 
@@ -803,6 +808,11 @@ class CreateOrdersController extends Controller{
         	$express_arr=null;
         	if($express){
         		$express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$v->express_num));
+        		
+        		//0：在途中,1：已发货，2：疑难件，3： 已签收 ，4：已退货
+        		$state_arr=[0=>'在途中',1=>'已发货',2=>'疑难件',3=>'已签收',4=>'已退货'];
+        		$express_info['state']=$state_arr[$express_arr->state];
+        		$express_info['data']=$express_arr->data;
         	}
         	
         	
@@ -811,7 +821,7 @@ class CreateOrdersController extends Controller{
                 'express_name' => empty($v->express_name) ? "" : $express->name, //快递名称
                 'express_num' => is_null($v->express_num) ? "" : $v->express_num, //快递单号
                 'goods_list' =>[], //子订单包含的商品列表
-                'express'=>$express_arr?$express_arr->data:''
+                'express'=>$express_arr?$express_info:''
             ];
             array_push($tmp_info,$make_arr);
         }
