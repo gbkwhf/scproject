@@ -716,6 +716,7 @@ class CreateOrdersController extends Controller{
         foreach($goods_info as $k=>$v){
             $goods_info[$k]->image = empty($v->image) ? "" : $http.$v->image;
         }
+        $express=null;
         if($base_info->express_name !=''){
         	$express=\App\ExpressModel::where('id',$base_info->express_name)->first();
         }
@@ -736,7 +737,11 @@ class CreateOrdersController extends Controller{
         $data['goods_list'] = $goods_info; //子订单包含的商品列表
         $data['user_remark'] =$base_info->user_remark; //用户备注
         
-        $express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$base_info->express_num));
+        $express_arr=null;
+        if($express){
+        	$express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$base_info->express_num));
+        }
+        
         
 
         //物流信息
@@ -791,13 +796,16 @@ class CreateOrdersController extends Controller{
         $tmp_info = [];
         foreach($base_info as $k=>$v) {
         	
-        	
+        	$express=null;
         	if($v->express_name !=''){
         		$express=\App\ExpressModel::where('id',$v->express_name)->first();
         	}
+        	$express_arr=null;
+        	if($express){
+        		$express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$v->express_num));
+        	}
         	
-        	$express_arr=json_decode(file_get_contents('http://www.kuaidi100.com/query?type='.$express->e_name.'&postid='.$v->express_num));
-
+        	
             $make_arr = [
                 'sub_order_id' => $v->sub_order_id, //子订单id
                 'express_name' => empty($v->express_name) ? "" : $express->name, //快递名称
