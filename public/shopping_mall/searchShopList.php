@@ -125,7 +125,6 @@
 		};
 	})
 	function goDetail(goods_id){
-		
 //		console.log(goods_id);
 		location.href="shopDetails.php?goods_id="+goods_id;
 	}	

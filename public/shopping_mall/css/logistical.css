@@ -1,8 +1,9 @@
 .logisticBox{
+	/*position: fixed;*/
 	height: 86px;
 	margin-left: 12px;
 	margin-right: 12px;
-	margin-top: 19px;
+	margin-top: 10px;
 	border: solid 1px #e5e5e5;
 	background-color: #ffffff;
 	border-top-right-radius:4px ;
@@ -38,6 +39,8 @@ body{
 	border-top:none;
 	background-color: #ffffff;
 	margin-bottom: 20px;
+	/*overflow: auto;
+	height: 600px;*/
 }
 .liBox{
 	margin-left: 10px;

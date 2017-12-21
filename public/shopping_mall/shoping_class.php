@@ -13,13 +13,9 @@
 			body {
 				background: #f3f5f7;
 			}
-			
-			
-			
 			input[type="button"] {
 				-webkit-appearance: none;
 			}
-			
 			.topBox {
 				width: 100%;
 				height: 55px;
@@ -27,7 +23,6 @@
 				position: fixed;
 				z-index: 300;
 			}
-			
 			.serchBox {
 				width: 78%;
 				height: 37px;
@@ -37,18 +32,15 @@
 				margin-top: 9px;
 				float: left;
 			}
-			
 			.imgBox {
 				float: left;
 			}
-			
 			.searchImg {
 				width: 15px;
 				height: 15px;
 				margin-left: 12px;
 				margin-top: 11px;
 			}
-			
 			.inBox {
 				float: left;
 				width: 85%;
