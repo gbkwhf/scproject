@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="css/classification.css">
 </head>
 <body>
+	<div class="topBox">
+		<div class="serchBox">
+			<div class="imgBox"><img src="images/serach.png" class="searchImg"/></div>
+			<div class="inBox"><input type="text" placeholder="请输入需要查找的商品" class="insearch"/></div>
+		</div>
+		<div class="searchSubmit">搜索</div>
+	</div>
+	
 <div class="content"> 	
  	<ul class="left_nav">
         <!--<li class="curr_tab">营养保健</li>
@@ -152,5 +160,31 @@
   				}
   			}
   		});
+  		//-----------搜索----------
+			$(function() {
+				$(".searchSubmit").click(function() {
+					var first_id = $_GET['first_id'];
+					console.log(first_id);
+					if(first_id==4){ //1返利区，0非返利区
+						var shopName = $(".insearch").val();
+						console.log(shopName);
+						if(shopName == "" || shopName == undefined) {
+							layer.msg("商品名称不能为空");
+						} else {
+							location.href = "searchShopList.php?vid=0&shopName="+shopName;
+						}
+					}else{
+						var shopName = $(".insearch").val();
+						console.log(shopName);
+						if(shopName == "" || shopName == undefined) {
+							layer.msg("商品名称不能为空");
+						} else {
+							location.href = "searchShopList.php?vid=1&shopName="+shopName;
+						}
+					}
+					
+
+				})
+			})
 	 </script>
 </html>

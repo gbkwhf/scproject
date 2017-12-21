@@ -1,0 +1,73 @@
+html,
+body {
+	background: #edf0f2;
+	height: 100%;
+	overflow: hidden;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+/*----------内容开始-------*/
+.wrapper{
+	
+	margin-top: 10px;
+}
+.shopList{
+	width: 93.6%;
+	height: 133px;
+	background-color: #ffffff;
+	margin: 0 auto;
+	overflow: hidden;
+	margin-bottom: 7px;
+}
+.listLeft{
+	width: 40%;
+	height: 100%;
+	float: left;
+}
+.shopImgBox{
+	width: 94px;
+	height: 94px;
+	/*background-color: #f6f2f3;*/
+	margin-top: 22px;
+	margin-left: 21px;
+	overflow: hidden;
+}
+.shopImgBox img{
+	width: 81px;
+	height: 66px;
+	margin: 0 auto;
+	margin-top:21px ;
+}
+.shopMessageBox{
+	width: 60%;
+	float: left;
+	height: 100%;
+	
+}
+.shopMessage{
+	height: 37px;
+	padding-top: 24px;
+	padding-right: 10px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	/*white-space: nowrap;*/
+	-webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+	display: -webkit-box;
+	text-align:left ;
+	color: #4d4d4d;
+}
+.shopPrice{
+	color: #e09565;
+	padding-top: 35px;
+}
