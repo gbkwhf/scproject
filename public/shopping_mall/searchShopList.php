@@ -40,8 +40,6 @@
 		$('.wrapper').height(winH);
 		var vid = $_GET['vid']; //获取vid
 		var shopName = $_GET['shopName']; //获取商品名
-		
-//		var first_id = $_GET['first_id'];
 		if(vid == 0) {
 			$.ajax({ //获取搜索的列表信息
 				type: "post",

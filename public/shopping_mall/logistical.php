@@ -41,7 +41,7 @@
 	<script src="js/config.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$.ajax({ //获取搜索的列表信息
+			$.ajax({ //获取物流信息
 				type: "post",
 				dataType: 'json',
 				url: commonsUrl + "api/gxsc/get/commodity/sub_order/info" + versioninfos,
@@ -56,7 +56,7 @@
 						tm += '<p class="logStaBox"><span class="logStatus">状态：</span><span class="logStatus1">' + data.result.express.state + '</span></p><p class="logStaBox1"><span class="logStatu2">快递单号：</span><span id="orderNumber">' + data.result.express_num + '</span></p>'
 						$('.logisticBox').append(tm);
 						var con = data.result.express.data;
-						var express_name = data.result.express_name;
+						var express_name = data.result.express_name;//快递名称
 						if(con.length != 0) {
 							console.log(con);
 							var html = '';
