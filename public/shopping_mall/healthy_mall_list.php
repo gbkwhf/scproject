@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-		<div class="topBox">
+		<div class="topBox" style="display: none;">
 			<div class="serchBox">
 				<div class="imgBox"><img src="images/serach.png" class="searchImg" /></div>
 				<div class="inBox"><input type="text" placeholder="请输入需要查找的商品" class="insearch" /></div>
@@ -167,10 +167,14 @@
 		});
 		//-----------搜索----------
 		$(function() {
+			if(first_id == 4){
+				$(".topBox").show();
+			}
 			$(".searchSubmit").click(function() {
 				var first_id = $_GET['first_id'];
 				console.log(first_id);
 				if(first_id == 4) { //1返利区，0非返利区
+					
 					var shopName = $(".insearch").val();
 					console.log(shopName);
 					if(shopName == "" || shopName == undefined) {
@@ -179,6 +183,7 @@
 						location.href = "searchShopList.php?vid=0&shopName=" + shopName;
 					}
 				} else {
+//					$(".topBox").hide();
 					var shopName = $(".insearch").val();
 					console.log(shopName);
 					if(shopName == "" || shopName == undefined) {

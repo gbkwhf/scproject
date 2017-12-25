@@ -36,7 +36,7 @@
 				<div class="cashback" onclick="location.href='cashback.php'">
 					<em>¥</em>
 					<p>0</p>
-					<span>昨日返现</span>
+					<span>返现记录</span>
 				</div>
 			</div>
 		</header>

@@ -1,6 +1,6 @@
 .logisticBox{
 	/*position: fixed;*/
-	height: 86px;
+	min-height: 86px;
 	margin-left: 12px;
 	margin-right: 12px;
 	margin-top: 10px;
@@ -9,6 +9,7 @@
 	border-top-right-radius:4px ;
 	border-top-left-radius:4px ;
 	font-size: 15px;
+	
 	
 }
 body{
@@ -30,6 +31,12 @@ body{
 	color: #999;
 	margin-left: 19px;
 	margin-top: 9px;
+}
+.logStaBox2{
+	color: #999;
+	margin-left: 19px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 .logistBot{
 	margin-left: 12px;

@@ -79,7 +79,7 @@
 				html='';
 				html+='<div class="information" onclick="goUrl()" subId="'+data.result.sub_order_id+'">'+
 				'<p><img src="images/wucar.png" class="img1"/><span class="span1">'+data.result.express.state+'</span><img src="images/returns.png" width="9" height="16" class="img2"/></p>'+
-				'<h4>快递单号：'+data.result.express_num+'</h4></div>'+
+				'<h4>快递单号：'+data.result.express_num+'</h4><h4>订单编号：'+data.result.sub_order_id+'</h4></div>'+
 				'<div class="main">'+
 				'	<div class="user-info">'+
 				'		<p>'+data.result.name+'<span>'+data.result.mobile+'</span></p>'+

@@ -53,7 +53,7 @@
 					console.log(data)
 					if(data.code == 1) { //请求成功
 						var tm = '';
-						tm += '<p class="logStaBox"><span class="logStatus">状态：</span><span class="logStatus1">' + data.result.express.state + '</span></p><p class="logStaBox1"><span class="logStatu2">快递单号：</span><span id="orderNumber">' + data.result.express_num + '</span></p>'
+						tm += '<p class="logStaBox"><span class="logStatus">状态：</span><span class="logStatus1">' + data.result.express.state + '</span></p><p class="logStaBox1"><span class="logStatu2">快递单号：</span><span id="orderNumber">' + data.result.express_num + '</span></p><p class="logStaBox2"><span class="logStatu2">订单编号：</span><span id="orderNumber">' + data.result.sub_order_id + '</span></p>'
 						$('.logisticBox').append(tm);
 						var con = data.result.express.data;
 						var express_name = data.result.express_name;//快递名称
