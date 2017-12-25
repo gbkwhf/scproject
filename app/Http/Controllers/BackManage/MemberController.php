@@ -127,7 +127,7 @@ class MemberController  extends Controller
 	 		'amount'=>$user_money,
 	 		'pay_describe'=>'系统返利',
 	 		'created_at'=>date('Y-m-d H:i:s',time()),
-	 		'type'=>1,
+	 		'type'=>3,
  		];
  		$user_insert=\App\BillModel::insert($params);
  		$user_update=\App\MemberModel::where('user_id',$val->user_id)->increment('balance',$user_money);
