@@ -11,7 +11,28 @@ html,body{
 	font-size: 13px;
 	font-weight: 400;
 	color: #999;
-	padding: 25px 0px 15px 20px;
+	padding: 5px 0px 5px 20px;
+}
+.information p{
+	overflow: hidden;
+	
+}
+.information .span1{
+	padding-left: 7px;
+	color: #333;
+	font-weight: bold;
+}
+.img1{
+	
+	width: 20px;
+	height: 12px;
+	margin-top: 17px;
+	margin-left: 16px;
+}
+.img2{
+	float: right;
+	padding-top: 17px;
+	padding-right: 11px;
 }
 .main{
 	border: 1px solid #e6e6e6;

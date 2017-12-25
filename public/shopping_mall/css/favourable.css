@@ -17,18 +17,21 @@ input[type="button"] {
 
 
 /*----------------内容开始-------------*/
-.favBanner{
+
+.favBanner {
 	height: 131px;
 	background: url(../images/scBanner.png) no-repeat;
 	background-size: 100% 100%;
 }
-.navBox{
+
+.navBox {
 	height: 45px;
 	background: url(../images/navigationBj.png) no-repeat;
 	background-size: 100% 100%;
 	overflow: hidden;
 }
-.silverMember{
+
+.silverMember {
 	width: 60px;
 	height: 28px;
 	background: url(../images/member.png) no-repeat;
@@ -41,7 +44,10 @@ input[type="button"] {
 	color: #ffffff;
 	float: left;
 }
-.goldMember,.platinumMember,.drillMember{
+
+.goldMember,
+.platinumMember,
+.drillMember {
 	width: 60px;
 	height: 28px;
 	background: url(../images/member.png) no-repeat;
@@ -54,13 +60,14 @@ input[type="button"] {
 	color: #ffffff;
 	float: left;
 }
-.concentBox{
+
+.concentBox {
 	background: url(../images/nrBg_02.png) no-repeat;
 	background-size: 100% 100%;
 	overflow: hidden;
-	
 }
-.conHead{
+
+.conHead {
 	width: 138px;
 	height: 26px;
 	background-color: #f2cf6a;
@@ -72,7 +79,8 @@ input[type="button"] {
 	line-height: 26px;
 	color: #d0121e;
 }
-.sliverBox{
+
+.sliverBox {
 	width: 250px;
 	height: 74px;
 	background: url(../images/memBox.png) no-repeat;
@@ -80,25 +88,30 @@ input[type="button"] {
 	margin: 0 auto;
 	margin-top: 21px;
 }
-.messages{
+
+.messages {
 	float: left;
 	padding-left: 45px;
 }
-.messages p span{
+
+.messages p span {
 	padding-left: 17px;
 }
-.titles{
-	padding-top:10px ;
+
+.titles {
+	padding-top: 10px;
 	font-size: 10px;
 	color: #000000;
 }
-.giveaway{
+
+.giveaway {
 	color: #fd2e25;
 	font-size: 13px;
 	padding-top: 8px;
 	font-weight: bold;
 }
-.gives{
+
+.gives {
 	width: 34px;
 	height: 34px;
 	float: right;
@@ -110,9 +123,9 @@ input[type="button"] {
 	line-height: 36px;
 	text-align: center;
 	color: #ffffff;
-	
 }
-.goldBox{
+
+.goldBox {
 	width: 250px;
 	height: 101px;
 	background: url(../images/give2.png) no-repeat;
@@ -120,13 +133,15 @@ input[type="button"] {
 	margin: 0 auto;
 	margin-top: 15px;
 }
-.giveaway2{
+
+.giveaway2 {
 	color: #fd2e25;
 	font-size: 13px;
-/*	padding-top: 4px;*/
+	/*	padding-top: 4px;*/
 	font-weight: bold;
 }
-.platBox{
+
+.platBox {
 	width: 250px;
 	height: 144px;
 	background: url(../images/give3.png) no-repeat;
@@ -134,7 +149,8 @@ input[type="button"] {
 	margin: 0 auto;
 	margin-top: 15px;
 }
-.dirBox{
+
+.dirBox {
 	width: 250px;
 	height: 193px;
 	background: url(../images/give4.png) no-repeat;
@@ -143,7 +159,8 @@ input[type="button"] {
 	margin-top: 15px;
 	margin-bottom: 22px;
 }
-.footerBox{
+
+.footerBox {
 	width: 120px;
 	height: 61px;
 	/*background-color: greenyellow;*/
@@ -151,15 +168,18 @@ input[type="button"] {
 	margin-right: 10px;
 	margin-bottom: 35px;
 }
-.comPanyLogo{
+
+.comPanyLogo {
 	width: 60px;
 	height: 60px;
 	float: left;
 }
-.comPanyLogo img{
+
+.comPanyLogo img {
 	width: 100%;
 }
-.comName{
+
+.comName {
 	font-size: 12px;
 	color: #ffffff;
 	line-height: 60px;
@@ -167,6 +187,8 @@ input[type="button"] {
 	float: left;
 	font-weight: bold;
 }
+
+
 /*.footerBox img{
 	width: 20%;
 	margin-bottom: 80px;

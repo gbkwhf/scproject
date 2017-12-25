@@ -12,7 +12,10 @@
 <body>
 	<div class="wrapper">
 		<div class="order-details">
-			<!--<h4>订单号：15515205445214</h4>
+			<!--<div class="information" onclick="location.href='logistical.php'">
+				<p><img src="images/wucar.png" class="img1"/><span class="span1">配送完成</span><img src="images/returns.png" width="9" height="16" class="img2"/></p>
+				<h4>订单号：15515205445214</h4>
+			</div>
 			<div class="main">
 				<div class="user-info">
 					<p>王洪强<span>18344555589</span></p>
@@ -74,7 +77,9 @@
 			if(data.code==1){
 				console.log(data);
 				html='';
-				html+='<h4>订单号：'+data.result.sub_order_id+'</h4>'+
+				html+='<div class="information" onclick="goUrl()" subId="'+data.result.sub_order_id+'">'+
+				'<p><img src="images/wucar.png" class="img1"/><span class="span1">'+data.result.express.state+'</span><img src="images/returns.png" width="9" height="16" class="img2"/></p>'+
+				'<h4>快递单号：'+data.result.express_num+'</h4><h4>订单编号：'+data.result.sub_order_id+'</h4></div>'+
 				'<div class="main">'+
 				'	<div class="user-info">'+
 				'		<p>'+data.result.name+'<span>'+data.result.mobile+'</span></p>'+
@@ -143,7 +148,11 @@
 			
 		});
 	})
-	
+	function goUrl(){
+		var subId=$_GET['sub_order_id'];
+//		console.log(subId);
+		location.href="logistical.php?sub_order_id="+subId;
+	}
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
