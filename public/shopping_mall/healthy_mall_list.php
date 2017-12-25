@@ -178,6 +178,9 @@
 				if(first_id == 4) { //1返利区，0非返利区
 					
 					var shopName = $(".insearch").val();
+					
+//					var nn=decodeURIComponent(shopName);
+//					console.log(nn);
 					console.log(shopName);
 					if(shopName == "" || shopName == undefined) {
 						layer.msg("商品名称不能为空");

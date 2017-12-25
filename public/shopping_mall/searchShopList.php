@@ -40,13 +40,14 @@
 		$('.wrapper').height(winH);
 		var vid = $_GET['vid']; //获取vid
 		var shopName = $_GET['shopName']; //获取商品名
+		var shopNames=decodeURIComponent(shopName);
 		if(vid == 0) {
 			$.ajax({ //获取搜索的列表信息
 				type: "post",
 				dataType: 'json',
 				url: commonsUrl + 'api/gxsc/searchgoods' + versioninfos,
 				data: {
-					"name": shopName, //请求参数  商品名
+					"name": shopNames, //请求参数  商品名
 					"vip": 0 //非会员区
 				},
 				success: function(data) {
@@ -86,7 +87,7 @@
 				dataType: 'json',
 				url: commonsUrl + 'api/gxsc/searchgoods' + versioninfos,
 				data: {
-					"name": shopName, //请求参数  商品名
+					"name": shopNames, //请求参数  商品名
 					"vip": 1 //会员区
 				},
 				success: function(data) {
