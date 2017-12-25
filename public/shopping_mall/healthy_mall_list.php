@@ -169,6 +169,8 @@
 		$(function() {
 			if(first_id == 4){
 				$(".topBox").show();
+			}else{
+				$(".topBox").next().removeClass("content").addClass("contents");
 			}
 			$(".searchSubmit").click(function() {
 				var first_id = $_GET['first_id'];

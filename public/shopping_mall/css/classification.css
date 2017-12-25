@@ -67,7 +67,14 @@ input[type="button"] {
 	float: right;
 	margin-top: 9px;
 }
+
 /*--------------内容开始---------*/
+.contents{
+	padding: 15px 3% 0 0;
+	overflow: hidden;
+	height: 96%;
+	clear: both;
+}
 .content{
 	padding: 65px 3% 0 0;
 	overflow: hidden;
