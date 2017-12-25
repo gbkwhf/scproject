@@ -185,7 +185,6 @@
 						location.href = "searchShopList.php?vid=0&shopName=" + shopName;
 					}
 				} else {
-//					$(".topBox").hide();
 					var shopName = $(".insearch").val();
 					console.log(shopName);
 					if(shopName == "" || shopName == undefined) {

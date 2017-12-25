@@ -75,14 +75,13 @@
 									"</div>" +
 									"</li>";
 							});
-							$('#lofinContext').append(html); ////动态物流信息
+							$('#lofinContext').append(html); //动态物流信息
 							var val = "<div class='liTopWap'><div class='liTopWap1'><div class='liTopWap3'></div></div></div><div class='liLine'></div>";
 							//这是最后那一个没有线条
 							var lastVal = "<div class='liTopWap3 liTopWap4'></div>";
 							$(".liBox:first").find('.liBoxLeft').html(val);
 							$(".liBox:first").find('.liBoxRight').css('color', '#5ac8af');
-							$(".liBox:last").find('.liBoxLeft').html(lastVal);
-							//							$('.wrapper').append(html); 
+							$(".liBox:last").find('.liBoxLeft').html(lastVal); 
 						} else {
 							$('.wrapper').html('<p>暂时没有您的物流信息哦！</p>');
 							$('.wrapper p').css({
