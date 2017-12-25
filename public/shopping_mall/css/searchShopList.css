@@ -59,6 +59,7 @@ input[type="button"] {
 	height: 37px;
 	padding-top: 24px;
 	padding-right: 10px;
+	line-height: 20px;
 	overflow: hidden;
 	text-overflow:ellipsis;
 	/*white-space: nowrap;*/
