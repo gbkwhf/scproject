@@ -53,10 +53,10 @@
 				<div class="messages">
 					<p class="titles">钻卡会员</p>
 					<p class="giveaway">牛肉三斤<span>羊腿一只</span></p>
-					<p class="giveaway2">茶叶一盒<span>苹果一箱</span></p>
+					<p class="giveaway2">三黄鸡一只<span>苹果一箱</span></p>
 					<p class="giveaway2">花生五斤<span>土鸡蛋一箱</span></p>
 					<p class="giveaway2">大枣两袋<span>糖块两斤</span></p>
-					<p class="giveaway2">三黄鸡一只<span>蜂蜜一公斤</span></p>
+					<p class="giveaway2">茶叶一盒<span>蜂蜜一公斤</span></p>
 					<p class="giveaway2">大雁一只<span>瓜子五斤</span></p>
 					<p class="giveaway2">带鱼一箱<span>餐具一套</span></p>
 					<p class="giveaway2">茅台两瓶</p>
