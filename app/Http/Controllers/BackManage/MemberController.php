@@ -142,4 +142,50 @@ class MemberController  extends Controller
  		return redirect('manage/sendmemberbalance');
  	}
  }
+ 
+ 
+ public  function CashBackList (Request $request){
+ 
+ 
+ 	$member=\App\BillModel::leftjoin('ys_member','ys_member.user_id','=','ys_bills.user_id')->orderBy('ys_bills.created_at','desc');
+ 		
+ 	$search=[];
+ 	if ($request->start != ''){
+ 		$member->where('ys_bills.created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$member->where('ys_bills.created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if ($request->mobile != ""){
+ 		$member->where('ys_member.mobile','like','%'.$request->mobile.'%');
+ 		$search['mobile']=$request->mobile;
+ 	}
+ 	if ($request->name != ""){
+ 		$member->where('ys_member.name','like','%'.$request->name.'%');
+ 		$search['name']=$request->name;
+ 	}
+ 	if ($request->type != ""){
+ 		$member->where('ys_bills.type','=',$request->type);
+ 		$search['type']=$request->type;
+ 	} 	
+ 	$data = $member->select('ys_member.name','ys_member.mobile','amount','pay_describe','type','ys_bills.created_at') ->paginate(10);
+ 	
+
+ 	
+ 	
+ 	$total=$member->sum('ys_bills.amount');
+ 	
+ 	//1会员返利，2邀请返利，3系统返现
+ 	$typeArr=array(
+ 			'1'=>'购物返现',
+ 			'2'=>'邀请返现',
+ 			'3'=>'系统返现',
+ 	);
+ 	foreach ($data as &$val){
+ 		$val['type']=$typeArr[$val['type']];
+ 	}
+ 	return view('membercashbacklist',['data'=>$data,'search'=>$search,'total'=>$total]);
+ }
 }

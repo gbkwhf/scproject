@@ -719,6 +719,11 @@ class CreateOrdersController extends Controller{
         $express=null;
         if($base_info->express_name !=''){
         	$express=\App\ExpressModel::where('id',$base_info->express_name)->first();
+        	if(empty($express)){
+        		$express=(object)array();
+        		$express->name='';
+        		$express->e_name='';
+        	}
         }
         
   
@@ -745,12 +750,20 @@ class CreateOrdersController extends Controller{
         	$state_arr=[0=>'在途中',1=>'已发货',2=>'疑难件',3=>'已签收',4=>'已退货'];
         	$express_info['state']=$state_arr[$express_arr->state];
         	$express_info['data']=$express_arr->data;
+        }else{        	
+        	if($base_info->express_name ==''){
+        		$express_info['state']='未发货';
+        		$express_info['data']=[];
+        	}else{
+        		$express_info['state']='未查询到快递信息';
+        		$express_info['data']=[];        		
+        	}
         }
         
         
 
         //物流信息
-        $data['express']=$express_arr?$express_info:'';
+        $data['express']=$express_info;
 
         return  $this->respond($this->format($data));
 
@@ -804,6 +817,11 @@ class CreateOrdersController extends Controller{
         	$express=null;
         	if($v->express_name !=''){
         		$express=\App\ExpressModel::where('id',$v->express_name)->first();
+        		if(empty($express)){
+        			$express=(object)array();
+        			$express->name='';
+        			$express->e_name='';
+        		}
         	}
         	$express_arr=null;
         	if($express){
@@ -813,7 +831,15 @@ class CreateOrdersController extends Controller{
         		$state_arr=[0=>'在途中',1=>'已发货',2=>'疑难件',3=>'已签收',4=>'已退货'];
         		$express_info['state']=$state_arr[$express_arr->state];
         		$express_info['data']=$express_arr->data;
-        	}
+        	}else{        	
+	        	if($v->express_name ==''){
+	        		$express_info['state']='未发货';
+	        		$express_info['data']=[];
+	        	}else{
+	        		$express_info['state']='未查询到快递信息';
+	        		$express_info['data']=[];        		
+	        	}
+        }
         	
         	
             $make_arr = [
@@ -821,7 +847,7 @@ class CreateOrdersController extends Controller{
                 'express_name' => empty($v->express_name) ? "" : $express->name, //快递名称
                 'express_num' => is_null($v->express_num) ? "" : $v->express_num, //快递单号
                 'goods_list' =>[], //子订单包含的商品列表
-                'express'=>$express_arr?$express_info:''
+                'express'=>$express_info,
             ];
             array_push($tmp_info,$make_arr);
         }

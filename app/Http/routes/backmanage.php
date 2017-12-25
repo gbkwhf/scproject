@@ -54,6 +54,7 @@
 		Route::get('manage/joinsupplierdetial/{id}', 'SupplierController@joinSupplierDetial');
 		Route::post('manage/joinsupplierexcel', 'SupplierController@joinSupplierExcel');
 		Route::post('manage/joinsuppliersave', 'SupplierController@joinSupplierSave');
+		Route::get('member/cashbacklist', 'MemberController@CashBackList');
 		
 		
 		

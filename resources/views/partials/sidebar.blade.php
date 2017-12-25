@@ -35,6 +35,7 @@
             <li @if (in_array($current_route_2,['manage/suppliercashlist','manage/suppliercashedit'])) class="active" @endif @if (!in_array(9,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/suppliercashlist') }}"><i class="fa fa-edit"></i><span>供应商提现</span></a></li>
             <li @if (in_array($current_route_2,['manage/joinsupplier','manage/joinsupplierdetial'])) class="active" @endif @if (!in_array(10,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/joinsupplier') }}"><i class="fa fa-edit"></i><span>供应商加盟</span></a></li>
             <li @if (in_array($current_route_2,['manage/managepassword'])) class="active" @endif @if (!in_array(11,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/managepassword') }}"><i class="fa fa-edit"></i><span>修改密码</span></a></li>
+            <li @if (in_array($current_route_2,['member/cashbacklist'])) class="active" @endif @if (!in_array(12,$power_arr)) style="display:none"  @endif   ><a href="{{ url('member/cashbacklist') }}"><i class="fa fa-edit"></i><span>返现列表</span></a></li>
 
             
 
