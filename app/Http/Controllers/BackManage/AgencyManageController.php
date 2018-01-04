@@ -144,7 +144,9 @@ class AgencyManageController  extends Controller
  	$result=\App\EmployeeModel::withTrashed()->updateOrcreate(['user_id'=>$user_info->user_id],$params);
 	$agency_info=\App\AgencyModel::find($agency_id);
 	 if($agency_info->agency_type==1){
-		\App\MemberModel::where('user_id',$user_info->user_id)->update(['agency_type'=>1]);
+		\App\MemberModel::where('user_id',$user_info->user_id)->update(['cash_back'=>1]);
+	 }elseif ($agency_info->agency_type==2){
+		 \App\MemberModel::where('user_id',$user_info->user_id)->update(['cash_back'=>0]);
 	 }
 
 
