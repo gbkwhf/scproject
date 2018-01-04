@@ -57,7 +57,16 @@
                   <div class="col-sm-10">
                       <input type="text" class="form-control" name="account" placeholder="Enter ..." value="{{ $data->account or '' }}">
                   </div>
-                </div>                
+                </div>  
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="inputEmail3">经销商类型</label>
+                  <div class="col-sm-10">
+                      <select name="agency_type"  class="form-control  " style="float:left;width:150px">
+                          <option @if(!isset($data) || $data->agency_type==1) selected   @endif value=1>普通经销商</option>
+                          <option @if(isset($data) && $data->agency_type==2) selected   @endif value=2>非返现经销商</option>
+                      </select>
+                  </div>
+                </div>                               
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="inputEmail3">状态</label>
                   <div class="col-sm-10">
@@ -66,7 +75,7 @@
                           <option @if(isset($data) && $data->state==0) selected   @endif value=0>禁用</option>
                       </select>
                   </div>
-                </div>                
+                </div>                                
                                                                                                                  
               </div>
               <!-- /.box-body -->
