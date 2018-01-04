@@ -90,8 +90,8 @@
             </div>
             <!-- /.box-body -->
             
-            <div class="box-footer clearfix">总数：{{$data->total()}}条 ,总金额：{{$total_amount or 0}}元<br>
-            	{!! $data->appends($search)->render() !!}
+            <div class="box-footer clearfix">总数：@if($data) {{$data->total()}} @else 0 @endif  条 ,总金额：{{$total_amount or 0}}元<br>
+                @if($data) {!! $data->appends($search)->render() !!} @endif
             </div>
           </div>
           <!-- /.box -->          

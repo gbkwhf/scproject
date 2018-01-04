@@ -23,7 +23,8 @@ class AgencyManageController  extends Controller
  	
  	
  	$employees=\App\EmployeeModel::withTrashed()->where('agency_id',$agency_id)->selectRaw('GROUP_CONCAT(user_id) as employees')->get();
- 	
+	 $search=array();
+	 $total_amount=0;
  	if($employees && $employees[0]->employees){
  		
  		
@@ -43,7 +44,7 @@ class AgencyManageController  extends Controller
  		
  		
  		//付款时间，订单号，用户手机，订单状态，员工名称
- 		$search=array();
+
 
  		if ($request->start != ''){
  			$par->where('ys_base_order.pay_time','>=',$request->start.' 00:00:00');
@@ -134,12 +135,20 @@ class AgencyManageController  extends Controller
  		session()->flash('message','已是本店员工');
  		return back();
  	}
+
  	$params=array(
  			'user_id'=>	$user_info->user_id,
  			'agency_id'=>$agency_id,
  			'deleted_at'=>null,
  	);
  	$result=\App\EmployeeModel::withTrashed()->updateOrcreate(['user_id'=>$user_info->user_id],$params);
+	$agency_info=\App\AgencyModel::find($agency_id);
+	 if($agency_info->agency_type==1){
+		\App\MemberModel::where('user_id',$user_info->user_id)->update(['agency_type'=>1]);
+	 }
+
+
+
  	return redirect('agency/setemployee');
  }
  //删除员工

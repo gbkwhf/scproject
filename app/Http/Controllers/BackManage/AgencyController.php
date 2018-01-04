@@ -32,8 +32,13 @@ class AgencyController  extends Controller
  		0=>'禁用',
  		1=>'正常',
  	];
+	 $agency_arr=[
+		 1=>'普通经销商',
+		 2=>'非返现经销商',
+	 ];
  	foreach ($data as $val){
  		$val['state']=$state_arr[$val['state']];
+		$val['agency_type']=$agency_arr[$val['agency_type']];
  	}
 
 	return view('agencylist',['data'=>$data,'search'=>$search]);
@@ -62,6 +67,7 @@ class AgencyController  extends Controller
                 'mobile'=>$request->mobile,
                 'state'=>$request->state,
         		'account'=>$request->account,
+				'agency_type'=>$request->agency_type,
         );
         if(!empty($request->password)){
             $params['password']=md5($request->password);
@@ -104,6 +110,7 @@ class AgencyController  extends Controller
                 'password'=>md5($request->password),
         		'account'=>$request->account,
         		'state'=>$request->state,
+				'agency_type'=>$request->agency_type,
         );
          //dd($params);
          $res = \App\AgencyModel::create($params);

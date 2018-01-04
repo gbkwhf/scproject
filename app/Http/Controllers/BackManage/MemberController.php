@@ -112,6 +112,7 @@ class MemberController  extends Controller
  	//指定用户返利
  	$personal=\App\BaseOrderModel::where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)
 		 	->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+			->where('ys_member.cash_back',1)
 		 	->where('ys_base_order.state',1)
 		 	->where('rebate_num','>',0)
 		 	->groupBy('ys_base_order.user_id')

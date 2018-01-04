@@ -54,6 +54,7 @@
                 <tbody><tr>
                   <th>名称</th>
                   <th>手机号</th>
+                  <th>经销商类型</th>
                   <th>佣金</th>
                   <th>状态</th> 
                    <th>操作</th>
@@ -62,6 +63,7 @@
 	    			<tr>
 	                  <td>{{ $agency->name }}</td>
 	                  <td>{{ $agency->mobile }}</td>
+                      <td>{{ $agency->agency_type}}</td>
 	                  <td>{{ $agency->balance}}</td>
 	                  <td>{{ $agency->state }}</td>                  
 	                  <td>

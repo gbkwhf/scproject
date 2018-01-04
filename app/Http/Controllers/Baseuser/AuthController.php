@@ -120,8 +120,10 @@ class AuthController extends Controller
         if(!empty($request->invite_id)){
             $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
             $invite_id  = empty($is_true) ? "" : $request->invite_id;
+            $cash_back=$is_true->cash_back;
         }else{
             $invite_id = "";
+            $cash_back=1;
         }
 
 
@@ -136,6 +138,7 @@ class AuthController extends Controller
             'name' => empty($request->name) ? '游客' : $request->name,
             'sex' => empty($request->sex) ? '0' : $request->sex,
             'invite_id' => $invite_id,
+            'cash_back' => $cash_back,
         ]);
 
         $update =  UserPincodeHistoryModel::where('id',$max->id)->update([
