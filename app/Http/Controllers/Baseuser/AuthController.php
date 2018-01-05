@@ -1091,6 +1091,7 @@ class AuthController extends Controller
             $openId = "";
         }
 
+
         //获取分配服务器信息
         $serverArr = $this->getDispatchServerInfo('ys');
             /**
@@ -1100,11 +1101,12 @@ class AuthController extends Controller
 
 
             \DB::beginTransaction(); //开启事务
+            
+            $in_info=\App\MemberModel::where('user_id',$invite_id)->first();
 
             //验证通过，则插入数据库，并且更改相应逻辑操作
            if(empty($is_exist)){ //如果系统内未找到该openId，表示用户自己主动注册,因此该openId其实就是用户本身的
                $insert1 = \DB::table('ys_member')->insertGetId([
-
                    'mobile' => $request->un,
                    'password' => md5(md5('123456789')),
                    'created_at' => date('Y-m-d H:i:s'),
@@ -1112,7 +1114,7 @@ class AuthController extends Controller
                    'image' => $weixin_info['image_name'],
                    'sex' =>$weixin_info['sex'],
                    'invite_id' => $invite_id,
-               		'cash_back'=>1,
+               		'cash_back'=>$in_info->cash_back,
                ]);
 
                $insert2 = \DB::table('ys_session_info')->insert([
@@ -1133,10 +1135,6 @@ class AuthController extends Controller
 
 
            }else{ //如果系统内已经有该openId，则表示是员工替用户注册的,因此该openId其实是员工的
-           	
-           	$u_info=\App\Session::where('openId',$request->openId)
-           				->leftjoin('ys_member','ys_member.user_id','=','ys_session_info.user_id')
-           				->first();
                $insert1 = \DB::table('ys_member')->insertGetId([
                    'mobile' => $request->un,
                    'password' => md5(md5('123456789')),
@@ -1144,7 +1142,7 @@ class AuthController extends Controller
                    'name' => "游客".substr(time(),0,5),
                    'sex' =>0,
                    'invite_id' => $invite_id,
-               	   'cash_back'=>$u_info->cash_back,
+               	   'cash_back'=>$in_info->cash_back,
                ]);
 
                $insert2 = \DB::table('ys_session_info')->insert([
