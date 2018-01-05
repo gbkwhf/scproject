@@ -72,7 +72,7 @@ class AuthController extends Controller
     }
 
     public function testsend(){
-    	sendSms('15353552324','11');
+    	//sendSms('15353552324','11');
     }
 
 
@@ -115,14 +115,15 @@ class AuthController extends Controller
         if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
             return $this->setStatusCode(1008)->respondWithError($this->message);
         }
-        $cash_back=1;
+        
         //检测邀请人是否存在，以及邀请人id是否真实有效
         if(!empty($request->invite_id)){
             $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
             $invite_id  = empty($is_true) ? "" : $request->invite_id;
             $cash_back=$is_true->cash_back;
         }else{
-            $invite_id = "";            
+            $invite_id = "";  
+            $cash_back=1;
         }
 
 
@@ -860,11 +861,14 @@ class AuthController extends Controller
 
             //检测邀请人是否存在，以及邀请人id是否真实有效
             if(!empty($request->invite_id)){
-                $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
-                $invite_id  = empty($is_true) ? "" : $request->invite_id;
+            	$is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
+            	$invite_id  = empty($is_true) ? "" : $request->invite_id;
+            	$cash_back=$is_true->cash_back;
             }else{
-                $invite_id = "";
+            	$invite_id = "";
+            	$cash_back=1;
             }
+            
 
             /**
              * 这里请求微信服务器，获取用户头像和姓名，然后把头像下载下来放到本地服务器
@@ -884,6 +888,7 @@ class AuthController extends Controller
                 'image' => $weixin_info['image_name'],
                 'sex' =>$weixin_info['sex'],
                 'invite_id' => $invite_id,
+            	'cash_back'=>$cash_back,	
             ]);
 
 
@@ -1107,6 +1112,7 @@ class AuthController extends Controller
                    'image' => $weixin_info['image_name'],
                    'sex' =>$weixin_info['sex'],
                    'invite_id' => $invite_id,
+               		'cash_back'=>1,
                ]);
 
                $insert2 = \DB::table('ys_session_info')->insert([
@@ -1127,14 +1133,18 @@ class AuthController extends Controller
 
 
            }else{ //如果系统内已经有该openId，则表示是员工替用户注册的,因此该openId其实是员工的
+           	
+           	$u_info=\App\Session::where('openId',$request->openId)
+           				->leftjoin('ys_member','ys_member.user_id','=','ys_session_info.user_id')
+           				->first();
                $insert1 = \DB::table('ys_member')->insertGetId([
-
                    'mobile' => $request->un,
                    'password' => md5(md5('123456789')),
                    'created_at' => date('Y-m-d H:i:s'),
                    'name' => "游客".substr(time(),0,5),
                    'sex' =>0,
                    'invite_id' => $invite_id,
+               	   'cash_back'=>$u_info->cash_back,
                ]);
 
                $insert2 = \DB::table('ys_session_info')->insert([
