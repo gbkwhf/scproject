@@ -21,6 +21,7 @@
 						<thead>
 						<tr>
 							<th>日期</th>
+							<th>会员数</th>
 							<th>订单数</th>
 						</tr>
 						</thead>
@@ -28,24 +29,29 @@
 						<tbody>
 						<tr>
 							<td>总数</td>
+							<td>{{$order_num['member']}}</td>
 							<td>{{$order_num['order']}}</td>
 						</tr>
 						<tr>
 							<td>今日</td>
+							<td>{{$order_num['member_day']}}</td>
 							<td>{{$order_num['order_day']}}</td>
 
 						</tr>
 						<tr>
 							<td>昨日</td>
+							<td>{{$order_num['member_yesterday']}}</td>
 							<td>{{$order_num['order_yesterday']}}</td>
 
 						</tr>
 						<tr>
 							<td>本周</td>
+							<td>{{$order_num['member_monday']}}</td>
 							<td>{{$order_num['order_monday']}}</td>
 						</tr>
 						<tr>
 							<td>本月</td>
+							<td>{{$order_num['member_month']}}</td>
 							<td>{{$order_num['order_month']}}</td>
 						</tr>
 						</tbody>

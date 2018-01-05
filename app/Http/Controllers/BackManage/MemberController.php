@@ -17,9 +17,7 @@ class MemberController  extends Controller
 
 
  public  function memberList (Request $request){
- 	
- 	
- 	
+
  	//dd(Auth::user());
  	 $member=\App\MemberModel::orderBy('created_at','desc');
  	 
@@ -91,7 +89,11 @@ class MemberController  extends Controller
  	$end_time=date('Y-m-d',strtotime(date('Y-m-d',strtotime('-1 days')))).' 23:59:59';
  	
  	
- 	$total_num=\App\BaseOrderModel::where('state',1)->where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)->sum('rebate_num');
+ 	$total_num=\App\BaseOrderModel::leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+ 					->where('ys_member.cash_back',1)
+ 					->where('ys_base_order.state',1)->where('pay_time','>=',$start_time)
+ 					->where('ys_base_order.pay_time','<',$end_time)
+ 					->sum('rebate_num');
 
  	
  	return view('sendmemberbalace',['total'=>$total_num]);
@@ -118,6 +120,7 @@ class MemberController  extends Controller
 		 	->groupBy('ys_base_order.user_id')
 		 	->selectRaw('ys_base_order.user_id,sum(ys_base_order.rebate_num) as rebate_num')
 		 	->get();
+
  	
  	$user_insert=true;
  	$user_update=true;

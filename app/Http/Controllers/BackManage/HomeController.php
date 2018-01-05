@@ -91,9 +91,37 @@ class HomeController extends Controller
 			    	->where('ys_base_order.state','=',1)
 			    	->where('pay_time','>=',$month)
 			    	->count();    	    	    	
+    	//所有会员sql
+    	$member = \App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 						->whereNotNull('ys_member.invite_id')
+ 						->where('ys_employee.agency_id',$agency_id)
+    					->count();//所有会员总数
     	
-
+    	
+    	
+    	$member_day = \App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 						->whereNotNull('ys_member.invite_id')
+ 						->where('ys_employee.agency_id',$agency_id)
+    					->where('created_at','>=',$time)->count();//今天所有会员
+    	$member_yesterday = \App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 						->whereNotNull('ys_member.invite_id')
+ 						->where('ys_employee.agency_id',$agency_id)
+    					->where('created_at','>=',$yesterday)->where('created_at','<',$time)->count();//昨天所有会员
+    	$member_monday = \App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 						->whereNotNull('ys_member.invite_id')
+ 						->where('ys_employee.agency_id',$agency_id)
+    					->where('created_at','>=',$monday)->count();//本周所有会员
+    	$member_month = \App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 						->whereNotNull('ys_member.invite_id')
+ 						->where('ys_employee.agency_id',$agency_id)
+    					->where('created_at','>=',$month)->count();//本月所有会员
+    	
     	$order_num =array(
+    			'member'=> $member,
+    			'member_day'=> $member_day,
+    			'member_yesterday'=> $member_yesterday,
+    			'member_monday'=> $member_monday,
+    			'member_month'=> $member_month,    			
     			'order'=> $order,
     			'order_day'=> $order_day,
     			'order_yesterday'=> $order_yesterday,

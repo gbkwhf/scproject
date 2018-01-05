@@ -425,6 +425,64 @@ class AgencyManageController  extends Controller
  } 
  
  
+ public  function memberList (Request $request){
+ 
+ 
+ 	$agency_id=\Session::get('role_userid');
+ 	//dd(Auth::user());
+ 	$member=\App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 						->whereNotNull('ys_member.invite_id')
+ 						->where('ys_employee.agency_id',$agency_id)
+ 						->orderBy('created_at','desc');
+ 		
+ 	$search=[];
+ 	if ($request->start != ''){
+ 		$member->where('created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$member->where('created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if ($request->mobile != ""){
+ 		$member->where('mobile','like','%'.$request->mobile.'%');
+ 		$search['mobile']=$request->mobile;
+ 	}
+ 	if ($request->name != ""){
+ 		$member->where('name','like','%'.$request->name.'%');
+ 		$search['name']=$request->name;
+ 	}
+ 	$data = $member ->paginate(10);
+ 	$sexArr=array(
+ 			'1'=>'男',
+ 			'2'=>'女',
+ 			'0'=>'未选择',
+ 	);
+ 	foreach ($data as &$val){
+ 		if ($val['sex'] == ''){
+ 			$val['sex'] = 0;
+ 		}
+ 		$val['sex']=$sexArr[$val['sex']];
+ 		$val['state']=$val['state']==1?'正常':'禁止登陆';
+ 	}
+ 	return view('agencymemberlist',['data'=>$data,'search'=>$search]);
+ }
+ 
+ public  function memberEdit (Request $request){
+ 
+ 
+ 
+ 	$data=\App\MemberModel::where('user_id',$request->id)->first();
+ 
+ 	$sexArr=array(
+ 			'1'=>'男',
+ 			'2'=>'女',
+ 			'0'=>'未选择',
+ 	);
+ 	if ($data['sex']==''){$data['sex']=0;}
+ 	$data['sex']=$sexArr[$data['sex']];
+ 	return view('agencymemberedit',['data'=>$data]);
+ }
  
 
 }

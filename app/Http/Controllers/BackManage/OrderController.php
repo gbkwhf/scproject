@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use App\GoodsImageModel;
+use DB;
 
 class OrderController extends Controller
 {
@@ -105,7 +106,6 @@ class OrderController extends Controller
 	}
 	//
 	public  function orderDetial (Request $request){
-		 
 		$data=\App\BaseOrderModel::where('id',$request->id)->first();
 	
 		$goods_name=\App\BaseOrderModel::where('ys_base_order.id',$request->id)
@@ -114,7 +114,6 @@ class OrderController extends Controller
 		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
 		->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
 		->get();
-	
 		$data['order_id']=$request->id;
 		$data['goods_name']=$goods_name[0]->goods_name;
 		$data['receive_address']=$data['receive_name'].'，'.$data['receive_mobile'].'，'.$data['receive_address'];

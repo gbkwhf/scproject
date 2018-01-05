@@ -47,6 +47,7 @@
 			<li @if (in_array($current_route_2,['agency/orderlist','agency/orderdetial'])) class="active" @endif @if (!in_array(50,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
 			<li @if (in_array($current_route_2,['agency/setemployee'])) class="active" @endif @if (!in_array(51,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/setemployee') }}"><i class="fa fa-edit"></i><span>员工管理</span></a></li>            
             <li @if (in_array($current_route_2,['agency/membercashlist'])) class="active" @endif @if (!in_array(52,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/membercashlist') }}"><i class="fa fa-edit"></i><span>提现流水</span></a></li>
+            <li @if (in_array($current_route_2,['agency/memberlist'])) class="active" @endif @if (!in_array(53,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agency/memberlist') }}"><i class="fa fa-edit"></i><span>会员列表</span></a></li>
             
             
         </ul><!-- /.sidebar-menu -->

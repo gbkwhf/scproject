@@ -115,15 +115,14 @@ class AuthController extends Controller
         if(($minute>$userful_time) || ($max->is_succ != 0)){ //表示该验证码已经失效
             return $this->setStatusCode(1008)->respondWithError($this->message);
         }
-
+        $cash_back=1;
         //检测邀请人是否存在，以及邀请人id是否真实有效
         if(!empty($request->invite_id)){
             $is_true = \DB::table('ys_member')->where('user_id',$request->invite_id)->first();
             $invite_id  = empty($is_true) ? "" : $request->invite_id;
             $cash_back=$is_true->cash_back;
         }else{
-            $invite_id = "";
-            $cash_back=1;
+            $invite_id = "";            
         }
 
 
