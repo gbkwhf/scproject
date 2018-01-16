@@ -29,8 +29,8 @@
     <!------------弹出层------------>
     <div class="popBox" style="display: none;">
     	<div class="close"></div>
-    	<div class="favourable" onclick="location.href='favourable.php'">
-    		<img src="images/tankBg.png"/>
+    	<div class="favourable" onclick="location.href='newYearActive.php'">
+    		<img src="images/tanKBj.png"/>
     	</div>
     </div>
     
@@ -89,12 +89,12 @@
             }
         })
     }
-//  $(function(){
-//  	$(".popBox").show();
-//  	$(".close").click(function(){
-//  		$(".popBox").hide();
-//  	})
-//  })
+    $(function(){
+    	$(".popBox").show();
+    	$(".close").click(function(){
+    		$(".popBox").hide();
+    	})
+    })
 </script>
 <style type="text/css">
     .layui-layer.layui-anim.layui-layer-page{

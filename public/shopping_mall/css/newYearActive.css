@@ -1,0 +1,102 @@
+html,
+body {
+	background: #edf0f2;
+	
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*-----------内容开始（放置背景图）-----------*/
+.wrapper{
+	min-height: 935px;
+	background: url(../images/newActiveBj.png) no-repeat;
+	background-size: 100% 100%;
+	overflow: hidden;
+}
+/*--------活动详情--------*/
+.activeDetails{
+	height: 49px;
+	background: url(../images/active1.png) no-repeat;
+	background-size: 100% 100%;
+	font-size: 22px;
+	line-height: 49px;
+	text-align: center;
+	color: #fdeed4;
+	margin-top: 401px;
+}
+.avContent{
+	width: 79.6%;
+	height: 141px;
+	background-color: #ea3c3e;
+	margin:0 auto;
+	margin-top: 23px;
+	color: #f6c39e;
+	font-size: 13px;
+}
+.p1{
+	padding-top: 27px;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+.p2{
+	text-align: center;
+	font-size: 16px;
+	color: #fba50e;
+	padding-top: 10px;
+}
+.times{
+	text-align: center;
+	padding-top: 9px;
+	font-size: 12px;
+}
+/*--------活动说明------------*/
+.activeDescription{
+	height: 49px;
+	background: url(../images/description.png) no-repeat;
+	background-size: 100% 100%;
+	font-size: 22px;
+	line-height: 49px;
+	text-align: center;
+	color: #fdeed4;
+	margin-top: 27px;
+}
+.description{
+	width: 79.6%;
+	height: 165px;
+	background-color: #ea3c3e;
+	margin:0 auto;
+	margin-top: 20px;
+	color: #f6c39e;
+	
+	
+}
+.destents{
+	padding-top: 18px;
+	color: #fba50e;
+	padding-left: 28px;
+	padding-right: 24px;
+	
+}
+.explation{
+	padding-left: 28px;
+	padding-top: 11px;
+	font-size: 12px;
+	padding-right: 24px;
+}
+.interpret{
+	float: right;
+	padding-right: 18px;
+	font-size: 12px;
+	padding-top: 8px;
+}
