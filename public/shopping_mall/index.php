@@ -89,12 +89,12 @@
             }
         })
     }
-    $(function(){
-    	$(".popBox").show();
-    	$(".close").click(function(){
-    		$(".popBox").hide();
-    	})
-    })
+//  $(function(){
+//  	$(".popBox").show();
+//  	$(".close").click(function(){
+//  		$(".popBox").hide();
+//  	})
+//  })
 </script>
 <style type="text/css">
     .layui-layer.layui-anim.layui-layer-page{
