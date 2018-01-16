@@ -73,7 +73,7 @@ input[type="button"] {
 }
 .description{
 	width: 79.6%;
-	height: 165px;
+	min-height: 175px;
 	background-color: #ea3c3e;
 	margin:0 auto;
 	margin-top: 20px;
@@ -99,4 +99,5 @@ input[type="button"] {
 	padding-right: 18px;
 	font-size: 12px;
 	padding-top: 8px;
+	padding-bottom: 22px;
 }
