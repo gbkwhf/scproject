@@ -47,14 +47,14 @@ html,body{
 	float: right;
 	background: url(../images/close.png) no-repeat;
 	background-size: 100% 100%;
-	margin-top: 125px;
+	margin-top: 120px;
 	margin-right: 25px;
 }
 .favourable{
 	width: 84%;
 	height: 225px;
 	margin: 0 auto;
-	margin-top: 160px;
+	margin-top: 145px;
 	
 }
 .favourable img{
