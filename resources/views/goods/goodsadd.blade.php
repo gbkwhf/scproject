@@ -92,7 +92,9 @@
                           <option value="2" @if(isset($data)) @if($data->first_id == 2) selected="selected" @endif @endif >家居家装</option>
                           <option value="3" @if(isset($data)) @if($data->first_id == 3) selected="selected" @endif @endif >健康商城</option>
                           <option value="4" @if(isset($data)) @if($data->first_id == 4) selected="selected" @endif @endif >非返利专区</option>
-                          <option value="5" @if(isset($data)) @if($data->first_id == 5) selected="selected" @endif @endif >伶医馆</option>							
+                          <option value="5" @if(isset($data)) @if($data->first_id == 5) selected="selected" @endif @endif >伶医馆</option>
+                          <option value="6" @if(isset($data)) @if($data->first_id == 6) selected="selected" @endif @endif >非遗景泰蓝</option>							
+                          							
                       </select>                      
 	                 @if(isset($data)) 
 	                     <select name="class_id" id="class_list" class="form-control  " style="float:left;width:150px">
