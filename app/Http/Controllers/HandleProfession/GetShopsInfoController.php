@@ -19,7 +19,7 @@ class GetShopsInfoController extends Controller{
     public function getSecondClass($first_id)
     {
 
-        if(($first_id>5) || ($first_id < 1)) return $this->setStatusCode(9999)->respondWithError($this->message);
+        if(($first_id>6) || ($first_id < 1)) return $this->setStatusCode(9999)->respondWithError($this->message);
 
         $data = \DB::table('ys_goods_class')->select('id as second_id','name as second_name')->where('first_id',$first_id)->orderBy('sort','asc')->get();
 
