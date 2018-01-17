@@ -137,9 +137,9 @@
 					<img src="images/linyi_shop.png" />
 					<em>聆医馆</em>
 				</li>
-				<li style="margin-right:9px;" onclick="waitting()">
-					<img src="images/life.png" />
-					<em>生活缴费</em>
+				<li style="margin-right:9px;" onclick="location.href='healthy_mall_list.php?first_id=6'">
+					<img src="images/yijing.png" />
+					<em>非遗景泰蓝</em>
 				</li>
 				<li onclick="waitting()">
 					<img src="images/Customer.png" />
