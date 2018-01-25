@@ -19,7 +19,7 @@
 				</div>
 				<div class="active2">
 					<div class="activeName"><p class="scoll2">白金卡</p></div>
-					<div class="activeContents2">赠送红包780元</div>
+					<div class="activeContents2">赠送红包788元</div>
 				</div>
 				<div class="active3">
 					<div class="activeName"><p class="scoll3">金卡</p></div>
