@@ -20,84 +20,105 @@ input[type="button"] {
 /*-----------内容开始（放置背景图）-----------*/
 .wrapper{
 	min-height: 935px;
-	background: url(../images/newActiveBj.png) no-repeat;
+	background: url(../images/activeBg.png) no-repeat;
 	background-size: 100% 100%;
 	overflow: hidden;
 }
 /*--------活动详情--------*/
 .activeDetails{
-	height: 49px;
-	background: url(../images/active1.png) no-repeat;
-	background-size: 100% 100%;
-	font-size: 22px;
-	line-height: 49px;
-	text-align: center;
-	color: #fdeed4;
-	margin-top: 401px;
+	width: 67%;
+	min-height: 470px;
+	margin: 0 auto;
+	margin-top: 405px;
+	overflow: hidden;
 }
-.avContent{
-	width: 79.6%;
-	height: 141px;
-	background-color: #ea3c3e;
-	margin:0 auto;
-	margin-top: 23px;
-	color: #f6c39e;
-	font-size: 13px;
+.active1{
+	height: 102px;
 }
-.p1{
-	padding-top: 27px;
-	padding-left: 24px;
-	padding-right: 24px;
+.active2{
+	height: 104px;
 }
-.p2{
-	text-align: center;
-	font-size: 16px;
-	color: #fba50e;
-	padding-top: 10px;
+.active3{
+	height: 104px;
 }
-.times{
-	text-align: center;
-	padding-top: 9px;
-	font-size: 12px;
-}
-/*--------活动说明------------*/
-.activeDescription{
-	height: 49px;
-	background: url(../images/description.png) no-repeat;
-	background-size: 100% 100%;
-	font-size: 22px;
-	line-height: 49px;
-	text-align: center;
-	color: #fdeed4;
+.activeName{
+	width: 22%;
+	float: left;
 	margin-top: 27px;
 }
-.description{
-	width: 79.6%;
-	min-height: 175px;
-	background-color: #ea3c3e;
-	margin:0 auto;
-	margin-top: 20px;
-	color: #f6c39e;
-	
-	
+.scoll{
+	width: 20px;
+	height: 44px;
+	background-color: #e90000;
+	text-align: center;
+	padding-top: 5px;
+	color: #ffffff;
+	font-size: 14px;
+	border-radius: 3px;
+	margin-left: 26px;
 }
-.destents{
-	padding-top: 18px;
-	color: #fba50e;
-	padding-left: 28px;
-	padding-right: 24px;
-	
+.activeContents{
+	width: 65%;
+	float: left;
+	text-align: center;
+	font-size: 13px;
+	padding-top: 38px;
 }
-.explation{
-	padding-left: 28px;
-	padding-top: 11px;
+.scoll2{
+	width: 20px;
+	height: 63px;
+	background-color: #e90000;
+	text-align: center;
+	padding-top: 5px;
+	color: #ffffff;
+	font-size: 14px;
+	border-radius: 3px;
+	margin-left: 26px;
+}
+.activeContents2{
+	height: 104px;
+	float: left;
+	text-align: center;
+	font-size: 13px;
+	line-height: 118px;
+	width: 65%;
+}
+.scoll3{
+	width: 20px;
+	height: 44px;
+	background-color: #e90000;
+	text-align: center;
+	padding-top: 5px;
+	color: #ffffff;
+	font-size: 14px;
+	border-radius: 3px;
+	margin-left: 26px;
+	margin-top: 5px;
+}
+.activeContents3{
+	float: left;
+	text-align: center;
+	font-size: 13px;
+	line-height: 110px;
+	width: 65%;
+}
+.activeMess{
+	clear: both;
+	text-align: center;
+	color: #d03127;
+	padding-top: 15px;
+}
+.tishi{
+	width: 82%;
+	margin: 0 auto;
+	margin-top: 35px;
 	font-size: 12px;
-	padding-right: 24px;
+	color: #873904;
 }
-.interpret{
+.times{
 	float: right;
-	padding-right: 18px;
 	font-size: 12px;
-	padding-top: 8px;
-	padding-bottom: 22px;
+	padding-right: 29px;
+	padding-top: 10px;
 }
+
