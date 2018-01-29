@@ -21,7 +21,7 @@
 			<!--活动说明-->
 			<div class="activeDescription">活动说明</div>
 			<div class="description">
-				<p class="destents">原：一张钻卡享受26张银卡返利 <br />现：一张钻卡+赠送两张银卡享受27张银卡的返利；</p>
+				<p class="destents">原：一张钻卡享受26张银卡返利 <br />现：一张钻卡+赠送一张银卡享受27张银卡的返利；</p>
 				<p class="explation">凡订购赠送的银卡只享受平台的返利，不能订购平台商品。不可与平台其他优惠活动同时享受。</p>
 				<p class="interpret">最终解释权归双创共享平台</p>
 			</div>
