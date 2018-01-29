@@ -29,8 +29,8 @@
     <!------------弹出层------------>
     <div class="popBox" style="display: none;">
     	<div class="close"></div>
-    	<div class="favourable" onclick="location.href='newYearActive.php'">
-    		<img src="images/tanKBj.png"/>
+    	<div class="favourable" onclick="location.href='newYearsActive.php'">
+    		<img src="images/tanKBgg.png"/>
     	</div>
     </div>
     
