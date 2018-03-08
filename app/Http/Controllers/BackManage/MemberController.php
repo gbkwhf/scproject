@@ -44,13 +44,26 @@ class MemberController  extends Controller
  			'2'=>'女',
  			'0'=>'未选择',
  	); 	
+
  	foreach ($data as &$val){
         if ($val['sex'] == ''){
             $val['sex'] = 0;
         }
  		$val['sex']=$sexArr[$val['sex']];
  		$val['state']=$val['state']==1?'正常':'禁止登陆';
+ 		
+ 
+ 		//邀请人
+ 		$invite_info=\App\MemberModel::where('ys_member.user_id',$val->invite_id)
+ 				->leftjoin('ys_employee','ys_employee.user_id','=','ys_member.user_id')
+ 				->leftjoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')
+ 				->select('ys_member.name','ys_agency.name as agency_name')
+ 				->first();
+ 		$agenyc_name=empty($invite_info->agency_name)?'':"($invite_info->agency_name)";
+ 		
+ 		$val['invite_id']=empty($val->invite_id)?'':$invite_info->name.$agenyc_name;
  	}
+
 	return view('memberlist',['data'=>$data,'search'=>$search]);
  }
  

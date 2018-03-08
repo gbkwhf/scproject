@@ -63,6 +63,7 @@
                   <th>联系电话</th>
                   <th>性别</th>
                   <th>注册时间</th>
+                  <th>邀请人</th>
                   <th>状态</th>
                    <th>操作</th>
                 </tr>                
@@ -72,6 +73,7 @@
 	                  <td>{{ $member->mobile }}</td>
 	                  <td>{{ $member->sex }}</td>	                  
 	                  <td>{{ $member->created_at }}</td>
+	                  <td>{{ $member->invite_id }}</td>
 	                  <td>{{ $member->state }}</td>	
 	                  <td>
 	                  		<a href="{{ url('memberedit',['id'=>$member->user_id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
