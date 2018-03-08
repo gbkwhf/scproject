@@ -1197,12 +1197,12 @@ class AuthController extends Controller
     			->_validate($request->all());
     	if (!$validator) throw new ValidationErrorException;
     
-    	    	
+    	//现金红包、时令土特产、爱菊面粉、爱菊大米
     	$gift_arr=[
-	    	1=>'1号礼品',
-	    	2=>'2号礼品',
-	    	3=>'3号礼品',
-	    	4=>'4号礼品',
+	    	1=>'现金红包',
+	    	2=>'时令土特产',
+	    	3=>'爱菊面粉',
+	    	4=>'爱菊大米',
     	];
 		//检查是否已领取
     	$had=\DB::table('ys_invite_member')
