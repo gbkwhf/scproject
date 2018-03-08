@@ -1180,6 +1180,125 @@ class AuthController extends Controller
 
 
     }
+    
+    
 
+    //邀请新用户
+    public function inviteMember(Request $request){
+    	
+    	$validator = $this->setRules([
+    			'user_mobile'  => 'required|regex:/^1[34578][0-9]{9}$/',
+    			'employee_mobile'  => 'required|regex:/^1[34578][0-9]{9}$/',
+    			'name' => 'required|string',
+    			'address' => 'required|string',
+    			'gift' => 'required',
+    
+    			])
+    			->_validate($request->all());
+    	if (!$validator) throw new ValidationErrorException;
+    
+    	    	
+    	$gift_arr=[
+	    	1=>'1号礼品',
+	    	2=>'2号礼品',
+	    	3=>'3号礼品',
+	    	4=>'4号礼品',
+    	];
+		//检查是否已领取
+    	$had=\DB::table('ys_invite_member')
+    				->join('ys_member','ys_member.user_id','=','ys_invite_member.user_id')
+    				->where('ys_member.mobile',$request->user_mobile)->first();
+    	if($had){
+    		$data=[
+    			'user_id'=>$had->user_id,
+	    		'tips'=>'您已领取'.$gift_arr[$had->gift],
+	    		'time'=>$had->created_time,
+	    		'receive_time'=>empty($had->receive_time)?0:$had->receive_time,
+    		];
+    		return $this->respond($this->format($data,true));
+    	}
+    	//首先判断该用户是否是系统内用户
+    	$had_mobile=\DB::table('ys_member')->where('mobile',$request->user_mobile)->first();
+    	if(!empty($had_mobile)){ //表示该用户已经存在
+    		return $this->setStatusCode(1050)->respondWithError($this->message);
+    	}
+    	//员工是否存在
+    	$had_employee=\DB::table('ys_member')
+    				->join('ys_employee','ys_employee.user_id','=','ys_member.user_id')
+    				->where('mobile',$request->employee_mobile)
+    				->select('ys_member.user_id','ys_employee.agency_id','ys_member.cash_back')	
+    				->first();
+    	if(empty($had_employee)){ //员工不存在
+    		return $this->setStatusCode(1052)->respondWithError($this->message);
+    	}
+
+    	//获取分配服务器信息
+    	$serverArr = $this->getDispatchServerInfo('ys');
+
+    
+    	\DB::beginTransaction(); //开启事务
+
+    		$insert1 = \DB::table('ys_member')->insertGetId([
+    				'mobile' => $request->user_mobile,
+    				'password' => md5(md5('123456789')),
+    				'created_at' => date('Y-m-d H:i:s'),
+    				'name' => $request->name,
+    				'address' =>$request->address,    		
+    				'invite_id' => $had_employee->user_id,
+    				'cash_back'=>$had_employee->cash_back,
+    				]);
+    
+    		$insert2 = \DB::table('ys_session_info')->insert([
+   
+    				'user_id'=>$insert1,
+    				'client_type'=>1, //安卓
+    				'session'=>'',
+    				'mid'=>$insert1,
+    				'push_service_type'=>2,
+    				'mec_ip' => $serverArr['mec_ip'],
+    				'mec_port' => $serverArr['mec_port'],
+    				'lps_ip' => $serverArr['lps_ip'],
+    				'lps_port' => $serverArr['lps_port'],
+    				'last_get_session_date' => Carbon::now(),
+    				'session_hash' => '',
+    				'openId'=>'',
+    				]);
+    
+    		$insert3 = \DB::table('ys_invite_member')->insertGetId([
+    				'user_id' => $insert1,
+    				'employee_id' => $had_employee->user_id,
+    				'agency_id' => $had_employee->agency_id,
+    				'created_time' => date('Y-m-d H:i:s'),
+    				'gift' => $request->gift,
+    				]);
+        
+    	if ($insert1 && $insert2 && $insert3) {
+    		DB::commit();
+    		$data=[
+    			'user_id'=>$insert1,
+    			'tips'=>'您已领取'.$gift_arr[$request->gift],
+    			'time'=>date('Y-m-d H:i:s',time()),
+    			'receive_time'=>0,
+    		];
+    		return $this->respond($this->format($data,true));
+    	}else {
+    		DB::rollBack();
+    		return $this->setStatusCode(1040)->respondWithError($this->message);
+    	}
+    }
+    
+    //邀请新用户
+    public function inviteMemberReceive(Request $request){
+    	 
+    	$validator = $this->setRules([
+    			'user_id' => 'required',   
+    			])
+    			->_validate($request->all());
+    	if (!$validator) throw new ValidationErrorException;
+    
+    	$insert3 = \DB::table('ys_invite_member')->where('user_id',$request->user_id)->update(['receive_time' => date('Y-m-d H:i:s')]);
+    	return $this->respond($this->format([],true));
+    } 
+    
 
 }

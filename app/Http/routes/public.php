@@ -22,6 +22,11 @@ Route::post('api/gxsc/bind/user/openId','Baseuser\AuthController@bindOpenId');
 //邀请用户注册
 Route::post('api/gxsc/invite/user/register','Baseuser\AuthController@inviteUserRegister');
 
+//邀请新用户进店领礼品
+Route::post('api/gxsc/invitemember','Baseuser\AuthController@inviteMember');
+
+//进店确认领取礼品
+Route::post('api/gxsc/invitememberreceive','Baseuser\AuthController@inviteMemberReceive');
 
 Route::group([
 
