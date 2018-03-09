@@ -29,9 +29,17 @@ input[type="button"] {
 }
 .look img{
 	margin: 0 auto;
-	width: 180px;
-	height: 140px;
+	width: 145px;
+	height: 145px;
 	margin-top: 22px;
+}
+.an{
+	text-align: center;
+	color: #797575;
+}
+.guanzhu{
+	text-align: center;
+	padding-top: 20px;
 }
 .receiveSub{
 	width: 131px;
