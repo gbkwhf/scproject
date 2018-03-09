@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{
+	margin: 0 auto;
+	background-color: #ffffff;
+}
+img{ width:100%; display:block;border: none;vertical-align: bottom;border: none;}
+input[type="button"]{-webkit-appearance: none;}
+/*------内容开始-----------*/
+.successImg img{
+	width: 70px;
+	height:70px;
+	margin: 0 auto;
+	margin-top: 160px;
+}
+.sucTitle{
+	text-align: center;
+	font-size: 18px;
+	color: #333333;
+	padding-top: 40px;
+}

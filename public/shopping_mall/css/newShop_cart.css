@@ -1,0 +1,311 @@
+.storeBox {
+	height: 58px;
+	border-bottom: solid 1px #d2d2d2;
+}
+
+label {
+	display: block;
+	/*width:100%;*/
+	height: 16px;
+	margin-top: 21px;
+	margin-left: 10px;
+	background: url("../images/check2.png") no-repeat;
+	background-size: 16px 16px;
+}
+
+label input {
+	opacity: 0;
+}
+
+.checked {
+	background: url("../images/check1.png") no-repeat;
+	background-size: 16px 16px;
+}
+
+.nextCheck {
+	margin-top: 11%;
+}
+
+.shopBox1 {
+	clear: both;
+	margin-bottom: 105px;
+}
+
+.checkLeft {
+	width: 8.7%;
+	/*background-color: red;*/
+	height: 58px;
+	float: left;
+}
+
+.checkLeft img {
+	width: 16px;
+	margin-left: 26.5%;
+	margin-top: 21px;
+}
+
+.nextCheck {
+	width: 11.5%;
+	/*background-color: red;*/
+	height: 19.4%;
+	float: left;
+}
+
+.nextCheck img {
+	width: 16px;
+	margin-left: 26.5%;
+	margin-top: 145%;
+}
+
+.storeName {
+	width: 79.3%;
+	height: 58px;
+	float: left;
+	background: url(../images/shopHea.png) no-repeat;
+	background-size: 19px 19px;
+	background-position: 10px 19px;
+	line-height: 58px;
+	font-size: 14px;
+	color: #333333;
+	text-indent: 37px;
+}
+
+.storeBack {
+	width: 9.4%;
+	height: 58px;
+	float: right;
+	background: url(../images/carback.png) no-repeat;
+	background-size: 8px 14px;
+	background-position: 94% 22px;
+	margin-right: 2%;
+}
+
+.storeConHei {
+	height: 19.4%;
+	/*background-color: red;*/
+	clear: both;
+}
+
+.nextCon {
+	width: 88.5%;
+	height: 19.4%;
+	float: left;
+	/*background-color: green;*/
+}
+
+.nextShopImg {
+	width: 32.1%;
+	/*background-color: gray;*/
+	height: 19.4%;
+	float: left;
+}
+
+.nextShopImg img {
+	width: 100%;
+	border-radius: 4px;
+	margin-top: 14px;
+}
+
+.shopTitleBox {
+	float: right;
+	width: 62%;
+	height: 100%;
+	/*background-color: red;*/
+}
+
+.shopTitle {
+	/*background-color: navajowhite;*/
+	height: 40px;
+	font-size: 14px;
+	color: #333333;
+	margin-right: 1.5%;
+	margin-top: 9%;
+	margin-left: 4%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+.daipen {
+	margin-left: 21%;
+}
+
+.shopPro1 {
+	display: inline-block;
+	float: left;
+	width: 67%;
+	margin-top: 7%;
+	margin-left: 4%;
+	color: #f5987b;
+}
+
+.dlecon {
+	display: inline-block;
+	float: right;
+	width: 24%;
+	height: 30px;
+	/*background-color: red;*/
+}
+
+.dlecon {
+	margin-right: 4.5%;
+}
+
+.dlecon img {
+	width: 33%;
+	margin-left: 67%;
+	margin-top: 26%;
+}
+
+.shopPriceBox {
+	clear: both;
+	margin-top: 23%;
+	
+}
+
+.shopPrice {
+	color: #eb3738 !important;
+	font-size: 14px;
+	display: inline-block;
+	float: left;
+	margin-left: 4%;
+	padding-left: 0px !important;
+}
+
+.rightDiv {
+	width: 54.4%;
+	float: left;
+	/* background-color: red; */
+	margin-right: 2%;
+}
+
+.addBox {
+	width: 63px;
+	height: 19px;
+	/*background-color: green;*/
+	border: solid 1px #626262;
+	float: right;
+	margin-right: 4.5%;
+	border-radius: 4px;
+	color: #333333;
+}
+
+.Jian {
+	width: 21px;
+	height: 19px;
+	display: inline-block;
+	float: left;
+	/*background-color: hotpink;*/
+	text-align: center;
+	line-height: 19px;
+}
+
+.inpuCon {
+	width: 21px;
+	height: 19px;
+	display: inline-block;
+	float: left;
+	/*background-color: gold;*/
+}
+
+.inTeCon {
+	border: none;
+	width: 21px;
+	height: 19px;
+	vertical-align: bottom;
+	border-left: solid 1px #626262;
+	border-right: solid 1px #626262;
+	text-align: center;
+}
+
+.shopCartCon {
+	clear: both;
+}
+
+.storeBox {
+	clear: both;
+}
+
+.fengexian1 {
+	clear: both;
+	height: 13px;
+	width: 100%;
+	background-color: #fff;
+}
+
+.fengexian {
+	clear: both;
+	height: 10px;
+	width: 100%;
+	background-color: #ebebeb;
+}
+
+.bottomBox {
+	width: 100%;
+	height: 48px;
+	background-color: #fff;
+	position: fixed;
+	bottom: 56px;
+	border-top: solid 1px #bfbfbf;
+	/*border-bottom:solid 1px #bfbfbf;*/
+	z-index: 9999;
+}
+
+.storeName1 {
+	width: 49%;
+	height: 48px;
+	float: left;
+	background-size: 19px 19px;
+	background-position: 10px 19px;
+	line-height: 48px;
+	font-size: 14px;
+	color: #333333;
+	text-align: right;
+}
+
+.storeBack1 {
+	width: 25.4%;
+	height: 48px;
+	float: right;
+	text-align: center;
+	line-height: 48px;
+	background-color: #eb3737;
+	color: #fff;
+}
+
+.checkLeft1 {
+	width: 22.7%;
+	height: 48px;
+	float: left;
+	text-align: center;
+	line-height: 18px;
+}
+
+.label1 {
+	margin-top: 16px;
+}
+
+.popBox{text-align: center;}
+.submitbox{text-align: center;}
+.cancels{width: 90px;
+    width: 49%;
+    color: #9c9c9c;
+    line-height: 1.5em;
+    background-color: #fff;
+    border-top:1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    float: left;
+    padding: 11px 0;
+
+}
+.confirm{
+    width: 50%;
+    color: #88c5be;
+    line-height: 1.5em;
+    background-color: #fff;
+    float: left;
+    padding: 11px 0;
+    border-top:1px solid #e6e6e6;
+}

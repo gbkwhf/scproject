@@ -1,0 +1,197 @@
+html,
+body {
+	background: #edf0f2;
+	background: url(../images/customerBj.png) no-repeat;
+	background-size: 100% 100%;
+	/*background-size: cover;*/
+	overflow: auto;
+	/*background-size: cover;*/
+	
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*----------------内容开始(用户基本信息)-------------*/
+.inforTitle{
+	width: 104px;
+	height: 38px;
+	background: url(../images/inforBg_03.png) no-repeat;
+	background-size: 100% 100%;
+	text-align: center;
+	line-height: 34px;
+	margin-top: 43px;
+	margin-left: 34px;
+	color: #ffffff;
+	margin-bottom: 25px;
+	font-size: 17px;
+}
+.phoneBox,.inforNameBox{
+	height: 20px;
+	color: #ffffff;
+	margin-bottom: 25px;
+}
+.addressBox{
+	height: 20px;
+	color: #ffffff;
+	margin-bottom: 30px;
+}
+.phone,.user_name,.address_word{
+	width: 17.2%;
+	float: left;
+	padding-left: 34px;
+	height: 20px;
+	line-height: 20px;
+}
+.inBox,.inName,.us_address{
+	float: left;
+	/*margin-left: 23px;*/
+	border-bottom: solid 1px #dddada;
+	width: 64%;
+	
+}
+.inBox input{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	border: none;
+	outline: none;
+	background-color:transparent ;
+	color: #ffffff;
+	 
+}
+.inName input{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	border: none;
+	outline: none;
+	background-color:transparent ;
+	color: #ffffff;
+}
+.us_address input{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	border: none;
+	outline: none;
+	background-color:transparent ;
+	color: #ffffff;
+}
+/*----------------选择礼品----------*/
+.giftBox{
+	min-height: 335px;
+	width: 82%;
+	margin: 0 auto;
+}
+.selectGift{
+	width: 104px;
+	height: 38px;
+	background: url(../images/inforBg_03.png) no-repeat;
+	background-size: 100% 100%;
+	text-align: center;
+	line-height: 34px;
+	/*margin-left: 34px;*/
+	color: #ffffff;
+	margin-bottom: 25px;
+	font-size: 17px;
+}
+.shopSelectBox1{
+	width: 41%;
+	float: left;
+	/*margin-left: 35px;*/
+	margin-bottom: 10px;
+	margin-right: 6%;
+	
+}
+.shopSelectBox2{
+	width: 41%;
+	float: right;
+	/*margin-left: 35px;*/
+	margin-bottom: 10px;
+}
+.shop_img{
+	/*width: 126px;*/
+	height: 82px;
+	background-color: hotpink;
+	border-radius: 8px;
+}
+.shop_img img{
+	/*width: 126px;*/
+	height: 82px;
+	border-radius: 8px;
+}
+.giftName{
+	width: 87px;
+	height: 32px;
+	background: url(../images/radio2.png) no-repeat;
+	background-size: 20% 50%;
+	padding-top: 15px;
+	color: #ffffff;
+	font-size: 16px;
+	padding-left: 39px;
+	background-position: 7% 58%;
+}
+.gifStyle{
+	width: 87px;
+	height: 32px;
+	background: url(../images/radio1.png) no-repeat;
+	background-size: 20% 50%;
+	padding-top: 15px;
+	color: #ffffff;
+	font-size: 16px;
+	padding-left: 39px;
+	background-position: 7% 58%;
+}
+/*-------员工确认--------*/
+.staffConfirm{
+	width: 104px;
+	height: 38px;
+	background: url(../images/inforBg_03.png) no-repeat;
+	background-size: 100% 100%;
+	text-align: center;
+	line-height: 34px;
+	margin-top: 43px;
+	margin-left: 34px;
+	color: #ffffff;
+	margin-bottom: 25px;
+	font-size: 17px;
+}
+.staffPhone{
+	width: 27.2%;
+	float: left;
+	padding-left: 34px;
+	height: 20px;
+	line-height: 20px;
+}
+.inBox,.inName,.us_address{
+	float: left;
+	/*margin-left: 23px;*/
+	border-bottom: solid 1px #dddada;
+	width: 54%;
+	
+}
+/*-------提交--------*/
+.confirm_sub{
+	width: 131px;
+	height: 44px;
+	line-height: 44px;
+	color: #ffffff;
+	text-align: center;
+	background: url(../images/comSub_03.png) no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+	margin-bottom: 60px;
+	margin-top: 50px;
+	font-size: 16px;
+}
