@@ -90,7 +90,10 @@
 				},
 				success: function(data) {
 					if(data.code == 1) { //请求成功
-						layer.msg(data.result.tips);
+						if(data.result.tips){
+							layer.msg(data.result.tips);
+						}
+//						
 						if(data.result.receive_time == 0) {
 							layer.msg(data.result.tips);
 							location.href = "enrollSuccess.php?user_id=" + data.result.user_id + "&git=" + data.result.tips;
