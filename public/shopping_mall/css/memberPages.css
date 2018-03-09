@@ -1,0 +1,227 @@
+html,
+body {
+	background: #FFFFFF;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*----------内容开始------------*/
+
+
+/*---------搜索框---*/
+.searchTop{
+	height: 65px;
+	width: 100%;
+	position: fixed;
+	/*top: 0;
+	bottom: 80px;*/
+	background-color: #ffffff;
+	z-index: 1000;
+	
+}
+.searchBox {
+	width: 79%;
+	height: 35px;
+	margin-left: 19px;
+	margin-top: 16px;
+	border-radius: 6px;
+	border: solid 1px #bfbfbf;
+	float: left;
+	margin-bottom: 14px;
+}
+.seachImg {
+	float: left;
+}
+.seachImg img {
+	width: 13px;
+	height: 13px;
+	margin-left: 15px;
+	margin-top: 12px;
+}
+.insearchBox {
+	float: left;
+	width: 85%;
+	margin-left: 5px;
+}
+.insearch {
+	height: 35px;
+	width: 90%;
+	line-height: 35px;
+	outline: none;
+	border: none;
+	background: #fffffff;
+	padding-left: 5px;
+}
+.searchSub {
+	font-size: 14px;
+	color: #e63737;
+	line-height: 35px;
+	float: right;
+	padding-top: 16px;
+	padding-right: 15px;
+}
+/*-----------轮播图-------------*/
+.swiper-container {
+	clear: both;
+	width: 100%;
+	/*height: 370px;*/
+	min-height: 100px;
+}
+
+.swiper-slide{
+	margin-top: 67px;
+}
+/*--------商品分类---*/
+.container {
+	clear: both;
+	padding: 1px 12px;
+}
+.container>ul {
+	overflow: hidden;
+	width: 100%;
+}
+.container>ul>li {
+	float: left;
+	width: 33%;
+	text-align: center;
+	margin-top: 21px;
+}
+.container>ul>li>img {
+	width: 56px;
+	height: 56px;
+	margin: 0 auto;
+	vertical-align: top;
+}
+.container>ul>li>em {
+	font-style: normal;
+	font-size: 14px;
+	color: #4d4d4d;
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-top: 9px;
+}
+/*-----福利区--------*/
+.welfare{
+	
+	margin-top: 25px;
+}
+.welfare img{
+	height: 92px;
+	width: 100%;
+	margin: 0 auto;
+}
+/*-------新品上线------*/
+.newBox{
+	/*min-height: 50px;*/
+	margin-top: 20px;
+	height: 27px;
+}
+.newShopBox{
+	float: left;
+	width: 99px;
+	height: 27px;
+	text-align: center;
+	line-height: 27px;
+	background:url(../images/newShopBj.png) no-repeat;
+	background-size: 100% 100%;
+	margin-left: 138px;
+	/*margin-top: 23px;*/
+	color: #333333;
+}
+.moreShop{
+	float: right;
+	width: 17px;
+	height: 17px;
+	border:solid 1px #c5c5c5;
+	border-radius: 50%;
+	margin-top: 6px;
+	margin-right: 15px;
+}
+.moreShop img{
+	width: 30%;
+	margin-left: 6px;
+	margin-top: 4px;
+}
+/*--------商品信息-----*/
+.shopBox{
+	clear: both;
+	margin-top: 15px;
+	/*margin-bottom: 15px;*/
+}
+.shopImg img{
+	height: 160px;
+}
+.shopName{
+	padding: 10px;
+}
+.shopMessage{
+	height: 27px;
+}
+.shops{
+	float: left;
+}
+.shopPrice{
+	color: #ec4444;
+	padding-left: 12px;
+}
+.fan{
+	color: #acacac;
+	font-size: 12px;
+	padding-left: 11px;
+}
+.toBuy{
+	float: right;
+	width: 82px;
+	height: 26px;
+	background-color: #e63737;
+	color: #ffffff;
+	text-align: center;
+	line-height: 26px;
+	margin-right: 13px;
+	border-radius: 6px;
+}
+/*------------底部-------*/
+.shopBottom{
+	clear: both;
+	width: 100%;
+	height: 55px;
+	position: fixed;
+	bottom: 0;
+	z-index: 100;
+	border-top: solid 1px #bfbfbf;
+	background-color: #ffffff;
+}
+.memberIndex{
+	width: 33.3%;
+	float: left;
+	text-align: center;
+	color: #ec7777;
+}
+.shopCar{
+	width: 33%;
+	float: left;
+	text-align: center;
+}
+.personal{
+	width: 33%;
+	float: left;
+	text-align: center;
+}
+.shopBottom dl dt img{
+	width: 22px;
+	height: 23px;
+	margin: 0 auto;
+	margin-top: 10px;
+}

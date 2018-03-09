@@ -1,0 +1,49 @@
+html,
+body {
+	background: #edf0f2;
+	background: url(../images/enrollBj.png) no-repeat;
+	background-size: 100% 100%;
+	background-size: cover;
+	/*background-size: cover;*/
+	
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*----------------内容开始-------------*/
+/*-----------内容开始（放置背景图）-----------*/
+.wrapper{
+	overflow: hidden;
+}
+.codeBox{
+	width: 200px;
+	height: 200px;
+	background: url(../images/codeBj.png) no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+	margin-top: 172px;
+	overflow: auto;
+}
+.codeBox img{
+	width: 180px;
+	height: 180px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.word{
+	text-align: center;
+	padding-top: 13px;
+	color: #333333;
+	/*margin-bottom: 200px;*/
+}

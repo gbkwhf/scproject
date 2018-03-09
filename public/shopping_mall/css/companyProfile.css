@@ -1,0 +1,40 @@
+html,
+body {
+	background: #edf0f2;
+	background: url(../images/company_02.png) no-repeat;
+	background-size: 100% 100%;
+	background-size: cover;
+	overflow: auto;
+	/*background-size: cover;*/
+	
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*----------------内容开始-------------*/
+.companyBox{
+	width: 131px;
+	height: 44px;
+	line-height: 44px;
+	color: #ffffff;
+	text-align: center;
+	background: url(../images/comSub_03.png) no-repeat;
+	background-size: 100% 100%;
+	/*margin: 0 auto;
+	margin-bottom: 100px;*/
+	position: absolute;
+	left: 30%;
+	bottom: 85px;
+	/*right: 50%;*/
+}

@@ -1,0 +1,111 @@
+html,
+body {
+	background: #ececec;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+
+
+/*----------内容开始------------*/
+/*---------搜索框---*/
+.searBox{
+	position: fixed;
+	width: 100%;
+	height: 65px;
+	background-color: #ececec;
+	top: 0;
+	z-index: 100;
+}
+.searchBox {
+	width: 79%;
+	height: 35px;
+	margin-left: 19px;
+	margin-top: 16px;
+	border-radius: 6px;
+	border: solid 1px #bfbfbf;
+	float: left;
+	margin-bottom: 14px;
+	background-color: #ffffff;
+}
+.seachImg {
+	float: left;
+}
+.seachImg img {
+	width: 13px;
+	height: 13px;
+	margin-left: 15px;
+	margin-top: 12px;
+}
+.insearchBox {
+	float: left;
+	width: 85%;
+	margin-left: 5px;
+}
+.insearch {
+	height: 35px;
+	width: 90%;
+	line-height: 35px;
+	outline: none;
+	border: none;
+	background: #fffffff;
+	padding-left: 5px;
+}
+.searchSub {
+	font-size: 14px;
+	color: #e63737;
+	line-height: 35px;
+	float: right;
+	padding-top: 16px;
+	padding-right: 15px;
+}
+/*-------商品列表----*/
+.shopListBox{
+	width: 49.3%;
+	height: 276px;
+	border-right: solid 2px #d2d2d2;
+	border-bottom: solid 2px #d2d2d2;
+	overflow: auto;
+	float: left;
+	background-color: #ffffff;
+}
+.shopImg img{
+	width: 100%;
+	margin-top: 35px;
+	
+}
+.shopListNames{
+	height: 20px;
+	padding: 20px 20px;
+	line-height: 20px;
+	font-size: 12px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	/*white-space: nowrap;*/
+	-webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+	display: -webkit-box;
+	text-align:left ;
+}
+.shops{
+	padding-top: 15px;
+	padding-left: 20px;
+}
+.shopPrice{
+	color: #ec4444;
+	
+}
+.fan{
+	color: #acacac;
+	font-size: 12px;
+	padding-left: 11px;
+}
