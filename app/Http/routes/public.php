@@ -28,6 +28,9 @@ Route::post('api/gxsc/invitemember','Baseuser\AuthController@inviteMember');
 //进店确认领取礼品
 Route::post('api/gxsc/invitememberreceive','Baseuser\AuthController@inviteMemberReceive');
 
+//检查是否注册，是否已领
+Route::post('api/gxsc/checkmemberreceive','Baseuser\AuthController@checkMemberReceive');
+
 Route::group([
 
     'prefix' => 'api/gxsc','namespace' => 'Baseuser'

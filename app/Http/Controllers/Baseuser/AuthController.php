@@ -1300,5 +1300,45 @@ class AuthController extends Controller
     	return $this->respond($this->format([],true));
     } 
     
+    
+    //检查是否注册，是否已领
+    public function checkMemberReceive(Request $request){
+    	 
+    	$validator = $this->setRules([
+    			'user_mobile'  => 'required|regex:/^1[34578][0-9]{9}$/',
+    
+    			])
+    			->_validate($request->all());
+    	if (!$validator) throw new ValidationErrorException;
+    
+    	//现金红包、时令土特产、爱菊面粉、爱菊大米
+    	$gift_arr=[
+	    	1=>'现金红包',
+	    	2=>'时令土特产',
+	    	3=>'爱菊面粉',
+	    	4=>'爱菊大米',
+    	];
+    	//检查是否已领取
+    	$had=\DB::table('ys_invite_member')
+    	->join('ys_member','ys_member.user_id','=','ys_invite_member.user_id')
+    	->where('ys_member.mobile',$request->user_mobile)->first();
+    	if($had){
+    		$data=[
+    		'user_id'=>$had->user_id,
+    		'tips'=>'您已领取'.$gift_arr[$had->gift],
+    		'time'=>$had->created_time,
+    		'receive_time'=>empty($had->receive_time)?0:$had->receive_time,
+    		];
+    		return $this->respond($this->format($data,true));
+    	}
+    	//首先判断该用户是否是系统内用户
+    	$had_mobile=\DB::table('ys_member')->where('mobile',$request->user_mobile)->first();
+    	if(!empty($had_mobile)){ //表示该用户已经存在
+    		return $this->setStatusCode(1050)->respondWithError($this->message);
+    	}
+    	
+    	return $this->respond($this->format([],true));
+    }
+    
 
 }

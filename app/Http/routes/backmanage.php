@@ -109,7 +109,7 @@
 			Route::get('agency/deleteemployee/{id}', 'AgencyManageController@DeleteEmployee');	
 			Route::get('agency/membercashlist', 'AgencyManageController@MemberCashList');
 			Route::post('agency/membercashexcel', 'AgencyManageController@MemberCashExcel');
-			Route::get('agency/memberlist', 'AgencyManageController@MemberList');
+			Route::get('agency/memberlist', 'AgencyManageController@');
 			Route::get('agency/memberedit/{id}', 'AgencyManageController@memberEdit');
 			//Route::Post('agency/membersave', 'MemberController@memberSave');
 		});
