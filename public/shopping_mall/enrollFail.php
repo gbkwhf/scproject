@@ -12,6 +12,7 @@
 	<body>
 		<div class="successPrompt">报名失败</div>
 		<div class="gift">感谢您的耐心填写，还可以继续申请哦~</div>
-		<div class="look"><img src="images/look2.png"/></div>
+		<div class="look"><img src="images/scMa.jpg" /></div>
+		<div class="an">长按二维码关注公众号</div>
 	</body>
 </html>
