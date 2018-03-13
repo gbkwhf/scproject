@@ -31,6 +31,9 @@ Route::post('api/gxsc/invitememberreceive','Baseuser\AuthController@inviteMember
 //检查是否注册，是否已领
 Route::post('api/gxsc/checkmemberreceive','Baseuser\AuthController@checkMemberReceive');
 
+//检查员工是否注册
+Route::post('api/gxsc/checkemployeeinfo','Baseuser\AuthController@checkEmployeeInfo');
+
 Route::group([
 
     'prefix' => 'api/gxsc','namespace' => 'Baseuser'

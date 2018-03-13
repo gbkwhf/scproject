@@ -1340,5 +1340,29 @@ class AuthController extends Controller
     	return $this->respond($this->format([],true));
     }
     
+    //检查员工是否注册，
+    public function checkEmployeeInfo(Request $request){
+    
+    	$validator = $this->setRules([
+    			'user_mobile'  => 'required|regex:/^1[34578][0-9]{9}$/',
+    
+    			])
+    			->_validate($request->all());
+    	if (!$validator) throw new ValidationErrorException;
+    
+    	$user_info=DB::table('ys_member')->where('ys_member.mobile',$request->user_mobile)
+    	->leftJoin('ys_employee','ys_member.user_id','=','ys_employee.user_id')
+    	->leftJoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')
+    	->select('ys_member.name as user_name','ys_agency.name as agency_name')
+    	->first();
+
+		if(empty($user_info)){
+			return $this->setStatusCode(1052)->respondWithError($this->message);
+		}
+    	 
+		return $this->respond($this->format($user_info,true));
+    	
+    }  
+    
 
 }
