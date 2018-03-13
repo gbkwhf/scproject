@@ -52,12 +52,14 @@ input[type="button"] {
 	padding-left: 34px;
 	height: 20px;
 	line-height: 20px;
+	
 }
 .inBox,.inName,.us_address{
 	float: left;
 	/*margin-left: 23px;*/
 	border-bottom: solid 1px #dddada;
 	width: 64%;
+	
 	
 }
 .inBox input{
@@ -68,6 +70,7 @@ input[type="button"] {
 	outline: none;
 	background-color:transparent ;
 	color: #ffffff;
+	font-size: 17px;
 	 
 }
 .inName input{
@@ -78,6 +81,7 @@ input[type="button"] {
 	outline: none;
 	background-color:transparent ;
 	color: #ffffff;
+	font-size: 17px;
 }
 .us_address input{
 	width: 100%;
@@ -87,6 +91,7 @@ input[type="button"] {
 	outline: none;
 	background-color:transparent ;
 	color: #ffffff;
+	font-size: 17px;
 }
 /*----------------选择礼品----------*/
 .giftBox{

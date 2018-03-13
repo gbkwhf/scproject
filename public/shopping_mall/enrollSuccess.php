@@ -14,8 +14,10 @@
 
 	<body>
 		<div class="successPrompt">报名成功</div>
-		<div class="gift">成功领取了一份精美礼品，前往店内领取哦~</div>
-		<div class="look"><img src="images/look1.png" /></div>
+		<div class="gift"><span class="spanId"></span>，前往店内领取哦~</div>
+		<div class="look"><img src="images/scMa.jpg" /></div>
+		<div class="an">长按二维码关注公众号</div>
+		<div class="guanzhu">关注公众号，赶紧去店内领取精美大礼吧~</div>
 		<div class="receiveSub">立即领取</div>
 	</body>
 
@@ -27,6 +29,9 @@
 <script type="text/javascript">
 	$(function() {
 		var user_id = $_GET['user_id']; //获取用户id
+		var gitName = $_GET['git']; //获取礼品名
+		var shopNames=decodeURIComponent(gitName);
+		$('.spanId').html(shopNames); //商品单价
 		$(".receiveSub").click(function() {
 			$.ajax({ //用户进店确认领取礼品
 				type: "post", //请求方式
@@ -38,6 +43,7 @@
 				success: function(data) {
 					console.log(data)
 					if(data.code == 1) { //请求成功
+						
 						location.href = "receiveSuccess.php";
 					} else {
 						layer.msg(data.msg);
