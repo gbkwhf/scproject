@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<div class="successPrompt">报名失败</div>
-		<div class="gift">感谢您的耐心填写，您已经是老用户了哦~</div>
+		<div class="gift">感谢您的耐心填写，还可以继续申请哦~</div>
 		<div class="look"><img src="images/look2.png"/></div>
 	</body>
 </html>

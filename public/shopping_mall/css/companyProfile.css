@@ -1,9 +1,10 @@
 html,
 body {
 	background: #edf0f2;
-	background: url(../images/company_02.png) no-repeat;
+	background: url(../images/atvBj_02.png) no-repeat;
 	background-size: 100% 100%;
-	background-size: cover;
+/*	background-size: cover;*/
+	min-height: 750px;
 	overflow: auto;
 	/*background-size: cover;*/
 	
@@ -31,10 +32,10 @@ input[type="button"] {
 	text-align: center;
 	background: url(../images/comSub_03.png) no-repeat;
 	background-size: 100% 100%;
-	/*margin: 0 auto;
-	margin-bottom: 100px;*/
-	position: absolute;
+	margin: 0 auto;
+	margin-top: 660px;
+	/*position: absolute;
 	left: 30%;
-	bottom: 85px;
+	bottom: 85px;*/
 	/*right: 50%;*/
 }
