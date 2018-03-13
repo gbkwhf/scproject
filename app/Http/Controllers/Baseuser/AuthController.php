@@ -1203,6 +1203,8 @@ class AuthController extends Controller
 	    	2=>'时令土特产',
 	    	3=>'爱菊面粉',
 	    	4=>'爱菊大米',
+	    	5=>'鸡蛋10枚',
+	    	6=>'香油一瓶',
     	];
 		//检查是否已领取
     	$had=\DB::table('ys_invite_member')
@@ -1317,6 +1319,8 @@ class AuthController extends Controller
 	    	2=>'时令土特产',
 	    	3=>'爱菊面粉',
 	    	4=>'爱菊大米',
+	    	5=>'鸡蛋10枚',
+	    	6=>'香油一瓶',
     	];
     	//检查是否已领取
     	$had=\DB::table('ys_invite_member')
