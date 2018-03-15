@@ -149,3 +149,7 @@ Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinS
 
   //邀请分享
    Route::get('api/gxsc/invite/others/register','Weixin\JsApiPay@inviteRegister');
+
+
+    //xupan  获取新发布的商品
+    Route::post('api/gxsc/get/new/commodity/class','HandleProfession\GetShopsInfoController@getNewCommodity');

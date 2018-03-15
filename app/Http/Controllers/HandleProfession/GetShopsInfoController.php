@@ -130,4 +130,46 @@ class GetShopsInfoController extends Controller{
 
 
 
+    //获取新发布的商品
+    public function getNewCommodity(Request $request)
+    {
+
+
+        $validator = $this->setRules([
+            'page' => 'integer',
+
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $page = empty($request->page) ? 1 : $request->page;
+        $start = $page <= 1 ? 0 : ($page - 1) * 10;//分页
+
+        $data = \DB::table('ys_goods as a')
+                ->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
+                ->select('a.id as goods_id','a.name as goods_name','a.num','a.price','a.sales','a.updated_at as time','b.image')
+                ->where('a.state',1) //0下架1上架
+                ->groupBy('a.id')
+                ->orderBy('a.updated_at','desc')
+                ->skip($start)
+                ->take(10)
+                ->get();
+
+
+        $result = empty($data) ? [] : $data;
+        $http = getenv('HTTP_REQUEST_URL');
+        //改变图片链接，使其可以直接访问
+        if(!empty($result)){
+            foreach($result as $k=>$v){
+                $result[$k]->image = empty($v->image) ? "" : $http.$v->image;
+            }
+        }
+        return  $this->respond($this->format($result));
+
+
+
+    }
+
+
+
 }
