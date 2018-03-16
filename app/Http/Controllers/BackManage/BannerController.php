@@ -24,51 +24,106 @@ class BannerController   extends Controller{
 
 
 
+    //banner列表
     public function bannerList(Request $request)
     {
 
+        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->paginate(6);
 
-//        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->get();
+        $num  = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->get();
+
+        return view('bannerlist',['data'=>$banner_list,'num'=>$num]);
+
+    }
 
 
+    //添加
+    public function bannerAdd()
+    {
+
+        return view('banneradd');
+    }
+
+    //保存
+    public function bannerSave(Request $request){
+
+            if ($request->hasFile('image')){//图片上传
+
+                $up_res=uploadPic($request->file('image')[0]);
+                $file_name=$up_res;
+
+                $res  = \DB::table('ys_banner_manage')->insert([
+                    'img_url'=>$file_name,
+                    'sort'=>$request->sort
+                ]);
 
 
+                if($res){
+                    return redirect('banner/list');
+                }else{
+                    return back() -> with('errors','数据填充失败');
+                }
+        }else{
 
-
-
-//        //搜索供应商，商品名，商品状态
-//        $search=[];
-//        $data = GoodsModel::orderBy('sort','asc')->orderBy('created_at','desc')
-//            ->join('ys_supplier','ys_goods.supplier_id','=','ys_supplier.id')
-//            ->selectRaw('ys_goods.id,ys_goods.name,num,sort,price,cost_price,supplier_price,sales,ys_goods.state,ys_supplier.name as supplier_id');
-//        if($request->name !=''){
-//            $data->where('ys_goods.name','like','%'.$request->name.'%');
-//            $search['name']=$request->name;
-//        }
-//        if (isset($request->state) && $request->state != -1){
-//            $data->where('ys_goods.state',$request->state);
-//            $search['state']=$request->state;
-//        }
-//        if ($request->supplier != ''){
-//            $data->where('ys_goods.supplier_id',$request->supplier);
-//            $search['supplier']=$request->supplier;
-//        }
-//        $paginate = $data->paginate(10);
-//        $state_arr=[0=>'下架',1=>'正常'];
-//        foreach ($paginate as $val){
-//            $val['state']=$state_arr[$val['state']];
-//
-//        }
-//        $suppliers=\App\SupplierModel::where('state',1)->get();
-//        return view('goods.goodslist',['data'=>$paginate,'search'=>$search,'suppliers'=>$suppliers]);
-//
-//
+             return back() -> with('errors','图片必传');
+        }
 
 
     }
 
 
+    //编辑
+    public function bannerEdit($id)
+    {
 
+        $banner_info = \DB::table('ys_banner_manage')->select('id','img_url','sort')->where('id',$id)->first();
+
+        return view('bannerEdit',['data'=>$banner_info]);
+
+
+    }
+
+    //保存编辑
+    public function bannerEditSave(Request $request){
+
+
+
+        if ($request->hasFile('image')){//图片上传
+
+            $up_res=uploadPic($request->file('image')[0]);
+            $file_name=$up_res;
+
+            $res  = \DB::table('ys_banner_manage')->where('id',$request->edit_id)->update([
+                'img_url'=>$file_name,
+                'sort'=>$request->sort
+            ]);
+
+
+        }else{
+
+            $res  = \DB::table('ys_banner_manage')->where('id',$request->edit_id)->update([
+
+                        'sort'=>$request->sort
+                    ]);
+
+        }
+
+        if($res){
+            return redirect('banner/list');
+        }else{
+            return back() -> with('errors','数据填充失败');
+        }
+
+
+
+    }
+
+    //删除
+    public function bannerDel($id){
+
+        \DB::table('ys_banner_manage')->where('id',$id)->delete();
+        return redirect('banner/list');
+    }
 
 
 

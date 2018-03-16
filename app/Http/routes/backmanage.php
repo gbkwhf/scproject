@@ -90,7 +90,18 @@
 
         //徐盼  2018/03/15   banner管理
         Route::get('banner/list', 'BannerController@bannerList');//banner列表
+        Route::get('banner/add', 'BannerController@bannerAdd');//添加Banner图
+        Route::post('banner/save', 'BannerController@bannerSave');//保存banner图
+        Route::get('banner/edit/{id}', 'BannerController@bannerEdit');//编辑banner图
+        Route::post('banner/edit/save', 'BannerController@bannerEditSave');//编辑商品保存
+        Route::get('banner/delete/{id}', 'BannerController@bannerDel');//删除banner图
 
+//        Route::post('goods/goodscreate', 'GoodsController@GoodsCreate');//提交商品
+//        Route::get('goods/goodsedit/{id}', 'GoodsController@GoodsEdit');//编辑商品
+//        Route::post('goods/goodssave', 'GoodsController@Goodssave');//编辑商品保存
+//        Route::get('banner/delete/{id}', 'GoodsController@Goodsdel');//删除商品
+//
+//
 
 
     });	
