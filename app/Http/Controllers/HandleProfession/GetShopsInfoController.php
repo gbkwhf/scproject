@@ -170,6 +170,26 @@ class GetShopsInfoController extends Controller{
 
     }
 
+    //获取banner轮播图
+    public function getBannerList(Request $request)
+    {
+
+        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->limit(6)->get();
+
+        if(!empty($banner_list)){
+
+            foreach($banner_list as $k=>$v){
+
+                $banner_list[$k]->img_url = env('HTTP_REQUEST_URL').$v->img_url;
+            }
+
+        }else{
+            $banner_list = [];
+        }
+
+        return  $this->respond($this->format($banner_list));
+    }
+
 
 
 }

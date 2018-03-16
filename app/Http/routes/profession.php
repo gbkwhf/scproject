@@ -153,3 +153,6 @@ Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinS
 
     //xupan  获取新发布的商品
     Route::post('api/gxsc/get/new/commodity/class','HandleProfession\GetShopsInfoController@getNewCommodity');
+
+    //获取banner轮播图
+   Route::post('api/gxsc/get/banner/list','HandleProfession\GetShopsInfoController@getBannerList');
