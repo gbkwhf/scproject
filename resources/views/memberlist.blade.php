@@ -36,6 +36,14 @@
                   <div class="box-tools2 ">
                       <form class="form-horizontal" id ="form_action" action="{{url('memberlist')}}" method="get">
                           <div style="width: 800px;" class="input-group input-group-sm row">
+                             <div class="col-lg-2">
+	                            <select name="agency"  class="form-control pull-right"  style="width: 150px">
+	                                <option value="">经销商</option>
+			                          @foreach ($agency_list as $agency)
+			                          <option @if(isset($_GET['agency'])) @if($_GET['agency'] == $agency->id) selected="selected" @endif @endif value="{{$agency->id}}">{{$agency->name}}</option>
+			                          @endforeach
+	                            </select>
+                              </div>                            
                               <div class="col-lg-2">
                                   <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
                               </div>
@@ -50,7 +58,8 @@
                                   <input type="text" placeholder="会员名" class="form-control  " style="float:left;width:141px" name="name" value="{{ $_GET['name'] or ''}}">
                                   <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>                                  
                               </div>
-
+                              <div style="position:absolute;right:-120px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
+                              
                           </div>
                       </form>
                   </div>
@@ -64,6 +73,7 @@
                   <th>性别</th>
                   <th>注册时间</th>
                   <th>邀请人</th>
+                  <th>领取礼品</th>
                   <th>状态</th>
                    <th>操作</th>
                 </tr>                
@@ -74,6 +84,7 @@
 	                  <td>{{ $member->sex }}</td>	                  
 	                  <td>{{ $member->created_at }}</td>
 	                  <td>{{ $member->invite_id }}</td>
+	                  <td>{{ $member->gift }}</td>
 	                  <td>{{ $member->state }}</td>	
 	                  <td>
 	                  		<a href="{{ url('memberedit',['id'=>$member->user_id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
@@ -100,5 +111,13 @@
             elem: '#end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
             event: 'focus' //响应事件。如果没有传入event，则按照默认的click
         });
+
+        function getOrderExcel(){
+        	$("#form_action").attr('action',"{{ url('memberlistexcel') }}");
+        	$("#form_action").attr('method','post');	
+        	$("#form_action").submit();
+        	$("#form_action").attr('action',"{{ url('memberlist') }}");
+        	$("#form_action").attr('method','get');	        	        	
+        } 
     </script>
 @endsection

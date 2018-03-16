@@ -37,6 +37,7 @@
 		Route::get('memberlist', 'MemberController@memberList');
 		Route::get('memberedit/{id}', 'MemberController@memberEdit');
 		Route::Post('membersave', 'MemberController@memberSave');
+		Route::post('memberlistexcel', 'MemberController@memberListExcel');
 	
 		
 		//供应商

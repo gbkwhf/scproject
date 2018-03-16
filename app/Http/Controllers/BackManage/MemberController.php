@@ -19,31 +19,38 @@ class MemberController  extends Controller
  public  function memberList (Request $request){
 
  	//dd(Auth::user());
- 	 $member=\App\MemberModel::orderBy('created_at','desc');
+ 	 $member=\App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 	 			->leftjoin('ys_invite_member','ys_invite_member.user_id','=','ys_member.user_id')
+ 	 			->orderBy('ys_member.created_at','desc');
  	 
  	 $search=[];
  	 if ($request->start != ''){
- 	 	$member->where('created_at','>=',$request->start.' 00:00:00');
+ 	 	$member->where('ys_member.created_at','>=',$request->start.' 00:00:00');
  	 	$search['start']=$request->start;
  	 }
  	 if ($request->end != ''){
- 	 	$member->where('created_at','<',$request->end.' 59:59:59');
+ 	 	$member->where('ys_member.created_at','<',$request->end.' 59:59:59');
  	 	$search['end']=$request->end;
  	 } 	 
       if ($request->mobile != ""){
-          $member->where('mobile','like','%'.$request->mobile.'%');
+          $member->where('ys_member.mobile','like','%'.$request->mobile.'%');
           $search['mobile']=$request->mobile;
       }   
       if ($request->name != ""){
-      	$member->where('name','like','%'.$request->name.'%');
+      	$member->where('ys_member.name','like','%'.$request->name.'%');
           $search['name']=$request->name;
-      }         
+      }   
+      if ($request->agency != ''){
+      	$member->where('ys_employee.agency_id','=',$request->agency);
+      	$search['agency']=$request->agency;
+      }            
      $data = $member ->paginate(10);
  	$sexArr=array(
  			'1'=>'男',
  			'2'=>'女',
  			'0'=>'未选择',
  	); 	
+ 	$invite_gift=config('clinic-config.invite_goods');
 
  	foreach ($data as &$val){
         if ($val['sex'] == ''){
@@ -52,6 +59,7 @@ class MemberController  extends Controller
  		$val['sex']=$sexArr[$val['sex']];
  		$val['state']=$val['state']==1?'正常':'禁止登陆';
  		
+ 		$val['gift']=empty($val['gift'])?'':$invite_gift[$val['gift']];
  
  		//邀请人
  		$invite_info=\App\MemberModel::where('ys_member.user_id',$val->invite_id)
@@ -63,10 +71,111 @@ class MemberController  extends Controller
  		
  		$val['invite_id']=empty($val->invite_id)?'':$invite_info->name.$agenyc_name;
  	}
-
-	return view('memberlist',['data'=>$data,'search'=>$search]);
+ 	//所有经销商
+ 	$agency_list=\App\AgencyModel::get();
+	return view('memberlist',['data'=>$data,'search'=>$search,'agency_list'=>$agency_list]);
  }
  
+ 
+ public function memberListExcel(Request $request){
+ 
+ 	 	//dd(Auth::user());
+ 	 $member=\App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 	 			->leftjoin('ys_invite_member','ys_invite_member.user_id','=','ys_member.user_id')
+ 	 			->orderBy('ys_member.created_at','desc')
+ 	 			->select('ys_member.name as user_name','ys_member.mobile','ys_member.sex','ys_member.created_at','ys_member.invite_id as employee_name','ys_member.invite_id as agency_name','ys_invite_member.gift');
+ 	 
+ 	 $search=[];
+ 	 if ($request->start != ''){
+ 	 	$member->where('ys_member.created_at','>=',$request->start.' 00:00:00');
+ 	 	$search['start']=$request->start;
+ 	 }
+ 	 if ($request->end != ''){
+ 	 	$member->where('ys_member.created_at','<',$request->end.' 59:59:59');
+ 	 	$search['end']=$request->end;
+ 	 } 	 
+      if ($request->mobile != ""){
+          $member->where('ys_member.mobile','like','%'.$request->mobile.'%');
+          $search['mobile']=$request->mobile;
+      }   
+      if ($request->name != ""){
+      	$member->where('ys_member.name','like','%'.$request->name.'%');
+          $search['name']=$request->name;
+      }   
+      if ($request->agency != ''){
+      	$member->where('ys_employee.agency_id','=',$request->agency);
+      	$search['agency']=$request->agency;
+      }            
+     $data = $member ->get();
+ 	$sexArr=array(
+ 			'1'=>'男',
+ 			'2'=>'女',
+ 			'0'=>'未选择',
+ 	); 	
+ 	$invite_gift=config('clinic-config.invite_goods');
+ 	foreach ($data as &$val){
+        if ($val['sex'] == ''){
+            $val['sex'] = 0;
+        }
+ 		$val['sex']=$sexArr[$val['sex']];
+ 		//$val['state']=$val['state']==1?'正常':'禁止登陆';
+ 		$val['gift']=empty($val['gift'])?'':$invite_gift[$val['gift']];
+ 			
+ 
+ 		//邀请人
+ 		$invite_info=\App\MemberModel::where('ys_member.user_id',$val->employee_name)
+ 				->leftjoin('ys_employee','ys_employee.user_id','=','ys_member.user_id')
+ 				->leftjoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')
+ 				->select('ys_member.name','ys_agency.name as agency_name')
+ 				->first();
+
+ 		
+ 		if(empty($val->employee_name)){
+ 			$val['employee_name']='';
+ 			$val['agency_name']='';
+ 		}else{
+ 			$val['employee_name']=$invite_info->name;
+ 			$val['agency_name']=$invite_info->agency_name;
+ 		}
+ 		
+ 		//$val['invite_id']=empty($val->invite_id)?'':$invite_info->name.$agenyc_name;
+ 	}
+ 
+
+ 	
+ 
+ 	$arr_data=$data->toArray();
+ 	if (empty($arr_data)){
+ 		return back();
+ 	}
+ 	//，
+ 	foreach($arr_data as $k=>$v){
+ 		$new_arr[$k]=$v;
+ 	}
+ 	// 输出Excel文件头，可把user.csv换成你要的文件名
+ 	header('Content-Type: application/vnd.ms-excel');
+ 	header('Content-Disposition: attachment;filename="用户列表.csv"');
+ 	header('Cache-Control: max-age=0');
+ 
+ 	// 打开PHP文件句柄，php://output 表示直接输出到浏览器
+ 	$fp = fopen('php://output', 'a');
+ 
+ 	// 输出Excel列名信息
+ 	$head = array('会员名','注册手机','性别','注册时间','邀请人','门店','领取礼品');
+ 	foreach ($head as $i => $v) {
+ 		// CSV的Excel支持GBK编码，一定要转换，否则乱码
+ 		$head[$i] = iconv('utf-8', 'gbk',$v);
+ 	}
+ 	// 将数据通过fputcsv写到文件句柄
+ 	fputcsv($fp, $head);
+ 	foreach ($new_arr as $key => $val) {
+ 		foreach($val as $k=>$v){
+			$new[$k] = iconv('utf-8', 'gbk//IGNORE', strval($v)."\t");
+ 		}
+ 		fputcsv($fp, $new);
+ 	}
+
+ }
  public  function memberEdit (Request $request){
 
 
