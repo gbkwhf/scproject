@@ -212,12 +212,14 @@ class CreateGoodsCarController extends Controller{
 
 
         $goods_info = \DB::table('ys_goods_car')->where('user_id',$user_id)
-                     ->select('id as car_id','goods_id','goods_name','goods_price','goods_url','number','state','first_class_id','created_at')
+        			->leftjoin('ys_supplier','ys_supplier.id','=','ys_goods_car.supplier_id')	
+                     ->select('supplier_id','ys_supplier.name as supplier_name','ys_goods_car.id as car_id','goods_id','goods_name','goods_price','goods_url','number','ys_goods_car.state','first_class_id','created_at')                     
                      ->get();
 
         $result = [];
         $returns = 0;
         $no_returns = 0;
+		$new_data=[];
         if(!empty($goods_info)){
             foreach($goods_info as $k=>$v){
                 if(($v->state == 1) && ($v->first_class_id == 4)){ //表示该商品是选中状态 ,并且该商品的一级分类id是不支持返利的商品4
@@ -225,20 +227,27 @@ class CreateGoodsCarController extends Controller{
                 }elseif(($v->state == 1) && ($v->first_class_id != 4)){
                     $returns += ($v->number) * ($v->goods_price);
                 }
+
+                if(array_key_exists($v->supplier_id, $new_data)){
+                	$new_data[$v->supplier_id]['goods_list'][]=$v;
+                }else{
+                	$new_data[$v->supplier_id]['supplier_id']=$v->supplier_id;
+                	$new_data[$v->supplier_id]['supplier_name']=$v->supplier_name;
+                	$new_data[$v->supplier_id]['goods_list'][]=$v;
+                }
             }
 
             $result['return'] = $returns;//可支持返利的商品总金额
             $result['no_return'] = $no_returns;//不支持返利的商品总金额
 
         }else{
-
             $goods_info = [];
             $result['return'] = $returns;//可支持返利的商品总金额
             $result['no_return'] = $no_returns;//不支持返利的商品总金额
             $result['return_rule'] = getenv('RETURN_RULE');//返利规则，大于该规则金额才进行返利
         }
 
-        $result['info'] =  $goods_info;
+        $result['info'] =  array_values($new_data);
 
         return  $this->respond($this->format($result));
 
