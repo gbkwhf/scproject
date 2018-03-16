@@ -85,7 +85,13 @@
         Route::get('manage/managepassword', 'HomeController@managePassword');//管理员密码修改
         Route::post('manage/managepasswordsave', 'HomeController@managePasswordSave');//管理员密码修改
         Route::get('manage/invitemember', 'MemberController@inviteMember');
-        
+
+
+        //徐盼  2018/03/15   banner管理
+        Route::get('banner/list', 'BannerController@bannerList');//banner列表
+
+
+
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
 			//供应商功能			
