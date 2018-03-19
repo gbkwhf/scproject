@@ -78,6 +78,9 @@ Route::group([
           //5.更改购物车：选中该商品的标志（选中/不选中）
           Route::post('update/goods/car/commodity/state','CreateGoodsCarController@updateGoodsCar');
 
+          //6.更改购物车   同一供应商底下所有商品的状态（选中/不选中）
+          Route::post('update/goods/car/supply/all/commodity/state','CreateGoodsCarController@updateAllGoodsCar');
+
 
 
 

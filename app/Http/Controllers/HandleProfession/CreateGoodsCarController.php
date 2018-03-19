@@ -359,6 +359,55 @@ class CreateGoodsCarController extends Controller{
 
 
 
+    //6.更改购物车   同一供应商底下所有商品的状态（选中/不选中）
+    public function updateAllGoodsCar(Request $request)
+    {
+
+        $validator = $this->setRules([
+            'ss' => 'required|string',
+            'supplier_id' => 'required|integer', //供应商id
+            'flag' => 'required|integer|in:1,2' //g
+        ])
+            ->_validate($request->all());
+        if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
+
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
+
+
+        //判断该条记录是否存在
+        $car_id_arr = \DB::table('ys_goods_car')->where('user_id',$user_id)->where('supplier_id',$request->supplier_id)->lists('id'); //state: 1表示选中  0 表示不选
+        if(empty($car_id_arr)){ //未找到该条购物车记录
+            return $this->setStatusCode(1043)->respondWithError($this->message);
+        }
+
+
+        \DB::beginTransaction(); //开启事务
+        if($request->flag == 1){//1 全不选
+                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->whereIn('id',$car_id_arr)->update(['state'=>0,'updated_at'=>\DB::Raw('Now()')]);
+
+        }elseif($request->flag == 2){ //  2全选中
+                $update = \DB::table('ys_goods_car')->where('user_id',$user_id)->whereIn('id',$car_id_arr)->update(['state'=>1,'updated_at'=>\DB::Raw('Now()')]);
+        }else{
+
+            $update = 1;
+        }
+
+        if ($update) {
+                \DB::commit();
+                return  $this->respond($this->format([],true));
+        }else{
+                \DB::rollBack();
+                return $this->setStatusCode(9998)->respondWithError($this->message);
+        }
+
+
+
+
+
+
+
+    }
+
 
 
 
