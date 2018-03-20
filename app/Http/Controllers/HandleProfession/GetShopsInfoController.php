@@ -136,6 +136,7 @@ class GetShopsInfoController extends Controller{
 
 
         $validator = $this->setRules([
+            'flag'=>'required|integer|in:0,1',//0非返利区   1返利区
             'page' => 'integer',
 
         ])
@@ -145,10 +146,23 @@ class GetShopsInfoController extends Controller{
         $page = empty($request->page) ? 1 : $request->page;
         $start = $page <= 1 ? 0 : ($page - 1) * 10;//分页
 
+
+         $id_arr = [];
+        if($request->flag == 0){
+
+            $id_arr = ['4'];
+        }else{
+
+            $id_arr = ['1','2','3','5','6'];
+        }
+
+
         $data = \DB::table('ys_goods as a')
                 ->leftjoin('ys_goods_image as b','a.id','=','b.goods_id')
+                ->leftjoin('ys_goods_class as c','a.class_id','=','c.id')
                 ->select('a.id as goods_id','a.name as goods_name','a.num','a.price','a.sales','a.updated_at as time','b.image')
                 ->where('a.state',1) //0下架1上架
+                ->whereIn('c.first_id',$id_arr)
                 ->groupBy('a.id')
                 ->orderBy('a.updated_at','desc')
                 ->skip($start)
