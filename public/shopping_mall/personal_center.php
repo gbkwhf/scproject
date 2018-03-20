@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/personal_center.css">
+    	
 </head>
 <script>
     //解决IOS微信webview后退不执行JS的问题
@@ -63,11 +64,13 @@
 			</li>
 		</ul>
 	</div>
+	<!---------底部----->
+	<div id="commId"></div>
 	<!--购物车-->
-	<div class="shopping-cart" onclick="location.href='shopCart.php'">
+	<!--<div class="shopping-cart" onclick="location.href='shopCart.php'">
 		<img src="images/shopping-cart.png"/>
 		<span></span>
-	</div>
+	</div>-->
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
@@ -97,29 +100,33 @@
 		
 		
 		//获取购物车中的商品数量
-  		$.ajax({
-  			type: "post",
-  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, 
-  			data: {
-  				"ss": getCookie('openid')
-  			},
-  			success: function(data) {
-  				if(data.code == 1) { //请求成功
-  					console.log(data);
-  					var numberShop = 0;
-  					for(var i=0;i<data.result.info.length;i++){
-						numberShop += parseInt(data.result.info[i].number) ;
-  					}
-					$('.shopping-cart span').html(numberShop);
-  					
-  				}else if(data.code==1011){
-  					layer.msg('身份已失效，请重新绑定');
-  					setTimeout(function(){location.href='register.php';},1000);
-  				}else{
-  					layer.msg(data.msg);  					
-  				}
-  			}
-  		});
+  		var tarr = [];
+		var numberShop = 0;
+		//获取购物车的数量
+		$.ajax({
+			type: "post",
+			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
+			data: {
+				"ss": getCookie('openid')
+			},
+			success: function(data) {
+				if(data.code == 1) { //请求成功
+					console.log(data);
+					var arr = data.result.info;
+					$.each(arr, function(k, v) {
+						$.each(v.goods_list, function(key, value) {
+							//console.log(value.number);
+							numberShop += parseInt(value.number)
+						})
+					})
+					console.log(numberShop + 'iiiiiii')
+					$('.shopCar span').html(numberShop);
+
+				} else {
+					layer.msg(data.msg);
+				}
+			}
+		});
   		
   		//获取用户基本信息
   		$.ajax({
@@ -143,6 +150,27 @@
   				}
   			}
   		});
+</script>
+<script type="text/javascript">
+	$(function(){
+		//公共的底部
+		$('#commId').load('commfooter.php');
+		
+			setTimeout(function(){  //#e63636
+				$(".memberIndex dd").css('color', '#333333');
+				$(".memberIndex dt img").attr("src", "images/in1.jpg")
+				$(".shopCar dt img").attr("src","images/che1.jpg");
+				$(".shopCar dd").css('color','#333333');
+				$(".personal dt img").attr("src","images/my2.jpg");
+				$(".personal dd").css('color','#e63636');
+				$('.shopCar').click(function(){	
+					location.href="newShop_cart.php";
+				});
+				$('.memberIndex').click(function(){	
+					location.href = "memberPages.php";
+				})
+			},100)
+	})
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

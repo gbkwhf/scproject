@@ -76,11 +76,14 @@ input[type="button"] {
 	clear: both;
 	width: 100%;
 	/*height: 370px;*/
-	min-height: 100px;
+	height: 300px;
 }
 
 .swiper-slide{
 	margin-top: 67px;
+}
+.swiper-slide img{
+	/*margin-top: 67px;*/
 }
 /*--------商品分类---*/
 .container {
@@ -165,9 +168,19 @@ input[type="button"] {
 }
 .shopName{
 	padding: 10px;
+	height: 33px;
+	line-height: 20px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	/*white-space: nowrap;*/
+	-webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+	display: -webkit-box;
+	text-align:left ;
 }
 .shopMessage{
 	height: 27px;
+	margin-top: 10px;
 }
 .shops{
 	float: left;
@@ -193,7 +206,7 @@ input[type="button"] {
 	border-radius: 6px;
 }
 /*------------底部-------*/
-.shopBottom{
+/*.shopBottom{
 	clear: both;
 	width: 100%;
 	height: 55px;
@@ -224,4 +237,4 @@ input[type="button"] {
 	height: 23px;
 	margin: 0 auto;
 	margin-top: 10px;
-}
+}*/

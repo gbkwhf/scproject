@@ -8,7 +8,7 @@
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/common.css">
-		<link rel="stylesheet" type="text/css" href="css/memberPages.css" />
+		<link rel="stylesheet" type="text/css" href="css/commfooter.css" />
 	</head>
 	<body>
 		<div class="shopBottom">
@@ -20,8 +20,12 @@
 			</div>
 			<div class="shopCar">
 				<dl>
-					<dt><img src="images/che1.jpg"/></dt>
+					<dt>
+						<img src="images/che1.jpg" class="car"/>
+						<span>0</span>
+					</dt>
 					<dd>购物车</dd>
+					
 				</dl>
 			</div>
 			<div class="personal">
@@ -33,7 +37,7 @@
 		</div>
 	</body>
 </html>
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 //		

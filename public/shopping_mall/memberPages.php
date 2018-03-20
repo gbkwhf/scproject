@@ -24,46 +24,41 @@
 		</div>
 		<!------------轮播图------------->
 		<div class="swiper-container" id="001">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide "> <img src="images/banners.png" /></div>
-				<div class="swiper-slide "> <img src="images/banners.png" /></div>
-				<div class="swiper-slide "> <img src="images/banners.png" /></div>
-				<div class="swiper-slide "> <img src="images/banners.png" /></div>
-			</div>
+			<div class="swiper-wrapper"></div>
 			<div class="swiper-pagination"></div>
 		</div>
 		<!-------------商品分类----->
 		<div class="container">
 			<ul>
 				<li>
-					<img src="images/shipin_03.png" />
+					<img src="images/shipin_03.png" onclick="location.href='member_mall_list.php?first_id=1'" />
 					<em>食品土特产</em>
 				</li>
 				<li>
-					<img src="images/jiaju_03.png" />
+					<img src="images/jiaju_03.png" onclick="location.href='member_mall_list.php?first_id=2'" />
 					<em>家居家装</em>
 				</li>
 				<li>
-					<img src="images/health_03.png" />
+					<img src="images/health_03.png" onclick="location.href='member_mall_list.php?first_id=3'" />
 					<em>健康商城</em>
 				</li>
 				<li>
-					<img src="images/linyi.png" />
+					<img src="images/linyi.png" onclick="location.href='lyg_index.php?first_id=5'" />
 					<em>聆医馆</em>
 				</li>
 				<li>
-					<img src="images/yijing_03.png" />
+					<img src="images/yijing_03.png" onclick="location.href='member_mall_list.php?first_id=6'" />
 					<em>非遗景泰蓝</em>
 				</li>
 				<li>
-					<img src="images/shouhou_03.png" />
+					<img src="images/shouhou_03.png" onclick="waitting()" />
 					<em>售后交流</em>
 				</li>
 			</ul>
 
 		</div>
 		<!-------------福利区------->
-		<div class="welfare"><img src="images/welfare.png" /></div>
+		<!--<div class="welfare"><img src="images/welfare.png" /></div>-->
 		<!-----------新品上线------->
 		<div class="newBox">
 			<div class="newShopBox">新品上线</div>
@@ -71,8 +66,8 @@
 		</div>
 
 		<!----------商品信息----->
-		<div style="margin-bottom: 70px;">
-			<div class="shopBox">
+		<div style="margin-bottom: 70px;" class="shop_Box">
+			<!--<div class="shopBox">
 				<div class="shopImg"><img src="images/shop_img.png" /></div>
 				<div class="shopName">可玉可求 飘香翡翠手镯 女款玉手镯 玉器玉石收手镯子， 送礼自带均可</div>
 				<div class="shopMessage">
@@ -93,31 +88,18 @@
 					</div>
 					<div class="toBuy">立即抢购</div>
 				</div>
-			</div>
-			
+			</div>-->
+
 		</div>
 
 		<!---------底部----->
-		<div id="commId"></div>
+		<div id="commId" style="clear: both;"></div>
 	</body>
 
 </html>
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/config.js"></script>
 <script type="text/javascript" src="js/swiper-3.4.0.min.js"></script>
+<script src="js/layer/layer.js"></script>
 <script type="text/javascript" src="js/memberPages.js"></script>
-<script type="text/javascript">
-	$(function(){
-		//公共的底部
-		$('#commId').load('commfooter.php');
-		
-			setTimeout(function(){  //#e63636
-				$(".memberIndex dd").css('color','#e63636');
-				$(".memberIndex dt img").attr("src","images/in2.jpg")
-				$(".shopCar dt img").attr("src","images/che1.jpg");
-				$(".shopCar dd").css('color','#333333');
-				$('.shopCar').click(function(){	
-					location.href="newShop_cart.php";
-				})
-			},100)
-	})
-</script>
