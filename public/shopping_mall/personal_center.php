@@ -176,27 +176,6 @@
   			}
   		});
 </script>
-<script type="text/javascript">
-//	$(function(){
-//		//公共的底部
-//		$('#commId').load('commfooter.php');
-//		
-//			setTimeout(function(){  //#e63636
-//				$(".memberIndex dd").css('color', '#333333');
-//				$(".memberIndex dt img").attr("src", "images/in1.jpg")
-//				$(".shopCar dt img").attr("src","images/che1.jpg");
-//				$(".shopCar dd").css('color','#333333');
-//				$(".personal dt img").attr("src","images/my2.jpg");
-//				$(".personal dd").css('color','#e63636');
-//				$('.shopCar').click(function(){	
-//					location.href="newShop_cart.php";
-//				});
-//				$('.memberIndex').click(function(){	
-//					location.href = "memberPages.php";
-//				})
-//			},100)
-//	})
-</script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
 		border-radius: 5px;

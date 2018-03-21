@@ -444,30 +444,9 @@
 			})
 
 		}, 300)
-
-		//公共的底部
-//		$('#commId').load('commfooter.php');
-//		setTimeout(function() { //#e63636
-//			$(".memberIndex dd").css('color', '#333333');
-//			$(".memberIndex dt img").attr("src", "images/in1.jpg")
-//			$(".shopCar dt img").attr("src", "images/che2.jpg");
-//			$(".shopCar dd").css('color', '#e63636');
-//			$(".personal dt img").attr("src", "images/my.png");
-//			$(".personal dd").css('color', '#333333');
-//
-//			$('.personal').click(function() {
-//				location.href = "personal_center.php";
-//			});
-//			$('.memberIndex').click(function() {
-//
-//				location.href = "memberPages.php";
-//
-//			})
-//		}, 100)
-
+		//获取购物车的数量
 		var tarr = [];
 		var numberShop = 0;
-		//获取购物车的数量
 		$.ajax({
 			type: "post",
 			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
