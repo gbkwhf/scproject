@@ -41,6 +41,7 @@
 	<script src="js/config.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			var winH=$(window).height();
 			$.ajax({ //获取物流信息
 				type: "post",
 				dataType: 'json',
