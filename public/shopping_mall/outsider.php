@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="css/common.css">
 		<link rel="stylesheet" type="text/css" href="css/outsider.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/commfooter.css"/>
 	</head>
 
 	<body>
@@ -97,28 +98,31 @@
 
 		</div>
 		<!---------底部----->
-		<div id="commId"></div>
+		<!--<div id="commId"></div>-->
 		<!---------底部----->
-		<!--<div class="shopBottom">
+		<div class="shopBottom">
 			<div class="memberIndex">
 				<dl>
-					<dt><img src="images/index.png"/></dt>
-					<dd>首页</dd>
+					<dt><img src="images/in2.jpg"/></dt>
+					<dd style="color: #e63636;">首页</dd>
 				</dl>
 			</div>
-			<div class="shopCar">
+			<div class="shopCar" onclick="location.href='newShop_cart.php'">
 				<dl>
-					<dt><img src="images/shopCar.png"/></dt>
-					<dd>购物车</dd>
+					<dt>
+						<img src="images/che1.jpg"/>
+						<span>0</span>
+					</dt>
+					<dd style="color: #333333;">购物车</dd>
 				</dl>
 			</div>
-			<div class="personal">
+			<div class="personal" onclick="location.href='personal_center.php'">
 				<dl>
 					<dt><img src="images/my.png"/></dt>
-					<dd>我的</dd>
+					<dd style="color: #333333;">我的</dd>
 				</dl>
 			</div>
-		</div>-->
+		</div>
 
 	</body>
 

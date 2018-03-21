@@ -3,13 +3,13 @@ body {
 	background: #FFFFFF;
 }
 
-img {
+/*img {
 	width: 100%;
 	display: block;
 	border: none;
 	vertical-align: bottom;
 	border: none;
-}
+}*/
 
 input[type="button"] {
 	-webkit-appearance: none;
@@ -83,6 +83,7 @@ input[type="button"] {
 	margin-top: 67px;
 }
 .swiper-slide img{
+	width: 100%;
 	/*margin-top: 67px;*/
 }
 /*--------商品分类---*/
@@ -164,6 +165,7 @@ input[type="button"] {
 	/*margin-bottom: 15px;*/
 }
 .shopImg img{
+	width: 100%;
 	height: 160px;
 }
 .shopName{

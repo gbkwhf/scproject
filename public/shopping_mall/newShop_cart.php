@@ -10,6 +10,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/common.css">
 		<link rel="stylesheet" type="text/css" href="css/newShop_cart.css" />
+		<link rel="stylesheet" type="text/css" href="css/commfooter.css"/>
 	</head>
 	<body>
 		<!---->
@@ -44,7 +45,31 @@
         </div>
         <input type="hidden" id="returnprice"/>
         <input type="hidden" id="noreturnprice"/>
-		<div id="commId"></div>
+		<!--<div id="commId"></div>-->
+		<!---------底部----->
+		<div class="shopBottom">
+			<div class="memberIndex" onclick="location.href='memberPages.php'">
+				<dl>
+					<dt><img src="images/in1.jpg"/></dt>
+					<dd style="color: #333333;">首页</dd>
+				</dl>
+			</div>
+			<div class="shopCar">
+				<dl>
+					<dt>
+						<img src="images/che2.jpg"/>
+						<span>0</span>
+					</dt>
+					<dd style="color: #e63636;">购物车</dd>
+				</dl>
+			</div>
+			<div class="personal" onclick="location.href='personal_center.php'">
+				<dl>
+					<dt><img src="images/my.png"/></dt>
+					<dd style="color: #333333;">我的</dd>
+				</dl>
+			</div>
+		</div>
 	</body>
 
 </html>

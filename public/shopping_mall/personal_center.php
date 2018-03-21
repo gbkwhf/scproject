@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/personal_center.css">
+    <link rel="stylesheet" type="text/css" href="css/commfooter.css"/>
     	
 </head>
 <script>
@@ -65,7 +66,31 @@
 		</ul>
 	</div>
 	<!---------底部----->
-	<div id="commId"></div>
+	<!--<div id="commId"></div>-->
+	<!---------底部----->
+		<div class="shopBottom">
+			<div class="memberIndex" onclick="location.href='memberPages.php'">
+				<dl>
+					<dt><img src="images/in1.jpg"/></dt>
+					<dd style="color: #333333;">首页</dd>
+				</dl>
+			</div>
+			<div class="shopCar" onclick="location.href='newShop_cart.php'">
+				<dl>
+					<dt>
+						<img src="images/che1.jpg"/>
+						<span>0</span>
+					</dt>
+					<dd style="color: #333333;">购物车</dd>
+				</dl>
+			</div>
+			<div class="personal">
+				<dl>
+					<dt><img src="images/my2.jpg"/></dt>
+					<dd style="color: #e63636;">我的</dd>
+				</dl>
+			</div>
+		</div>
 	<!--购物车-->
 	<!--<div class="shopping-cart" onclick="location.href='shopCart.php'">
 		<img src="images/shopping-cart.png"/>
@@ -152,25 +177,25 @@
   		});
 </script>
 <script type="text/javascript">
-	$(function(){
-		//公共的底部
-		$('#commId').load('commfooter.php');
-		
-			setTimeout(function(){  //#e63636
-				$(".memberIndex dd").css('color', '#333333');
-				$(".memberIndex dt img").attr("src", "images/in1.jpg")
-				$(".shopCar dt img").attr("src","images/che1.jpg");
-				$(".shopCar dd").css('color','#333333');
-				$(".personal dt img").attr("src","images/my2.jpg");
-				$(".personal dd").css('color','#e63636');
-				$('.shopCar').click(function(){	
-					location.href="newShop_cart.php";
-				});
-				$('.memberIndex').click(function(){	
-					location.href = "memberPages.php";
-				})
-			},100)
-	})
+//	$(function(){
+//		//公共的底部
+//		$('#commId').load('commfooter.php');
+//		
+//			setTimeout(function(){  //#e63636
+//				$(".memberIndex dd").css('color', '#333333');
+//				$(".memberIndex dt img").attr("src", "images/in1.jpg")
+//				$(".shopCar dt img").attr("src","images/che1.jpg");
+//				$(".shopCar dd").css('color','#333333');
+//				$(".personal dt img").attr("src","images/my2.jpg");
+//				$(".personal dd").css('color','#e63636');
+//				$('.shopCar').click(function(){	
+//					location.href="newShop_cart.php";
+//				});
+//				$('.memberIndex').click(function(){	
+//					location.href = "memberPages.php";
+//				})
+//			},100)
+//	})
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

@@ -120,6 +120,7 @@
 							//							console.log(data)
 							$(thPar).remove();
 							allsetTotal();
+							jisNum();
 							layer.closeAll();
 							var getStrC = $(seParBox).find('.storeConHei').length;
 							if(getStrC == 0) { //做店铺的删除
@@ -445,24 +446,24 @@
 		}, 300)
 
 		//公共的底部
-		$('#commId').load('commfooter.php');
-		setTimeout(function() { //#e63636
-			$(".memberIndex dd").css('color', '#333333');
-			$(".memberIndex dt img").attr("src", "images/in1.jpg")
-			$(".shopCar dt img").attr("src", "images/che2.jpg");
-			$(".shopCar dd").css('color', '#e63636');
-			$(".personal dt img").attr("src", "images/my.png");
-			$(".personal dd").css('color', '#333333');
-
-			$('.personal').click(function() {
-				location.href = "personal_center.php";
-			});
-			$('.memberIndex').click(function() {
-
-				location.href = "memberPages.php";
-
-			})
-		}, 100)
+//		$('#commId').load('commfooter.php');
+//		setTimeout(function() { //#e63636
+//			$(".memberIndex dd").css('color', '#333333');
+//			$(".memberIndex dt img").attr("src", "images/in1.jpg")
+//			$(".shopCar dt img").attr("src", "images/che2.jpg");
+//			$(".shopCar dd").css('color', '#e63636');
+//			$(".personal dt img").attr("src", "images/my.png");
+//			$(".personal dd").css('color', '#333333');
+//
+//			$('.personal').click(function() {
+//				location.href = "personal_center.php";
+//			});
+//			$('.memberIndex').click(function() {
+//
+//				location.href = "memberPages.php";
+//
+//			})
+//		}, 100)
 
 		var tarr = [];
 		var numberShop = 0;

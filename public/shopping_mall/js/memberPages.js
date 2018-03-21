@@ -117,22 +117,22 @@ $(function() {
 	})
 
 	//公共的底部
-	$('#commId').load('commfooter.php');
-
-	setTimeout(function() { //#e63636
-		$(".memberIndex dd").css('color', '#e63636');
-		$(".memberIndex dt img").attr("src", "images/in2.jpg")
-		$(".shopCar dt img").attr("src", "images/che1.jpg");
-		$(".shopCar dd").css('color', '#333333');
-		$(".personal dt img").attr("src", "images/my.png");
-		$(".personal dd").css('color', '#333333');
-		$('.shopCar').click(function() {
-			location.href = "newShop_cart.php";
-		});
-		$('.personal').click(function() {
-			location.href = "personal_center.php";
-		})
-	}, 100)
+//	$('#commId').load('commfooter.php');
+//
+//	setTimeout(function() { //#e63636
+//		$(".memberIndex dd").css('color', '#e63636');
+//		$(".memberIndex dt img").attr("src", "images/in2.jpg")
+//		$(".shopCar dt img").attr("src", "images/che1.jpg");
+//		$(".shopCar dd").css('color', '#333333');
+//		$(".personal dt img").attr("src", "images/my.png");
+//		$(".personal dd").css('color', '#333333');
+//		$('.shopCar').click(function() {
+//			location.href = "newShop_cart.php";
+//		});
+//		$('.personal').click(function() {
+//			location.href = "personal_center.php";
+//		})
+//	}, 100)
 });
 
 function goDetail(goods_id) {
