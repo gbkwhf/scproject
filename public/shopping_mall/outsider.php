@@ -245,6 +245,8 @@
 						$('.newBox').hide();
 					}
 
+				}else{
+					layer.msg(data.msg);
 				}
 
 			}

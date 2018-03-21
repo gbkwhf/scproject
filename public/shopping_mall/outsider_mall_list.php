@@ -53,13 +53,13 @@
 <script type="text/javascript">
 	$(function() {
 		var winH = $(window).height();
-		var second_id = $_GET['second_id']; //获取商品名
+		var second_id = $_GET['second_id']; //获取二级分类id
 		$.ajax({ //获取商品列表
 			type: "get",
 			dataType: 'json',
 			url: commonsUrl + "api/gxsc/get/commodity/lists/" + second_id + versioninfos,
 			data: {
-				"second_id": second_id //请求参数  openid
+				"second_id": second_id //请求参数  
 			},
 			success: function(data) {
 				console.log(data)
