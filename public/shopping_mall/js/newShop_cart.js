@@ -41,7 +41,7 @@
 							html += "<div class='storeConHei'>" +
 								"<div class='nextCheck'>" + state + "</div>" +
 								"<div class='nextShopImg'>" +
-								"<a href=''><img src=" + goods_url + " alt='' /></a>" +
+								"<img src=" + goods_url + " alt='' />" +
 								"</div>" +
 								"<div class='rightDiv'>" +
 								"<div class='shopTitle'>" + goods_name + "</div>" +
