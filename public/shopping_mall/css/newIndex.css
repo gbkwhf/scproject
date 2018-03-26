@@ -1,0 +1,36 @@
+html,
+body {
+	background: #f3f5f7;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+/*----------内容开始------------*/
+.member{
+	width: 92%;
+	/*height: 107px;*/
+	margin: 0 auto;
+	margin-top: 28px;
+}
+.no_member{
+	width: 92%;
+	/*height: 107px;*/
+	margin: 0 auto;
+	margin-top: 22px;
+}
+.gameBox{
+	width: 92%;
+	/*height: 107px;*/
+	margin: 0 auto;
+	margin-top: 22px;
+	margin-bottom: 22px;
+}

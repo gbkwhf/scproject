@@ -8,6 +8,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/personal_center.css">
+    <link rel="stylesheet" type="text/css" href="css/commfooter.css"/>
+    	
 </head>
 <script>
     //解决IOS微信webview后退不执行JS的问题
@@ -63,11 +65,37 @@
 			</li>
 		</ul>
 	</div>
+	<!---------底部----->
+	<!--<div id="commId"></div>-->
+	<!---------底部----->
+		<div class="shopBottom">
+			<div class="memberIndex" onclick="location.href='memberPages.php'">
+				<dl>
+					<dt><img src="images/in1.jpg"/></dt>
+					<dd style="color: #333333;">首页</dd>
+				</dl>
+			</div>
+			<div class="shopCar" onclick="location.href='newShop_cart.php'">
+				<dl>
+					<dt>
+						<img src="images/che1.jpg"/>
+						<span>0</span>
+					</dt>
+					<dd style="color: #333333;">购物车</dd>
+				</dl>
+			</div>
+			<div class="personal">
+				<dl>
+					<dt><img src="images/my2.jpg"/></dt>
+					<dd style="color: #e63636;">我的</dd>
+				</dl>
+			</div>
+		</div>
 	<!--购物车-->
-	<div class="shopping-cart" onclick="location.href='shopCart.php'">
+	<!--<div class="shopping-cart" onclick="location.href='shopCart.php'">
 		<img src="images/shopping-cart.png"/>
 		<span></span>
-	</div>
+	</div>-->
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
@@ -97,29 +125,33 @@
 		
 		
 		//获取购物车中的商品数量
-  		$.ajax({
-  			type: "post",
-  			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos, 
-  			data: {
-  				"ss": getCookie('openid')
-  			},
-  			success: function(data) {
-  				if(data.code == 1) { //请求成功
-  					console.log(data);
-  					var numberShop = 0;
-  					for(var i=0;i<data.result.info.length;i++){
-						numberShop += parseInt(data.result.info[i].number) ;
-  					}
-					$('.shopping-cart span').html(numberShop);
-  					
-  				}else if(data.code==1011){
-  					layer.msg('身份已失效，请重新绑定');
-  					setTimeout(function(){location.href='register.php';},1000);
-  				}else{
-  					layer.msg(data.msg);  					
-  				}
-  			}
-  		});
+  		var tarr = [];
+		var numberShop = 0;
+		//获取购物车的数量
+		$.ajax({
+			type: "post",
+			url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
+			data: {
+				"ss": getCookie('openid')
+			},
+			success: function(data) {
+				if(data.code == 1) { //请求成功
+					console.log(data);
+					var arr = data.result.info;
+					$.each(arr, function(k, v) {
+						$.each(v.goods_list, function(key, value) {
+							//console.log(value.number);
+							numberShop += parseInt(value.number)
+						})
+					})
+					console.log(numberShop + 'iiiiiii')
+					$('.shopCar span').html(numberShop);
+
+				} else {
+					layer.msg(data.msg);
+				}
+			}
+		});
   		
   		//获取用户基本信息
   		$.ajax({

@@ -115,7 +115,8 @@ label input {
 
 .shopTitle {
 	/*background-color: navajowhite;*/
-	height: 40px;
+	height: 37px;
+	line-height: 20px;
 	font-size: 14px;
 	color: #333333;
 	margin-right: 1.5%;
