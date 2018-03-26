@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<div class="companyBanner"><img src="images/comBanner.png" /></div>
+		<div class="companyBanner"><img src="images/comBanner.jpg" /></div>
 		<div class="member" onclick="location.href='memberPages.php'">
 			<img src="images/member_img.jpg" />
 		</div>
