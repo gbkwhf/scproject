@@ -22,6 +22,7 @@
 	Route::group(['namespace' => 'BackManage'], function () {
 		Route::Post('ajax/citylist', 'AjaxController@cityList');
 		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
+		Route::Post('ajax/getuserinfotoorder', 'AjaxController@getUserInfoToOrder');
 	});
 	
 	
@@ -79,6 +80,13 @@
         Route::get('manage/orderlist', 'OrderController@OrderList');//订单列表
         Route::post('manage/getorderexcel', 'OrderController@getOrderExcel');//导出订单列表
         Route::get('manage/orderdetial/{id}', 'OrderController@OrderDetial');//订单详情
+        
+        Route::get('manage/changeorder/{id}', 'OrderController@ChangeOrder');//更改订单
+        Route::post('manage/changeordersave', 'OrderController@changeOrderSave');//客服订单备注
+        
+        Route::get('manage/deleteorder/{id}', 'OrderController@DeleteOrder');//删除订单
+        
+        
         Route::get('manage/sendmemberbalance', 'MemberController@SendMemberBalance');//后台给用户返现
         Route::post('manage/sendmemberbalancesave', 'MemberController@SendMemberBalanceSave');//后台给用户返现
         Route::post('manage/manageremarksave', 'OrderController@manageRemarkSave');//客服订单备注

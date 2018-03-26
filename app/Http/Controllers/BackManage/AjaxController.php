@@ -38,6 +38,21 @@ class AjaxController  extends Controller
  	
  	echo json_encode($user_info);
  }
+ 
+ 
+ public  function getUserInfoToOrder (Request $request){
+ 
+ 	$user_info=DB::table('ys_member')->where('ys_member.mobile',$request->phone)
+ 	->select('ys_member.name')
+ 	->first();
+ 	if(!$user_info){
+ 		return 3;//人员不存在
+ 	}
+ 
+ 
+ 	echo json_encode($user_info);
+ }
+ 
  //获取商品分类
  public  function getGoodsClass (Request $request){
  	$class=DB::table('ys_goods_class')->where('first_id',$request->id)->get();

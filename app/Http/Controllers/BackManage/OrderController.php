@@ -59,7 +59,11 @@ class OrderController extends Controller
 		if ($request->name != ''){
 			$par->where('ys_member.name','like',"%$request->name%");
 			$search['name']=$request->name;
-		}		
+		}
+		if ($request->orderid != ''){
+			$par->where('ys_base_order.id','like',"%$request->orderid%");
+			$search['orderid']=$request->id;
+		}				
 		
 		$total_par=$par;
 		$data_par=$par;
@@ -81,13 +85,13 @@ class OrderController extends Controller
 				->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
 				->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
 				->get();
-			$val->goods_name=str_limit($goods_name[0]->goods_name,20,'...');
+			$val->goods_name=str_limit($goods_name[0]->goods_name,15,'...');
 			//供应商
 			$supplier_name=\App\SubOrderModel::where('base_id',$val->order_id)
 				->leftjoin('ys_supplier','ys_supplier.id','=','ys_sub_order.supplier_id')
 				->selectRaw("GROUP_CONCAT(ys_supplier.name) as supplier_name")
 				->get();
-			$val->supplier_name=str_limit($supplier_name[0]->supplier_name,20,'...');
+			$val->supplier_name=str_limit($supplier_name[0]->supplier_name,15,'...');
 			//经销商
 			if(empty($val->employee_id)){
 				$val->order_source='线上订单';
@@ -121,6 +125,51 @@ class OrderController extends Controller
 	
 		return view('orderdetial',['data'=>$data]);
 	}
+	
+	
+	public  function ChangeOrder (Request $request){
+		
+		$data=\App\BaseOrderModel::where('id',$request->id)
+					->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+					->select('ys_member.name','ys_member.mobile','ys_base_order.create_time')
+					->first();
+		$data['order_id']=$request->id;
+		return view('changeorder',['data'=>$data]);
+	}	
+
+	//更改订单归属人提交
+	public  function changeOrderSave (Request $request){
+	
+	 	$user_info=DB::table('ys_member')->where('ys_member.mobile',$request->phone)
+	 	->first();
+		if(!$user_info){
+			session()->flash('message','人员不存在');
+			return back();
+		}
+		
+		$res=\App\BaseOrderModel::where('id',$request->id)->update(['user_id'=>$user_info->user_id]);
+		
+
+		return redirect('manage/changeorder/'.$request->id);
+	}
+	
+	//删除订单
+	public  function DeleteOrder (Request $request){
+
+		\App\OrderGoodsModel::leftjoin('ys_sub_order','ys_sub_order.id','=','ys_order_goods.sub_id')
+				->leftjoin('ys_base_order','ys_base_order.id','=','ys_sub_order.base_id')
+				->where('ys_base_order.id',$request->id)
+				->delete();	
+			
+		\App\SubOrderModel::where('base_id',$request->id)->delete();
+		
+		\App\BaseOrderModel::where('id',$request->id)->delete();
+
+	
+		return redirect('manage/orderlist');
+	}
+	
+	
 	public  function manageRemarkSave (Request $request){
 				
 		$res=\App\BaseOrderModel::where('id',$request->id)->update(['manage_remark'=>$request->manage_remark]);
@@ -173,6 +222,10 @@ class OrderController extends Controller
 			$par->where('ys_member.name','like',"%$request->name%");
 			$search['name']=$request->name;
 		}
+		if ($request->orderid != ''){
+			$par->where('ys_base_order.id','like',"%$request->orderid%");
+			$search['orderid']=$request->id;
+		}		
 		
 
 		

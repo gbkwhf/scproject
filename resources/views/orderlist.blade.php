@@ -31,11 +31,14 @@
         <div class="col-xs-12">
           <div class="box">
           
-                        <div class="box-header">
+                <div class="box-header">
                <br><br>
                   <div class="box-tools2 ">
                       <form class="form-horizontal" id ="form_action" action="{{url('manage/orderlist')}}" method="get">
                           <div style="width: 1000px;" class="input-group input-group-sm row">
+                              <div class="col-lg-2">
+									<input placeholder="订单号" class="form-control  " style="float:left;width:161px" name="orderid" value="{{ $_GET['orderid'] or ''}}" type="text">                                                            
+                              </div> 
                               <div class="col-lg-2">
                                   <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
                               </div>
@@ -43,7 +46,7 @@
                                   <input type="text" placeholder="结束日期" id="end" class="inline laydate-icon form-control" style="float:left;" name="end" value="{{ $_GET['end'] or ''}}">
                               </div>
                              <div class="col-lg-2">
-	                            <select name="agency"  class="form-control pull-right"  style="width: 200px">
+	                            <select name="agency"  class="form-control pull-right"  >
 	                                <option value="">订单来源 </option>
 	                                <option value=-1 @if(isset($_GET['agency'])) @if($_GET['agency'] == -1) selected="selected" @endif @endif>线上订单 </option>
 			                          @foreach ($agency_list as $agency)
@@ -52,22 +55,22 @@
 	                            </select>
                               </div>   
                              <div class="col-lg-2">
-	                            <select name="supplier"  class="form-control pull-right"  style="width: 200px">
+	                            <select name="supplier"  class="form-control pull-right"  >
 	                                <option value="">供应商 </option>
 			                          @foreach ($supplier_list as $supplier)
 			                          <option @if(isset($_GET['supplier'])) @if($_GET['supplier'] == $supplier->id) selected="selected" @endif @endif value="{{$supplier->id}}">{{$supplier->name}}</option>
 			                          @endforeach
 	                            </select>
                               </div>    
-                              <div class="col-lg-2">
+                              <div class="col-lg-1">
 									<input placeholder="用户名" class="form-control  " style="float:left;width:161px" name="name" value="{{ $_GET['name'] or ''}}" type="text">                                                            
                               </div>                                                                                                                                                 
-                              <div class="col-lg-2" style="position:relative">
+                              <div class="col-lg-1" style="position:relative">
                                   <input type="hidden" name="search" value="1">
                                   <input type="text" placeholder="用户手机" class="form-control  " style="float:left;width:141px" name="mobile" value="{{ $_GET['mobile'] or ''}}">
-                                  <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>
+                                  <button class="btn btn-default" style="position:absolute;right:-120px;height:34px;" type="submit"><i class="fa fa-search"></i></button>
                               </div>
-                              <div style="position:absolute;right:-130px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
+                              <div style="position:absolute;right:-200px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>                                                                                                                                                                  
                           </div>
                           
                       </form>
@@ -102,6 +105,12 @@
 	                  <td>
 	                  		<a href="{{ url('manage/orderdetial',['id'=>$order->order_id]) }}"><button class="btn bg-orange margin" type="button">订单详情</button></a>
 	                  </td>
+	                  <td>
+	                  		<a href="{{ url('manage/changeorder',['id'=>$order->order_id]) }}"><button class="btn bg-orange margin" type="button">更改</button></a>		
+	                  </td>
+	                  <td>
+	                  		<a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('manage/deleteorder',['id'=>$order->order_id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>		
+	                  </td>	                  
 	                </tr>                
 				@endforeach               
               </tbody></table>
