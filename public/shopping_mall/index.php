@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<div class="companyBanner"><img src="images/comBanner.jpg" /></div>
+		<div class="companyBanner"><img src="images/comBanner.png" /></div>
 		<div class="member" onclick="location.href='memberPages.php'">
 			<img src="images/member_img.jpg" />
 		</div>
@@ -21,31 +21,9 @@
 			<img src="images/nomember.jpg" onclick="location.href='outsider.php?first_id=4'" />
 		</div>
 		<div class="gameBox" onclick="waitting()">
-			<img src="images/game_03.jpg" />
+			<img src="images/game.png" />
 		</div>
-		<!--<div class="wrapper">
-        <div class="module-box" onclick="location.href='member_zone.php'">
-            <div class="pic-module">				
-                <img src="images/shopping-pic.jpg" width="100%"/>
-                <span></span>
-            </div>
-            <h4>购物商城</h4>
-        </div>
-        <div class="module-box" onclick="location.href='personal_center.php'">
-            <div class="pic-module">				
-                <img src="images/personal-center.jpg" width="100%"/>
-                <span></span>
-            </div>
-            <h4>个人中心</h4>
-        </div>
-    </div>
-   
-    <div class="popBox" style="display: none;">
-    	<div class="close"></div>
-    	<div class="favourable" onclick="location.href='newYearsActive.php'">
-    		<img src="images/tanKBgg.png"/>
-    	</div>
-    </div>-->
+		
 
 	</body>
 	<script src="js/jquery.min.js"></script>
