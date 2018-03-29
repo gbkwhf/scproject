@@ -115,6 +115,14 @@
         Route::get('spec/delete/{id}', 'SpecController@specDel');//删除商品规格
 
 
+       //徐盼   2018/03/29   商品类型管理
+        Route::get('goods/type/list', 'GoodsTypeController@goodsTypeList');//商品类型列表
+        Route::get('goods/type/add', 'GoodsTypeController@goodsTypeAdd');//添加商品类型
+        Route::post('goods/type/save', 'GoodsTypeController@goodsTypeSave');//保存商品类型
+        Route::get('goods/type/edit/{id}', 'GoodsTypeController@goodsTypeEdit');//编辑商品类型
+        Route::post('goods/type/edit/save', 'GoodsTypeController@goodsTypeEditSave');//编辑商品类型保存
+        Route::get('goods/type/delete/{id}', 'GoodsTypeController@goodsTypeDel');//删除商品类型
+
 
 
 
