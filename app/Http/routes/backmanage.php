@@ -106,6 +106,22 @@
 
 
 
+        //徐盼  2018/03/26   商品规格管理
+        Route::get('spec/list', 'SpecController@specList');//商品规格列表
+        Route::get('spec/add', 'SpecController@specAdd');//添加商品规格
+        Route::post('spec/save', 'SpecController@specSave');//保存商品规格
+        Route::get('spec/edit/{id}', 'SpecController@specEdit');//编辑商品规格
+        Route::post('spec/edit/save', 'SpecController@specEditSave');//编辑商品规格保存
+        Route::get('spec/delete/{id}', 'SpecController@specDel');//删除商品规格
+
+
+
+
+
+
+
+
+
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
 			//供应商功能			
