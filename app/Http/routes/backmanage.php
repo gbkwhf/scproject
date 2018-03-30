@@ -57,7 +57,17 @@
 		Route::post('manage/joinsupplierexcel', 'SupplierController@joinSupplierExcel');
 		Route::post('manage/joinsuppliersave', 'SupplierController@joinSupplierSave');
 		Route::get('member/cashbacklist', 'MemberController@CashBackList');
-		
+
+
+        //店内分类管理  （供应商）
+        Route::get('supplieredit/shop/class/{id}', 'SupplierController@shopClassMan'); //门店内分类列表
+        Route::get('supplieredit/shop/class/add/{id}', 'SupplierController@shopClassManAdd');//添加门店分类
+        Route::post('supplieredit/shop/class/save', 'SupplierController@shopClassManSave');//保存门店分类
+        Route::get('supplieredit/shop/class/edit/{id}', 'SupplierController@shopClassManEdit');//编辑门店分类
+        Route::post('supplieredit/shop/class/edit/save', 'SupplierController@sshopClassManSave');//保存门店分类编辑
+        Route::get('supplieredit/shop/class/delete/{id}', 'SupplierController@shopClassManDel');//删除门店分类
+
+
 		
 		
 		//经销商

@@ -71,6 +71,7 @@
 	                  <td>{{ $supplier->state }}</td>                  
 	                  <td>
 	                  		<a href="{{ url('supplieredit',['id'=>$supplier->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
+                          <a href="{{ url('supplieredit/shop/class',['id'=>$supplier->id]) }}"><button class="btn bg-purple margin" type="button">分类管理</button></a>
 	                  		<a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('supplierdelete',['id'=>$supplier->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>                 			                  		
 	                  </td>
 	                </tr>                

@@ -560,5 +560,119 @@ class SupplierController  extends Controller
  		return back() -> with('errors','请选择状态');
  	}
  } 
- 
+
+
+   //根据门店id，获取门店的分类列表
+    public function shopClassMan($id){
+
+         $info = \DB::table('ys_store_goods_class as a')
+                   ->leftjoin('ys_supplier as b','a.store_id','=','b.id')
+                   ->select('a.id','a.name','a.store_id','a.sort','b.name as spec_name')
+                   ->where('a.store_id',$id)
+                   ->orderBy('a.sort','asc')
+                   ->paginate(10);
+
+        $num  = \DB::table('ys_store_goods_class')->where('store_id',$id)->lists('id');
+
+        return view('shopclasslist',['data'=>$info,'num'=>$num,'store_id'=>$id]);
+
+    }
+
+    //添加门店分类
+    public function shopClassManAdd($id){
+
+
+        return view('shopclassAdd',['store_id'=>$id]);
+
+    }
+
+
+    //添加数据保存
+    public function shopClassManSave(Request $request)
+    {
+
+         if(!empty($request->shopClassName))
+         {
+
+
+             $res = \DB::table('ys_store_goods_class')->insert([
+
+                      'name'=>$request->shopClassName,
+                      'store_id'=>$request->store_id,
+                      'sort'=>$request->sort
+             ]);
+
+             if($res){
+                 return redirect('supplierlist');
+             }else{
+                 return back() -> with('errors','数据填充失败');
+             }
+         }else{
+
+             return back() -> with('errors','分类名称必填');
+
+         }
+
+    }
+
+
+    //编辑
+    public function shopClassManEdit($id){
+
+
+        $shop_class = \DB::table('ys_store_goods_class')->where('id',$id)->first();
+
+        return view('shopclassEdit',['data'=>$shop_class]);
+
+
+    }
+
+
+    //保存编辑
+    public function sshopClassManSave(Request $request)
+    {
+
+
+        if(!empty($request->shopClassName)){
+
+
+            $is_have = \DB::table('ys_store_goods_class')->where('id',$request->id)->where('name',$request->shopClassName)->where('sort',$request->sort)->first();
+
+            if(!empty($is_have)){
+
+                return back() -> with('errors','没有要更新的数据');
+            }
+
+
+            $res  = \DB::table('ys_store_goods_class')->where('id',$request->id)->update([
+
+                'name'=>$request->shopClassName,
+                'sort'=>$request->sort
+            ]);
+
+            if($res){
+                return redirect('supplierlist');
+            }else{
+                return back() -> with('errors','数据更改失败');
+            }
+
+        }else{
+
+            return back() -> with('errors','门店分类名称必填');
+        }
+
+
+    }
+
+    //删除门店分类
+    public function shopClassManDel($id){
+
+        \DB::table('ys_store_goods_class')->where('id',$id)->delete();
+        return redirect('supplierlist');
+
+    }
+
+
+
+
 }
