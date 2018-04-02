@@ -5,7 +5,7 @@
     Home
 @endsection
 
-@section('contentheader_title','banner列表')
+@section('contentheader_title','门店分类列表')
 @section('main-content')
     <style>
         .box-header > .box-tools2 {
@@ -54,32 +54,41 @@
                           {{--</div>--}}
                       {{--</form>--}}
                   {{--</div>--}}
-                   <div style="float:right;margin-top: -55px;"><a href="{{url('banner/add')}}">  <button type="button" class="btn bg-olive margin" >添加Banner图</button></a></div>
+                   <div style="float:right;margin-top: -55px;">
+                          <a href="{{url('supplieredit/shop/class/add',['id'=>$store_id])}}">
+                              <button type="button" class="btn bg-olive margin" >添加门店分类</button>
+                          </a>
+                   </div>
+
+                {{--<a href="{{ url('supplieredit/shop/class/edit',['id'=>$spec->id]) }}">--}}
+                    {{--<button class="btn bg-orange margin" type="button">编辑</button>--}}
+                {{--</a>--}}
+
               </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tbody><tr>
                             <th width="10%">id</th>
-                            <th>缩略图</th>
+                            <th>分类名称</th>
+                            <th>门店名称</th>
                             <th>排序</th>
                             <th>操作</th>
                         </tr>
-                        @foreach ($data as $banner)
+                        @foreach ($data as $spec)
                             <tr>
-
-                                <td>{{ $banner->id }}</td>
-                                <td><img src={{ url($banner->img_url) }}  width="100" height="100"></td>
-{{--                                <td>{{ url($banner->img_url)}}</td>--}}
-                                <td>{{ $banner->sort }}</td>
+                                <td>{{ $spec->id }}</td>
+                                <td>{{ $spec->name }}</td>
+                                <td>{{ $spec->spec_name }}</td>
+                                <td>{{ $spec->sort }}</td>
                                 <td>
-                                    <a href="{{ url('banner/edit',['id'=>$banner->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
-                                    <a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('banner/delete',['id'=>$banner->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>
-                                </td>
+                                    <a href="{{ url('supplieredit/shop/class/edit',['id'=>$spec->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
+                                    <a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('supplieredit/shop/class/delete',['id'=>$spec->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody></table>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">总数：{{count($num)}}<br>
