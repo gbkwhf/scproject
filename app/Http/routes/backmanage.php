@@ -135,6 +135,12 @@
 
 
 
+        //徐盼   2018/04/02   商品分类管理
+        Route::get('commody/class/manage/list', 'CommodyCLaManController@comClasManList');//商品分类列表
+        Route::get('commody/class/manage/edit/{id}', 'CommodyCLaManController@comClasManEdit');//编辑商品分类
+        Route::post('commody/class/manage/edit/save', 'CommodyCLaManController@comClasManEditSave');//编辑商品分类保存
+        Route::get('commody/class/manage/delete/{id}', 'CommodyCLaManController@comClasManDel');//删除商品分类
+
 
 
 
