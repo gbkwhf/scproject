@@ -42,47 +42,6 @@
             <form class="form-horizontal" action="{{ url('goods/goodscreate') }}" method="post"  enctype ="multipart/form-data">
                 @endif
                 <div class="box-body">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >商品名称</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" placeholder="Enter ..." value="{{ $data->name or '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >商品库存</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="num"  placeholder="Enter ..." class="form-control" value="{{ $data->num or '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >销售价</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="price"  placeholder="Enter ..." class="form-control" value="{{ $data->price or '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >成本价</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="cost_price"  placeholder="Enter ..." class="form-control" value="{{ $data->cost_price or '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >供应商结算价</label>
-                        <div class="col-sm-10">
-                            <input type="text"  name="supplier_price"  placeholder="Enter ..." class="form-control" value="{{ $data->supplier_price or '' }}">
-                        </div>
-                    </div>                    
-	                <div class="form-group">
-	                  <label class="col-sm-2 control-label" for="inputEmail3">所属供应商</label>
-	                  <div class="col-sm-10">	                  
-	                  <select name="supplier_id"  class="form-control  " style="float:left;width:150px">
-                          <option value="">请选择供应商</option>
-                          @foreach ($suppliers as $supplier)
-                          <option @if(isset($data)) @if($data->supplier_id == $supplier['id']) selected="selected" @endif @endif value="{{$supplier['id']}}">{{$supplier['name']}}</option>
-                          @endforeach
-                      </select>
-	                  </div>
-	                </div> 
 	                <div class="form-group">
 	                  <label class="col-sm-2 control-label" for="inputEmail3">商品分类</label>
 	                  <div class="col-sm-10">	                  
@@ -108,7 +67,75 @@
 	                      </select>   	                
                       @endif               
 	                  </div>
-	                </div> 	                
+	                </div>                 
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >商品名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name" placeholder="Enter ..." value="{{ $data->name or '' }}">
+                        </div>
+                    </div>
+                    
+                    
+                    
+  <!--                   
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >商品库存</label>
+                        <div class="col-sm-10">
+                            <input type="text"  name="num"  placeholder="Enter ..." class="form-control" value="{{ $data->num or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >销售价</label>
+                        <div class="col-sm-10">
+                            <input type="text"  name="price"  placeholder="Enter ..." class="form-control" value="{{ $data->price or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >成本价</label>
+                        <div class="col-sm-10">
+                            <input type="text"  name="cost_price"  placeholder="Enter ..." class="form-control" value="{{ $data->cost_price or '' }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" >供应商结算价</label>
+                        <div class="col-sm-10">
+                            <input type="text"  name="supplier_price"  placeholder="Enter ..." class="form-control" value="{{ $data->supplier_price or '' }}">
+                        </div>
+                    </div>        
+                    
+  -->   			
+  
+  
+  				
+  					@foreach ($spec_data as $spec)
+  					<div class="form-group">
+                        <label class="col-sm-2 control-label" >{{$spec->spec_name}}</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox"  name="supplier_price"  placeholder="Enter ..." class="checkbox" value="{{ $data->supplier_price or '' }}">
+                        </div>
+                    </div>    
+  					 @endforeach	         
+  					 
+  					 
+  					 
+  	 
+                   
+                    
+                    
+                                
+	                <div class="form-group">
+	                  <label class="col-sm-2 control-label" for="inputEmail3">所属供应商</label>
+	                  <div class="col-sm-10">	                  
+	                  <select name="supplier_id"  class="form-control  " style="float:left;width:150px">
+                          <option value="">请选择供应商</option>
+                          @foreach ($suppliers as $supplier)
+                          <option @if(isset($data)) @if($data->supplier_id == $supplier['id']) selected="selected" @endif @endif value="{{$supplier['id']}}">{{$supplier['name']}}</option>
+                          @endforeach
+                      </select>
+	                  </div>
+	                </div> 
+	                
                     <div class="form-group">
                         <label class="col-sm-2 control-label" >商品排序</label>
                         <div class="col-sm-10">

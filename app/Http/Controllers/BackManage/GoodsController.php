@@ -41,12 +41,39 @@ class GoodsController extends Controller
         $suppliers=\App\SupplierModel::where('state',1)->get();
         return view('goods.goodslist',['data'=>$paginate,'search'=>$search,'suppliers'=>$suppliers]);
     }
+    
+    
+    
+    
+    //添加商品前选择分类
+    public function GoodsaddSelClass()
+    {
+
+    	//列所有分类    	
+    	$data=\App\GoodsClassModel::where('first_id',0)->orderby('sort','asc')->get();
+    	return view('goods.goodsaddselclass',['data'=>$data]);
+    }
+    
+    
+    
     //添加
-    public function Goodsadd()
+    public function Goodsadd(Request $request)
     {    	
+    	
+    	$spec_data=\App\GoodsClassModel::where('ys_goods_class.id',$request->class_id)
+    			->leftjoin('ys_goods_type','ys_goods_type.id','=','ys_goods_class.goods_type')
+    			->leftjoin('ys_type_spec','ys_type_spec.type_id','=','ys_goods_type.id')
+    			->leftjoin('ys_goods_spec','ys_goods_spec.id','=','ys_type_spec.spec_id')
+    			->select('ys_goods_spec.id as spec_id','ys_goods_spec.name as spec_name')
+    			->get();
+    	
+    	//dd($spec_data);
+    	
+    	
+    	//dd($request->class_id);
     	//所有供应商
     	$suppliers=\App\SupplierModel::where('state',1)->get();    	
-        return view('goods.goodsadd',['suppliers'=>$suppliers]);
+        return view('goods.goodsadd',['suppliers'=>$suppliers,'spec_data'=>$spec_data]);
     }
     //提交商品
     public function GoodsCreate(Request $request)
