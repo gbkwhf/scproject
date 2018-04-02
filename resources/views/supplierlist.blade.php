@@ -59,7 +59,7 @@
                   <th>分类名称</th>
                   <th>包邮金额</th>
                   <th>状态</th> 
-                   <th>操作</th>
+                   <th style="padding-left: 100px;">操作</th>
                 </tr>                
                 @foreach ($data as $supplier)    				
 	    			<tr>
