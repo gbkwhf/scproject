@@ -141,7 +141,15 @@
         Route::post('commody/class/manage/edit/save', 'CommodyCLaManController@comClasManEditSave');//编辑商品分类保存
         Route::get('commody/class/manage/delete/{id}', 'CommodyCLaManController@comClasManDel');//删除商品分类
 
+        Route::get('commody/class/manage/first/list', 'CommodyCLaManController@comClasManFirList');//一级商品分类列表
+        Route::get('commody/class/manage/first/add', 'CommodyCLaManController@comClasManFirAdd');//添加一级商品分类
+        Route::post('commody/class/manage/first/save', 'CommodyCLaManController@comClasManFirSave');//保存一级商品分类信息
+        Route::get('commody/class/manage/first/edit/{id}', 'CommodyCLaManController@comClasManFirEdit');//编辑商品一级分类
+        Route::post('commody/class/manage/first/edit/save', 'CommodyCLaManController@comClasManEditFirSave');//编辑商品一级分类保存
+        Route::get('commody/class/manage/first/delete/{id}', 'CommodyCLaManController@comClasManFirDel');//删除商品一级分类
 
+        Route::get('commody/class/manage/second/add', 'CommodyCLaManController@comClasManSecAdd');//添加二级商品分类
+        Route::post('commody/class/manage/second/add/save', 'CommodyCLaManController@comClasManSecSave');//保存二级商品分类信息
 
 
 

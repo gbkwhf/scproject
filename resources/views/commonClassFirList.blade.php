@@ -6,7 +6,7 @@
     Home
 @endsection
 
-@section('contentheader_title','商品分类列表')
+@section('contentheader_title','商品一级分类列表')
 
 
 
@@ -49,27 +49,7 @@
           
                         <div class="box-header">
                <br><br>
-                  <div class="box-tools2 ">
-                      <form class="form-horizontal" id ="form_action" action="{{url('commody/class/manage/list')}}" method="get">
-                          <div style="width: 800px;" class="input-group input-group-sm row">
-
-                             <div class="col-lg-2">
-	                            <select name="first_id"  class="form-control pull-right"  >
-
-                                    @foreach($first_info  as  $tmp)
-
-                                        <option  @if(isset($_GET['first_id']) && $_GET['first_id'] == $tmp->id) selected  @endif   value="{{$tmp->id}}">{{$tmp->name}}</option>
-                                    @endforeach
-
-	                            </select>
-                                 <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>
-                              </div>
-
-                          </div>
-                      </form>
-                  </div>
-                            <div style="float:right;padding-right:150px;margin-top: -55px;"><a href="{{url('commody/class/manage/first/list')}}">  <button type="button" class="btn bg-olive margin" >一级商品分类管理</button></a></div>
-                            <div style="float:right;margin-top: -55px;"><a href="{{url('commody/class/manage/second/add')}}">  <button type="button" class="btn bg-olive margin" >添加二级商品分类</button></a></div>
+                            <div style="float:right;margin-top: -55px;"><a href="{{url('commody/class/manage/first/add')}}">  <button type="button" class="btn bg-olive margin" >添加一级商品分类</button></a></div>
               </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
@@ -87,10 +67,10 @@
 	                  <td>{{ $class->id }}</td>
 	                  <td>{{ $class->name }}</td>
 	                  <td>{{ $class->sort }}</td>
-	                  <td>{{ $class->type_name }}</td>
+	                  <td>无</td>
                       <td>
-                            <a href="{{ url('commody/class/manage/edit',['id'=>$class->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
-                            <a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('commody/class/manage/delete',['id'=>$class->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>
+                            <a href="{{ url('commody/class/manage/first/edit',['id'=>$class->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
+                            <a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('commody/class/manage/first/delete',['id'=>$class->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>
                        </td>
 	                </tr>                
 				@endforeach               
@@ -102,7 +82,7 @@
             	{{--{!! $data->appends($search)->render() !!}--}}
               <div class="box-footer clearfix">总数：{{count($num)}}<br>
 
-                      {!! $data->appends($search)->render() !!}
+                      {{--{!! $data->appends($search)->render() !!}--}}
               </div>
           </div>
           <!-- /.box -->          
