@@ -159,3 +159,35 @@ Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinS
 
     //获取banner轮播图
    Route::post('api/gxsc/get/banner/list','HandleProfession\GetShopsInfoController@getBannerList');
+
+
+/**
+ * 2018/04/04  商城二期开发
+ */
+Route::group([
+
+    'prefix' => 'api/gxsc','namespace' => 'SecondExploit', 'middleware'=> ['check.session:ys_session_info']//,'check.version']
+
+],function (){
+
+
+          //1.发布售后问题咨询
+          Route::post('publish/after/consult','OtherOnlyController@pubAfterConsult');
+          //2.获取售后问题咨询列表
+          Route::post('get/after/consult/list','OtherOnlyController@getAfterConsultList');
+          //3.首页搜索商品
+          Route::post('get/search/commodity/list','OtherOnlyController@getSarchComList');
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
