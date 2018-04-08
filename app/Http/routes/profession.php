@@ -179,10 +179,12 @@ Route::group([
           Route::post('get/search/commodity/list','OtherOnlyController@getSarchComList');
           //4.获取首页数据
           Route::post('get/index/data','OtherOnlyController@getIndexData');
-          //5.获取二级分类
+          //5.获取门店二级分类信息列表
           Route::post('get/second/info/list','OtherOnlyController@getSecondInfo');
-          //6.根据二级分类id获取门店列表
+          //6.根据门店二级分类id获取门店列表
           Route::post('get/store/list','OtherOnlyController@getStoreList');
+          //7.根据门店id获取门店分类列表
+          Route::post('get/store/class/list','OtherOnlyController@getStoreClassList');
 
 
 });
