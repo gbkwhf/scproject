@@ -185,6 +185,11 @@ Route::group([
           Route::post('get/store/list','OtherOnlyController@getStoreList');
           //7.根据门店id获取门店分类列表
           Route::post('get/store/class/list','OtherOnlyController@getStoreClassList');
+          //8.根据门店分类id获取商品列表
+          Route::post('get/store_class/goods/list','OtherOnlyController@getStoreClassGoodsList');
+
+
+
 
 
 });
