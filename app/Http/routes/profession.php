@@ -181,6 +181,8 @@ Route::group([
           Route::post('get/index/data','OtherOnlyController@getIndexData');
           //5.获取二级分类
           Route::post('get/second/info/list','OtherOnlyController@getSecondInfo');
+          //6.根据二级分类id获取门店列表
+          Route::post('get/store/list','OtherOnlyController@getStoreList');
 
 
 });
