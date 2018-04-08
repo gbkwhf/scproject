@@ -177,7 +177,10 @@ Route::group([
           Route::post('get/after/consult/list','OtherOnlyController@getAfterConsultList');
           //3.首页搜索商品
           Route::post('get/search/commodity/list','OtherOnlyController@getSarchComList');
-
+          //4.获取首页数据
+          Route::post('get/index/data','OtherOnlyController@getIndexData');
+          //5.获取二级分类
+          Route::post('get/second/info/list','OtherOnlyController@getSecondInfo');
 
 
 });
