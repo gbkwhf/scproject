@@ -14,6 +14,7 @@ class CreateYsGoodsExtendTable extends Migration
     {
         Schema::create('ys_goods_extend', function (Blueprint $table) {
         	$table->increments('id');        	 
+        	$table->bigInteger('goods_id')->comment="商品id";
             $table->string('name')->comment="商品全名";
             $table->string('goods_spec')->comment="商品规格";
             $table->decimal('market_price',10,2)->comment="市场价";

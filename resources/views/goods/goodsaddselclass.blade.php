@@ -48,6 +48,17 @@
 	                      </select>                
 	                  </div>
 	                </div>   
+	                <div class="form-group">
+	                  <label class="col-sm-2 control-label" for="inputEmail3">所属供应商</label>
+	                  <div class="col-sm-10">	                  
+	                  <select name="supplier_id" id="supplier_id" class="form-control  " style="float:left;width:150px">
+                          <option value="">请选择供应商</option>
+                          @foreach ($suppliers as $supplier)
+                          <option  value="{{$supplier['id']}}">{{$supplier['name']}}</option>
+                          @endforeach
+                      </select>
+	                  </div>
+	                </div> 	                
                        
 <script type="text/javascript">  
                     	$('#change_class').change(function(){

@@ -12,12 +12,16 @@ class AddSpecToYsGoodsTable extends Migration
      */
     public function up()
     {
-        Schema::table('ys_base_order', function (Blueprint $table) {
+        Schema::table('ys_goods', function (Blueprint $table) {
             $table->string('spec_name', 300)->nullable()->comment="规格名";
             $table->string('spec_value',300)->nullable()->comment="规格值";
             $table->integer('store_class')->comment="店内分类";
-            $table->decimal('rebate_amount',10,2)->comment="返利金额";
             $table->decimal('shipping_price',10,2)->comment="运费";
+            
+            $table->dropColumn("num");
+            $table->dropColumn("price");
+            $table->dropColumn("cost_price");
+            $table->dropColumn("supplier_price");
         });
     }
 
@@ -28,13 +32,11 @@ class AddSpecToYsGoodsTable extends Migration
      */
     public function down()
     {
-        Schema::table('ys_base_order', function (Blueprint $table) {
+        Schema::table('ys_goods', function (Blueprint $table) {
             //
             $table->dropColumn("spec_name");
             $table->dropColumn("spec_value");
             $table->dropColumn("store_class");
-            $table->dropColumn("store_class");
-            $table->dropColumn("rebate_amount");
             $table->dropColumn("shipping_price");
         });
     }
