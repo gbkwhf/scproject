@@ -188,8 +188,17 @@ Route::group([
           //8.根据门店分类id获取商品列表
           Route::post('get/store_class/goods/list','OtherOnlyController@getStoreClassGoodsList');
 
+           //9.获取商品二级分类信息列表
+           Route::post('get/goods/second/list','OtherOnlyController@getGoodSecondList');
+           //10.根据商品二级分类获取商品列表
+          Route::post('get/goods_class/list','OtherOnlyController@getGoodsClassList');
 
 
+
+    //1.获取商品二级分类
+//    Route::get('api/gxsc/get/commodity/secondary/classification/{first_id}','HandleProfession\GetShopsInfoController@getSecondClass');
+//    //2.根据二级分类id获取商品列表
+//    Route::get('api/gxsc/get/commodity/lists/{second_id}','HandleProfession\GetShopsInfoController@getCommodityLists');
 
 
 });
