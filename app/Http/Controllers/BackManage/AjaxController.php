@@ -65,7 +65,7 @@ class AjaxController  extends Controller
 		'spec_id'=>$request->spec_id,
 		'supplier_id'=>$request->supplier_id,
  	];
- 	$res=\App\SpecValueModel::insert($params);
+ 	$res=\App\SpecValueModel::insertGetId($params);
  	echo json_encode($res);
  }
  

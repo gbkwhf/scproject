@@ -137,7 +137,7 @@
                 			error: function () {  },
                 			success: function(data){
 								//关闭对话框，显示新加的规格
-								str=' <input type="checkbox"  name="spec_value['+spec_id+']"    > '+spec_value+' ';
+								str=' <input type="checkbox" onclick="create_box(this)"  spec_id="'+spec_id+'" val_id="'+data+'" name="spec_value['+spec_id+']['+data+']" value="'+spec_value+'"    > '+spec_value+' ';
 								$('#add_spec_'+spec_id).before(str);									
 	    						$('#add_spec_'+spec_id).show();		
 	    						$('#add_spec_box_'+spec_id).hide();	  	

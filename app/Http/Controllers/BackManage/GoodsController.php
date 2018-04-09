@@ -214,14 +214,6 @@ class GoodsController extends Controller
     public function GoodsEdit($id)
     {
 
-    	$value[14]['market_price']=1;
-    	$value[14]['price']=2;
-    	$value[14]['cost_price']=3;
-    	$value[14]['supplier_price']=4;
-    	$value[14]['rebate_amount']=5;
-    	$value[14]['num']=6;
-    	
-    	//dd(json_encode($value));
     	
         $data = GoodsModel::where('ys_goods.id',$id)
         		->leftjoin('ys_goods_class','ys_goods.class_id','=','ys_goods_class.id')
@@ -320,47 +312,109 @@ class GoodsController extends Controller
     //编辑商品保存
     public function Goodssave(Request $request)
     {
+
+    	
         $input = Input::except('_token');
-        $rules = [
-            'name'=> 'required',
-            'num'=> 'required|regex:/^[0-9]{1,9}$/',
-            'price'=> 'required',
-            'cost_price'=> 'required',
-            'supplier_price'=> 'required',
-            'editorValue'=> 'required',
-            'sort'=> 'required',
-            'supplier_id'=> 'required',
-            'class_id'=> 'required',
-            
-        ];
-        $massage = [
-            'name.required' =>'商品名称不能为空',
-            'num.required' =>'商品库存不能为空',
-            'num.regex' =>'商品库存必须大于0，且长度小于9位',
-            'price.required' =>'销售价不能为空',
-            'cost_price.required' =>'成本价不能为空',
-            'supplier_price.required' =>'供应商结算价不能为空',
-            'editorValue.required' =>'商品详情不能为空',
-            'sort.required' =>'商品排序不能为空',
-            'supplier_id.required' =>'供应商不能为空',
-            'class_id.required' =>'商品分类不能为空',
-        ];
+    	$rules = [
+	    	'name'=> 'required',
+	    	'shipping_price'=> 'required',
+	    	'editorValue'=> 'required',
+	    	'sort'=> 'required',
+	    	'supplier_id'=> 'required',
+	    	'class_id'=> 'required',
+	    	'store_class'=> 'required',
+	    	'spec_name'=> 'required',
+	    	'spec_value'=> 'required',
+	    	'spec'=> 'required',
+    	
+    	];
+    	$massage = [
+	    	'name.required' =>'商品名称不能为空',
+	    	'shipping_price.required' =>'供应商结算价不能为空',
+	    	'editorValue.required' =>'商品详情不能为空',
+	    	'sort.required' =>'商品排序不能为空',
+	    	'supplier_id.required' =>'供应商不能为空',
+	    	'class_id.required' =>'商品分类不能为空',
+	    	'store_class.required' =>'店内商品分类不能为空',
+	    	'spec_name.required' =>'规格名不能为空',
+	    	'spec_value.required' =>'规格值不能为空',
+	    	'spec.required' =>'价格不能为空',
+    	
+    	];
         $validator = \Validator::make($input,$rules,$massage);
         if($validator->passes()){
 
             $params=array(
                 'name'=>$input['name'],
-                'num'=>$input['num'],
+                'shipping_price'=>$input['shipping_price'],
                 'content'=>$input['editorValue'],
                 'sort'=>$input['sort'],
-                'price'=>$input['price'],
-                'cost_price'=>$input['cost_price'],
-            	'supplier_price'=>$input['supplier_price'],
                 'state'=>$request->state>0?$request->state:0,
             	'supplier_id'=>$input['supplier_id'],
-            	'class_id'=>$input['class_id'],
+            	'class_id'=>$input['class_id'],            		
+            	'store_class'=>$input['store_class'],
+            	'spec_name'=>serialize($input['spec_name']),
+            	'spec_value'=>serialize($input['spec_value']),
             );
+            
+            
             $res = GoodsModel::where('id',$input['id'])->update($params);
+            
+            
+            
+            
+            
+            
+            //存储商品扩展信息
+            if(count($request->spec_value)==1){
+            	 
+            	$spec_val=array_values($request->spec_value);
+            	$ii=0;
+            	foreach ($spec_val[0] as $k=>$v){
+            		$sp_va[$ii][$k]=$v;
+            		$sp_params[$ii]=[
+            		'goods_id'=>$input['id'],
+            		'name'=>$request->name.' '.$v,
+            		'goods_spec'=>serialize($sp_va[$ii]),
+            		'price'=>$request->spec[$k]['price'],
+            		'market_price'=>$request->spec[$k]['market_price'],
+            		'cost_price'=>$request->spec[$k]['cost_price'],
+            		'supplier_price'=>$request->spec[$k]['supplier_price'],
+            		'rebate_amount'=>$request->spec[$k]['rebate_amount'],
+            		'num'=>$request->spec[$k]['num'],
+            		];
+            		$ii++;
+            	}
+            }else if(count($request->spec_value)==2){
+            	$spec_val=array_values($request->spec_value);
+            	$ii=0;
+            	foreach ($spec_val[0] as $key=>$val){
+            		foreach ($spec_val[1] as $k=>$v){
+            			$sp_va[$ii][$key]=$val;
+            			$sp_va[$ii][$k]=$v;
+            			 
+            			$sp_params[$ii]=[
+            			'goods_id'=>$input['id'],
+            			'name'=>$request->name.' '.$val.' '.$v,
+            			'goods_spec'=>serialize($sp_va[$ii]),
+            			'price'=>$request->spec[$key.$k]['price'],
+            			'market_price'=>$request->spec[$key.$k]['market_price'],
+            			'cost_price'=>$request->spec[$key.$k]['cost_price'],
+            			'supplier_price'=>$request->spec[$key.$k]['supplier_price'],
+            			'rebate_amount'=>$request->spec[$key.$k]['rebate_amount'],
+            			'num'=>$request->spec[$key.$k]['num'],
+            			];
+            			$ii++;
+            		}
+            	}
+            }
+             
+            $res = \App\GoodsExtendModel::where('goods_id',$input['id'])->delete();
+            $res = \App\GoodsExtendModel::insert($sp_params);
+            
+            
+            
+            
             
             if ($request->hasFile('image')){//图片上传
             	$image=[];
