@@ -54,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Http/routes/backmanage.php');
             require app_path('Http/routes/user.php');
             require app_path('Http/routes/profession.php');
+            require app_path('Http/routes/goods.php');
 
         });
     }
