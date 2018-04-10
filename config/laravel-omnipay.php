@@ -67,9 +67,9 @@ EgPCS436VV01gGCI3/ECQGc2GFAcBkRLXeyztWTskj82HaDkHI2pLQ9w6lpdJCG0
         'wechatpay_js' => [
 	        'driver' => 'WechatPay_Js',
 	        'options' => [
-	        'appId' => 'wx97bfadf3a81d8206',
-	        'mchId' =>'1491005162',
-	        'apiKey' => '07kmwATHWNJae6J2QtB5OJSKxlGwdNR2',
+	        'appId' => 'wx39e732f7f323536f',
+	        'mchId' =>'1501765761',
+	        'apiKey' => '1a492c226370e4136af4ca35e3cefe03',
 	        ]
         ],  
         /**
