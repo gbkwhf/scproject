@@ -23,6 +23,7 @@
 		Route::Post('ajax/citylist', 'AjaxController@cityList');
 		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
 		Route::Post('ajax/getuserinfotoorder', 'AjaxController@getUserInfoToOrder');
+		Route::Post('ajax/addspec', 'AjaxController@addSpec');//ajax添加商品规格
 	});
 	
 	
@@ -82,6 +83,12 @@
 		//商品
         Route::get('goodslist', 'GoodsController@Goodslist');//商品列表
         Route::get('goods/goodsadd', 'GoodsController@Goodsadd');//添加商品
+        Route::get('goods/goodsaddselclass', 'GoodsController@GoodsaddSelClass');//添加商品前选择分类
+        
+        
+        
+        
+        
         Route::post('goods/goodscreate', 'GoodsController@GoodsCreate');//提交商品
         Route::get('goods/goodsedit/{id}', 'GoodsController@GoodsEdit');//编辑商品
         Route::post('goods/goodssave', 'GoodsController@Goodssave');//编辑商品保存

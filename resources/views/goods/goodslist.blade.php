@@ -54,7 +54,8 @@
                           </div>
                       </form>
                   </div>
-                   <div style="float:right;margin-top: -55px;"><a href="{{url('goods/goodsadd')}}">  <button type="button" class="btn bg-olive margin" >添加商品</button></a></div>
+                   <div style="float:right;margin-top: -55px;"><a href="{{url('goods/goodsaddselclass')}}">  <button type="button" class="btn bg-olive margin" >添加商品</button></a></div>
+                   
               </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
