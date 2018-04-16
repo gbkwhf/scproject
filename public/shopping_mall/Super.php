@@ -79,7 +79,7 @@
 			store_first_id: 1
 		},
 		success: (res) => {
-			let data = res.result
+			let data = res.result;
 			store_second_id = data[0].store_second_id
 			for (let i = 0; i < data.length; i++) {
 				if (i == 0) {
