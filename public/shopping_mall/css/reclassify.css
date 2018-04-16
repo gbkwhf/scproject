@@ -1,0 +1,51 @@
+
+.wrapper03 {position:relative;height: 1rem;width: 100%;overflow: hidden;margin:0 auto;border-bottom:1px solid #ccc}
+.wrapper03 .scroller {position:absolute}
+.wrapper03 .scroller li {height: 1rem;color:#333;float: left;line-height: 1rem;font-size: .4rem;text-align: center}
+.wrapper03 .scroller li a{color:#333;display:block;margin:0 .2rem;padding:0 .1rem}
+.wrapper03 .scroller li.cur a{color:#eb3737;height:.95rem;border-bottom:.05rem solid #eb3737}
+.clearfix{overflow: hidden;}
+.commodity ul{
+    display: flex
+}
+
+.commodity li{
+    width: 50%;
+    overflow: hidden;
+}
+
+.commodity li>div:nth-child(1){
+    width: 100%;
+    height: 165px;
+    overflow: hidden;
+}
+.commodity li>div:nth-child(1) img{
+    margin: 30px auto 0px;
+    display: block
+}
+.commodity li>p{
+    margin: 0 15px 10px;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.commodity li{
+    border-bottom: 1px solid #f3f2f2;
+    box-sizing:border-box;
+}
+.commodity li:nth-child(2n){
+    border-right: 1px solid #f3f2f2
+}
+.commodity li>div:nth-of-type(2){
+    margin: 10px 15px 
+}
+.commodity li>div:nth-of-type(2) span:nth-child(1){
+    font-size: 14px;
+    color: #eb3737
+}
+.commodity li>div:nth-of-type(2) span:nth-child(2){
+    color: #999;
+    text-decoration:line-through
+}

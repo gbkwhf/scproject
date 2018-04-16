@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/salesReturn.css">
+    <meta charset="UTF-8">
+    <title>申请退货</title>
+</head>
+<body>
+<form action="">
+    <div class="table">
+        <div>
+            <p>退款金额:</p>
+            <p>￥408.00</p>
+        </div>
+    </div>
+    <div class="table">
+        <div class="show">
+            <p>退款原因 : &nbsp;&nbsp;&nbsp;<span>请选择退款原因</span></p>
+            <img src="images/down.png" alt="">
+        </div>
+    </div>
+    <div class="table">
+        <div>
+            <p>退款说明 : &nbsp;&nbsp;&nbsp;<input type="text" placeholder="(选填)"></p>
+        </div>
+    </div>
+    <div class="camera">
+        <div>
+            <p>上传凭证 :</p>
+            <img src="images/camera.png" alt="">
+        </div>
+    </div>
+
+    <button>确定</button>
+</form>
+
+<!--弹出层-->
+<div class="fixed title">
+    <div>
+        <div style="border-bottom: 1px solid #e5e5e5;">
+            <div class="title title_refund">
+                <span></span>
+                <p>退款原因</p>
+                <img src="images/close-area.png" alt="" class="vanish">
+            </div>
+        </div>
+        <ul class="list">
+            <li>尺寸偏大/偏小/不合适</li>
+            <li>与实物不符/质量差</li>
+            <li>不喜欢/拍错了/重新买</li>
+            <li>操作有误(商品、地址等选错)</li>
+            <li>送货时间太长</li>
+            <li>其他原因</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(".show").click(function () {
+        $(".title").show()
+    })
+
+    $(".vanish").click(function () {
+        $(".title").hide()
+    })
+</script>

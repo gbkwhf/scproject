@@ -1,0 +1,81 @@
+.list ul{
+	display: flex;
+	padding-left: 10px;
+	position: relative;
+}
+.list ul li{
+	width: 85px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	margin: 17px 0;
+	border-radius: 50px;
+}
+.list ul>img{
+	position: absolute;
+	right: 0;
+	top: 17px;
+	width: 33px;
+	height: 25px;
+}
+.select{
+	background: #e63737;
+	color: #fff;
+}
+.msg img{
+	width: 100%;
+	height: 222px;
+}
+.msg p{
+	display: flex;
+	justify-content: space-between;
+	width: 92%;
+	margin: 12px auto;
+}
+.msg li p>span:nth-child(2){
+	display: block;
+	width: 75px;
+	height: 25px;
+	text-align: center;
+	line-height: 25px;
+	border: 1px solid #e63737;
+	border-radius: 5px;
+	color: #e63737;
+}
+.float{
+	width: 100%;
+	position: fixed;
+	right: 0;
+	top: 0;
+	background: white;
+	padding-top: 15px;
+	display: none;
+	
+}
+.float ul{
+	position: relative;
+}
+.float li{
+	width: 100%;
+	height: 37px;
+	line-height: 37px;
+	padding-left: 14px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.float img{
+	position: absolute;
+	right: 0px;
+	width: 33px;
+	height: 25px;
+}
+
+/* body{
+	position: relative
+} */
+.clarity{
+	position: fixed;
+	top: 0;
+	display: none;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.5)
+}

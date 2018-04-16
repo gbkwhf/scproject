@@ -60,7 +60,7 @@
             </a>
         </section>
         <textarea rows="3" class="detailed" placeholder="详细地址（可填写街道、小区、大厦）"></textarea>
-        <a href="javascript:;" class="save-use">保存并使用</a>
+        <a href="" class="save-use">保存并使用</a>
         <span class="layui-layer-setwin">
         	<a class="layui-layer-ico layui-layer-close layui-layer-close2" href="javascript:;" onclick="closeAddpop()"></a>
         </span>
