@@ -1,5 +1,5 @@
 html,body{
-	background: #ebebeb;
+	background: #f3f2f2;
 }
 .wrapper{
 	/*padding-top: 10px;*/
@@ -72,15 +72,24 @@ html,body{
 	color: #f5997b;
 }
 /*---------商品列表----*/
+.js-details{
+	background-color: #ffffff;
+}
 .commodityBox{
+	width: 91.8%;
+	margin: 0 auto;
 	margin-top: 5px;
 	min-height: 165px;
 	background-color: #ffffff;
 	overflow: auto;
-	margin-bottom: 5px;
+	
+}
+.kong{
+	height: 5px;
+	background-color: #f3f2f2;
 }
 .shopNames{
-	height: 45px;
+	height: 17px;
 }
 .shopIcon{
 	float: left;
@@ -89,46 +98,49 @@ html,body{
 	width: 15px;
 	height: 15px;
 	margin-top: 15px;
-	margin-left: 17px;
+	/*margin-left: 17px;*/
 	
 }
 .shop_name{
 	float: left;
-	line-height: 45px;
+	line-height: 17px;
 	padding-left: 6px;
+	padding-top: 13px;
 }
 .shop_message{
 	min-height: 104px;
 	clear: both;
 	margin-bottom: 15px;
+	overflow: auto;
 }
 .product_img{
-	width: 100px;
+	/*width: 100px;*/
 	/*height: 104px;*/
 	border-radius: 5px;
 	/*margin-top: 15px;
 	margin-left: 17px;*/
 	float: left;
-	width: 39%;
+	width: 35%;
 	clear: both;
 }
 .product_img img{
-	width: 105px;
+	width: 100%;
 	height: 104px;
 	border-radius: 5px;
 	margin-top: 15px;
-	margin-left: 17px;
+	/*margin-left: 17px;*/
 	
 }
 .messageBox{
 	/*height: 104px;*/
 	float: left;
 	width: 60%;
+	margin-left: 2%;
 }
 .shopName{
 	height: 37px;
 	padding-top: 16px;
-	padding-right: 15px;
+	/*padding-right: 15px;*/
 	line-height: 20px;
 	overflow: hidden;
 	text-overflow:ellipsis;
@@ -151,7 +163,7 @@ html,body{
 }
 .shop_num{
 	float: right;
-	padding-right: 15px;
+	/*padding-right: 15px;*/
 }
 
 
@@ -314,7 +326,7 @@ html,body{
 	line-height: 42px;
 	padding-right: 30px;
 	background: url(../images/back1.png) no-repeat;
-	background-size: 12% 33%;
+	background-size: 10% 35%;
 	background-position: 83% 50%;
 	color: #b3b3b3;
 }

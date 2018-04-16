@@ -23,6 +23,7 @@
 		Route::Post('ajax/citylist', 'AjaxController@cityList');
 		Route::Post('ajax/getuserinfo', 'AjaxController@getUserInfo');
 		Route::Post('ajax/getuserinfotoorder', 'AjaxController@getUserInfoToOrder');
+		Route::Post('ajax/addspec', 'AjaxController@addSpec');//ajax添加商品规格
 	});
 	
 	
@@ -57,7 +58,17 @@
 		Route::post('manage/joinsupplierexcel', 'SupplierController@joinSupplierExcel');
 		Route::post('manage/joinsuppliersave', 'SupplierController@joinSupplierSave');
 		Route::get('member/cashbacklist', 'MemberController@CashBackList');
-		
+
+
+        //店内分类管理  （供应商）
+        Route::get('supplieredit/shop/class/{id}', 'SupplierController@shopClassMan'); //门店内分类列表
+        Route::get('supplieredit/shop/class/add/{id}', 'SupplierController@shopClassManAdd');//添加门店分类
+        Route::post('supplieredit/shop/class/save', 'SupplierController@shopClassManSave');//保存门店分类
+        Route::get('supplieredit/shop/class/edit/{id}', 'SupplierController@shopClassManEdit');//编辑门店分类
+        Route::post('supplieredit/shop/class/edit/save', 'SupplierController@sshopClassManSave');//保存门店分类编辑
+        Route::get('supplieredit/shop/class/delete/{id}', 'SupplierController@shopClassManDel');//删除门店分类
+
+
 		
 		
 		//经销商
@@ -72,6 +83,12 @@
 		//商品
         Route::get('goodslist', 'GoodsController@Goodslist');//商品列表
         Route::get('goods/goodsadd', 'GoodsController@Goodsadd');//添加商品
+        Route::get('goods/goodsaddselclass', 'GoodsController@GoodsaddSelClass');//添加商品前选择分类
+        
+        
+        
+        
+        
         Route::post('goods/goodscreate', 'GoodsController@GoodsCreate');//提交商品
         Route::get('goods/goodsedit/{id}', 'GoodsController@GoodsEdit');//编辑商品
         Route::post('goods/goodssave', 'GoodsController@Goodssave');//编辑商品保存
@@ -103,6 +120,44 @@
         Route::get('banner/edit/{id}', 'BannerController@bannerEdit');//编辑banner图
         Route::post('banner/edit/save', 'BannerController@bannerEditSave');//编辑商品保存
         Route::get('banner/delete/{id}', 'BannerController@bannerDel');//删除banner图
+
+
+
+        //徐盼  2018/03/26   商品规格管理
+        Route::get('spec/list', 'SpecController@specList');//商品规格列表
+        Route::get('spec/add', 'SpecController@specAdd');//添加商品规格
+        Route::post('spec/save', 'SpecController@specSave');//保存商品规格
+        Route::get('spec/edit/{id}', 'SpecController@specEdit');//编辑商品规格
+        Route::post('spec/edit/save', 'SpecController@specEditSave');//编辑商品规格保存
+        Route::get('spec/delete/{id}', 'SpecController@specDel');//删除商品规格
+
+
+       //徐盼   2018/03/29   商品类型管理
+        Route::get('goods/type/list', 'GoodsTypeController@goodsTypeList');//商品类型列表
+        Route::get('goods/type/add', 'GoodsTypeController@goodsTypeAdd');//添加商品类型
+        Route::post('goods/type/save', 'GoodsTypeController@goodsTypeSave');//保存商品类型
+        Route::get('goods/type/edit/{id}', 'GoodsTypeController@goodsTypeEdit');//编辑商品类型
+        Route::post('goods/type/edit/save', 'GoodsTypeController@goodsTypeEditSave');//编辑商品类型保存
+        Route::get('goods/type/delete/{id}', 'GoodsTypeController@goodsTypeDel');//删除商品类型
+
+
+
+        //徐盼   2018/04/02   商品分类管理
+        Route::get('commody/class/manage/list', 'CommodyCLaManController@comClasManList');//商品分类列表
+        Route::get('commody/class/manage/edit/{id}', 'CommodyCLaManController@comClasManEdit');//编辑商品分类
+        Route::post('commody/class/manage/edit/save', 'CommodyCLaManController@comClasManEditSave');//编辑商品分类保存
+        Route::get('commody/class/manage/delete/{id}', 'CommodyCLaManController@comClasManDel');//删除商品分类
+
+        Route::get('commody/class/manage/first/list', 'CommodyCLaManController@comClasManFirList');//一级商品分类列表
+        Route::get('commody/class/manage/first/add', 'CommodyCLaManController@comClasManFirAdd');//添加一级商品分类
+        Route::post('commody/class/manage/first/save', 'CommodyCLaManController@comClasManFirSave');//保存一级商品分类信息
+        Route::get('commody/class/manage/first/edit/{id}', 'CommodyCLaManController@comClasManFirEdit');//编辑商品一级分类
+        Route::post('commody/class/manage/first/edit/save', 'CommodyCLaManController@comClasManEditFirSave');//编辑商品一级分类保存
+        Route::get('commody/class/manage/first/delete/{id}', 'CommodyCLaManController@comClasManFirDel');//删除商品一级分类
+
+        Route::get('commody/class/manage/second/add', 'CommodyCLaManController@comClasManSecAdd');//添加二级商品分类
+        Route::post('commody/class/manage/second/add/save', 'CommodyCLaManController@comClasManSecSave');//保存二级商品分类信息
+
 
 
 

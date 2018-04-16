@@ -34,7 +34,7 @@
 			<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
 			<div class="shops">
 				<span class="shopPrice">￥22000</span>
-				<span class="fan">返利0.2</span>
+				<span class="fan">￥<span class="yuan">1000</span></span>
 			</div>
 		</div>
 		<div class="shopListBox">
@@ -42,7 +42,7 @@
 			<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
 			<div class="shops">
 				<span class="shopPrice">￥22000</span>
-				<span class="fan">返利0.2</span>
+				<span class="fan">￥<span class="yuan">1000</span></span>
 			</div>
 		</div>
 		<div class="shopListBox">
@@ -50,7 +50,7 @@
 			<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手玉器玉石收手玉器玉石收手</div>
 			<div class="shops">
 				<span class="shopPrice">￥22000</span>
-				<span class="fan">返利0.2</span>
+				<span class="fan">￥<span class="yuan">1000</span></span>
 			</div>
 		</div>
 		<div class="shopListBox">
@@ -58,7 +58,7 @@
 			<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
 			<div class="shops">
 				<span class="shopPrice">￥22000</span>
-				<span class="fan">返利0.2</span>
+				<span class="fan">￥<span class="yuan">1000</span></span>
 			</div>
 		</div>
 		<div class="shopListBox">
@@ -66,7 +66,7 @@
 			<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
 			<div class="shops">
 				<span class="shopPrice">￥22000</span>
-				<span class="fan">返利0.2</span>
+				<span class="fan">￥<span class="yuan">1000</span></span>
 			</div>
 		</div>
 			

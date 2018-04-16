@@ -55,16 +55,23 @@
                 <tbody><tr>
                   <th>名称</th>
                   <th>手机号</th>
+                  <th>logo图片</th>
+                  <th>分类名称</th>
+                  <th>包邮金额</th>
                   <th>状态</th> 
-                   <th>操作</th>
+                   <th style="padding-left: 100px;">操作</th>
                 </tr>                
                 @foreach ($data as $supplier)    				
 	    			<tr>
 	                  <td>{{ $supplier->name }}</td>
 	                  <td>{{ $supplier->mobile }}</td>
+                      <td><img src={{ url($supplier->logo) }}  width="100" height="100"></td>
+                      <td>{{ $supplier->class_name }}</td>
+                      <td>{{ $supplier->free_shipping }}</td>
 	                  <td>{{ $supplier->state }}</td>                  
 	                  <td>
 	                  		<a href="{{ url('supplieredit',['id'=>$supplier->id]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
+                          <a href="{{ url('supplieredit/shop/class',['id'=>$supplier->id]) }}"><button class="btn bg-purple margin" type="button">分类管理</button></a>
 	                  		<a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('supplierdelete',['id'=>$supplier->id]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>                 			                  		
 	                  </td>
 	                </tr>                

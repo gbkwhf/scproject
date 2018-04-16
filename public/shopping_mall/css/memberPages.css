@@ -3,6 +3,7 @@ body {
 	background: #FFFFFF;
 }
 
+
 /*img {
 	width: 100%;
 	display: block;
@@ -20,93 +21,154 @@ input[type="button"] {
 
 
 /*---------搜索框---*/
-.searchTop{
+
+.searchTop {
 	height: 65px;
 	width: 100%;
-	position: fixed;
 	/*top: 0;
 	bottom: 80px;*/
-	background-color: #ffffff;
+	/*background-color: #ffffff;*/
+
+	/*position: absolute;*/
 	z-index: 1000;
-	
+	position: fixed;
 }
+
+.active {
+	background-color:#ffffff ;
+}
+
 .searchBox {
 	width: 79%;
-	height: 35px;
+	height: 30px;
 	margin-left: 19px;
 	margin-top: 16px;
-	border-radius: 6px;
-	border: solid 1px #bfbfbf;
+	border-radius: 20px;
+	/*border: solid 1px #bfbfbf;*/
 	float: left;
 	margin-bottom: 14px;
+	background: rgba(0, 0, 0, .1);
 }
+
 .seachImg {
 	float: left;
 }
+
 .seachImg img {
 	width: 13px;
 	height: 13px;
 	margin-left: 15px;
-	margin-top: 10px;
+	margin-top: 8px;
 }
+
 .insearchBox {
 	float: left;
 	width: 85%;
 	margin-left: 5px;
 }
+
+.insearchBox input {
+	background-color: transparent;
+}
+
 .insearch {
-	height: 35px;
+	height: 30px;
 	width: 90%;
-	line-height: 35px;
+	line-height: 30px;
 	outline: none;
 	border: none;
 	background: #fffffff;
 	padding-left: 5px;
 }
+/*---------修改placeholder的字体颜色*/
+ input::-webkit-input-placeholder{
+            color:#ffffff;
+        }
+        input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+            color:#ffffff;
+        }
+        input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+            color:#ffffff;
+        }
+        input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+            color:#ffffff;
+        }
+
 .searchSub {
 	font-size: 14px;
-	color: #e63737;
-	line-height: 35px;
+	color: #ffffff;
+	line-height: 30px;
 	float: right;
 	padding-top: 16px;
 	padding-right: 15px;
 }
+.insearchs{color: red;}
+
 /*-----------轮播图-------------*/
+
 .swiper-container {
 	clear: both;
 	width: 100%;
 	/*height: 370px;*/
-	height: 300px;
+	min-height: 100px;
+	position: relative;
+	top: 0;
 }
 
-.swiper-slide{
-	margin-top: 67px;
+.swiper-slide {
+	/*margin-top: 67px;*/
 }
-.swiper-slide img{
+
+.swiper-slide img {
 	width: 100%;
 	/*margin-top: 67px;*/
 }
+/*包裹自定义分页器的div的位置等CSS样式*/
+.swiper-pagination-custom {
+	bottom: 10px;
+	left: 0;
+	width: 100%;
+}
+/*自定义分页器的样式，这个你自己想要什么样子自己写*/
+.swiper-pagination-customs {
+	width: 12px;
+	height: 2px;
+	display: inline-block;
+	background: #000;
+	opacity: .3;
+	margin: 0 5px;
+}
+/*自定义分页器激活时的样式表现*/
+.swiper-pagination-customs-active {
+	opacity: 1;
+	background-color: #e63737;
+}
 /*--------商品分类---*/
+
 .container {
 	clear: both;
 	padding: 1px 12px;
 }
+
 .container>ul {
 	overflow: hidden;
 	width: 100%;
 }
+
 .container>ul>li {
 	float: left;
-	width: 33%;
+	width: 20%;
 	text-align: center;
-	margin-top: 21px;
+	margin-top: 20px;
 }
+
 .container>ul>li>img {
-	width: 56px;
-	height: 56px;
+	width: 47px;
+	height: 46px;
 	margin: 0 auto;
 	vertical-align: top;
 }
+
 .container>ul>li>em {
 	font-style: normal;
 	font-size: 14px;
@@ -116,87 +178,164 @@ input[type="button"] {
 	text-align: center;
 	margin-top: 9px;
 }
+
+
 /*-----福利区--------*/
-.welfare{
-	
-	margin-top: 25px;
+
+.welfare {
+	margin-top: 20px;
 }
-.welfare img{
+
+.welfare img {
 	height: 92px;
 	width: 100%;
 	margin: 0 auto;
 }
-/*-------新品上线------*/
-.newBox{
-	/*min-height: 50px;*/
-	margin-top: 20px;
-	height: 27px;
+
+.noDiv {
+	height: 6px;
+	background-color: #f3f2f2;
+	margin-top: 10px;
 }
-.newShopBox{
+
+
+/*-------------大分类区--------*/
+
+.classfiyTitle {
+	padding-top: 17px;
+	padding-left: 15px;
+	color: #333333;
+}
+
+.classfiyBox {
+	width: 92%;
+	margin: 0 auto;
+}
+
+.leftBox {
+	width: 38%;
+	height: 172px;
+	margin-top: 15px;
+	float: left;
+}
+
+.leftBox img {
+	width: 100%;
+	height: 172px;
+}
+
+.rightBox {
+	width: 60%;
+	height: 172px;
+	float: right;
+	margin-top: 15px;
+}
+
+.localSpecialty {
+	height: 82px;
+}
+
+.localSpecialty img {
+	width: 100%;
+	height: 82px;
+}
+
+.boutiqueGallery {
+	height: 82px;
+	margin-top: 7px;
+}
+
+.boutiqueGallery img {
+	width: 100%;
+	height: 82px;
+}
+
+
+/*-------新品上线------*/
+
+.newBox {
+	clear: both;
+	height: 47px;
+	margin-bottom: 20px;
+}
+
+.newShopBox {
 	float: left;
 	width: 99px;
 	height: 27px;
 	text-align: center;
 	line-height: 27px;
-	background:url(../images/newShopBj.png) no-repeat;
+	background: url(../images/newShopBj.png) no-repeat;
 	background-size: 100% 100%;
 	margin-left: 138px;
-	/*margin-top: 23px;*/
+	margin-top: 20px;
 	color: #333333;
 }
-.moreShop{
+
+.moreShop {
 	float: right;
 	width: 17px;
 	height: 17px;
-	border:solid 1px #c5c5c5;
+	border: solid 1px #c5c5c5;
 	border-radius: 50%;
-	margin-top: 6px;
+	margin-top: 25px;
 	margin-right: 15px;
 }
-.moreShop img{
+
+.moreShop img {
 	width: 30%;
 	margin-left: 6px;
 	margin-top: 4px;
 }
+
+
 /*--------商品信息-----*/
-.shopBox{
+
+.shopBox {
 	clear: both;
 	margin-top: 15px;
 	/*margin-bottom: 15px;*/
 }
-.shopImg img{
+
+.shopImg img {
 	width: 100%;
 	height: 250px;
 }
-.shopName{
+
+.shopName {
 	padding: 10px;
-	height: 30px;
+	height: 14px;
 	line-height: 20px;
 	overflow: hidden;
-	text-overflow:ellipsis;
+	text-overflow: ellipsis;
 	/*white-space: nowrap;*/
 	-webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+	-webkit-line-clamp: 1;
 	display: -webkit-box;
-	text-align:left ;
+	text-align: left;
 }
-.shopMessage{
+
+.shopMessage {
 	height: 27px;
-	margin-top: 10px;
+	margin-top: 8px;
 }
-.shops{
+
+.shops {
 	float: left;
 }
-.shopPrice{
+
+.shopPrice {
 	color: #ec4444;
 	padding-left: 12px;
 }
-.fan{
+
+.fan {
 	color: #acacac;
 	font-size: 12px;
 	padding-left: 11px;
 }
-.toBuy{
+
+.toBuy {
 	float: right;
 	width: 82px;
 	height: 26px;
@@ -207,7 +346,15 @@ input[type="button"] {
 	margin-right: 13px;
 	border-radius: 6px;
 }
+
+.mui-pull-bottom-pocket {
+	display: none !important;
+}
+
+
 /*------------底部-------*/
+
+
 /*.shopBottom{
 	clear: both;
 	width: 100%;

@@ -159,3 +159,50 @@ Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinS
 
     //获取banner轮播图
    Route::post('api/gxsc/get/banner/list','HandleProfession\GetShopsInfoController@getBannerList');
+
+
+/**
+ * 2018/04/04  商城二期开发
+ */
+Route::group([
+
+    'prefix' => 'api/gxsc','namespace' => 'SecondExploit', 'middleware'=> ['check.session:ys_session_info']//,'check.version']
+
+],function (){
+
+
+          //1.发布售后问题咨询
+          Route::post('publish/after/consult','OtherOnlyController@pubAfterConsult');
+          //2.获取售后问题咨询列表
+          Route::post('get/after/consult/list','OtherOnlyController@getAfterConsultList');
+          //3.首页搜索商品
+          Route::post('get/search/commodity/list','OtherOnlyController@getSarchComList');
+          //4.获取首页数据
+          Route::post('get/index/data','OtherOnlyController@getIndexData');
+          //5.获取门店二级分类信息列表
+          Route::post('get/second/info/list','OtherOnlyController@getSecondInfo');
+          //6.根据门店二级分类id获取门店列表
+          Route::post('get/store/list','OtherOnlyController@getStoreList');
+          //7.根据门店id获取门店分类列表
+          Route::post('get/store/class/list','OtherOnlyController@getStoreClassList');
+          //8.根据门店分类id获取商品列表
+          Route::post('get/store_class/goods/list','OtherOnlyController@getStoreClassGoodsList');
+          //9.获取商品二级分类信息列表
+          Route::post('get/goods/second/list','OtherOnlyController@getGoodSecondList');
+          //10.根据商品二级分类获取商品列表
+          Route::post('get/goods_class/list','OtherOnlyController@getGoodsClassList');
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" type="text/css" href="css/member_mall_list.css" />
 	</head>
 	<style type="text/css">
@@ -32,8 +33,10 @@
 			</div>
 		</div>
 		<!-------商品列表------>
-		<div style="margin-top: 52px;" class="shopBox">
-			<!--<div class="shopListBox">
+		<div id="refreshContainer" class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div style="margin-top: 52px;" class="shopBox">
+					<!--<div class="shopListBox">
 				<div class="shopImg"><img src="images/shop1.png" /></div>
 				<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
 				<div class="shops">
@@ -49,12 +52,14 @@
 					<span class="fan">返利0.2</span>
 				</div>
 			</div>-->
+				</div>
+			</div>
 		</div>
 		<!--购物车-->
-		<div class="shopping-cart" onclick="location.href='newShop_cart.php'">
+		<!--<div class="shopping-cart" onclick="location.href='newShop_cart.php'">
 			<img src="images/shopping-cart.png" />
 			<span></span>
-		</div>
+		</div>-->
 	</body>
 
 </html>
@@ -62,20 +67,20 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
-<script type="text/javascript">
-</script>
+<script src="js/mui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var winW = $(window).width();
 		var winH = $(window).height();
-
-		var first_id = $_GET['first_id'];
+		var first_id = $_GET['goods_first_id'];
+		console.log(first_id);
 		$.ajax({ //获取商品二级分类
-			type: "get",
+			type: "post",
 			dataType: 'json',
-			url: commonsUrl + "api/gxsc/get/commodity/secondary/classification/" + first_id + versioninfos,
+			url: commonsUrl + "api/gxsc/get/goods/second/list" + versioninfos,
 			data: {
-				"first_id": first_id //请求参数  openid
+				"goods_first_id": first_id,
+				"ss": getCookie('openid') //请求参数  openid
 			},
 			success: function(data) {
 				console.log(data)
@@ -85,18 +90,20 @@
 						console.log(con);
 						var html = '';
 						$.each(con, function(k, v) {
-							var second_id = con[k].second_id; //二级分类id
-							console.log(second_id);
-							var second_name = con[k].second_name; //分类名称
-							html += "<div class='classify' second_id=" + second_id + ">" + second_name + "</div>"
+							var goods_second_id = con[k].goods_second_id; //二级分类id
+							console.log(goods_second_id);
+							var second_name = con[k].goods_second_name; //分类名称
+							html += "<div class='classify' goods_second_id=" + goods_second_id + ">" + second_name + "</div>"
 						});
 						$('.moreWid').append(html); //动态显示分类名称
 						$(".classify").eq(0).addClass("addStyleMi").siblings().removeClass("addStyleMi");
-						shopList(con[0].second_id);
+						shopList(1, $(".addStyleMi").attr("goods_second_id"));
+						$('.shopBox').html('');
 						$('.classify').click(function() {
 							$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
-							shopList($(this).attr("second_id"));
-							//							$('.moreWid').append(html);
+							$('.shopBox').html('');
+							shopList(1, $(".addStyleMi").attr("goods_second_id"));
+							pageNum = 1;
 						})
 					} else {
 						layer.msg(data.msg);
@@ -107,53 +114,96 @@
 			}
 		});
 	});
+	pageNum = 1;
+	shopList(pageNum, 1);
 	//专区切换
-	function shopList(second_id) {
+	function shopList(pageNum, t) {
+
+		var goods_second_id = $(".addStyleMi").attr("goods_second_id");
+		layer.ready(function() {
+			layer.load(2);
+		})
+		console.log(goods_second_id);
 		var winH = $(window).height();
 		var html = '';
 		var con = "";
 		$.ajax({ //获取商品列表
-			type: "get",
+			type: "post",
 			dataType: 'json',
-			url: commonsUrl + "api/gxsc/get/commodity/lists/" + second_id + versioninfos,
+			url: commonsUrl + "api/gxsc/get/goods_class/list" + versioninfos,
 			data: {
-				"second_id": second_id //请求参数  openid
+				"goods_second_id": t, //
+				"page": pageNum,
+				"ss": getCookie('openid') //请求参数  openid
 			},
 			success: function(data) {
+				layer.closeAll();
 				console.log(data)
 				if(data.code == 1) { //请求成功
+
 					var content = data.result;
-					con = content
-					if(con.length != 0) {
-						console.log(con)
-						$.each(con, function(k, v) {
-							var goods_id = con[k].goods_id; //商品id
-							console.log(goods_id);
-							var goods_name = con[k].goods_name; //商品名称
-							var images = con[k].image; //商品图片
-							var price = con[k].price; //商品价格
-							html += '<div class="shopListBox" goods_id=' + goods_id + ' onclick="goDetail(' + goods_id + ')">' +
-								'<div class="shopImg"><img src=' + images + ' /></div>' +
-								'<div class="shopListNames">' + goods_name + '</div>' +
-								'<div class="shops"><span class="shopPrice">￥' + price + '</span>' +
-								'<span class="fan"></span></div>' +
-								'</div>';
-						});
-						$('.shopBox').html(html); //动态商品列表
-					} else {
+					con = content;
+					if(con.length == 0 && pageNum == 1) {
+
+						layer.closeAll();
 						$('.shopBox').html('<p>暂无商品,敬请期待!</p>');
 						$('.shopBox p').css({
 							'line-height': winH - 51 + 'px',
 							'text-align': 'center',
 							'color': '#c6bfbf'
 						});
+						mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+					} else {
+						console.log(con)
+						$.each(con, function(k, v) {
+							var goods_id = con[k].goods_id; //商品id
+							console.log(goods_id);
+							var goods_name = con[k].goods_name; //商品名称
+							var images = con[k].image; //商品图片
+							var price1 = con[k].price; //商品价格
+							var ext_id = con[k].ext_id;//商品扩展表id
+							var market_price = con[k].market_price; //原价
+							html += '<div class="shopListBox" goods_id=' + goods_id + ' ext_id='+ext_id+' >' +
+								'<div class="shopImg"><img src=' + images + ' /></div>' +
+								'<div class="shopListNames">' + goods_name + '</div>' +
+								'<div class="shops"><span class="shopPrice">￥' + price1 + '</span>' +
+								'<span class="fan">￥<span style="text-decoration: line-through;">' + market_price + '</span></span></div>' +
+								'</div>';
+						});
+						//console.log(html);
+						$('.shopBox').append(html); //动态商品列表
+						if(data.result.length > 0) {
+							mui('#refreshContainer').pullRefresh().refresh(true);
+							//mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+						} else {
+							layer.msg("已经到底了");
+							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+						}
 					}
 
+				} else {
+					layer.msg(data.msg);
 				}
 
 			}
 		});
 	};
+	mui.init({
+		pullRefresh: {
+			container: '#refreshContainer', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			auto: true, // 可选,默认false.自动上拉加载一次
+			height: 50,
+			up: {
+				callback: function() {
+						pageNum++;
+						shopList(pageNum, $(".addStyleMi").attr("goods_second_id"));
+						//                	 mui('#refreshContainer').pullRefresh().endPullupToRefresh();
+						mui('#refreshContainer').pullRefresh().refresh(true);
+					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			}
+
+		}
+	});
 	//获取购物车中的商品数量
 	var tarr = [];
 	var numberShop = 0;
@@ -183,8 +233,15 @@
 		}
 	});
 
-	function goDetail(goods_id) {
-		//		console.log(goods_id);
-		location.href = "shopDetails.php?goods_id=" + goods_id;
-	}
+//	function goDetail(goods_id) {
+//		//		console.log(goods_id);
+//		location.href = "newShop_details.php?goods_id=" + goods_id;
+//	}
+mui('body').on('tap', '.shopListBox', function() {
+	var ext_id = $(this).attr('ext_id');
+	console.log(ext_id);
+	mui.openWindow({
+		url: "newShop_details.php?ext_id=" + ext_id
+	})
+})
 </script>

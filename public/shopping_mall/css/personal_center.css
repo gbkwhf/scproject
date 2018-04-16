@@ -2,8 +2,9 @@
 	padding-bottom: 20px;
 }
 .wrapper header{
-	background: url(../images/bg-img.jpg) no-repeat;
-	box-shadow: 0px 0px 15px #d2d2d2;
+	background: url(../images/presonHeadBj.png) no-repeat;
+	background-size: 100% 100%;
+	/*box-shadow: 0px 0px 15px #d2d2d2;*/
 }
 .user-info{
 	padding-top: 35px;
@@ -17,6 +18,7 @@
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
 }
+
 .head-portrait img{
 	display: block;
 	border-radius: 50%;
@@ -29,6 +31,18 @@
 	padding: 17px 10px 16px;
 	color: #fff;
 	font-size: 15px;
+}
+.user-info p img{
+	margin-left: 8px;
+}
+.rank{
+	float: right;
+	padding: 17px 10px 16px;
+	color: #fff;
+	font-size: 15px;
+}
+.userRank{
+	padding-right: 8px;
 }
 .account-info{
 	padding-bottom: 27px;
@@ -60,15 +74,49 @@
 	color: rgba(255, 255, 255, 0.8);
 	line-height: 1.5em;
 }
+/*-----待付款 待评价 待收货模块----------*/
+.obligation,.receipt,.evaluated,.return{
+	float: left;
+	width: 33%;
+	color: #333333;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.obligation dl dt img{
+	width: 21px;
+	height: 21px;
+}
+.receipt dl dt img{
+	width: 25px;
+	height: 22px;
+}
+.evaluated dl dt img{
+	width: 19px;
+	height: 23px;
+}
+.return dl dt img{
+	width: 22px;
+	height: 22px;
+	margin: 0 auto;
+}
+.kong{
+	height: 6px;
+	background-color: #f3f2f2;
+	clear: both;
+}
+
 .menu-list{
 	padding: 0px 10px;
+	margin-bottom: 35px;
+	
 }
 .menu-list li{
 	line-height: 1.5em;
 	color: #333;
 	font-size: 15px;
 	padding: 16px 13px;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e5e5e5;
 	overflow: hidden;
 }
 .menu-list li img{

@@ -22,7 +22,7 @@ input[type="button"] {
 	position: fixed;
 	width: 100%;
 	height: 65px;
-	background-color: #ececec;
+	background-color: #f3f2f2;
 	top: 0;
 	z-index: 100;
 }
@@ -32,7 +32,7 @@ input[type="button"] {
 	margin-left: 19px;
 	margin-top: 16px;
 	border-radius: 6px;
-	border: solid 1px #bfbfbf;
+	/*border: solid 1px #bfbfbf;*/
 	float: left;
 	margin-bottom: 14px;
 	background-color: #ffffff;
@@ -71,9 +71,9 @@ input[type="button"] {
 /*-------商品列表----*/
 .shopListBox{
 	width: 49.3%;
-	height: 276px;
-	border-right: solid 2px #d2d2d2;
-	border-bottom: solid 2px #d2d2d2;
+	/*height: 276px;*/
+	border-right: solid 2px #e5e5e5;
+	border-bottom: solid 2px #e5e5e5;
 	overflow: auto;
 	float: left;
 	background-color: #ffffff;
@@ -97,8 +97,9 @@ input[type="button"] {
 	text-align:left ;
 }
 .shops{
-	padding-top: 15px;
+	padding-top: 7px;
 	padding-left: 20px;
+	margin-bottom: 10px;
 }
 .shopPrice{
 	color: #ec4444;
@@ -108,4 +109,7 @@ input[type="button"] {
 	color: #acacac;
 	font-size: 12px;
 	padding-left: 11px;
+}
+.yuan{
+	text-decoration: line-through;
 }

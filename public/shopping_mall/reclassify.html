@@ -29,7 +29,7 @@
 		<ul>
 			<script type="text/html" id="commentList">
 
-			<li onclick="location.href='newShop_details.php?id={{goods_id}}'">
+			<li onclick="location.href='newShop_details.php?id={{ext_id}}'">
 				<div>
 					<img src="{{image}}" alt="">
 				</div>
@@ -97,7 +97,7 @@
 						let data = res.result
 						for (let val of data) {
 							let temp = $("#commentList").html()
-							temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{goods_id}}", val.goods_id)
+							temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
 							$(".commodity ul").append(temp)
 						}
 					}
@@ -114,7 +114,7 @@
 			dataType: "json",
 			url: commonsUrl + 'api/gxsc/get/goods_class/list' + versioninfos,
 			data: {
-				goods_second_id: "1",
+				goods_second_id: "4",
 				page: "1",
 				ss: getCookie('openid')
 			},
@@ -123,7 +123,7 @@
 				let data = res.result
 				for (let val of data) {
 					let temp = $("#commentList").html()
-					temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{goods_id}}", val.goods_id)
+					temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
 					$(".commodity ul").append(temp)
 				}
 			}

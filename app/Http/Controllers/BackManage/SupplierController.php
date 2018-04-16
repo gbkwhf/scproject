@@ -17,6 +17,7 @@ class SupplierController  extends Controller
  public  function supplierList (Request $request){
  	
  	$par=\App\SupplierModel::select();
+
  	$search=array();
  	if ($request->name != ''){
  		$par->where('name','like',"%$request->name%");
@@ -28,6 +29,28 @@ class SupplierController  extends Controller
  	}
 
  	$data=$par->orderBy('id','desc')->paginate(10);
+
+
+     $tmp = [];
+     if(!empty($data)){
+         foreach($data as $k=>$v){
+             array_push($tmp,$v->class_id);
+         }
+         $tmp = array_values(array_unique($tmp));
+
+         $class_name = \DB::table('ys_store_class')->whereIn('id',$tmp)->get();
+
+
+         foreach($data as $k=>$v){
+             $data[$k]->class_name = '';
+             foreach($class_name as $kk=>$vv){
+                 if($v->class_id == $vv->id){
+                     $data[$k]->class_name = $vv->name;
+                 }
+             }
+         }
+     }
+
  	$state_arr=[
  		0=>'禁用',
  		1=>'正常',
@@ -36,15 +59,68 @@ class SupplierController  extends Controller
  		$val['state']=$state_arr[$val['state']];
  	}
 
+
 	return view('supplierlist',['data'=>$data,'search'=>$search]);
  }
  //
  public  function supplierEdit (Request $request){
  
  	$data=\App\SupplierModel::where('id',$request->id)->first();
-	return view('supplieredit',['data'=>$data]);
- } 
+
+     $class_info = \DB::table('ys_store_class')->select('id','name','first_id','sort')->orderBy('sort','asc')->get();
+
+     if(!empty($class_info)){
+
+         $tmp = [];
+         foreach($class_info as $k=>$v){
+             if($v->first_id == 0){
+                 array_push($tmp,$v->id);
+             }
+
+         }
+
+
+         $arr = array_fill_keys($tmp, []); //根据一级分类的id为键，值为空数组进行填充数组
+
+         foreach($arr as $k=>$v){
+             foreach($class_info as $kk=>$vv){
+                 if($k == $vv->first_id){
+                     array_push($arr[$k],$k.'+'.$vv->id.'+'.$vv->name);
+                 }
+             }
+         }
+
+         $arr = array_values($arr);
+
+     }else{
+
+         $arr = [];
+     }
+
+
+     //查询一下，目前到底属于哪个一级分类和二级分类
+     if(!empty($data->class_id)){
+
+         $second_info = \DB::table('ys_store_class')->where('id',$data->class_id)->first();
+         if(!empty($second_info)){
+             $first_info = \DB::table('ys_store_class')->where('id',$second_info->first_id)->first();
+         }else{
+             $first_info = "";
+         }
+
+
+     }else{
+         $second_info = "";
+         $first_info = "";
+     }
+
+
+	return view('supplieredit',['data'=>$data,'class_info'=>$class_info,'arr'=>urlencode(json_encode($arr)),'second_info'=>$second_info,'first_info'=>$first_info ]);
+ }
+
+
  public  function supplierSave (Request $request){
+
 
      $input = Input::except('_token');
      $rules = [
@@ -57,15 +133,37 @@ class SupplierController  extends Controller
      ];
      $validator = \Validator::make($input,$rules,$massage);
      if($validator->passes()){
-        $params=array(
-                'name'=>$request->name,
-                'mobile'=>$request->mobile,
-                'state'=>$request->state,
-        		'bank_name'=>$request->bank_name,
-        		'bank_address'=>$request->bank_address,
-        		'bank_num'=>$request->bank_num,
-        		'real_name'=>$request->real_name,
-        );
+
+
+         if ($request->hasFile('image')){//图片上传
+             $file_name=uploadPic($request->file('image')[0]);
+             $params=array(
+                 'name'=>$request->name,
+                 'mobile'=>$request->mobile,
+                 'state'=>$request->state,
+                 'bank_name'=>$request->bank_name,
+                 'bank_address'=>$request->bank_address,
+                 'bank_num'=>$request->bank_num,
+                 'real_name'=>$request->real_name,
+                 'logo'=>$file_name,
+                 'class_id'=>$request->class_id,
+                 'free_shipping'=>$request->free_shipping
+             );
+         }else{
+             $params=array(
+                 'name'=>$request->name,
+                 'mobile'=>$request->mobile,
+                 'state'=>$request->state,
+                 'bank_name'=>$request->bank_name,
+                 'bank_address'=>$request->bank_address,
+                 'bank_num'=>$request->bank_num,
+                 'real_name'=>$request->real_name,
+                 'class_id'=>$request->class_id,
+                 'free_shipping'=>$request->free_shipping
+             );
+         }
+
+
         if(!empty($request->password)){
             $params['password']=md5($request->password);
         }
@@ -84,10 +182,39 @@ class SupplierController  extends Controller
  
  public  function supplierAdd (Request $request){
 
- 	return view('supplieredit');
+
+     $class_info = \DB::table('ys_store_class')->select('id','name','first_id','sort')->orderBy('sort','asc')->get();
+
+     if(!empty($class_info)){
+
+         $tmp = [];
+         foreach($class_info as $k=>$v){
+             if($v->first_id == 0){
+                 array_push($tmp,$v->id);
+             }
+         }
+
+         $arr = array_fill_keys($tmp, []); //根据一级分类的id为键，值为空数组进行填充数组
+
+          foreach($arr as $k=>$v){
+                foreach($class_info as $kk=>$vv){
+                    if($k == $vv->first_id){
+                         array_push($arr[$k],$k.'+'.$vv->id.'+'.$vv->name);
+                    }
+                }
+          }
+
+           $arr = array_values($arr);
+
+     }else{
+
+         $arr = [];
+     }
+ 	 return view('supplieredit',['class_info'=>$class_info,'arr'=>urlencode(json_encode($arr))]);
  }
 
  public  function supplierCreate (Request $request){
+
      $input = Input::except('_token');
      $rules = [
          'name'=> 'required',
@@ -100,7 +227,17 @@ class SupplierController  extends Controller
          'password.required' =>'密码不能为空',
      ];
      $validator = \Validator::make($input,$rules,$massage);
+
      if($validator->passes()){
+
+
+         if ($request->hasFile('image')){//图片上传
+             $file_name=uploadPic($request->file('image')[0]);
+         }else{
+             $file_name="";
+         }
+
+
         $params=array(
                 'name'=>$request->name,
                 'mobile'=>$request->mobile,
@@ -110,6 +247,9 @@ class SupplierController  extends Controller
         		'bank_address'=>$request->bank_address,
         		'bank_num'=>$request->bank_num,
         		'real_name'=>$request->real_name,
+                'logo'=>$file_name,
+                'class_id'=>$request->class_id,
+                'free_shipping'=>$request->free_shipping
         );
          //dd($params);
          $res = \App\SupplierModel::create($params);
@@ -122,6 +262,8 @@ class SupplierController  extends Controller
      }else{
          return back() -> withErrors($validator);
      }
+
+
  }
  //删除供应商
  public function supplierDelete(Request $request)
@@ -418,5 +560,119 @@ class SupplierController  extends Controller
  		return back() -> with('errors','请选择状态');
  	}
  } 
- 
+
+
+   //根据门店id，获取门店的分类列表
+    public function shopClassMan($id){
+
+         $info = \DB::table('ys_store_goods_class as a')
+                   ->leftjoin('ys_supplier as b','a.store_id','=','b.id')
+                   ->select('a.id','a.name','a.store_id','a.sort','b.name as spec_name')
+                   ->where('a.store_id',$id)
+                   ->orderBy('a.sort','asc')
+                   ->paginate(10);
+
+        $num  = \DB::table('ys_store_goods_class')->where('store_id',$id)->lists('id');
+
+        return view('shopclasslist',['data'=>$info,'num'=>$num,'store_id'=>$id]);
+
+    }
+
+    //添加门店分类
+    public function shopClassManAdd($id){
+
+
+        return view('shopclassAdd',['store_id'=>$id]);
+
+    }
+
+
+    //添加数据保存
+    public function shopClassManSave(Request $request)
+    {
+
+         if(!empty($request->shopClassName))
+         {
+
+
+             $res = \DB::table('ys_store_goods_class')->insert([
+
+                      'name'=>$request->shopClassName,
+                      'store_id'=>$request->store_id,
+                      'sort'=>$request->sort
+             ]);
+
+             if($res){
+                 return redirect('supplierlist');
+             }else{
+                 return back() -> with('errors','数据填充失败');
+             }
+         }else{
+
+             return back() -> with('errors','分类名称必填');
+
+         }
+
+    }
+
+
+    //编辑
+    public function shopClassManEdit($id){
+
+
+        $shop_class = \DB::table('ys_store_goods_class')->where('id',$id)->first();
+
+        return view('shopclassEdit',['data'=>$shop_class]);
+
+
+    }
+
+
+    //保存编辑
+    public function sshopClassManSave(Request $request)
+    {
+
+
+        if(!empty($request->shopClassName)){
+
+
+            $is_have = \DB::table('ys_store_goods_class')->where('id',$request->id)->where('name',$request->shopClassName)->where('sort',$request->sort)->first();
+
+            if(!empty($is_have)){
+
+                return back() -> with('errors','没有要更新的数据');
+            }
+
+
+            $res  = \DB::table('ys_store_goods_class')->where('id',$request->id)->update([
+
+                'name'=>$request->shopClassName,
+                'sort'=>$request->sort
+            ]);
+
+            if($res){
+                return redirect('supplierlist');
+            }else{
+                return back() -> with('errors','数据更改失败');
+            }
+
+        }else{
+
+            return back() -> with('errors','门店分类名称必填');
+        }
+
+
+    }
+
+    //删除门店分类
+    public function shopClassManDel($id){
+
+        \DB::table('ys_store_goods_class')->where('id',$id)->delete();
+        return redirect('supplierlist');
+
+    }
+
+
+
+
 }

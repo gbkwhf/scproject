@@ -58,5 +58,17 @@ class AjaxController  extends Controller
  	$class=DB::table('ys_goods_class')->where('first_id',$request->id)->get();
  	echo json_encode($class);
  }
+ 
+ public function addSpec(Request $request){
+ 	$params=[
+		'name'=>$request->spec_value,
+		'spec_id'=>$request->spec_id,
+		'supplier_id'=>$request->supplier_id,
+ 	];
+ 	$res=\App\SpecValueModel::insertGetId($params);
+ 	echo json_encode($res);
+ }
+ 
+ 
 
 }
