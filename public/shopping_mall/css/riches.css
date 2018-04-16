@@ -1,0 +1,80 @@
+html,
+body {
+	background: #ffffff;
+	height: 100%;
+	overflow: hidden;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+/*-----------内容开始-----*/
+.richesBox{
+	height: 170px;
+	background-color: #4d6dfd;
+	z-index: 1000;
+}
+.coountReturn{
+	text-align: center;
+	padding-top: 52px;
+	color: #ffffff;
+}
+.returnNum{
+	text-align: center;
+	color: #ffffff;
+	font-size: 21px;
+	padding-top: 28px;
+}
+.noneBox{
+	height: 10px;
+	background-color: #f3f2f2;
+}
+.recordName{
+	height: 55px;
+	line-height: 55px;
+	border-bottom: solid 1px #e5e5e5;
+	padding-left: 15px;
+	color: #333333;
+	z-index: 1000;
+}
+/*------返利记录-------*/
+.rebateRecordBox{
+	/*width: 92%;
+	margin: 0 auto;*/
+	/*margin-top: 236px;
+	z-index: -100;*/
+}
+
+.mallRecordBox{
+	height: 55px;
+	border-bottom: solid 1px #e5e5e5;
+	color: #333333;
+}
+.recordLeft{
+	float: left;
+	line-height: 55px;
+	padding-left: 15px;
+}
+.recordRight{
+	float: right;
+	padding-right: 15px;
+	text-align: right;
+}
+.recordMoney{
+	padding-top: 7px;
+}
+.recordTime{
+	color: #999999;
+	font-size: 12px;
+}
+.mui-pull-bottom-pocket {
+    display: none !important;
+}

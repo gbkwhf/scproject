@@ -15,13 +15,13 @@
 	<body>
 		<div class="companyBanner"><img src="images/qiye.png" /></div>
 		<div class="member" onclick="location.href='memberPages.php'">
-			<img src="images/member_img.jpg" />
+			<img src="images/gxMall.png" />
 		</div>
-		<div class="no_member">
+		<!--<div class="no_member">
 			<img src="images/nomember.jpg" onclick="location.href='outsider.php?first_id=4'" />
-		</div>
+		</div>-->
 		<div class="gameBox" onclick="waitting()">
-			<img src="images/game.png" />
+			<img src="images/amusement.png" />
 		</div>
 		
 

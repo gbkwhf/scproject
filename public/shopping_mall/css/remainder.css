@@ -1,0 +1,59 @@
+html,
+body {
+	background: #ffffff;
+	height: 100%;
+	overflow: hidden;
+}
+
+img {
+	width: 100%;
+	display: block;
+	border: none;
+	vertical-align: bottom;
+	border: none;
+}
+
+input[type="button"] {
+	-webkit-appearance: none;
+}
+/*------------内容开始--------*/
+.balanceList{
+	float: right;
+	padding-top: 18px;
+	padding-right: 17px;
+	font-size: 12px;
+}
+.accountName{
+	clear: both;
+	text-align: center;
+	padding-top: 65px;
+}
+.remainder{
+	font-size: 22px;
+	text-align: center;
+	padding-top: 29px;
+}
+.recharge{
+	width: 91%;
+	height: 40px;
+	margin: 0 auto;
+	margin-top: 70px;
+	background-color: #eb3738;
+	color: #ffffff;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 8px;
+}
+.withdrawCash{
+	width: 91%;
+	height: 40px;
+	margin: 0 auto;
+	margin-top: 22px;
+	background-color: #ffffff;
+	color: #333333;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 8px;
+	border: solid 1px #e5e5e5;
+	
+}

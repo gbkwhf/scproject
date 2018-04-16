@@ -40,6 +40,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="kong"></div>
 			<div class="commodityBox">
 				<div class="shopNames">
 					<div class="shopIcon"><img src="images/shop_image.png"/></div>
@@ -70,6 +71,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="kong"></div>
 			<!--<div class="commodity-align">
 				<div class="swiper-container">
 			        <div class="swiper-wrapper">
@@ -102,7 +104,7 @@
 			<div class="moneys">￥10.00</div>
 		</div>
 		
-		<div class="explain-buy">
+		<!--<div class="explain-buy">
 			<h4>利润共享返利条件</h4>
 			<ul class="xz-list">
 				<li>1、会员必须在平台消费1280元/单（含1280）以上，且订单完成（无退货）。</li>
@@ -110,7 +112,7 @@
 				<li>利润共享天数：180天，由系统每天自动返还。</li>
 				<li>2、如果一单不能满足利润共享基数，可以凑单并合并结算，总金额达到基数要求，方可享受利润共享。</li>
 			</ul>
-		</div>
+		</div>-->
 		<footer>
 			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
 			<div class="buy-operation">

@@ -17,7 +17,7 @@ input[type="button"] {
 	-webkit-appearance: none;
 }
 /*----------内容开始-------*/
-.wrapper{
+.shopBox{
 	
 	margin-top: 10px;
 }
@@ -56,7 +56,7 @@ input[type="button"] {
 	
 }
 .shopMessage{
-	height: 37px;
+	height: 62px;
 	padding-top: 24px;
 	padding-right: 10px;
 	line-height: 20px;
@@ -68,8 +68,13 @@ input[type="button"] {
 	display: -webkit-box;
 	text-align:left ;
 	color: #4d4d4d;
+	font-size: 14px;
 }
 .shopPrice{
 	color: #e09565;
-	padding-top: 35px;
+	padding-top: 30px;
+	font-size: 14px;
+}
+.mui-pull-bottom-pocket {
+    display: none !important;
 }

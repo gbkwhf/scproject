@@ -27,27 +27,60 @@
 				<div class="head-portrait">
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
-				<p></p>
+				<p><span class="user_names"></span><img src="images/userIcon.png" width="13"/></p>
+				<div class="rank"><span class="userRank">二级会员</span><img src="images/personBack.png" width="6"/></div>
 			</div>
+			
 			<div class="account-info">
-				<div class="balance">
-					<em>¥</em>
+				<div class="balance" onclick="location.href='remainder.php'">
+					<em></em>
 					<p>0</p>
-					<span>余额（可提现）</span>
+					<span>余额（积分）</span>
 				</div>
-				<div class="cashback" onclick="location.href='cashback.php'">
+				<div class="cashback" onclick="location.href='consumption.php'">
 					<em>¥</em>
 					<p>0</p>
-					<span>返现记录</span>
+					<span>累计消费（元）</span>
 				</div>
 			</div>
 		</header>
+		<div class="user-Box" >
+			<div class="obligation" orderId='0' onclick="location.href='myOrderList.php?orderId=0'">
+				<dl>
+					<dt><img src="images/obligation.png"/></dt>
+					<dd>待付款</dd>
+				</dl>
+			</div>
+			<div class="receipt" orderId='1' onclick="location.href='myOrderList.php?orderId=1'">
+				<dl>
+					<dt><img src="images/receipt.png"/></dt>
+					<dd>待收货</dd>
+				</dl>
+			</div>
+			<div class="evaluated" orderId='2' onclick="location.href='myOrderList.php?orderId=2'">
+				<dl>
+					<dt><img src="images/evaluated.png"/></dt>
+					<dd>待评价</dd>
+				</dl>
+			</div>
+			<!--<div class="return" orderId='3' onclick="location.href='myOrderList.php?orderId=3'">
+				<dl>
+					<dt><img src="images/return.jpg"/></dt>
+					<dd>退/换货</dd>
+				</dl>
+			</div>-->
+		</div>
+		<div class="kong"></div>
 		<ul class="menu-list">
-			<li onclick="location.href='my_orders.php'">
+			<li onclick="location.href='myOrderList.php'">
 				我的订单
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="location.href='invitation.php'">
+			<li onclick="location.href='riches.php'">
+				我的财富
+				<img src="images/right-arrow.png" width="8"/>
+			</li>
+			<li onclick="location.href='invitationList.php'">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
@@ -59,8 +92,16 @@
 				提现记录
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
+			<li onclick="location.href='afterSale.php'">
+				售后交流
+				<img src="images/right-arrow.png" width="8"/>
+			</li>
 			<li class="substitute" onclick="location.href='sale_record.php'">
 				销售记录
+				<img src="images/right-arrow.png" width="8"/>
+			</li>
+			<li onclick="location.href='setTing.php '">
+				设置
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
 		</ul>
@@ -164,7 +205,7 @@
   					if(data.result.thumbnail_image_url!=""){
   						$('.head-portrait img').attr('src',data.result.thumbnail_image_url);  						
   					}
-					$('.user-info p').html(data.result.name);
+					$('.user-info .user_names').html(data.result.name);
   					$('.balance p').html(data.result.balance);
   					$('.cashback p').html(data.result.yesterday_return_money);
   				}else if(data.code==1011){
