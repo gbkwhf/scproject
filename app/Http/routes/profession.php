@@ -193,6 +193,26 @@ Route::group([
           Route::post('get/goods_class/list','OtherOnlyController@getGoodsClassList');
 
 
+          //11.发表评论
+          Route::post('publish/goods/comment','OtherOnlyController@publishGoodsComment');
+
+
+        /**
+         * 购物车模块  登陆状态才可以访问
+         */
+            //1.获取购物车中商品信息
+            Route::post('v2/get/goods/car/info','ShoppingCartController@getV2GoodsCarInfo');
+            //2.创建购物车，给购物车中添加商品信息
+            Route::post('v2/add/goods/car','ShoppingCartController@addV2GoodsCar');
+            //3.更改购物车中某条商品的数量（1:加号   2:减号 ）
+            Route::post('v2/update/goods/car/number','ShoppingCartController@updateV2GoodsNumber');
+            //4.删除购物车中的商品
+            Route::post('v2/delete/goods/car','ShoppingCartController@deleteV2GoodsCar');
+            //5.更改购物车   同一供应商底下所有商品的状态（选中/不选中）
+            Route::post('v2/update/goods/car/supply/all/state','ShoppingCartController@updateV2AllGoodsCar');
+
+
+
 
 
 });
