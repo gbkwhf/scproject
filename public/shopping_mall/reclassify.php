@@ -55,7 +55,6 @@
 <script type="text/javascript" src="js/config.js"></script>
 <script>
 	let urlId=location.search.substring(4)
-	alert(urlId)
 	// 获取导航列表
 	$.ajax({
 		type: "post",
@@ -75,9 +74,6 @@
 		}
 	})
 	$(function () {
-
-
-
 		setTimeout(() => {
 			$('.wrapper').navbarscroll();
 
@@ -107,8 +103,8 @@
 			})
 		}, 200);
 
-
-		// 获取商品列表
+   
+		// 获取商品列表数据  
 		$.ajax({
 			type: "post",
 			dataType: "json",
@@ -128,6 +124,7 @@
 				}
 			}
 		})
+
 
 
 	})

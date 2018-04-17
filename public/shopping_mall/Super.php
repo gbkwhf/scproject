@@ -26,7 +26,7 @@
 		<div class="msg">
 			<ul class="tem">
 				<script type="text/html" id="commentList">
-				<li onclick="location.href='reclassify.html?id={{store_id}}'">
+				<li onclick="location.href='reclassify.php?id={{store_id}}'">
 					<div>
 						<img src="{{logo}}" />
 						<p>
@@ -51,7 +51,7 @@
 <script type="text/javascript" src="js/config.js"></script>
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
-
+	let page=1
 	let store_second_id
 
 
@@ -79,7 +79,7 @@
 			store_first_id: 1
 		},
 		success: (res) => {
-			let data = res.result
+			let data = res.result;
 			store_second_id = data[0].store_second_id
 			for (let i = 0; i < data.length; i++) {
 				if (i == 0) {
@@ -98,7 +98,7 @@
 
 
 	setTimeout(() => {
-		shop(store_second_id)
+		shop(store_second_id,page)
 
 
 
@@ -110,14 +110,15 @@
 
 			$(".tem li").remove()
 
-			shop(store_second_id)
+			shop(store_second_id,page)
 		})
 
 
 
 		$(".float li").click(function () {
 			let store_second_id = $(this).attr("id")
-			shop(store_second_id)
+			$(".tem li").remove()
+			shop(store_second_id,page)
 			$(".float").hide()
 			$(".clarity").hide()
 		})
@@ -127,14 +128,11 @@
 
 	$(this).scroll(function () {
 		var viewHeight = $(this).height();//可见高度  
-		console.log(viewHeight)
 		var contentHeight = $("#body").get(0).scrollHeight;//内容高度  
-		console.log(contentHeight)
 		var scrollHeight = $(this).scrollTop();//滚动高度  
-		console.log(scrollHeight)
-		console.log((contentHeight - viewHeight) / scrollHeight + "----------------------")
 		if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-			alert("到底了")
+			page++
+			shop(store_second_id,page)
 		}
 	})
 
@@ -142,7 +140,7 @@
 
 
 	// // 门店	
-	function shop(id) {
+	function shop(id,page) {
 		$.ajax({
 			type: "POST",
 			dataType: "json",
@@ -150,7 +148,7 @@
 			data: {
 				ss: getCookie('openid'),
 				store_second_id: id,
-				page: "1"
+				page: page
 			},
 			success: (res) => {
 				console.log(res)

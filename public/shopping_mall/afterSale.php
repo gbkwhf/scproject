@@ -13,12 +13,13 @@
 </head>
 
 <body>
-    <div class="entire">
-        <p style="height: 50px;line-height:50px">关于商品咨询 (
-            <span id="num"></span> 条)</p>
-        <div id="after"></div>
-    </div>
-    <script type='text/html' id="commentList">
+    <div id="body">
+        <div class="entire">
+            <p style="height: 50px;line-height:50px">关于商品咨询 (
+                <span id="num"></span> 条)</p>
+            <div id="after"></div>
+        </div>
+        <script type='text/html' id="commentList">
             <div style="margin:0 0 40px 15px;overflow: hidden">
                 <div class="user">
                     <img src="images/name.png" alt="">
@@ -41,7 +42,8 @@
             <input type="text" placeholder="请输入您想提出的问题" class="aa" />
             <p id="submit">提问</p>
         </div>
-        </dvi>
+    </div>
+    </div>
 </body>
 
 </html>
@@ -50,15 +52,16 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
 <script type="text/javascript">
-
+    let page = 1
     $(function () {
+
         // 获取售后信息
         $.ajax({
             type: "POST",
             dataType: "json",
             url: commonsUrl + 'api/gxsc/get/after/consult/list' + versioninfos,
             data: {
-                page: "1",
+                page: page,
                 ss: getCookie('openid')
             },
             success: (res) => {
@@ -121,9 +124,61 @@
                 })
             }
         })
+
+
+
+
     })
 
 
+    $(this).scroll(function () {
+        var viewHeight = $(this).height();//可见高度  
+        var contentHeight = $("#body").get(0).scrollHeight;//内容高度  
+        var scrollHeight = $(this).scrollTop();//滚动高度  
+        if ((contentHeight - viewHeight) / scrollHeight <= 1) {
+            page++
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: commonsUrl + 'api/gxsc/get/after/consult/list' + versioninfos,
+                data: {
+                    page: 1,
+                    ss: getCookie('openid')
+                },
+                success: (res) => {
+                    console.log(res)
+                    $("#num").text(res.result.num)
 
+                    try {
+                        if (res.code == "1") {
+                            let data = res.result.data
+                            for (let val of data) {
+                                var content = val.merchant_reply;
+                                let temp = $("#commentList").html()
+                                temp = temp.replace("{{createTime}}", val.created_at)
+                                    .replace("{{name}}", val.name)
+                                    .replace("{{commentContent}}", content)
+                                    .replace("{{problem}}", val.user_problem);
+                                $("#after").append(temp)
+                                if (!content) {
+                                    content = '';
+                                    $(".ask").hide()
+                                }
+                            }
+
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    }
+
+
+
+                },
+                error: (res) => {
+                    console.log(res)
+                }
+            })
+        }
+    })
 
 </script>
