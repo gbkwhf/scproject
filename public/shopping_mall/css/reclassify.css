@@ -32,11 +32,11 @@
     overflow: hidden;
 }
 .commodity li{
-    border-bottom: 1px solid #f3f2f2;
+    border-bottom: 1px solid #ccc;
     box-sizing:border-box;
 }
 .commodity li:nth-child(2n){
-    border-right: 1px solid #f3f2f2
+    border-right: 1px solid #ccc
 }
 .commodity li>div:nth-of-type(2){
     margin: 10px 15px 

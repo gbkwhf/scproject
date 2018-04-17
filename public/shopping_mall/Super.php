@@ -26,7 +26,7 @@
 		<div class="msg">
 			<ul class="tem">
 				<script type="text/html" id="commentList">
-				<li onclick="location.href='reclassify.html?id={{store_id}}'">
+				<li onclick="location.href='reclassify.php?id={{store_id}}'">
 					<div>
 						<img src="{{logo}}" />
 						<p>
