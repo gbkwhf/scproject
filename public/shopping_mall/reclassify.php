@@ -75,9 +75,6 @@
 		}
 	})
 	$(function () {
-
-
-
 		setTimeout(() => {
 			$('.wrapper').navbarscroll();
 
@@ -107,8 +104,8 @@
 			})
 		}, 200);
 
-
-		// 获取商品列表
+   
+		// 获取商品列表数据
 		$.ajax({
 			type: "post",
 			dataType: "json",
@@ -128,6 +125,7 @@
 				}
 			}
 		})
+
 
 
 	})
