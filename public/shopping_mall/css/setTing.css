@@ -1,0 +1,15 @@
+.outer{
+    border-bottom: 1px solid #e5e5e5;
+}
+.outer div{
+    width: 92%;
+    margin: 0 auto;
+    height: 55px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.box div img{
+    width: 7.5px;
+    height: 13px;
+}

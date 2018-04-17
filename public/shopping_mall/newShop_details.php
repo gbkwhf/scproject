@@ -20,6 +20,15 @@
 			}
 		};
 	</script>
+	<style type="text/css">
+		.arrBox {
+			clear: both;
+		}
+		
+		.cl {
+			margin-right: 4px;
+		}
+	</style>
 
 	<body>
 		<!-----------顶部固定----------->
@@ -39,37 +48,52 @@
 		<div class="shopIntroduce"></div>
 		<!--------------商品单价------>
 		<div class="shopPrice">
-			<div class="priceBox"><span class="price"></span><span class="originalCost">原价：10000元</span></div>
-			<div class="bor"></div>
-			<div class="super" onclick="location.href='super_return.php'">超级返?</div>
+			<div class="priceBox"><span class="price"></span><span class="originalCost"></span></div>
+			<!--<div class="bor"></div>-->
+			<!--<div class="super" onclick="location.href='super_return.php'">超级返?</div>-->
 		</div>
 		<div class="saleBox">
-			<div class="postage">邮费：<span class="postNum">10</span>元</div>
-			<div class="sales">销量：<span class="saleNum">999</span></div>
+			<div class="postage">邮费：<span class="postNum"></span></div>
+			<div class="sales">销量：<span class="saleNum"></span></div>
+		</div>
+		<div class="saleBox">
+			<div class="postage">返利期限：<span class="postNum2">365</span>天</div>
+		</div>
+		<div class="saleBox">
+			<div class="postage">返利积分：<span class="postNum1"></span></div>
+
 		</div>
 		<!-----------选择商品属性-->
 		<div class="selectAttributes">
-			<div class="attributes">选择尺码颜色和分类</div>
+			<div class="attributes"></div>
 			<div class="backs"><img src="images/selectBack.png" /></div>
 		</div>
 		<!-----------选择商品属性弹出层-->
 		<div class="selectPopup" style="display: none;" id="dd">
 			<div class="hideBox"></div>
 			<div class="attributesBox">
+				<div class="close"></div>
 				<div class="attrHead">
-					<div class="attrImg"><img src="images/attrImg.png" /></div>
+					<!--<div class="attrImg"><img src="images/attrImg.png" /></div>
 					<div class="selectName">
 						<p class="shop_name">精美琥珀核桃仁</p>
-						<p class="selectAttr">请选择属性</p>
-					</div>
-					<div class="close"></div>
+						<p class="selectAttr"><span id="shu1">请选择属性</span><span id="shu2" style="padding-left: 4px;"></span></p>
+					</div>-->
+					<!--<div class="close"></div>-->
 				</div>
 				<div class="attrContent">
-					<div class="atrrName">品种</div>
-					<div class="attrType">
-						<div class="type_one">盒装</div>
-						<div class="type_one">袋装</div>
+
+					<div class="arrGuiGe">
+						<!--<div class="arrBox">
+							<div class="atrrName">品种</div>
+							<div class="attrType">
+								<div class="type_one">盒装</div>
+								<div class="type_one">袋装</div>
+							</div>
+						</div>-->
+
 					</div>
+
 					<div class="buyNumBox">
 						<div class="buyTitle">购买数量</div>
 						<div class="calculateBox">
@@ -83,7 +107,7 @@
 			</div>
 		</div>
 
-		<div class="rebate">
+		<!--<div class="rebate">
 			<h4>利润共享返利条件</h4>
 			<ul class="rebate-con">
 				<li>
@@ -96,11 +120,12 @@
 					<em>利润共享天数：</em> 180天，由系统每天自动返还。达到以上条件，平台会根据会员个人所推荐的总人数给予会员个人一定比例的推荐返利，推荐共享的金额每天根据财务数据统计，由系统自动返到会员的平台账户“可用余额”里。
 				</li>
 			</ul>
-		</div>
+		</div>-->
 		<div class="kong"></div>
 		<!--<div class="shopInformation">
 			<div class="shopIntoduce">
 				<a href="#002">商品介绍</a>
+				<a class="details" onclick="click_scroll2();">详情</a>
 			</div>
 			<div class="apprarise">
 				<a href="#003">评论</a>
@@ -126,7 +151,7 @@
 				</div>
 			</div>
 			<div class="addCar" id="addCar">加入购物车</div>
-			<div class="buyNow">立即购买</div>
+			<!--<div class="buyNow">立即结算</div>-->
 		</div>
 		<!------------商品详情------------>
 		<div class="detailTitle aa" id="002">商品详情</div>
@@ -183,7 +208,7 @@
 	</body>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/shopDetails.js"></script>
-	<!--<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/swiper-3.4.0.min.js"></script>
@@ -195,53 +220,119 @@
 		//根据商品id获取商品详情
 		$(function() {
 			shopCarts(); //页面加载的时候显示购物车的数量
-			var goods_id = $_GET['goods_id']; //获取商品id
-			console.log(goods_id + '+++++');
-			$.ajax({
-				type: "get",
-				dataType: 'json',
-				url: commonsUrl + 'api/gxsc/get/commodity/info/' + goods_id + versioninfos,
-				data: {
-					"goods_id": goods_id //商品id
-				},
-				success: function(data) {
-					console.log(data)
-					if(data.code == 1) { //请求成功
-						var con = data.result; //
-						var content = con.content; //商品详情
-						var goods_id = con.goods_id; //商品id
-						var goods_name = con.goods_name; //商品名称
-						var img_url = con.img_url; //商品图片列表
-						var num = con.num; //商品数量
-						var price = con.price; //商品单价
-						var sales = con.sales; //商品销量
-						//------------进行赋值---------------
-						$('.swiper-pagination-total').html(img_url.length); //轮播图计数
-						$('.shopIntroduce').html(goods_name); //商品名
-						$('.price').html('¥' + price); //商品单价
-						$('.shopImg').html(content); //商品内容
-						$('.saleNum').html(sales);//销量
-						//---------------循环图片（轮播图）-----
-						$.each(img_url, function(k, v) {
-							var src = img_url[k].image;
-							var imgId = img_url[k].img_id;
-							var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
-							$('.swiper-wrapper').append(t)
+			var ext_id = $_GET['ext_id']; //获取商品id
+			console.log(ext_id + '+++++');
+			getCon(ext_id);
+
+			function getCon(ext_id) {
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: commonsUrl + 'api/gxsc/getgoodsextendinfo' + versioninfos,
+					data: {
+						"ss": getCookie('openid'),
+						"ext_id": ext_id
+					},
+					success: function(data) {
+						console.log(data)
+						if(data.code == 1) { //请求成功
+							var con = data.result; //
+							var content = con.content; //商品详情
+							var ext_id = con.ext_id; //商品扩展id
+							var g_id = con.g_id; //商品id
+							var goods_name = con.goods_name; //商品名称
+							var goods_image = con.goods_image; //商品图片列表
+							var market_price = con.market_price; //市场价
+							var rebate_amount = con.rebate_amount; //返利金额
+							var sales = con.sales; //商品销量
+							var price = con.price; //商品单价
+							var shipping_price = con.shipping_price; //商品运费
+							var spec_name = con.spec_name; //规格名
+							var spec_value = con.spec_value; //规格值
+							var store_id = con.store_id; //店id
+							var value_list = con.value_list; //规格值列表
+							var img = '';
+							img += '<div class="attrImg"><img src=' + goods_image + ' /></div>' +
+								'<div class="selectName">' +
+								'<p class="shop_name">' + goods_name + '</p>' +
+								'<p class="selectAttr"></p>' +
+								'</div>';
+								
+								
+
+							$('.attrHead').html(img);
+							var biaoqian = '';
+							var nameBox = $(".arrBox");
+
+							//							console.log(nameBox.length);
+
+							$.each(nameBox, function(k, v) {
+								var conTT = $(v).find(".typeHide").html();
+								var attrCon = $(v).find(".typeHide").attr('data-id');
+								if(conTT == undefined) {
+									conTT = '请选择' + arr[k].name;
+
+								} else {
+									conTT = conTT;
+								}
+								biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+							});
+							$(".selectAttr").html('已选：'+biaoqian);
+							$('.attributes').html('已选：'+biaoqian);
+
+							//------------进行赋值---------------
+							$('.swiper-pagination-total').html(goods_image.length); //轮播图计数
+							$('.shopIntroduce').html(goods_name); //商品名
+							$('.price').html('¥' + price); //商品单价
+							$('.originalCost').html('原价' + market_price + '元')
+							$('.shopImg').html(content); //商品内容
+							$('.saleNum').html(sales); //销量
+							$('.postNum').html(shipping_price + '元'); //运费
+							$('.postNum1').html(rebate_amount + '积分'); //返利积分
+
+							//---------------循环图片（轮播图）-----
+							$.each(goods_image, function(k, v) {
+								var src = goods_image[k].image;
+								var imgId = goods_image[k].img_id;
+								var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
+								$('.swiper-wrapper').append(t)
+							});
+
+						}
+						//swiper插件实现轮播图
+						var mySwiper = new Swiper('.swiper-container', {
+							paginationType: 'fraction', //分页器
+							loop: true,
+							pagination: '.swiper-pagination',
 						});
 
 					}
-					//swiper插件实现轮播图
-					var mySwiper = new Swiper('.swiper-container', {
-						paginationType: 'fraction', //分页器
-						loop: true,
-						pagination: '.swiper-pagination',
-					});
+				});
+			}
+			setTimeout(function() {
+				var biaoqian = '';
+				var arrBox = $(".arrBox")
+				$.each(arrBox, function(k, v) {
+					$(v).find(".attrType .type_one").eq(0).addClass("typeHide").siblings().removeClass("typeHide");
+					var conTT = $(v).find(".typeHide").html();
+					var attrCon = $(v).find(".typeHide").attr('data-id');
+					if(conTT == undefined) {
+						conTT = '请选择' + arr[k].name;
 
-				}
-			});
+					} else {
+						conTT = conTT;
+					}
+					biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+							
+					$(".selectAttr").html('已选：'+biaoqian);
+					$('.attributes').html('已选：'+biaoqian);
+				});
+				
+			}, 500);
 			//------------创建购物车------------
 			$(".addCar").click(function(event) {
 					var goods_id = $_GET['goods_id'];
+
 					$.ajax({
 						type: "post", //请求方式
 						dataType: 'json', //数据格式
@@ -253,13 +344,16 @@
 						},
 						success: function(data) { //请求成功
 							console.log(data);
-							layer.msg("<span style='color: red;font-size: 30px;'>√</span><br/>添加成功，在购物车等亲~~")
+							//							layer.msg("<span style='color: red;font-size: 30px;'>√</span><br/>添加成功，在购物车等亲~~")
 							shopCarts();
 						}
 					});
 				})
 				//获取购物车中的商品数量
 			function shopCarts() {
+				var tarr = [];
+				var numberShop = 0;
+				//获取购物车的数量
 				$.ajax({
 					type: "post",
 					url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
@@ -269,11 +363,15 @@
 					success: function(data) {
 						if(data.code == 1) { //请求成功
 							console.log(data);
-							var numberShop = 0;
-							for(var i = 0; i < data.result.info.length; i++) {
-								numberShop += parseInt(data.result.info[i].number);
-							}
-							$('.shop_car span').html(numberShop);
+							var arr = data.result.info;
+							$.each(arr, function(k, v) {
+								$.each(v.goods_list, function(key, value) {
+									//console.log(value.number);
+									numberShop += parseInt(value.number)
+								})
+							})
+							console.log(numberShop + 'iiiiiii')
+							$('.carNum').html(numberShop);
 
 						} else {
 							layer.msg(data.msg);
@@ -281,8 +379,147 @@
 					}
 				});
 			};
+			//商品规格选择
+			shopGuiCHE(ext_id);
+			var valueList = [];
+			var arr = [];
+
+			function shopGuiCHE(ext_id) {
+				arr = [];
+				valueList = [];
+				$.ajax({
+					type: "post",
+					url: commonsUrl + 'api/gxsc/getgoodsextendinfo' + versioninfos,
+					data: {
+						"ss": getCookie('openid'),
+						"ext_id": ext_id
+					},
+					success: function(data) {
+						if(data.code == 1) { //请求成功
+							console.log(data);
+							var con = data.result;
+							var goods_name = con.goods_name;
+							var goods_image = con.goods_image;
+							var value_list = con.value_list;
+							var spec_name = con.spec_name;
+							var spec_value = con.spec_value;
+
+							var index = 0;
+							for(var k in spec_name) {
+								var obj = {};
+								obj.name = spec_name[k];
+								obj.id = k;
+								obj.child = [];
+								arr.push(obj)
+							}
+
+							for(var j in spec_value) {
+								for(var m in spec_value[j]) {
+									var objC = {};
+									objC.name = spec_value[j][m];
+									objC.id = m;
+									arr[index].child.push(objC);
+								}
+								index++;
+							}
+							console.log(arr);
+							var maxArr = arr;
+							var attBiaoqian = '';
+							for(var i = 0; i < maxArr.length; i++) {
+								attBiaoqian += '<span class="cl" >' + arr[i].name + '</span>'
+							}
+							$(".selectAttr").html('请选择' + attBiaoqian);
+							$('.attributes').html('请选择' + attBiaoqian);
+							var htmlTen = "";
+							for(var i = 0; i < maxArr.length; i++) {
+								htmlTen += '<div class="arrBox"><div class="atrrName">' + maxArr[i].name + '</div><div class="attrType">';
+								for(var j = 0; j < maxArr[i].child.length; j++) {
+									htmlTen += '<div class="type_one" data-id=' + maxArr[i].child[j].id + '>' + maxArr[i].child[j].name + '</div>'
+								}
+								htmlTen += "</div></div>";
+							}
+							$(".arrGuiGe").html(htmlTen);
+
+							for(var h in value_list) {
+								var listObj = {};
+								listObj.nameId = h;
+								listObj.ext_id = value_list[h].ext_id;
+								valueList.push(listObj);
+							}
+							console.log(valueList);
+
+						} else {
+							layer.msg(data.msg);
+						}
+
+					}
+				});
+			};
+
+			setTimeout(function() {
+				//						$('.attributes').html('请选择'+arr);
+				$(".arrGuiGe .type_one").click(function() {
+					var conSpan = $(this).html();
+					$(this).addClass("typeHide").siblings().removeClass("typeHide");
+					var biaoqian = '';
+					var nameBox = $(".arrBox");
+					//							console.log(nameBox.length);
+
+					$.each(nameBox, function(k, v) {
+						var conTT = $(v).find(".typeHide").html();
+						var attrCon = $(v).find(".typeHide").attr('data-id');
+						if(conTT == undefined) {
+							conTT = '请选择' + arr[k].name;
+
+						} else {
+							conTT = conTT;
+						}
+						biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+					});
+					$(".selectAttr").html('已选：'+biaoqian);
+					$('.attributes').html('已选：'+biaoqian);
+
+					var c1 = $(".selectAttr .cl");
+					var sum = '';
+					$.each(c1, function(k, v) {
+						console.log('efff');
+						sum += $(v).attr("attrCon");
+					});
+					console.log(sum);
+					var conId = '';
+					for(var i = 0; i < valueList.length; i++) {
+						if(sum == valueList[i].nameId) {
+							console.log('已经选择好了');
+							conId = valueList[i].ext_id;
+							console.log(conId);
+							getCon(conId);
+						}
+					}
+
+				});
+
+				$(".confirm").click(function() {
+					var tArray = [];
+					var nameBox1 = $(".arrBox");
+					console.log(nameBox1);
+					$.each(nameBox1, function(k, v) {
+						var conTjj = $(v).find(".typeHide").html();
+						if(conTjj == undefined) {} else {
+							tArray.push(conTjj);
+						}
+
+					});
+					if(tArray.length < nameBox1.length) {
+						layer.msg('请选择商品属性');
+					} else {
+						console.log(tArray); //只想打印一个
+					}
+
+				})
+			}, 500)
+
 		});
-	</script>-->
+	</script>
 	<script type="text/javascript">
 		function click_scroll1() {
 			var scroll_offset = $("#001").offset(); //得到pos这个div层的offset，包含两个值，top和left 
@@ -307,7 +544,7 @@
 	</script>
 	<script type="text/javascript">
 		$(function() {
-			$('.selectAttributes').click(function() {
+			$('.selectAttributes,.addCar').click(function() {
 				$('.selectPopup').fadeIn();
 			});
 			$('.close,.hideBox').click(function() {
@@ -347,17 +584,18 @@
 		})
 	</script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$(window).scroll(function() {
-				var top = $(".swiper-container").offset().top; //获取指定位置
-				var scrollTop = $(window).scrollTop(); //获取当前滑动位置
-				//               if(scrollTop > top){                 //滑动到该位置时执行代码
-				//                 $(".shopTitle").fadeIn();
-				//               }else{
-				//                 $(".shopTitle").hide();
-				//               }
-			});
-		});
+		//		$(document).ready(function() {
+		//			$(window).scroll(function() {
+		//				var top = $(".swiper-container").offset().top; //获取指定位置
+		//				var scrollTop = $(window).scrollTop(); //获取当前滑动位置
+		//				if(scrollTop > top){                 //滑动到该位置时执行代码
+		//                 $(".shopTitle").addClass("active");
+		//                 $(".active a .dd").css({"color":"#ffffff"});
+		//               }else{
+		//                 $(".shopTitle").removeClass("active");
+		//               }
+		//			});
+		//		});
 	</script>
 
 </html>

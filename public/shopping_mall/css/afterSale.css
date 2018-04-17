@@ -1,0 +1,67 @@
+.entire{
+    width: 92%;
+    margin: auto;
+}
+.user img{
+    width: 12px;
+    height: 13.5px;
+}
+.user span{
+    color: #ccc;
+}
+#after>div:last-child{
+    margin-bottom: 82px!important
+}
+.reply,.ask{
+    display: flex;
+}
+.reply span{
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+.ask span{
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+.reply>img,.ask>img{
+    width: 19px;
+    height:19px;
+    margin-right: 9.5px;
+}
+.entire>div div{
+    margin-top: 15px;
+}
+.form{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid #e5e5e5;
+    background: #fff
+}
+.form>div{
+    width: 92%;
+    height: 42px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form input{
+    width: 249px;
+    height: 28px;
+    border: none;
+    background: #f2f2f2;
+    border-radius: 50px;
+    padding-left: 10px;
+}
+.form p{
+    width: 70px;
+    height: 28px;
+    display: block;
+    border: none;
+    background: #eb3738;
+    border-radius: 50px;
+    color: #fff;
+    line-height: 28px;
+    text-align: center
+}

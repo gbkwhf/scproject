@@ -31,14 +31,20 @@
     		width: 100%;
     		height:56px;
     		line-height:56px ;
-    		border-bottom: 1px solid #e6e6e6;	
+			border-bottom: 1px solid #e6e6e6;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
     	}
     	.container>ul>li>p{
     		font-size: 14px;
     		float:left;
     		color:#333;
     		font-weight: 600;
-    		margin-right:15px;	
+    	}
+    	.container>ul>li>p:nth-child(2){
+    	display: flex;
+    	align-items: center;	
     	}
     	.container>ul>li>span{
     		float:right;
@@ -59,6 +65,13 @@
 			<li>
 				<p>手机号</p>
 				<span></span>
+			</li>	
+			<li onclick="location.href='QRcode.html'"> 
+				<p>我的二维码</p>
+				<p>
+					<img style="width: 23px;height: 23px;margin-right: 10.5px;" src="images/QRcode.png" alt="">
+					<img style="width: 7.5;height: 13px;" src="images/right-arrow.png" alt="">
+				</p>
 			</li>		
 		</ul>
 	</div>

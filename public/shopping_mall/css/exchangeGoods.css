@@ -1,0 +1,52 @@
+.shop{
+    width: 92%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+.shop>p{
+    display: flex;
+    align-items: center;
+}
+.shop>p>img{
+    width: 18px;
+    height: 18px;
+    margin-right: 7.5px;
+}
+.shop>img{
+    width: 7.5px;
+    height: 13px;
+}
+.msg{
+    width: 92%;
+    display: flex;
+    margin: 18px auto;
+}
+.msg img{
+    width: 121px;
+    height: 103px;
+    margin-right: 18px;
+}
+.msg p:last-child{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.details{
+    width: 92%;
+    margin: auto;
+}
+.details a{
+    display: block;
+    width: 87px;
+    height: 27px;
+    float: right;
+    text-align: center;
+    line-height: 27px;
+    color: #000;
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+    margin: 20px 0 15px;
+}

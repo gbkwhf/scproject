@@ -1,0 +1,31 @@
+.fineListBox{
+	height: 65px;
+	border-bottom: solid 1px #e5e5e5;
+}
+.contentLeft{
+	float: left;
+	padding-left: 17px;
+	padding-top: 15px;
+}
+.contentRight{
+	text-align: right;
+	padding-top: 15px;
+	float: right;
+	padding-right: 17px;
+}
+.moneryNum,.prompt{
+	font-size: 13px;
+	color: #333333;
+}
+.shopTime{
+	font-size: 12px;
+}
+.mold,.shopTime{
+	padding-top: 6px;
+}
+.prompt{
+	color: #eb3738;
+}
+.mold,.shopTime{
+	color: #999999;
+}
