@@ -210,7 +210,8 @@ Route::group([
             Route::post('v2/delete/goods/car','ShoppingCartController@deleteV2GoodsCar');
             //5.更改购物车   同一供应商底下所有商品的状态（选中/不选中）
             Route::post('v2/update/goods/car/supply/all/state','ShoppingCartController@updateV2AllGoodsCar');
-
+            //6.更改购物车：选中该商品的标志（选中/不选中）
+            Route::post('v2/update/goods/car/state','ShoppingCartController@updateV2GoodsCar');
 
 
 
