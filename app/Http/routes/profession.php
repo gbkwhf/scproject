@@ -222,6 +222,14 @@ Route::group([
             Route::post('v2/user/create/order','OrderManageController@createV2Orders');
             //2.员工给会员创建订单  ---->走线下支付
              Route::post('v2/employee/give/user/create/order','OrderManageController@empV2GivCreOrders');
+             //3.获取订单列表（待付款）
+             Route::post('v2/get/order/info/obligation/list','OrderManageController@getV2OblLists');
+             //4.获取订单列表（待收货）
+             Route::post('v2/get/order/info/list','OrderManageController@getV2OrderLists');
+             //5.获取订单列表（待评价）
+             Route::post('v2/get/order/info/comment/list','OrderManageController@getV2ComLists');
+             //6.获取订单列表（全部订单）
+             Route::post('v2/get/order/info/all/list','OrderManageController@getV2AllLists');
 
 
 
