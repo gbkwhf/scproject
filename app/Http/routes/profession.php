@@ -220,6 +220,9 @@ Route::group([
           */
             //1.会员主动创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买  ---->走线上支付
             Route::post('v2/user/create/order','OrderManageController@createV2Orders');
+            //2.员工给会员创建订单  ---->走线下支付
+             Route::post('v2/employee/give/user/create/order','OrderManageController@empV2GivCreOrders');
+
 
 
 //    //1.会员主动创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买  ---->走线上支付
