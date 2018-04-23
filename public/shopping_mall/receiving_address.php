@@ -60,7 +60,7 @@
             </a>
         </section>
         <textarea rows="3" class="detailed" placeholder="详细地址（可填写街道、小区、大厦）"></textarea>
-        <a href="" class="save-use">保存并使用</a>
+        <a href="javascript:;" class="save-use">保存并使用</a>
         <span class="layui-layer-setwin">
         	<a class="layui-layer-ico layui-layer-close layui-layer-close2" href="javascript:;" onclick="closeAddpop()"></a>
         </span>
@@ -134,7 +134,7 @@
 					$(this).find('.sign span').hide();
 					$(this).find('.sign img').show();
 					var address_id = $(this).parents('.address-details').attr('address_id');
-					location.href='purchase.php?address_id='+address_id;
+					location.href='formOrder.php?address_id='+address_id;
 				})
 				
 				//设为默认地址
@@ -210,7 +210,7 @@
 						if(data.code==1){
 							console.log(data);
 							closeAddpop();
-							location.href='purchase.php?address_id='+data.result.address_id;
+							location.href='formOrder.php?address_id='+data.result.address_id;
 						}else{
 			                layer.msg(data.msg);
 			            }

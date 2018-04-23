@@ -134,17 +134,17 @@
 		<!-----------底部固定------------->
 		<div class="shopBuy">
 			<div class="botBox1">
-				<div class="store">
+				<!--<div class="store">
 					<dl>
 						<dt><img src="images/store.png"/></dt>
 						<dd>店铺</dd>
 					</dl>
-				</div>
-				<div class="shop_car">
+				</div>-->
+				<div class="shop_car" onclick="location.href='newShop_cart.php'">
 					<dl>
 						<dt>
 							<img src="images/shop_car.png" class="carImg"/>
-							<span class="carNum">15</span>
+							<span class="carNum">0</span>
 						</dt>
 						<dd>购物车</dd>
 					</dl>
@@ -153,64 +153,32 @@
 			<div class="addCar" id="addCar">加入购物车</div>
 			<!--<div class="buyNow">立即结算</div>-->
 		</div>
+		<span style="display: none;" id="hhId"></span>
 		<!------------商品详情------------>
 		<div class="detailTitle aa" id="002">商品详情</div>
 		<div class="shopImg"></div>
 		<!------------商品评价------------>
 		<div class="shopApprarise aa" id="003">商品评价</div>
 		<div class="apprariseBox">
-			<div class="apprariseNav">
+			<!--<div class="apprariseNav">
 				<div class="userMessage">
 					<div class="userImg">
 						<img src="images/userImg1.png" />
 					</div>
 					<div class="userName">
 						<p class="user-name">外屏总是碎</p>
-						<!--<img src="images/star.png" class="star" />-->
 					</div>
 					<div class="apprariseDate">2017-02-22</div>
 				</div>
-				<div class="evaluationContent">不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃</div>
-			</div>
-			<div class="apprariseNav">
-				<div class="userMessage">
-					<div class="userImg">
-						<img src="images/userImg1.png" />
-					</div>
-					<div class="userName">
-						<p class="user-name">外屏总是碎</p>
-						<!--<img src="images/star.png" class="star" />-->
-					</div>
-					<div class="apprariseDate">2017-02-22</div>
-				</div>
-				<div class="evaluationContent">不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃</div>
-			</div>
-			<div class="apprariseNav">
-				<div class="userMessage">
-					<div class="userImg">
-						<img src="images/userImg1.png" />
-					</div>
-					<div class="userName">
-						<p class="user-name">外屏总是碎</p>
-						<!--<img src="images/star.png" class="star" />-->
-					</div>
-					<div class="apprariseDate">2017-02-22</div>
-				</div>
-				<div class="evaluationContent">不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃不错！很好吃，一直在她家买，下次多买点全 家都非常喜欢吃</div>
-			</div>
-
+				<div class="evaluationContent"></div>
+			</div>-->
 		</div>
-		<!--购物车-->
-		<!--<div class="shopping-cart" id="shopping-cart" onclick="location.href='shopCart.php'">
-			<img src="images/shopping-cart.png" />
-			<span></span>
-		</div>-->
+
 	</body>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/shopDetails.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript" src="js/config.js"></script>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/swiper-3.4.0.min.js"></script>
 	<script type="text/javascript" src="js/shopDetails.js"></script>
 	<script type="text/javascript" src="js/layer/layer.js"></script>
@@ -223,7 +191,7 @@
 			var ext_id = $_GET['ext_id']; //获取商品id
 			console.log(ext_id + '+++++');
 			getCon(ext_id);
-
+			var exYId = ''; //点击加入购物车  确定的exit_id;
 			function getCon(ext_id) {
 				$.ajax({
 					type: "post",
@@ -251,35 +219,9 @@
 							var spec_value = con.spec_value; //规格值
 							var store_id = con.store_id; //店id
 							var value_list = con.value_list; //规格值列表
-							var img = '';
-							img += '<div class="attrImg"><img src=' + goods_image + ' /></div>' +
-								'<div class="selectName">' +
-								'<p class="shop_name">' + goods_name + '</p>' +
-								'<p class="selectAttr"></p>' +
-								'</div>';
-								
-								
-
-							$('.attrHead').html(img);
 							var biaoqian = '';
 							var nameBox = $(".arrBox");
-
-							//							console.log(nameBox.length);
-
-							$.each(nameBox, function(k, v) {
-								var conTT = $(v).find(".typeHide").html();
-								var attrCon = $(v).find(".typeHide").attr('data-id');
-								if(conTT == undefined) {
-									conTT = '请选择' + arr[k].name;
-
-								} else {
-									conTT = conTT;
-								}
-								biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
-							});
-							$(".selectAttr").html('已选：'+biaoqian);
-							$('.attributes').html('已选：'+biaoqian);
-
+							$("#hhId").attr("goosId", g_id);
 							//------------进行赋值---------------
 							$('.swiper-pagination-total').html(goods_image.length); //轮播图计数
 							$('.shopIntroduce').html(goods_name); //商品名
@@ -298,6 +240,27 @@
 								$('.swiper-wrapper').append(t)
 							});
 
+							var img = '';
+							var imConShow = $(".swiper-slide-active img").attr("src");
+							img += '<div class="attrImg"><img src=' + imConShow + ' /></div>' +
+								'<div class="selectName">' +
+								'<p class="shop_name">' + goods_name + '</p>' +
+								'<p class="selectAttr"></p>' +
+								'</div>';
+							$('.attrHead').html(img);
+							$.each(nameBox, function(k, v) {
+								var conTT = $(v).find(".typeHide").html();
+								var attrCon = $(v).find(".typeHide").attr('data-id');
+								if(conTT == undefined) {
+									conTT = '请选择' + arr[k].name;
+
+								} else {
+									conTT = conTT;
+								}
+								biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+							});
+							$(".selectAttr").html('已选：' + biaoqian);
+							$('.attributes').html('已选：' + biaoqian);
 						}
 						//swiper插件实现轮播图
 						var mySwiper = new Swiper('.swiper-container', {
@@ -323,40 +286,91 @@
 						conTT = conTT;
 					}
 					biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
-							
-					$(".selectAttr").html('已选：'+biaoqian);
-					$('.attributes').html('已选：'+biaoqian);
-				});
-				
-			}, 500);
-			//------------创建购物车------------
-			$(".addCar").click(function(event) {
-					var goods_id = $_GET['goods_id'];
 
-					$.ajax({
-						type: "post", //请求方式
-						dataType: 'json', //数据格式
-						url: commonsUrl + '/api/gxsc/update/goods/car/commodity/number' + versioninfos, //请求地址
-						data: {
-							"symbol": 1, //点击加号传1
-							"goods_id": goods_id, //请求参数
-							"ss": getCookie('openid') //请求参数  openid
-						},
-						success: function(data) { //请求成功
-							console.log(data);
-							//							layer.msg("<span style='color: red;font-size: 30px;'>√</span><br/>添加成功，在购物车等亲~~")
-							shopCarts();
-						}
+					$(".selectAttr").html('已选：' + biaoqian);
+					$('.attributes').html('已选：' + biaoqian);
+
+					var c1 = $(".selectAttr .cl");
+					var sum = '';
+					$.each(c1, function(k, v) {
+						console.log('efff');
+						sum += $(v).attr("attrCon");
 					});
-				})
-				//获取购物车中的商品数量
+					console.log(sum);
+					var conId = '';
+					for(var i = 0; i < valueList.length; i++) {
+						if(sum == valueList[i].nameId) {
+							console.log('已经选择好了 ddddd');
+							conId = valueList[i].ext_id;
+							console.log(conId);
+							exYId = conId;
+							console.log(exYId + 'ddddd');
+						}
+					}
+				});
+
+			}, 500);
+			//---------------评价列表-------------
+
+			var winH = $('.apprariseBox').height();
+			$.ajax({
+				type: "post",
+				dataType: 'json',
+				url: commonsUrl + 'api/gxsc/getgoodsextendinfo' + versioninfos,
+				data: {
+					"ss": getCookie('openid'),
+					"ext_id": ext_id
+				},
+				success: function(data) {
+					console.log(data)
+					if(data.code == 1) {
+						var cont = data.result.comment_list;
+						if(cont.length != 0) {
+							var html = '';
+							$.each(cont, function(k, v) {
+								var comment_image = cont[k].comment_image; //评论图
+								var create_time = cont[k].create_time; //时间
+								var images = cont[k].image; //用户头像
+								var name = cont[k].name; //用户名
+								var user_comment = cont[k].user_comment; //评论内容
+								if(images == '') {
+									thumbnail_image_url = 'images/head-portrait.png'
+								}
+								html += '<div class="apprariseNav">' +
+									'<div class="userMessage">' +
+									'<div class="userImg">' +
+									'<img src=' + images + ' />' +
+									'</div>' +
+									'<div class="userName">' +
+									'<p class="user-name">' + name + '</p>' +
+									'</div>' +
+									'<div class="apprariseDate">' + create_time + '</div>' +
+									'</div>' +
+									'<div class="evaluationContent">' + user_comment + '</div>' +
+									'</div>'
+							});
+							$('.apprariseBox').append(html); //动态显示邀请列表
+						} else {
+							$('.apprariseBox').html('<p>暂无评论哦!</p>');
+							$('.apprariseBox p').css({
+								'text-align': 'center',
+								'color': '#c6bfbf',
+								'line-height': winH + 'px'
+							});
+						}
+					} else {
+						layer.msg(data.msg);
+					}
+				}
+			});
+			//获取购物车中的商品数量
 			function shopCarts() {
 				var tarr = [];
 				var numberShop = 0;
 				//获取购物车的数量
 				$.ajax({
 					type: "post",
-					url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
+					url: commonsUrl + '/api/gxsc/v2/get/goods/car/info' + versioninfos,
 					data: {
 						"ss": getCookie('openid')
 					},
@@ -365,8 +379,7 @@
 							console.log(data);
 							var arr = data.result.info;
 							$.each(arr, function(k, v) {
-								$.each(v.goods_list, function(key, value) {
-									//console.log(value.number);
+								$.each(v.others, function(key, value) {
 									numberShop += parseInt(value.number)
 								})
 							})
@@ -399,7 +412,7 @@
 							console.log(data);
 							var con = data.result;
 							var goods_name = con.goods_name;
-							var goods_image = con.goods_image;
+							var goods_image = con.goods_image.image;
 							var value_list = con.value_list;
 							var spec_name = con.spec_name;
 							var spec_value = con.spec_value;
@@ -457,7 +470,6 @@
 			};
 
 			setTimeout(function() {
-				//						$('.attributes').html('请选择'+arr);
 				$(".arrGuiGe .type_one").click(function() {
 					var conSpan = $(this).html();
 					$(this).addClass("typeHide").siblings().removeClass("typeHide");
@@ -476,8 +488,8 @@
 						}
 						biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
 					});
-					$(".selectAttr").html('已选：'+biaoqian);
-					$('.attributes').html('已选：'+biaoqian);
+					$(".selectAttr").html('已选：' + biaoqian);
+					$('.attributes').html('已选：' + biaoqian);
 
 					var c1 = $(".selectAttr .cl");
 					var sum = '';
@@ -492,12 +504,13 @@
 							console.log('已经选择好了');
 							conId = valueList[i].ext_id;
 							console.log(conId);
+							exYId = conId;
 							getCon(conId);
 						}
 					}
 
 				});
-
+				//---------创建购物车--------------
 				$(".confirm").click(function() {
 					var tArray = [];
 					var nameBox1 = $(".arrBox");
@@ -514,9 +527,33 @@
 					} else {
 						console.log(tArray); //只想打印一个
 					}
+					var goods_id = $("#hhId").attr("goosId");
+					var ext_id = $_GET['ext_id'];
+					var shopNum = $('.shopNum').val();
+					$.ajax({
+						type: "post", //请求方式
+						dataType: 'json', //数据格式
+						url: commonsUrl + '/api/gxsc/v2/add/goods/car' + versioninfos, //请求地址
+						data: {
+							"ext_id": exYId,
+							"goods_id": goods_id, //请求参数
+							"ss": getCookie('openid'), //请求参数  openid
+							"number": shopNum
+						},
+						success: function(data) { //请求成功
+							console.log(data);
+							//							layer.msg("<span style='color: red;font-size: 30px;'>√</span><br/>添加成功，在购物车等亲~~")
+							if(data.code == 1) {
+								layer.msg("亲，添加成功，在购物车等您哦！");
+							} else {
+								layer.msg(data.msg);
+							}
+							shopCarts();
+						}
+					});
 
 				})
-			}, 500)
+			}, 300)
 
 		});
 	</script>
@@ -547,7 +584,7 @@
 			$('.selectAttributes,.addCar').click(function() {
 				$('.selectPopup').fadeIn();
 			});
-			$('.close,.hideBox').click(function() {
+			$('.close,.hideBox,.confirm').click(function() {
 				$('.selectPopup').fadeOut();
 			});
 
