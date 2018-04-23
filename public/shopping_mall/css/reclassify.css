@@ -6,12 +6,14 @@
 .wrapper03 .scroller li.cur a{color:#eb3737;height:.95rem;border-bottom:.05rem solid #eb3737}
 .clearfix{overflow: hidden;}
 .commodity ul{
-    display: flex
+    overflow: hidden;
 }
 
 .commodity li{
     width: 50%;
     overflow: hidden;
+    float: left;
+    height: 243px
 }
 
 .commodity li>div:nth-child(1){

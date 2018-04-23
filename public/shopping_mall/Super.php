@@ -26,7 +26,7 @@
 		<div class="msg">
 			<ul class="tem">
 				<script type="text/html" id="commentList">
-				<li onclick="location.href='reclassify.php?id={{store_id}}'">
+				<li onclick="location.href='reclassify.php?store_first_id={{store_id}}'">
 					<div>
 						<img src="{{logo}}" />
 						<p>
@@ -67,8 +67,7 @@
 		$(".clarity").hide()
 	})
 
-
-
+	console.log($_GET['store_first_id'])
 	// 导航分类
 	$.ajax({
 		type: "POST",
@@ -76,7 +75,7 @@
 		url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
 		data: {
 			ss: getCookie('openid'),
-			store_first_id: 1
+			store_first_id: $_GET['store_first_id']
 		},
 		success: (res) => {
 			let data = res.result;

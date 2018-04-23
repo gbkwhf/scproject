@@ -1,0 +1,65 @@
+/*.compile{*/
+    /*width: 92%;*/
+    /*margin: auto;*/
+/*}*/
+/*.namePel{*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+/*}*/
+/*.editoDel input{*/
+    /*-webkit-appearance: radio;*/
+/*}*/
+/*.editoDel{*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+/*}*/
+/*.editoDel img{*/
+    /*width: 13px;*/
+    /*height: 13px;*/
+/*}*/
+/*.editoDel div{*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+/*}*/
+
+.tt09{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bjsc-rt img{
+    width: 13px;
+    height: 13px;
+    margin: 0 .3rem 0 1rem ;
+}
+.bianji-shanchu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bianji-dizhi{
+    width: 92%;
+    padding: 17px 4%;
+    border-bottom: 8px solid #f3f2f2;
+}
+.your-adress02{
+    line-height: 1.5rem;
+    margin: 1rem 0;
+}
+.newAdd{
+    display: block;
+    width: 100%;
+    height: 40px;
+    background: #e63737;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    position: fixed;
+    bottom: 0;
+}
+.bjsc-rt{
+    display: flex;
+}

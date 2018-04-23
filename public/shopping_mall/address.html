@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/address.css">
+    <meta charset="UTF-8">
+    <title>收货地址</title>
+</head>
+<style>
+    .zdy-icon-radio{padding-left: 1.5rem;background:url(images/checkRight.jpg) no-repeat;background-size: 1rem 1rem;;}
+    .bjsc-rt{float: right;}
+    .zdy-icon-radio.active{background: url(images/checked.png) no-repeat;background-size: 1rem 1rem;color: #e63737;}
+</style>
+<body>
+<!--<div>-->
+    <!--<div class="compile">-->
+        <!--<div class="namePel">-->
+            <!--<p>黄豆子</p>-->
+            <!--<p>1369785454</p>-->
+        <!--</div>-->
+        <!--<div class="address">-->
+            <!--地址: 美国加拿大-->
+        <!--</div>-->
+        <!--<div class="editoDel">-->
+            <!--<p><input type="radio" name="tacitly" checked> 默认地址</p>-->
+            <!--<div>-->
+                <!--<p>-->
+                    <!--<img src="images/edito.png  " alt="">编辑-->
+                <!--</p>-->
+
+                <!--<p>-->
+                    <!--<img src="images/deleCon.png" alt="">删除-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+<div class="xp-content02">
+    <div class="bianji-dizhi">
+        <div class="tt09">
+            <span>苏定芳</span>
+            <span>15354656536</span>
+        </div>
+        <div class="your-adress02">
+            地址:南昌市北京东路1999号江西师范科技大学科技园讯升信息技术有限公司
+        </div>
+        <div class="bianji-shanchu mui-clearfix">
+            <div class="bjsc-lf mui-clearfix">
+                <span class="zdy-icon-radio active" id="1">默认地址</span>
+            </div>
+            <div class="bjsc-rt">
+                <p><img src="images/edito.png" alt="">编辑</p>
+                <p><img src="images/deleCon.png" alt="">删除</p>
+            </div>
+        </div>
+    </div>
+    <div class="greybg02"></div>
+    <div class="bianji-dizhi">
+        <div class="tt09">
+            <span>苏定芳</span>
+            <span>15354656536</span>
+        </div>
+        <div class="your-adress02">
+            南昌市北京东路1999号江西师范科技大学科技园讯升信息技术有限公司
+        </div>
+        <div class="bianji-shanchu mui-clearfix">
+            <div class="bjsc-lf">
+                <span class="zdy-icon-radio" id="2">设为默认</span>
+            </div>
+            <div class="bjsc-rt">
+                <p><img src="images/edito.png" alt="">编辑</p>
+                <p><img src="images/deleCon.png" alt="">删除</p>
+            </div>
+        </div>
+    </div>
+    <div class="greybg02"></div>
+    <div class="bianji-dizhi">
+        <div class="tt09">
+            <span>苏定芳</span>
+            <span>15354656536</span>
+        </div>
+        <div class="your-adress02">
+            南昌市北京东路1999号江西师范科技大学科技园讯升信息技术有限公司
+        </div>
+        <div class="bianji-shanchu mui-clearfix">
+            <div class="bjsc-lf">
+                <span class="zdy-icon-radio" id="3">设为默认</span>
+            </div>
+            <div class="bjsc-rt">
+                <p><img src="images/edito.png" alt="">编辑</p>
+                <p><img src="images/deleCon.png" alt="">删除</p>
+            </div>
+        </div>
+    </div>
+    <div class="greybg02"></div>
+    <div style="height: 40px;"></div>
+    <a href="newAddress.php?id=1" class="newAdd">新增地址</a>
+</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/config.js"></script>
+<script>
+    $(function(){
+//改变样式同时改变右边的文字
+        $("span.zdy-icon-radio").click(function(){
+            $(this).addClass("active").text("默认地址")
+                .parent().parent().parent().siblings().find("span.zdy-icon-radio").removeClass("active").text("设为默认");
+            console.log($(this).attr("id"))
+        });
+    })
+</script>

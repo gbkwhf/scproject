@@ -51,6 +51,7 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
+<script src="js/layer/layer.js"></script>
 <script type="text/javascript">
     let page = 1
     $(function () {
@@ -104,7 +105,7 @@
         $("#submit").click(function () {
             let msg = $(".aa").val()
             if (msg == "") {
-                alert("填写内容")
+                layer.msg("评论内容为空");
             } else {
                 $.ajax({
                     type: 'POST',
@@ -116,7 +117,12 @@
                     },
                     success: (res) => {
                         console.log(res)
-                        $(".aa").val("")
+                        if(res.code==1){
+                            layer.msg("评论成功");
+                            $(".aa").val("")
+                        }else{
+                            layer.msg("评论失败");
+                        }
                     },
                     error: (res) => {
                         console.log(res)
@@ -142,7 +148,7 @@
                 dataType: "json",
                 url: commonsUrl + 'api/gxsc/get/after/consult/list' + versioninfos,
                 data: {
-                    page: 1,
+                    page: page,
                     ss: getCookie('openid')
                 },
                 success: (res) => {
