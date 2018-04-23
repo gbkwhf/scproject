@@ -597,9 +597,14 @@ input[type="button"] {
 }
 
 .userMessage .userName {
-	width: 48%;
+	width: 35%;
 	height: 33px;
-	/*background-color: lawngreen;*/
+	text-overflow:ellipsis;
+	/*white-space: nowrap;*/
+	-webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+	display: -webkit-box;
+	text-align:left ;
 	float: left;
 }
 
@@ -614,11 +619,12 @@ input[type="button"] {
 }
 
 .userMessage .apprariseDate {
-	width: 32%;
+	/*width: 32%;*/
 	height: 33px;
 	/*background-color: aqua;*/
 	float: right;
-	text-align: center;
+	/*text-align: center;*/
+	padding-right: 10px;
 	line-height: 33px;
 	color: #cccccc;
 }

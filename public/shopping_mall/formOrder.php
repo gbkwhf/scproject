@@ -221,7 +221,7 @@
 			});
 
 			html += '<div class="amountBox">' +
-				'<div class="amount">商品金额</div>' +
+				'<div class="amount">商品金额（小计）</div>' +
 				'<div class="moneys">' + '¥' + t.sumprice + '</div>' +
 				'</div>' +
 				'<div class="amountBox">' +
