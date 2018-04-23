@@ -134,12 +134,18 @@ label input {
 }
 
 .shopPro1 {
+	height: 20px;
 	display: inline-block;
 	float: left;
 	width: 67%;
 	margin-top: 7%;
 	margin-left: 4%;
 	color: #f5987b;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
 }
 
 .dlecon {

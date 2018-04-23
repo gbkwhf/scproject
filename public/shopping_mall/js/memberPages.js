@@ -5,7 +5,7 @@ $(function() {
 	//获取购物车的数量
 	$.ajax({
 		type: "post",
-		url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
+		url: commonsUrl + '/api/gxsc/v2/get/goods/car/info' + versioninfos,
 		data: {
 			"ss": getCookie('openid')
 		},
@@ -14,7 +14,7 @@ $(function() {
 				console.log(data);
 				var arr = data.result.info;
 				$.each(arr, function(k, v) {
-					$.each(v.goods_list, function(key, value) {
+					$.each(v.others, function(key, value) {
 						//console.log(value.number);
 						numberShop += parseInt(value.number)
 					})
@@ -54,6 +54,7 @@ $(function() {
 					$(".secClick").click(function() {
 						var goods_first_id = $(this).attr("goods_first_id");
 						location.href = "member_mall_list.php?goods_first_id=" + goods_first_id;
+						
 					})
 				} else {
 					layer.msg(data.msg);
