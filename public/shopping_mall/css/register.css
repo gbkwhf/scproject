@@ -62,7 +62,7 @@
 .note{
 	width: 80%;
 	margin: 0 auto;
-	margin-top: 38px;
+	margin-top: 10px;
 	color: #9f9f9f;
 	font-size: 13px;
 }
@@ -76,4 +76,14 @@
     background: linear-gradient(to right, #ef833b , #f04d6a);
     line-height: 46px;
     color:#fff;
+}
+.checkbox{
+	width: 80%;
+	display: flex;
+	align-items: center;
+	margin: 15px auto;
+	color: #343434;
+}
+.checkbox input{
+	margin-right: 5px;
 }

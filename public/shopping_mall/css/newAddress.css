@@ -1,0 +1,32 @@
+.form{
+    width: 100%;
+    overflow: hidden;
+
+}
+.form>div{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 4%;
+    border-bottom: 1px solid #e5e5e5;
+    justify-content: space-between;
+}
+.form>div img{
+    width: 5.5px;
+    height: 10px;
+}
+.form>div input{
+    border: none;
+    height: 50px;
+    width: 80%;
+}
+button{
+    width: 92%;
+    height: 40px;
+    border: none;
+    background: #eb3738;
+    color: #fff;
+    margin: 70px auto;
+    border-radius: 5px;
+    display: block;
+}

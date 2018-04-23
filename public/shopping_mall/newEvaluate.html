@@ -36,7 +36,12 @@
             <textarea placeholder="有宝贝心得吗？分享给想买的他们吧"></textarea>
         </div>
         <div class="camera">
-            <img src="images/camera.png" alt="">
+            <p>
+                <img src="images/camera.png" alt="">
+                <input type="file" name="uploadFile">
+            </p>
+            <p id="addImg">
+            </p>
             <p>晒上传实拍图，帮忙想买的他们</p>
         </div>
     </div>
@@ -77,3 +82,31 @@
 </body>
 
 </html>
+<script src="js/jquery.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="js/config.js"></script>
+<script>
+    $("input[type=file]").change(function (e) {
+        console.log(e.currentTarget.files)
+        let addfile=[]
+        let file=getObjectURL(this.files[0])
+        $("#addImg").append("<img src=''/>")
+        $("#addImg img:last").attr("src",file)
+
+    })
+
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        console.log(file)
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+</script>

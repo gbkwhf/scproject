@@ -16,7 +16,7 @@ var Iput = {
         bodyWidth: 0,
         width: 0,
         soll: null,
-        pop: null //指定ID点击时不关闭
+        pop: null, //指定ID点击时不关闭
     },
     get: function (obj) { return document.getElementById(obj); },
     clear: function () {
@@ -43,7 +43,7 @@ var Iput = {
         $b.setAttribute('id', Iput.confg.idBox);
         $b.setAttribute('align', 'left');
         $b.style.position = 'absolute';
-        $b.style.background = 'transparent';
+        $b.style.background = '#fff';
         $b.style.zIndex = '20000';
         if ($a) {
             if (Iput.get(Iput.confg.idIframe)) {
@@ -58,7 +58,7 @@ var Iput = {
         }
 
         if (!document.all) {
-            window.document.addEventListener("click", Iput.hide, false);
+            window.document.addEventListener("click",Iput.hide, false);
         }
         else {
             window.document.attachEvent("onclick", Iput.hide);
@@ -68,7 +68,7 @@ var Iput = {
         if (!e) e = window.event;
         var a = Iput.get(Iput.confg.idBox);
         var b = Iput.get(Iput.confg.idIframe);
-        var c = "60%";
+        var c = "70%";
         var w = "100%";
         if (Iput.get(Iput.confg.idIframe)) {
             if (Iput.confg.hand == "1") {
@@ -119,13 +119,14 @@ var Iput = {
         var srcElement = e.srcElement || e.target;
         if (Iput.confg.event == undefined) {//输入时用,般在没传入Iput.confg.event请况下使用
             Iput.colse();
+
         }
         else {
             var a = Iput.confg.event.srcElement || Iput.confg.event.target;
             var b = Iput.get(Iput.confg.pop);
             console.log(a);
             console.log(srcElement);
-            if (a != srcElement) { Iput.colse(); }
+            if (a != srcElement) { Iput.colse(); $(".backop").hide()}
             if (b != null) {
                 if (b != srcElement && a != srcElement) { Iput.colse(); }
             }

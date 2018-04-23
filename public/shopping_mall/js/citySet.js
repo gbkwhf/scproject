@@ -1,9 +1,10 @@
 ﻿function SelCity(obj,e) {
     var ths = obj;
-    var dal = '<div class="_citys"><span title="关闭" id="cColse" >×</span><ul id="_citysheng" class="_citys0"><li class="citySel" id="sheng">省份</li><li id="shi">城市</li><li id="xian">区县</li></ul><div id="_citys0" class="_citys1"></div><div style="display:none" id="_citys1" class="_citys1"></div><div style="display:none" id="_citys2" class="_citys1"></div></div>';
+    var dal = '<div class="_citys"><span title="关闭" id="cColse" >×</span><p>所在地区</p><ul id="_citysheng" class="_citys0"><li class="citySel" id="sheng">省份</li><li id="shi">城市</li><li id="xian">区县</li></ul><div id="_citys0" class="_citys1"></div><div style="display:none" id="_citys1" class="_citys1"></div><div style="display:none" id="_citys2" class="_citys1"></div></div>';
     Iput.show({ id: ths, event: e, content: dal,width:"470"});
     $("#cColse").click(function () {
         Iput.colse();
+        $(".backop").hide()
     });
     var tb_province = [];
     var b = province;
@@ -66,6 +67,8 @@
 
             $("#_citys2 a").click(function () {
                 var lev = $(this).data("name");
+
+                $(".backop").hide()
                 $("#xian").html(lev);
                 if (document.getElementById("harea") == null) {
                     var hcitys = $('<input>', {
