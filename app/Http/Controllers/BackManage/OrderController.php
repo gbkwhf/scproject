@@ -16,6 +16,207 @@ class OrderController extends Controller
 
 	
 	public  function OrderList (Request $request){
+		
+// // 		$money=5000;
+		
+	
+// // 		$a=config('clinic-config.user_lvs');
+		
+		
+		
+// // 		$user_lv=[];
+// // 		foreach ($a as $val){
+// // 			if($money>=$val['min'] && $money<=$val['max']){
+// // 				$user_lv=$val;
+// // 			}
+// // 		}
+		
+// // 		//dd($user_lv);
+		
+// 		\DB::enableQueryLog();
+		
+		
+// 		$path=public_path();
+		
+// 		//读取上次执行时间
+// 		if(file_exists($path.'/month_rebate_execute.txt')){
+			 
+// 			\Log::info('进入月返现程序');
+// 			$log_file=unserialize(file_get_contents($path.'/month_rebate_execute.txt'));
+// 			$log_date=date('Y-m',strtotime($log_file['time']));
+// 			$today_data=date('Y-m');
+// 			\Log::info('月返现读取文件内容，'.serialize($log_file));
+// 			//检查重复执行
+// // 			if($log_date==$today_data){
+// // 				\Log::info('月返现同一天内重复执行，已退出');
+// // 				exit();
+// // 			}
+// 		}else{
+// 			$log_date=date('Y-m',strtotime('-1 days'));			
+// 		}
+		
+	
+// 		$data=[];
+		
+		
+// 		dump($log_date);
+
+		
+		
+			
+			
+			
+// 				//时间节点
+// 				$start_time=date('Y-m-d',strtotime("$log_date -1month")).' 00:00:00';
+// 				$end_time=date('Y-m-d',strtotime("$start_time +1 month -1 day")).' 23:59:59';
+// 				dump($start_time);
+// 				dump($end_time);
+				
+// 				//返现计算
+// 				$personal=\App\BaseOrderModel::where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)
+// 				->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
+// 				->where('ys_base_order.state',1)
+// 				->where('ys_sub_order.receive_state',1)
+// 				->where('ys_sub_order.all_rebate','>',0)
+// 				->groupBy('ys_base_order.user_id')
+// 				->selectRaw('ys_base_order.user_id,sum(ys_sub_order.price) as amount')
+// 				->get();
+				
+// 				dump($personal);
+				
+// 				$user_insert=true;
+// 				$user_update=true;
+// 				foreach ($personal as $val){
+					
+// 					//dump($val);
+// 					//b层级
+// 					$b=\App\MemberModel::where('invite_id',$val->user_id)
+// 					->where('invite_id','!=','')
+// 					->select('user_id')					
+// 					->get();
+// 					$b_str='';
+// 					if(!empty($b)){
+						
+					
+// 					foreach ($b as $v_b){
+					
+// 						$b_str.=','.$v_b->user_id;						
+// 						dump($b_str);
+// 						$c=\App\MemberModel::where('invite_id',$v_b->user_id)
+// 						->where('invite_id','!=','')
+// 						->select('user_id')
+// 						->get();
+						
+// 						$c_str='';
+// 						$d_str='';
+						
+// 						if(!empty($c)){
+							
+						
+// 						foreach ($c as $v_c){
+// 								dump($v_c);
+// 							$c_str.=','.$v_c->user_id;
+// 							$d=\App\MemberModel::where('invite_id',$v_c->user_id)
+// 							->where('invite_id','!=','')
+// 							->select('user_id')
+// 							->selectRaw("GROUP_CONCAT(concat(user_id)) as d_str")
+// 							->get();
+// 							//dd($d);
+// 							dump($d);
+// 							if(!empty($d)){
+// 								//$d_str.=$d->d_str;
+// 							}
+							
+						
+// 						}
+// 						dd($d_str);
+// 						}
+						
+// 					}
+// 					}
+// 					dd($c_str);
+// 					//dd($d_str);
+					
+					
+// // 					$personal=\App\BaseOrderModel::where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)
+// // 					->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
+// // 					->where('ys_base_order.state',1)
+// // 					->where('ys_sub_order.receive_state',1)
+// // 					->where('ys_sub_order.all_rebate','>',0)
+// // 					->where('ys_base_order.user_id')
+// // 					->selectRaw('ys_base_order.user_id,sum(ys_sub_order.price) as amount')
+// // 					->get();
+					
+					
+					
+					
+// // 					$user_money=round($val->all_rebate/365,2);
+// // 					$params=[
+// // 						'user_id'=>$val->user_id,
+// // 						'amount'=>$user_money,
+// // 						'pay_describe'=>'购物日返',
+// // 						'created_at'=>date('Y-m-d H:i:s',time()),
+// // 						'type'=>1,
+// // 					];
+// // 					$user_insert=\App\BillModel::insert($params);
+// // 					$user_update=\App\MemberModel::where('user_id',$val->user_id)->increment('balance',$user_money);
+// 				}					
+// 				if ($user_insert==false || $user_update==false) {
+// 					\DB::rollBack();
+// 					\Log::info('用户返现失败,log_date是'.$log_date);
+// 				}else {
+// 					\DB::commit();
+// 					\Log::info('用户返现成功');
+// 				}					
+	
+// 				dd(2222);
+// 		//执行时间
+// 		$data['time']=date('Y-m-d H:i:s',time());
+// 		$data['time_section']="月返利程序运行时间区间，开始时间$log_date ,结束时间".date('Y-m-d',$new_data);
+
+// 		file_put_contents($path.'/month_rebate_execute.txt', serialize($data));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+// 		dd(1);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		\DB::enableQueryLog();
 		
@@ -80,18 +281,6 @@ class OrderController extends Controller
 				  ->paginate(10);
 		foreach ($data as $val){
 			//商品名，供应商，订单来源
-			$goods_name=\App\SubOrderModel::where('base_id',$val->order_id)
-				->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
-				->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
-				->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
-				->get();
-			$val->goods_name=str_limit($goods_name[0]->goods_name,15,'...');
-			//供应商
-			$supplier_name=\App\SubOrderModel::where('base_id',$val->order_id)
-				->leftjoin('ys_supplier','ys_supplier.id','=','ys_sub_order.supplier_id')
-				->selectRaw("GROUP_CONCAT(ys_supplier.name) as supplier_name")
-				->get();
-			$val->supplier_name=str_limit($supplier_name[0]->supplier_name,15,'...');
 			//经销商
 			if(empty($val->employee_id)){
 				$val->order_source='线上订单';
@@ -113,16 +302,23 @@ class OrderController extends Controller
 		$data=\App\BaseOrderModel::where('id',$request->id)->first();
 	
 		$goods_name=\App\BaseOrderModel::where('ys_base_order.id',$request->id)
-		->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
-		->leftjoin('ys_order_goods','ys_sub_order.id','=','ys_order_goods.sub_id')
-		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
-		->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
-		->get();
+			->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
+			->leftjoin('ys_order_goods','ys_sub_order.id','=','ys_order_goods.sub_id')
+			->selectRaw("GROUP_CONCAT(concat(ys_order_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
+			->get();
+		
 		$data['order_id']=$request->id;
 		$data['goods_name']=$goods_name[0]->goods_name;
 		$data['receive_address']=$data['receive_name'].'，'.$data['receive_mobile'].'，'.$data['receive_address'];
 	
 	
+		//供应商
+		$supplier_name=\App\SubOrderModel::where('base_id',$request->id)
+		->leftjoin('ys_supplier','ys_supplier.id','=','ys_sub_order.supplier_id')
+		->selectRaw("GROUP_CONCAT(ys_supplier.name) as supplier_name")
+		->get();
+		$data['supplier_name']=$supplier_name[0]->supplier_name;
+		
 		return view('orderdetial',['data'=>$data]);
 	}
 	

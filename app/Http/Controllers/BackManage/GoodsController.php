@@ -180,7 +180,7 @@ class GoodsController extends Controller
             }
             
             
-            $res = \App\GoodsExtendModel::insert($sp_params);
+            $sp_res = \App\GoodsExtendModel::insert($sp_params);
             
             
 
@@ -200,7 +200,7 @@ class GoodsController extends Controller
             	}
             	\App\GoodsImageModel::insert($img_params);
             }
-            if($res){
+            if($res && $sp_res){
                 return redirect('goodslist');
             }else{
                 return back() -> with('errors','数据填充失败');

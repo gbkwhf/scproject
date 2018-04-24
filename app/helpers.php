@@ -438,8 +438,8 @@ function sendSms($mobile,$content){
 	return $result;
 }
 function formatContent($content){	
-	$url='https://'.$_SERVER['HTTP_HOST'].'/storage/upload/';
-	$new_content=str_replace("/storage/upload/",$url,$content);	
+	$url='http://'.$_SERVER['HTTP_HOST'].'/upload/';
+	$new_content=str_replace("/upload/",$url,$content);	
 	$new_content=' <style> *{word-break:break-all;}</style> '.$new_content;
 	$style='<img style="max-width:100%"';
 	return str_replace("<img",$style,$new_content);
