@@ -234,7 +234,8 @@ Route::group([
              Route::post('v2/get/base_order/info','OrderManageController@getV2BaseOrderInfo');
              //8.获取订单详情(根据子订单id获取订单详情---拆分后)
              Route::post('v2/get/sub_order/info','OrderManageController@getV2SubOrderInfo');
-
+             //9.确认收货
+             Route::post('v2/ack/receive/goods','OrderManageController@ackV2ReceiveGoods');
 
 
 
