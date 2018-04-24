@@ -191,10 +191,10 @@ Route::group([
           Route::post('get/goods/second/list','OtherOnlyController@getGoodSecondList');
           //10.根据商品二级分类获取商品列表
           Route::post('get/goods_class/list','OtherOnlyController@getGoodsClassList');
-
-
           //11.发表评论
           Route::post('publish/goods/comment','OtherOnlyController@publishGoodsComment');
+          //12.获取返利流水
+          Route::post('get/rebate/bill/list','OtherOnlyController@getRebateBill');
 
 
         /**
