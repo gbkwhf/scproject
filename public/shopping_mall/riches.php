@@ -20,6 +20,13 @@
 					<div class="coountReturn">返利总额（积分）</div>
 					<div class="returnNum">100000</div>
 				</div>
+				<div class="mallRecordBox1">
+						<div class="recordLeft">正在交易</div>
+						<div class="recordRight">
+							<div class="recordMoney"></div>
+							<div class="recordTime"></div>
+						</div>
+					</div>
 				<div class="noneBox"></div>
 				<div class="recordName">返利记录</div>
 
@@ -64,16 +71,20 @@
 		layer.ready(function(){ layer.load(2); })
 		$.ajax({
 			type: "post",
-			url: commonsUrl + "api/gxsc/get/cashbacklist" + versioninfos,
+			url: commonsUrl + "/api/gxsc/get/rebate/bill/list" + versioninfos,
 			data: {
 				'ss': getCookie('openid'),
 				'page': page
 			},
 			success: function(data) {
+				console.log(data);
 				layer.closeAll();
 				if(data.code == 1) { //请求成功
 					var t = [];
-					var con = data.result;
+					var con = data.result.bill_list;
+					$('.returnNum').html(data.result.all_money);
+					$('.recordMoney').html(data.result.underway_rebate_money);
+					$('.recordTime').html(data.result.date)
 					if(con.length == 0 && page == 1){
 						layer.closeAll();
 						$('.rebateRecordBox').html('<p>暂无返利记录哦！</p>');

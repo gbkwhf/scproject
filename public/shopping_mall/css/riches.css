@@ -58,6 +58,10 @@ input[type="button"] {
 	border-bottom: solid 1px #e5e5e5;
 	color: #333333;
 }
+.mallRecordBox1{
+	height: 55px;
+	color: #333333;
+}
 .recordLeft{
 	float: left;
 	line-height: 55px;
