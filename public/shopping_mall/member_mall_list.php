@@ -210,7 +210,7 @@
 	//获取购物车的数量
 	$.ajax({
 		type: "post",
-		url: commonsUrl + '/api/gxsc/get/goods/car/commodity/info' + versioninfos,
+		url: commonsUrl + '/api/gxsc/v2/get/goods/car/info' + versioninfos,
 		data: {
 			"ss": getCookie('openid')
 		},
@@ -219,7 +219,7 @@
 				console.log(data);
 				var arr = data.result.info;
 				$.each(arr, function(k, v) {
-					$.each(v.goods_list, function(key, value) {
+					$.each(v.others, function(key, value) {
 						//console.log(value.number);
 						numberShop += parseInt(value.number)
 					})

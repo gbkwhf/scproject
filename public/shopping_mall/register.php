@@ -13,6 +13,7 @@
         </style>
     </head>
 	<body>
+		
         <!-- 未绑定 -->
         <div class="regbox">
         	<img src="images/logoimg.png" class="logoimg" />
@@ -24,6 +25,9 @@
                     <input class="inp verify" id="verify" maxlength="6" type="text" placeholder="请输入验证码"/>
                     <div class="getCode" onkeyup="value=value.replace(/[^0-9.]/g,'') " onclick="getcode()">获取验证码</div>
                     <div class="clearfix"></div>
+                </div>
+                <div class="checkbox">
+                	<input type="checkbox" name="consent" id="" style="-webkit-appearance:checkbox"/>同意授权条约
                 </div>
                 <div class="clearfix"></div>
                 <div class="note"></div>
@@ -38,7 +42,6 @@
     <script type="text/javascript" src="js/config.js"></script>
     <script type="text/javascript" src="js/layer/layer.js"></script>
     <script>
-		
         //获取验证码
         function getcode(){
             mobile = $('#inpmobile').val();
@@ -91,8 +94,11 @@
             layer.load(2);
             verify = $('#verify').val();
             inpmobile = $('#inpmobile').val();
+            let checked=$("input[type='checkbox']").is(':checked')
             if(!verify||!inpmobile){
                 layer.msg('请填写手机验证码');
+            }else if(!checked){
+            	layer.msg('请同意授权');
             }else{
             	verify = $('#verify').val();
             	inpmobile = $('#inpmobile').val();

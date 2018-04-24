@@ -693,7 +693,10 @@ class AuthController extends Controller
             'source_image_url'=>empty($profile->image)? "" : $http.'/api/gxsc/show-ico/'.$profile->image,
             'is_member'=>$member,
             'balance'=>is_null($profile->balance) ? 0 : $profile->balance, //余额
-            'yesterday_return_money'=>$return_money //昨日返利
+            'yesterday_return_money'=>$return_money, //昨日返利
+            'total_amount'=>$profile->total_amount,
+            'user_lv'=>$profile->user_lv
+
         ];
         return $this->respond($this->format($params));
 //

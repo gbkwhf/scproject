@@ -6,12 +6,14 @@
 .wrapper03 .scroller li.cur a{color:#eb3737;height:.95rem;border-bottom:.05rem solid #eb3737}
 .clearfix{overflow: hidden;}
 .commodity ul{
-    display: flex
+    overflow: hidden;
 }
 
 .commodity li{
     width: 50%;
     overflow: hidden;
+    float: left;
+    height: 243px
 }
 
 .commodity li>div:nth-child(1){
@@ -32,11 +34,11 @@
     overflow: hidden;
 }
 .commodity li{
-    border-bottom: 1px solid #f3f2f2;
+    border-bottom: 1px solid #ccc;
     box-sizing:border-box;
 }
 .commodity li:nth-child(2n){
-    border-right: 1px solid #f3f2f2
+    border-right: 1px solid #ccc
 }
 .commodity li>div:nth-of-type(2){
     margin: 10px 15px 

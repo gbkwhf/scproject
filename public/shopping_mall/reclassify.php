@@ -29,7 +29,7 @@
 		<ul>
 			<script type="text/html" id="commentList">
 
-			<li onclick="location.href='newShop_details.php?id={{ext_id}}'">
+			<li onclick="location.href='newShop_details.php?ext_id={{ext_id}}'">
 				<div>
 					<img src="{{image}}" alt="">
 				</div>
@@ -55,17 +55,18 @@
 <script type="text/javascript" src="js/config.js"></script>
 <script>
 	let urlId=location.search.substring(4)
-	alert(urlId)
+	console.log($_GET['store_first_id'])
 	// 获取导航列表
 	$.ajax({
 		type: "post",
 		dataType: "json",
 		url: commonsUrl + 'api/gxsc/get/goods/second/list' + versioninfos,
 		data: {
-			goods_first_id: "28",
+			goods_first_id: $_GET['store_first_id'],  
 			ss: getCookie('openid')
 		},
 		success: (res) => {
+			console.log(res)
 			let data = res.result
 			for (let val of data) {
 				let temp = $("#navList").html()
@@ -75,9 +76,6 @@
 		}
 	})
 	$(function () {
-
-
-
 		setTimeout(() => {
 			$('.wrapper').navbarscroll();
 
@@ -107,14 +105,14 @@
 			})
 		}, 200);
 
-
-		// 获取商品列表
+   		
+		// 获取商品列表数据  
 		$.ajax({
 			type: "post",
 			dataType: "json",
 			url: commonsUrl + 'api/gxsc/get/goods_class/list' + versioninfos,
 			data: {
-				goods_second_id: "4",
+				goods_second_id: $_GET['store_first_id'],
 				page: "1",
 				ss: getCookie('openid')
 			},
@@ -128,6 +126,7 @@
 				}
 			}
 		})
+
 
 
 	})

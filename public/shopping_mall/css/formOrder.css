@@ -85,11 +85,14 @@ html,body{
 	
 }
 .kong{
-	height: 5px;
+	margin-top: 5px;
+	height: 8px;
 	background-color: #f3f2f2;
 }
 .shopNames{
 	height: 17px;
+	clear: both;
+	margin-top: 8px;
 }
 .shopIcon{
 	float: left;
@@ -152,8 +155,14 @@ html,body{
 	color: #4d4d4d;
 }
 .shop_attr{
+	height: 18px;
 	color: #f5997b;
 	padding-top: 5px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 .moneyBox{
 	padding-top: 20px;
@@ -336,6 +345,7 @@ html,body{
 	border-bottom: solid 1px #e5e5e5;
 	background: #fff;
 	color: #757575;
+	clear: both;
 }
 .amount{
 	line-height: 42px;

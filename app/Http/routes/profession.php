@@ -193,6 +193,52 @@ Route::group([
           Route::post('get/goods_class/list','OtherOnlyController@getGoodsClassList');
 
 
+          //11.发表评论
+          Route::post('publish/goods/comment','OtherOnlyController@publishGoodsComment');
+
+
+        /**
+         * 购物车模块  登陆状态才可以访问
+         */
+            //1.获取购物车中商品信息
+            Route::post('v2/get/goods/car/info','ShoppingCartController@getV2GoodsCarInfo');
+            //2.创建购物车，给购物车中添加商品信息
+            Route::post('v2/add/goods/car','ShoppingCartController@addV2GoodsCar');
+            //3.更改购物车中某条商品的数量（1:加号   2:减号 ）
+            Route::post('v2/update/goods/car/number','ShoppingCartController@updateV2GoodsNumber');
+            //4.删除购物车中的商品
+            Route::post('v2/delete/goods/car','ShoppingCartController@deleteV2GoodsCar');
+            //5.更改购物车   同一供应商底下所有商品的状态（选中/不选中）
+            Route::post('v2/update/goods/car/supply/all/state','ShoppingCartController@updateV2AllGoodsCar');
+            //6.更改购物车：选中该商品的标志（选中/不选中）
+            Route::post('v2/update/goods/car/state','ShoppingCartController@updateV2GoodsCar');
+
+
+
+         /**
+          * 订单模块
+          */
+            //1.会员主动创建订单（1.直接购买   2，加入购物车购买） 注：这里暂时不支持直接购买  ---->走线上支付
+            Route::post('v2/user/create/order','OrderManageController@createV2Orders');
+            //2.员工给会员创建订单  ---->走线下支付
+             Route::post('v2/employee/give/user/create/order','OrderManageController@empV2GivCreOrders');
+             //3.获取订单列表（待付款）
+             Route::post('v2/get/order/info/obligation/list','OrderManageController@getV2OblLists');
+             //4.获取订单列表（待收货）
+             Route::post('v2/get/order/info/list','OrderManageController@getV2OrderLists');
+             //5.获取订单列表（待评价）
+             Route::post('v2/get/order/info/comment/list','OrderManageController@getV2ComLists');
+             //6.获取订单列表（全部订单）
+             Route::post('v2/get/order/info/all/list','OrderManageController@getV2AllLists');
+             //7.获取订单详情（根据主订单id获取详情----拆分前）
+             Route::post('v2/get/base_order/info','OrderManageController@getV2BaseOrderInfo');
+             //8.获取订单详情(根据子订单id获取订单详情---拆分后)
+             Route::post('v2/get/sub_order/info','OrderManageController@getV2SubOrderInfo');
+             //9.确认收货
+             Route::post('v2/ack/receive/goods','OrderManageController@ackV2ReceiveGoods');
+
+
+
 
 
 });
