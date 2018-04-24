@@ -245,18 +245,25 @@ class GetUserOwnInfoController extends Controller{
 
         $validator = $this->setRules([
             'ss' => 'required|string', //员工session
-            'mobile' => 'required|regex:/^1[34578][0-9]{9}$/', //所代替的用户手机号码
+            'mobile' => 'regex:/^1[34578][0-9]{9}$/', //所代替的用户手机号码
         ])
             ->_validate($request->all());
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
 
-        $employee_id = $this->getUserIdBySession($request->ss); //获取员工id
+        //$employee_id = $this->getUserIdBySession($request->ss); //获取员工id
+        $user_id = $this->getUserIdBySession($request->ss); //获取用户id
 
-        $balance = \DB::table('ys_member')->where('mobile',$request->mobile)->first();
+        if(!empty($request->mobile)){
+            $balance = \DB::table('ys_member')->where('mobile',$request->mobile)->first();
+        }else{
+            $balance = \DB::table('ys_member')->where('user_id',$user_id)->first();
+        }
+
+
         if(empty($balance)){ //用户不存在
             return $this->setStatusCode(1039)->respondWithError($this->message);
         }
-        return $this->respond($this->format(['balance'=>$balance->balance]));
+        return $this->respond($this->format(['balance'=>$balance->balance,'total_amount'=>$balance->total_amount,'user_lv'=>$balance->user_lv]));
 
     }
 
