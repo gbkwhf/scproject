@@ -37,8 +37,14 @@
                   <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;" >
                   		
                   		<span>	{{ $data->goods_name or '' }}</span>
+                  </div>                  
+                </div>  
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >供应商</label>
+                  <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;" >                  		
+                  		<span>	{{ $data->supplier_name or '' }}</span>
                   </div>
-                </div>              
+                </div>                              
                 <div class="form-group">
                   <label class="col-sm-2 control-label" >收货地址</label>
                   <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;">

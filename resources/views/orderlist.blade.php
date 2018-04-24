@@ -80,11 +80,9 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
-                	<th>订单号</th>
-                  <th>商品名</th>
+                	<th>订单号</th>                  
                   <th>金额</th>
-                  <th>付款时间</th>
-				  <th>供应商</th>                  
+                  <th>付款时间</th>				                  
                   <th>订单来源</th>
                   <th>用户名</th>                  
                   <th>用户手机</th>
@@ -93,11 +91,9 @@
                 </tr>                
                 @foreach ($data as $order)    				
 	    			<tr>
-	    			<td>{{ $order->order_id }}</td>
-					  <td>{{ $order->goods_name }}</td>
+	    			<td>{{ $order->order_id }}</td>					  
 	                  <td>{{ $order->amount }}</td>
 	                  <td>{{ $order->pay_time }}</td>
-	                  <td>{{ $order->supplier_name }}</td>
 	                  <td>{{ $order->order_source }}</td>
 	                  <td>{{ $order->user_name }}</td>
 	                  <td>{{ $order->mobile }}</td>
