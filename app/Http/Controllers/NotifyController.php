@@ -40,7 +40,8 @@ class NotifyController extends Controller
                             ->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
                             ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id')
                             ->leftjoin('ys_goods as d','c.goods_id','=','d.id')
-                            ->select('a.require_amount','c.goods_id','c.num as buy_num','d.num as rest_num','d.sales')
+                            ->leftjoin('ys_goods as e','c.ext_id','=','e.id')
+                            ->select('a.require_amount','c.goods_id','c.num as buy_num','e.num as rest_num','d.sales')
                             ->where('a.id',$result['order_id'])
                             ->get();
 
@@ -69,11 +70,19 @@ class NotifyController extends Controller
             $update_arr = [];
             foreach($order_info as $k=>$v){
 
-                $update = \DB::table('ys_goods')->where('id',$v->goods_id)->update([
-                    'num'=>$v->rest_num - $v->buy_num,
-                    'sales'=>$v->sales + $v->buy_num,
-                    'updated_at'=>\DB::Raw('Now()')
-                ]);
+                if($v->rest_num > $v->buy_num){ //库存充足
+
+                    $update = \DB::table('ys_goods')->where('id',$v->goods_id)->update([
+                        'num'=>$v->rest_num - $v->buy_num,
+                        'sales'=>$v->sales + $v->buy_num,
+                        'updated_at'=>\DB::Raw('Now()')
+                    ]);
+
+                }else{//库存不足
+                    $update = 0;
+                    \Log::info('low stocks，goods_id is '.$v->goods_id);
+                }
+
                 array_push($update_arr,$update);
             }
 
