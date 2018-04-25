@@ -244,7 +244,7 @@
 
 								//var imgId = goods_image[k].img_id;
 								var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
-								$('.swiper-wrapper').append(t)
+								$('.swiper-wrapper').html(t)
 							});
 
 								var img = '';
