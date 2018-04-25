@@ -8,7 +8,7 @@
 
 Route::group([
 
-    'prefix' => 'api/gxsc','namespace' => 'Weixin', 'middleware'=> 'cors'//,'check.session:ys_session_info','check.version']
+    'prefix' => 'api/gxsc','namespace' => 'Weixin', 'middleware'=> ['check.session:ys_session_info','check.version']
 
 ],function (){
 
@@ -38,7 +38,7 @@ Route::group([
 
 Route::group([
 
-    'prefix' => 'api/gxsc','namespace' => 'HandleProfession', 'middleware'=> ['cors','check.session:ys_session_info','check.version']
+    'prefix' => 'api/gxsc','namespace' => 'HandleProfession', 'middleware'=> ['check.session:ys_session_info','check.version']
 
 ],function (){
 
@@ -166,7 +166,7 @@ Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinS
  */
 Route::group([
 
-    'prefix' => 'api/gxsc','namespace' => 'SecondExploit', 'middleware'=> ['cors','check.session:ys_session_info']//,'check.version']
+    'prefix' => 'api/gxsc','namespace' => 'SecondExploit', 'middleware'=> ['check.session:ys_session_info']//,'check.version']
 
 ],function (){
 
