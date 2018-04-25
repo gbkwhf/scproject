@@ -230,6 +230,7 @@ input[type="button"] {
 }
 
 .shop_name {
+	color: red;
 	height: 20px;
 	padding-left: 13px;
 	padding-top: 17px;

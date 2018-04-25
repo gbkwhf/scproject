@@ -250,7 +250,7 @@
 								var img = '';
 								img += '<div class="attrImg"><img src=""/></div>' +
 									'<div class="selectName">' +
-									'<p class="shop_name">' + goods_name + '</p>' +
+									'<p class="shop_name">￥' + price + '</p>' +
 									'<p class="selectAttr"></p>' +
 									'</div>';
 									
