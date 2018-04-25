@@ -8,7 +8,7 @@
 
 Route::group([
 
-    'prefix' => 'api/gxsc','namespace' => 'Weixin', 'middleware'=> ['cors']//,'check.session:ys_session_info','check.version']
+    'prefix' => 'api/gxsc','namespace' => 'Weixin', 'middleware'=> 'cors'//,'check.session:ys_session_info','check.version']
 
 ],function (){
 
