@@ -34,7 +34,8 @@ class NotifyController extends Controller
         //返回相关关订单信息
         if($result){
 
-            $order=\DB::table('ys_base_order')->where('id',$result['order_id'])->first();
+            $order_id = explode("_",$result['order_id'])[0];
+            $order=\DB::table('ys_base_order')->where('id',$order_id)->first();
 
             $order_info = \DB::table('ys_base_order as a')
                             ->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
@@ -42,7 +43,7 @@ class NotifyController extends Controller
                             ->leftjoin('ys_goods as d','c.goods_id','=','d.id')
                             ->leftjoin('ys_goods as e','c.ext_id','=','e.id')
                             ->select('a.require_amount','c.goods_id','c.num as buy_num','e.num as rest_num','d.sales')
-                            ->where('a.id',$result['order_id'])
+                            ->where('a.id',$order_id)
                             ->get();
 
             if(empty($order_info) || empty($order)){
@@ -64,7 +65,7 @@ class NotifyController extends Controller
 
             DB::beginTransaction(); //开启事务
             //更新主订单信息
-            $update1 = \DB::table('ys_base_order')->where('id',$result['order_id'])->update($base);
+            $update1 = \DB::table('ys_base_order')->where('id',$order_id)->update($base);
 
             //更新商品销量和库存
             $update_arr = [];
