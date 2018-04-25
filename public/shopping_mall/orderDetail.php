@@ -36,59 +36,44 @@
 
 		<div class="boxContent">
 			<div class="orderInfo">
+
+
 				<!--标题部分-->
 				<div class="orGe"></div>
-				<div class="orderHea">
+				
+				
+				<!-- <div class="orderHea">
 					<div class="orderStore">这是我的店铺哈哈哈哈哈哈</div>
-
-				</div>
+				</div> -->
 				<!--下面的产品-->
 				<div class="shopInfoBox">
-
-					<div class="shopBoxCon">
-						<!--图片-->
-						<div class="imgInfo"><img src="images/shopImg1.png" alt="" /></div>
-						<!--标题信息-->
-						<div class="titleInfoBox">
-							<!--商品标题-->
-							<div class="orderTitle">多肉植多肉植物组合套餐多肉童子肉肉多肉植物组合套餐多肉童子肉肉多肉植物组合套餐多肉童子肉肉多肉植物组合套餐多肉童子肉肉物组合套餐多肉童子肉肉 花卉盆栽</div>
-							<!--标签-->
-							<div class="orderBiaoQian1">
-								<span class="biao1 biao2">小盆多肉</span>
-								<span class="biao1 biao2">带盆</span>
-							</div>
-							<!--价格 以及数量-->
-							<div class="orderPriceBox">
-								<span class="orderPrice orderPrice1">￥10.00元</span>
-								<span class="orderNum">+1</span>
-							</div>
-						</div>
-					</div>
-					
-					<div class="shopBoxCon">
-						<!--图片-->
-						<div class="imgInfo"><img src="images/shopImg1.png" alt="" /></div>
-						<!--标题信息-->
-						<div class="titleInfoBox">
-							<!--商品标题-->
-							<div class="orderTitle">多肉植多肉植物组合套餐多肉童子肉肉多肉植物组合套餐多肉童子肉肉多肉植物组合套餐多肉童子肉肉多肉植物组合套餐多肉童子肉肉物组合套餐多肉童子肉肉 花卉盆栽</div>
-							<!--标签-->
-							<div class="orderBiaoQian1">
-								<span class="biao1 biao2">小盆多肉</span>
-								<span class="biao1 biao2">带盆</span>
-							</div>
-							<!--价格 以及数量-->
-							<div class="orderPriceBox">
-								<span class="orderPrice orderPrice1">￥10.00元</span>
-								<span class="orderNum">+1</span>
+					<script type="text/html" id="commentList">
+						<div class="shopBoxCon">
+							<!--图片-->
+							<div class="imgInfo"><img src="{{image}}" alt="" /></div>
+							<!--标题信息-->
+							<div class="titleInfoBox">
+								<!--商品标题-->
+								<div class="orderTitle">{{goods_name}}</div>
+								<!--标签-->
+								<div class="orderBiaoQian1">
+									<span class="biao1 biao2">{{spec_name}}</span>
+								</div>
+								<!--价格 以及数量-->
+								<div class="orderPriceBox">
+									<span class="orderPrice orderPrice1">￥{{goods_price}}元</span>
+									<span class="orderNum">+{{num}}</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					
+						
+						
+					</script>
+						
 					<!--商品的总数量-->
-					<div class="shopNumSum">
+					<!-- <div class="shopNumSum">
 						<span class="sumShop" style="float: left;margin-left: 17px;">运费：8元 实付款：18元</span>	
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -119,3 +104,53 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
+<script type="text/javascript">
+	console.log($_GET['id'])
+	$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url: commonsUrl + '/api/gxsc/v2/get/base_order/info' + versioninfos,
+			data: {
+				base_order_id: $_GET['base_order_id'],
+				ss: getCookie('openid')
+			},
+			success: (res) => {
+				try{
+					console.log(res)
+					let data=res.result
+					$(".perInfoma").text("收货人：" + data.user_name + "   " +data.user_mobile)
+					$(".addreIndo").text("地址 : " + data.address)
+					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
+					$(".orderInBox p:nth-child(2)").text("下单时间：" + data.create_time) 
+					$(".orderInBox p:nth-child(3)").text("支付方式：" + data.pay_type) 
+					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
+
+					for(let i=0;i<data.info.length;i++){
+						console.log(data.info[i])
+
+						$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
+						for(let j=0;j<data.info[i].goods_list.length;j++){
+							console.log(data.info[i].goods_list[j].num)
+							let temp = $("#commentList").html()
+							temp = temp.replace("{{image}}", data.info[i].goods_list[j].image)
+							.replace("{{goods_name}}", data.info[i].goods_list[j].goods_name)
+							.replace("{{spec_name}}", data.info[i].goods_list[j].spec_name)
+							.replace("{{goods_price}}", data.info[i].goods_list[j].goods_price)
+							.replace("{{num}}", data.info[i].goods_list[j].num)
+							$(".shopInfoBox").append(temp)
+						}
+
+					}
+
+					$(".shopInfoBox").append('<div class="shopNumSum"><span class="sumShop" style="float: left;margin-left: 17px;">运费：'+data.shipping_price+'元 实付款：'+data.price+'元</span></div>')
+					
+				}catch(e){
+					console.log(e)
+				}
+				
+			},
+			error: (res) => {
+				console.log(res)
+			}
+		})
+</script>

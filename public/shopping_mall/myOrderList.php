@@ -40,7 +40,7 @@
 					<!--下面的产品-->
 					<div class="shopInfoBox">
 						<script type="text/html" id="commentList">
-							<div class="shopBoxCon">
+							<div class="shopBoxCon" onclick="">
 									<!--图片-->
 									<div class="imgInfo"><img src="{{image}}" alt="" /></div>
 									<!--标题信息-->
@@ -95,7 +95,7 @@
 		console.log(orderId);
 		packaging(URL)
 		$(".commClick").click(function(){
-			$(".shopBoxCon").remove();$(".shopNumSum").remove();$(".wuliuConter").remove();
+			$(".shopBoxCon").remove();$(".shopNumSum").remove();$(".wuliuConter").remove();$(".orderHea").remove()
 
 			$(this).addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=$(this).attr("id")
@@ -170,6 +170,13 @@
 						if (res.code == "1") {
 							let data = res.result
 							for (let val=0; val<data.length;val++) {
+
+								if(val>=0){
+									 if(id==1){
+										$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">这是我的店铺哈哈哈哈哈哈</div></div>')
+									}
+								}
+
 								let num
 								for(let vals=0; vals<data[val].goods_list.length;vals++){
 									num=data[val].goods_list.length
@@ -180,8 +187,11 @@
 										.replace("{{price}}", data[val].goods_list[vals].price)
 										.replace("{{num}}", data[val].goods_list[vals].num)
 										$(".shopInfoBox").append(temp)
-
-										
+										if(id==0){
+											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?base_order_id="+data[val].base_order_id+"&id=0'")
+										}else if(id==1){
+											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?sub_order_id="+data[val].sub_order_id+"&id=1'")
+										}
 								}
 								if(val>=0){
 									if(id==0){
