@@ -23,7 +23,6 @@
 		<div class="gameBox" onclick="waitting()">
 			<img src="images/amusement.png" />
 		</div>
-		
 
 	</body>
 	<script src="js/jquery.min.js"></script>
@@ -33,31 +32,35 @@
 	<script>
 		//权限请求
 
-		//获取openid
-		$.ajax({
-			type: "get",
-			url: commonsUrl + "api/gxsc/get/user/openId" + versioninfos,
-			data: {
-				"code": $_GET['code']
-			},
-			success: function(data) {
-				if(data.code == 1) {
-					//                if(getCookie("openid")){
-					//                    setCookie("is_member",data.result.is_member);
-					//                    checkBind();
-					//                }else{
-					//                    setCookie("openid",data.result.openId);
-					//                    setCookie("is_member",data.result.is_member);
-					//                    checkBind();
-					//                }
-					setCookie("openid", data.result.openId);
-					setCookie("is_member", data.result.is_member);
-					checkBind();
-				} else {
-					layer.msg(data.msg);
+		if(getCookie("openid")) {
+			checkBind();
+		} else {
+			//获取openid
+			$.ajax({
+				type: "get",
+				url: commonsUrl + "api/gxsc/get/user/openId" + versioninfos,
+				data: {
+					"code": $_GET['code']
+				},
+				success: function(data) {
+					if(data.code == 1) {
+						//                if(getCookie("openid")){
+						//                    setCookie("is_member",data.result.is_member);
+						//                    checkBind();
+						//                }else{
+						//                    setCookie("openid",data.result.openId);
+						//                    setCookie("is_member",data.result.is_member);
+						//                    checkBind();
+						//                }
+						setCookie("openid", data.result.openId);
+						setCookie("is_member", data.result.is_member);
+						checkBind();
+					} else {
+						layer.msg(data.msg);
+					}
 				}
-			}
-		});
+			});
+		}
 
 		function checkBind() {
 			//验证openid是否绑定

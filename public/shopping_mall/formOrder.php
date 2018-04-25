@@ -69,7 +69,7 @@
 		</div>
 
 		<footer>
-			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
+			<p class="actual-payment">实付款：<span>¥0.00</span></p>
 			<div class="buy-operation">
 				<p onclick="scancode()" class="scanCode">进店扫码<span>到门店付款</span></p>
 				<p onclick="createOrder()" class="substitute" style="display: none;"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>

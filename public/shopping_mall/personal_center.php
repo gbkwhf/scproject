@@ -28,19 +28,19 @@
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
 				<p><span class="user_names"></span><img src="images/userIcon.png" width="13"/></p>
-				<div class="rank"><span class="userRank">二级会员</span><img src="images/personBack.png" width="6"/></div>
+				<div class="rank"><span class="userRank"></span><img src="images/personBack.png" width="6"/></div>
 			</div>
 			
 			<div class="account-info">
-				<div class="balance" onclick="location.href='remainder.php'">
+				<div class="balance" >
 					<em></em>
 					<p>0</p>
 					<span>余额（积分）</span>
 				</div>
-				<div class="cashback" onclick="location.href='consumption.php'">
+				<div class="cashback">
 					<em>¥</em>
 					<p>0</p>
-					<span>累计消费（元）</span>
+					<span>截至上月累计消费（元）</span>
 				</div>
 			</div>
 		</header>
@@ -207,7 +207,8 @@
   					}
 					$('.user-info .user_names').html(data.result.name);
   					$('.balance p').html(data.result.balance);
-  					$('.cashback p').html(data.result.yesterday_return_money);
+  					$('.cashback p').html(data.result.total_amount);
+  					$('.userRank').html('会员等级：'+data.result.user_lv);
   				}else if(data.code==1011){
   					layer.msg('身份已失效，请重新绑定');
   					setTimeout(function(){location.href='register.php';},1000);
@@ -216,6 +217,8 @@
   				}
   			}
   		});
+  		
+  		
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

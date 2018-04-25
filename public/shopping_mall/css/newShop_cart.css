@@ -1,6 +1,6 @@
 .storeBox {
 	height: 58px;
-	border-bottom: solid 1px #d2d2d2;
+	border-bottom: solid 1px #e5e5e5;
 }
 
 label {
@@ -246,7 +246,7 @@ label input {
 	clear: both;
 	height: 10px;
 	width: 100%;
-	background-color: #ebebeb;
+	background-color: #f3f2f2;
 }
 
 .bottomBox {
@@ -255,7 +255,7 @@ label input {
 	background-color: #fff;
 	position: fixed;
 	bottom: 56px;
-	border-top: solid 1px #bfbfbf;
+	border-top: solid 1px #e5e5e5;
 	/*border-bottom:solid 1px #bfbfbf;*/
 	z-index: 9999;
 }

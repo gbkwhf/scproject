@@ -54,25 +54,46 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
 <script>
-	let urlId=location.search.substring(4)
-	console.log($_GET['store_first_id'])
+	console.log($_GET['store_id'])
 	// 获取导航列表
 	$.ajax({
 		type: "post",
 		dataType: "json",
-		url: commonsUrl + 'api/gxsc/get/goods/second/list' + versioninfos,
+		url: commonsUrl + 'api/gxsc/get/store/class/list' + versioninfos,
 		data: {
-			goods_first_id: $_GET['store_first_id'],  
+			store_id: $_GET['store_id'],  
 			ss: getCookie('openid')
 		},
 		success: (res) => {
-			console.log(res)
+			let store_class_id=res.result[0].store_class_id
 			let data = res.result
 			for (let val of data) {
 				let temp = $("#navList").html()
-				temp = temp.replace("{{goods_second_name}}", val.goods_second_name).replace("{{goods_second_id}}", val.goods_second_id)
+				temp = temp.replace("{{goods_second_name}}", val.store_class_name).replace("{{goods_second_id}}", val.store_class_id)
 				$(".clearfix").append(temp)
 			}
+			
+			
+			// 获取商品列表数据  
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
+				data: {
+					store_class_id: store_class_id,
+					page: "1",
+					ss: getCookie('openid')
+				},
+				success: (res) => {
+				    console.log(res)
+					let data = res.result
+					for (let val of data) {
+						let temp = $("#commentList").html()
+						temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+						$(".commodity ul").append(temp)
+					}
+				}
+			})
 		}
 	})
 	$(function () {
@@ -102,30 +123,12 @@
 				})
 
 
+
+			
 			})
 		}, 200);
 
    		
-		// 获取商品列表数据  
-		$.ajax({
-			type: "post",
-			dataType: "json",
-			url: commonsUrl + 'api/gxsc/get/goods_class/list' + versioninfos,
-			data: {
-				goods_second_id: $_GET['store_first_id'],
-				page: "1",
-				ss: getCookie('openid')
-			},
-			success: (res) => {
-			    console.log(res)
-				let data = res.result
-				for (let val of data) {
-					let temp = $("#commentList").html()
-					temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
-					$(".commodity ul").append(temp)
-				}
-			}
-		})
 
 
 
