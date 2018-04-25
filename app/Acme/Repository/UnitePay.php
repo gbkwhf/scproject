@@ -285,7 +285,7 @@ class UnitePay
     	$gateway = \Omnipay::gateway('wechatpay_js');
     
     	$options = [
-    	'out_trade_no' => $order_id,     //订单号
+    	'out_trade_no' => $order_id."_".getRandomID(4),     //订单号,为了解决商户订单号重复201问题，给订单生成一个随机数
     	'body'       => $title,        //订单标题
     	'total_fee' => $money*100,            //金额
     	'spbill_create_ip' => \Request::getClientIp(),
