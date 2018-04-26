@@ -239,14 +239,15 @@
 							$('.postNum1').html(rebate_amount + '积分'); //返利积分
 
 							//---------------循环图片（轮播图）-----
+							var t='';
 							$.each(goods_image, function(k, v) {
 								var src = goods_image[k].image;
 
 								//var imgId = goods_image[k].img_id;
-								var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
-								$('.swiper-wrapper').html(t)
+								 t+= "<div class='swiper-slide'><image src=" + src + "/></div>";
+								
 							});
-
+						    $('.swiper-wrapper').html(t)
 								var img = '';
 								img += '<div class="attrImg"><img src=""/></div>' +
 									'<div class="selectName">' +
