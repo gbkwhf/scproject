@@ -100,7 +100,7 @@
 	console.log($_GET['id'])
 	if($_GET['id']==0){
 		$(".orderDetHe").text("等待买家发货")
-		$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont">立即支付</span></div>')
+		
 		$.ajax({
 			type: 'POST',
 			dataType: "json",
@@ -120,7 +120,7 @@
 					$(".orderInBox p:nth-child(2)").text("下单时间：" + data.create_time) 
 					$(".orderInBox p:nth-child(3)").text("支付方式：" + TYPE) 
 					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
-
+					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont" id="'+data.base_order_id+'">立即支付</span></div>')
 					for(let i=0;i<data.info.length;i++){
 						console.log(data.info[i])
 
@@ -196,5 +196,60 @@
 			}
 		})
 	}
+
+
+	setTimeout(() => {
+		$(".checkcont").click(function(){
+			let base_order_id =$(this).attr("id")
+			$.ajax({
+				type: "post",
+				url: commonsUrl + "api/gxsc/pay/goods" + versioninfos,
+				data: {
+					'base_order_id':base_order_id,
+					'filling_type': 3,
+					'open_id': getCookie('openid'),
+					'ss': getCookie('openid')
+				},
+				success: function(data) {
+					if(data.code == 1) {
+						console.log(data);
+						data.result.timeStamp = data.result.timeStamp.toString();
+						retStr = data.result;
+						callpay();
+						//调用微信JS api 支付
+						function jsApiCall() {
+							WeixinJSBridge.invoke(
+								'getBrandWCPayRequest',
+								retStr,
+								function(res) {
+									if(res.err_msg == "get_brand_wcpay_request:ok") {
+										//支付成功
+										location.href = 'myOrderList.php';
+									} else {
+										//												             alert(res.err_msg);
+									}
+								}
+							);
+						}
+
+						function callpay() {
+							if(typeof WeixinJSBridge == "undefined") {
+								if(document.addEventListener) {
+									document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+								} else if(document.attachEvent) {
+									document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+									document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+								}
+							} else {
+								jsApiCall();
+							}
+						}
+					} else {
+						layer.msg(data.msg);
+					}
+				}
+			})
+		})
+	}, 200);
 	
 </script>
