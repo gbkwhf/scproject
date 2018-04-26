@@ -650,17 +650,18 @@
 
 					for(var i = 0; i < newArr.length; i++) {
 						for(var t = 0; t < newArr[i].arrCon.length; t++) {
-							newArr[i].sumprice += (parseFloat(newArr[i].arrCon[t].price)*1* newArr[i].arrCon[t].number);
-							
+							newArr[i].sumprice += (parseFloat(newArr[i].arrCon[t].price)*1 * newArr[i].arrCon[t].number);
 						}
-						newArr[i].sumprice=newArr[i].sumprice.toFixed(2);
+						newArr[i].sumprice =newArr[i].sumprice.toFixed(2);
 					}
+					
 					for(var i = 0; i < newArr.length; i++) {
 						if(parseFloat(newArr[i].sumprice) < parseFloat(newArr[i].freeprice)) {
+							var proNu=0;
 							for(var j=0;j<newArr[i].arrCon.length; j++){
-								newArr[i].mianYou +=parseFloat(newArr[i].arrCon[j].shop_price); 
+								proNu +=parseFloat(newArr[i].arrCon[j].shop_price); 
 							}
-							
+							newArr[i].mianYou=proNu;
 						} else {
 							newArr[i].mianYou = '包邮'
 						}
