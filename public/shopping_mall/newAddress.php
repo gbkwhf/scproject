@@ -109,7 +109,7 @@
 		}else {
             let city=$("#city").text()+" "+site
             let url="/api/gxsc/add/delivery/goods/address"
-            let msg="添加地址"
+            let msg="保存成功"
             if($_GET["id"]==1){
                 url="/api/gxsc/edit/delivery/goods/address"
                 msg="编辑成功"

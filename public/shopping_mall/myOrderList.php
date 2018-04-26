@@ -144,16 +144,16 @@
 		});
 
 
-		// console.log(orderId+'******');
-		// if(orderId==0){ //待付款
-		// 	$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }else if(orderId==1){ //待收货
-		// 	$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }else if(orderId==2){//待评价
-		// 	$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }else{
-		// 	$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }
+		console.log(orderId+'******');
+		if(orderId==0){ //待付款
+			$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+		}else if(orderId==1){ //待收货
+			$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+		}else if(orderId==2){//待评价
+			$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+		}else{
+			$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+		}
 
 
 			function  packaging(URL){
@@ -173,7 +173,7 @@
 
 								if(val>=0){
 									 if(id==1){
-										$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">这是我的店铺哈哈哈哈哈哈</div></div>')
+										$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div></div>')
 									}
 								}
 
@@ -195,7 +195,7 @@
 								}
 								if(val>=0){
 									if(id==0){
-										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+data[val].require_amount+'元(含运费0.00元)</span></div><div class="wuliuConter"><span class="checkcont">立即支付</span></div></div>'
+										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+data[val].require_amount+'元(含运费0.00元)</span></div><div class="wuliuConter"><span class="checkcont" style="float:right;margin-right:10px;" id="'+data[val].base_order_id+'">立即支付</span></div></div>'
 										$(".shopInfoBox").append(aa)
 									}else if(id==1){
 										// $(".shopInfoBox").prepend('<div class="orderHea"><div class="orderStore">这是我的店铺哈哈哈哈哈哈</div></div>')
@@ -214,6 +214,60 @@
 				}
 		})
 	}
+
+	setTimeout(() => {
+		$(".checkcont").click(function(){
+			let base_order_id =$(this).attr("id")
+			$.ajax({
+				type: "post",
+				url: commonsUrl + "api/gxsc/pay/goods" + versioninfos,
+				data: {
+					'base_order_id':base_order_id,
+					'filling_type': 3,
+					'open_id': getCookie('openid'),
+					'ss': getCookie('openid')
+				},
+				success: function(data) {
+					if(data.code == 1) {
+						console.log(data);
+						data.result.timeStamp = data.result.timeStamp.toString();
+						retStr = data.result;
+						callpay();
+						//调用微信JS api 支付
+						function jsApiCall() {
+							WeixinJSBridge.invoke(
+								'getBrandWCPayRequest',
+								retStr,
+								function(res) {
+									if(res.err_msg == "get_brand_wcpay_request:ok") {
+										//支付成功
+										location.href = 'myOrderList.php';
+									} else {
+										//												             alert(res.err_msg);
+									}
+								}
+							);
+						}
+
+						function callpay() {
+							if(typeof WeixinJSBridge == "undefined") {
+								if(document.addEventListener) {
+									document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+								} else if(document.attachEvent) {
+									document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+									document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+								}
+							} else {
+								jsApiCall();
+							}
+						}
+					} else {
+						layer.msg(data.msg);
+					}
+				}
+			})
+		})
+	}, 200);
 		
 	})
 </script>

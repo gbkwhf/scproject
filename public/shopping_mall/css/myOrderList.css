@@ -82,7 +82,7 @@ body,html{
 			height: 104px;
 			width: 100%;
 			/*background-color: red;*/
-			margin-bottom: 22px;
+			margin: 22px 0;
 		}
 		.shopInfoBox{
 			padding-top: 20px;
