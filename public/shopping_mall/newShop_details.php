@@ -370,7 +370,7 @@
 									var name = cont[k].name; //用户名
 									var user_comment = cont[k].user_comment; //评论内容
 									if(images == '') {
-										thumbnail_image_url = 'images/head-portrait.png'
+										images = 'images/head-portrait.png'
 									}
 									html += '<div class="apprariseNav">' +
 										'<div class="userMessage">' +
