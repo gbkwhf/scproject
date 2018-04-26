@@ -139,7 +139,7 @@
 						console.log(data);
 						if(data.result.length == 0) {
 							//去新增收货地址
-							$('header').html('<span onclick="location.href=\'receiving_address.php\'" style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
+							$('header').html('<span onclick="location.href=\'newAddress.php\'" style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
 						} else {
 							//筛选默认地址
 							for(var i = 0; i < data.result.length; i++) {
@@ -159,7 +159,7 @@
 		}
 
 		function lastpage(addressId) {
-			location.href = 'receiving_address.php?address_id=' + addressId;
+			location.href = 'newAddress.php?address_id=' + addressId;
 		}
 
 		//身份校验

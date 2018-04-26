@@ -199,6 +199,7 @@ $(function() {
 					layer.msg("商品名称不能为空");
 				} else {
 					location.href = "searchShopList.php?shopName=" + shopName;
+					
 				}
 
 			})
