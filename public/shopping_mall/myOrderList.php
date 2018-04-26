@@ -190,7 +190,7 @@
 										if(id==0){
 											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?base_order_id="+data[val].base_order_id+"&id=0'")
 										}else if(id==1){
-											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?sub_order_id="+data[val].sub_order_id+"&id=1'")
+											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?sub_order_id="+data[val].sub_id+"&id=1'")
 										}
 								}
 								if(val>=0){

@@ -12,6 +12,9 @@
 	<title>新增收货地址</title>
 </head>
 <script src="js/jquery.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="js/config.js"></script>
 <script src="js/plug.js"></script>
 <script src="js/Popt.js"></script>
 <script src="js/cityJson.js"></script>
@@ -41,11 +44,11 @@
 	<div class="form">
 		<div>
 			<label for="">收货人:</label>
-			<input type="text" name="" id="">
+			<input type="text" name="name" id="">
 		</div>
 		<div>
 			<label for="">手机号码:</label>
-			<input type="text" name="" id="">
+			<input type="text" name="phone" id="" maxlength="11">
 		</div>
 		<div>
 			<label for="" >所在地区:
@@ -55,7 +58,7 @@
 		</div>
 		<div>
 			<label for="">详细地址:</label>
-			<input type="text" name="" id="">
+			<input type="text" name="site" id="">
 		</div>
 
 		<button>保存</button>
@@ -70,4 +73,73 @@
         console.log(this);
         $(".backop").show()
     });
+
+    if($_GET["id"]==1){
+        $.ajax({
+            type: "post",
+            url: commonsUrl + "/api/gxsc/get/delivery/goods/address" + versioninfos,
+            data: {
+                address_id:$_GET["address_id"],
+                ss: getCookie('openid')
+            },
+            success: function(data) {
+                console.log(data)
+                $("input[name='name']").val(data.result[0].name)
+                $("input[name='phone']").val(data.result[0].mobile)
+                $("#city").text(data.result[0].address.split(" ")[0])
+                $("input[name='site']").val(data.result[0].address.split(" ")[1])
+            }
+        });
+    }
+    
+    
+    $("button").click(function () {
+        let name=$("input[name='name']").val()
+		let phone=$("input[name='phone']").val()
+		let site=$("input[name='site']").val()
+        var pattern = /^1[34578]\d{9}$/;
+        if (name==""){
+            layer.msg("名字为空")
+		} else if(phone==""){
+		    layer.msg("手机号为空")
+		}else if(!pattern.test(phone)){
+            layer.msg("手机号格式不正确")
+		}else if(site==""){
+            layer.msg("地址为空")
+		}else {
+            let city=$("#city").text()+" "+site
+            let url="/api/gxsc/add/delivery/goods/address"
+            let msg="添加地址"
+            if($_GET["id"]==1){
+                url="/api/gxsc/edit/delivery/goods/address"
+                msg="编辑成功"
+                request(url,msg,phone,name,city)
+            }else{
+                request(url,msg,phone,name,city)
+            }
+            
+		}
+
+        function request(url,msg,phone,name,city){
+            $.ajax({
+                type: "post",
+                url: commonsUrl + url + versioninfos,
+                data: {
+                    mobile:phone,
+                    name:name,
+                    address:city,
+                    address_id:$_GET["address_id"],
+                    ss: getCookie('openid')
+                },
+                success: function(data) {
+					console.log(data.result.address_id)
+					layer.msg(msg)
+					let address_id=data.result.address_id
+					setTimeout(function () {
+                        location.href='address.php?address_id='+address_id
+                    },1500)
+                }
+            });
+        }
+    })
 </script>

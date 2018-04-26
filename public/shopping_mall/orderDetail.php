@@ -87,15 +87,7 @@
 		</div>
 		<!--下面的查看物流 内容-->
 		<div class="wuliuConter">
-			<div class="wuliBox">
-				<span class="checkcont">查看物流</span>
-			</div>
-			<div class="wuliBox">
-				<span class="checkcont">追加评论</span>
-			</div>
-			<div class="wuliBox">
-				<span class="checkcont">确认收货</span>
-			</div>
+			
 		</div>
 	</body>
 
@@ -106,7 +98,10 @@
 <script src="js/config.js"></script>
 <script type="text/javascript">
 	console.log($_GET['id'])
-	$.ajax({
+	if($_GET['id']==0){
+		$(".orderDetHe").text("等待买家发货")
+		$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont">立即支付</span></div>')
+		$.ajax({
 			type: 'POST',
 			dataType: "json",
 			url: commonsUrl + '/api/gxsc/v2/get/base_order/info' + versioninfos,
@@ -118,11 +113,12 @@
 				try{
 					console.log(res)
 					let data=res.result
+					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.user_name + "   " +data.user_mobile)
 					$(".addreIndo").text("地址 : " + data.address)
 					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
 					$(".orderInBox p:nth-child(2)").text("下单时间：" + data.create_time) 
-					$(".orderInBox p:nth-child(3)").text("支付方式：" + data.pay_type) 
+					$(".orderInBox p:nth-child(3)").text("支付方式：" + TYPE) 
 					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
 
 					for(let i=0;i<data.info.length;i++){
@@ -153,4 +149,52 @@
 				console.log(res)
 			}
 		})
+	}else{
+		$(".orderDetHe").text("卖家已发货")
+		
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url: commonsUrl + '/api/gxsc/v2/get/sub_order/info' + versioninfos,
+			data: {
+				sub_order_id: $_GET['sub_order_id'],
+				ss: getCookie('openid')
+			},
+			success: (res) => {
+				try{
+					console.log(res)
+					let data=res.result
+					let TYPE=data.pay_type==1?"微信":"线下支付"
+					$(".perInfoma").text("收货人：" + data.name + "   " +data.mobile)
+					$(".addreIndo").text("地址 : " + data.address)
+					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
+					$(".orderInBox p:nth-child(2)").text("下单时间：" + data.create_time) 
+					$(".orderInBox p:nth-child(3)").text("支付方式：" + TYPE) 
+					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
+					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont"  onclick="location.href="logistical.php?sub_order_id='+data.sub_order_id+'"">查看物流</span></div><div class="wuliBox"><span class="checkcont">确认收货</span></div>')
+						// $(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
+						for(let j=0;j<data.goods_list.length;j++){
+							console.log(data.goods_list[j].num)
+							let temp = $("#commentList").html()
+							temp = temp.replace("{{image}}", data.goods_list[j].image)
+							.replace("{{goods_name}}", data.goods_list[j].goods_name)
+							.replace("{{spec_name}}", data.goods_list[j].spec_name)
+							.replace("{{goods_price}}", data.goods_list[j].goods_price)
+							.replace("{{num}}", data.goods_list[j].num)
+							$(".shopInfoBox").append(temp) 
+						}
+
+					$(".shopInfoBox").append('<div class="shopNumSum"><span class="sumShop" style="float: left;margin-left: 17px;">运费：'+data.shipping_price+'元 实付款：'+data.price+'元</span></div>')
+					
+				}catch(e){
+					console.log(e)
+				}
+				
+			},
+			error: (res) => {
+				console.log(res)
+			}
+		})
+	}
+	
 </script>

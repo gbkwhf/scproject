@@ -106,7 +106,7 @@
 			let index = $(this).index()
 			$(this).addClass("select").siblings().removeClass("select");
 			// $(".msg li").hide().eq(index).show()
-
+			page=1
 			$(".tem li").remove()
 
 			shop(store_second_id,page)

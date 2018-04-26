@@ -12,13 +12,13 @@
 </head>
 <body>
 <div class=" outer">
-    <div>
+    <div onclick="location.href='personal_data.php'">
         <p>个人信息</p>
         <img src="images/selectBack.png" alt="">
     </div>
 </div>
 <div class=" outer">
-    <div>
+    <div onclick="location.href='address.php'">
         <p>收货地址</p>
         <img src="images/selectBack.png" alt="">
     </div>

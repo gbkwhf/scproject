@@ -45,7 +45,7 @@
 			$.ajax({ //获取物流信息
 				type: "post",
 				dataType: 'json',
-				url: commonsUrl + "api/gxsc/get/commodity/sub_order/info" + versioninfos,
+				url: commonsUrl + "/api/gxsc/v2/get/sub_order/info" + versioninfos,
 				data: {
 					'ss': getCookie('openid'), //请求参数
 					'sub_order_id': $_GET['sub_order_id'] //子订单id
