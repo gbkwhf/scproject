@@ -150,7 +150,7 @@ input[type="button"] {
 	width: 68%;
 	/*text-align: center;*/
 	padding-left: 15px;
-	font-size: 17px;
+	font-size: 18px;
 	color: #ef833b;
 }
 
@@ -237,6 +237,7 @@ input[type="button"] {
 	-webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
 	display: -webkit-box;
+	font-size: 18px;
 }
 
 .selectAttr {
@@ -372,7 +373,7 @@ input[type="button"] {
 	font-size: 12px;
 	color: #999999;
 	padding-left: 8px;
-	/*text-decoration: line-through;*/
+	text-decoration: line-through;
 }
 
 .hideBox {

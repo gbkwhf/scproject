@@ -15,7 +15,7 @@
 					//					console.log(con);
 					var html = '';
 					$.each(con, function(c, t) {
-						html += "<div class='shopCartCon' suppid=" + con[c].supplier_id + " supContent=" + t.supplier_name + " freePrice=" + t.free_shipping + " conPrice=" + data.result.price + ">" +
+						html += "<div class='shopCartCon' suppid=" + con[c].supplier_id + " supContent=" + t.supplier_name + " freePrice=" + t.free_shipping + " shop_price="+data.result.shipping_price+" conPrice=" + data.result.price + ">" +
 							"<div class='storeBox'>" +
 							"<div class='checkLeft'>" +
 							"<label class='seconLabel'>" +
@@ -619,6 +619,7 @@
 									'src': $(v).find(".conStore").find("label.checked").eq(c).attr("goods_url"),
 									'number': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".inTeCon").val(),
 									'spec_name': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".shopPro1").text(),
+									'shop_price':$(v).find(".conStore").find("label.checked").eq(c).attr("shop_price"), //运费
 									//							
 								}
 								obj.arrCon.push(arrcon);
@@ -649,12 +650,18 @@
 
 					for(var i = 0; i < newArr.length; i++) {
 						for(var t = 0; t < newArr[i].arrCon.length; t++) {
-							newArr[i].sumprice += (parseFloat(newArr[i].arrCon[t].price) * newArr[i].arrCon[t].number);
+							newArr[i].sumprice += (parseFloat(newArr[i].arrCon[t].price)*1 * newArr[i].arrCon[t].number);
 						}
+						newArr[i].sumprice =newArr[i].sumprice.toFixed(2);
 					}
+					
 					for(var i = 0; i < newArr.length; i++) {
-						if(parseFloat(newArr[i].sumprice) <= parseFloat(newArr[i].freeprice)) {
-							newArr[i].mianYou = newArr[i].freeprice;
+						if(parseFloat(newArr[i].sumprice) < parseFloat(newArr[i].freeprice)) {
+							var proNu=0;
+							for(var j=0;j<newArr[i].arrCon.length; j++){
+								proNu +=parseFloat(newArr[i].arrCon[j].shop_price); 
+							}
+							newArr[i].mianYou=proNu;
 						} else {
 							newArr[i].mianYou = '包邮'
 						}
