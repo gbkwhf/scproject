@@ -525,34 +525,20 @@ class AuthController extends Controller
 
         $http = getenv('HTTP_REQUEST_URL'); //获取域名
 
-        if (isset($request->uid)){//uid存在，获取他人头像
-            $uid = \DB::table('ys_member')->where('user_id',$request->uid)->first();
-            if (empty($uid)){
-                if (empty($uid->image)){//没有上传头像
-                    $new_data['source_image_url']='';
-                    $new_data['thumbnail_image_url']='';
-                    return $this->respond($this->format($new_data));
-                }else{
-                    $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$uid->image;
-                    $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$uid->image;
-                    return $this->respond($this->format($new_data));
-                }
-            }else{
-                return $this->setStatusCode(1039)->respondWithError($this->message);  //该用户不存在
-            }
-        }else{//uid不存在，获取用户自己的头像
-            $res = \DB::table('ys_member')->where('user_id',$user_id)->first();
-            if (empty($res->image)){//没有上传头像
-                $new_data['source_image_url']='';
-                $new_data['thumbnail_image_url']='';
-                return $this->respond($this->format($new_data));
+         $userId = empty($request->uid) ? $user_id : $request->uid;
 
-            }else{
-                $new_data['source_image_url']=$http.'/api/gxsc/show-ico/'.$res->image;
-                $new_data['thumbnail_image_url']=$http.'/api/gxsc/show-ico/'.'thu_'.$res->image;
-                return $this->respond($this->format($new_data));
-            }
+
+        $user_info = \DB::table('ys_member')->where('user_id',$userId)->first();
+
+         //该判断主要是为了怕uid为乱写的情况下
+        if (empty($user_info)){
+            return $this->setStatusCode(1039)->respondWithError($this->message);  //该用户不存在
         }
+
+        $new_data['source_image_url']= empty($user_info->image) ? "" : $http.'/api/gxsc/show-ico/'.$user_info->image;
+        $new_data['thumbnail_image_url']= empty($user_info->image) ? "" : $http.'/api/gxsc/show-ico/'.'thu_'.$user_info->image;
+        return $this->respond($this->format($new_data));
+
 
     }
 
