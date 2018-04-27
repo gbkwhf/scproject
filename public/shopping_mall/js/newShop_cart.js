@@ -15,7 +15,7 @@
 					//					console.log(con);
 					var html = '';
 					$.each(con, function(c, t) {
-						html += "<div class='shopCartCon' suppid=" + con[c].supplier_id + " supContent=" + t.supplier_name + " freePrice=" + t.free_shipping + " shop_price="+data.result.shipping_price+" conPrice=" + data.result.price + ">" +
+						html += "<div class='shopCartCon' suppid=" + con[c].supplier_id + " supContent=" + t.supplier_name + " freePrice=" + t.free_shipping + " shop_price=" + data.result.shipping_price + " conPrice=" + data.result.price + ">" +
 							"<div class='storeBox'>" +
 							"<div class='checkLeft'>" +
 							"<label class='seconLabel'>" +
@@ -41,7 +41,7 @@
 							var number = goodList[k].number == "" ? "无" : goodList[k].number; //商品数量
 							var state = stateCheck(goodList[k].state, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price); //商品状态
 							var state1 = goodList[k].state == "0"; //商品状态
-							html += "<div class='storeConHei'>" +
+							html += "<div class='storeConHei' ext_id=" + ext_id + " onclick='goDetail(" + ext_id + ")'>" +
 								"<div class='nextCheck'>" + state + "</div>" +
 								"<div class='nextShopImg'>" +
 								"<img src=" + goods_url + " alt='' />" +
@@ -71,6 +71,7 @@
 					})
 					$(".shopBox1").append(html); //动态显示商品
 					allsetTotal();
+					
 				} else {
 					layer.msg(data.msg);
 				}
@@ -619,7 +620,7 @@
 									'src': $(v).find(".conStore").find("label.checked").eq(c).attr("goods_url"),
 									'number': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".inTeCon").val(),
 									'spec_name': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".shopPro1").text(),
-									'shop_price':$(v).find(".conStore").find("label.checked").eq(c).attr("shop_price"), //运费
+									'shop_price': $(v).find(".conStore").find("label.checked").eq(c).attr("shop_price"), //运费
 									//							
 								}
 								obj.arrCon.push(arrcon);
@@ -629,7 +630,7 @@
 						}
 
 					});
-//					console.log(newArr.length);
+					//					console.log(newArr.length);
 					//					for(var i = 0; i < newArr.length; i++) {
 					//						console.log(newArr);
 					//						if(newArr[i].arrCon.length==0) {
@@ -637,31 +638,31 @@
 					//						}
 					//					}
 					(function() {
-						
+
 						var i = newArr.length;
 						while(i--) {
-//							console.log(i + "=" + newArr[i]);
-							if(newArr[i].arrCon.length==0) {
+							//							console.log(i + "=" + newArr[i]);
+							if(newArr[i].arrCon.length == 0) {
 								newArr.splice(i, 1);
 							}
 						}
-//						console.log(newArr);
+						//						console.log(newArr);
 					})();
 
 					for(var i = 0; i < newArr.length; i++) {
 						for(var t = 0; t < newArr[i].arrCon.length; t++) {
-							newArr[i].sumprice += (parseFloat(newArr[i].arrCon[t].price)*1 * newArr[i].arrCon[t].number);
+							newArr[i].sumprice += (parseFloat(newArr[i].arrCon[t].price) * 1 * newArr[i].arrCon[t].number);
 						}
-						newArr[i].sumprice =newArr[i].sumprice.toFixed(2);
+						newArr[i].sumprice = newArr[i].sumprice.toFixed(2);
 					}
-					
+
 					for(var i = 0; i < newArr.length; i++) {
 						if(parseFloat(newArr[i].sumprice) < parseFloat(newArr[i].freeprice)) {
-							var proNu=0;
-							for(var j=0;j<newArr[i].arrCon.length; j++){
-								proNu +=parseFloat(newArr[i].arrCon[j].shop_price); 
+							var proNu = 0;
+							for(var j = 0; j < newArr[i].arrCon.length; j++) {
+								proNu += parseFloat(newArr[i].arrCon[j].shop_price);
 							}
-							newArr[i].mianYou=proNu;
+							newArr[i].mianYou = proNu;
 						} else {
 							newArr[i].mianYou = '包邮'
 						}
@@ -671,7 +672,7 @@
 					console.log(nextArr);
 
 					localStorage.setItem("moneyArr", JSON.stringify(nextArr));
-										window.location.href = 'formOrder.php';
+					window.location.href = 'formOrder.php';
 					//					} else {
 					//						$('.submitbox').children('p').text('您返利区的价钱为￥' + returnprice + "，非返利区的价钱为￥" + noreturnprice + "，返利区商品需大于等于￥1280才有返利，确认提交吗？");
 					//						var Layer = layer.open({
@@ -692,3 +693,7 @@
 		}, 300)
 
 	})
+	function goDetail(ext_id) {
+		//		console.log(goods_id);
+		location.href = "newShop_details.php?ext_id=" + ext_id;
+	}
