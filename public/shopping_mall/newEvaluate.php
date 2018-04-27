@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<form>
+<!-- <form> -->
     <div>
 
 
@@ -80,7 +80,7 @@
     </div>-->
 
     <button>确定</button>
-</form>
+<!-- </form> -->
 </body>
 
 </html>
@@ -89,10 +89,11 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+    let flieimg
+    $(".header_first img").attr("src",$_GET["img"])
     $("input[type=file]").change(function (e) {
-        console.log(e.currentTarget.files)
-        let addfile=[]
         let file=getObjectURL(this.files[0])
+        flieimg=this.files[0]
         $("#addImg").append("<img src=''/>")
         $("#addImg img:last").attr("src",file)
         $(".upflie").hide()
@@ -100,7 +101,6 @@
 
     //建立一個可存取到該file的url
     function getObjectURL(file) {
-        console.log(file)
         var url = null ;
         if (window.createObjectURL!=undefined) { // basic
             url = window.createObjectURL(file) ;
@@ -113,6 +113,7 @@
     }
 
 
+
     $("button").click(function () {
         if($("textarea[name='msg']").val()==""){
             layer.msg("评论为空")
@@ -121,15 +122,19 @@
             layer.msg("给点面子，在写的点吧！")
             return false
         }else {
+            console.log(flieimg)
             $.ajax({
                 type: "post",
                 url: commonsUrl + "/api/gxsc/publish/goods/comment" + versioninfos,
                 data: {
-                    address_id:id,
-                    ss: getCookie('openid')
+                    buy_goods_id:$_GET["buy_goods_id"],
+                    ss: getCookie('openid'),
+                    contents:$("textarea[name='msg']").val(),
+                    image:flieimg
                 },
                 success: function(data) {
                     console.log(data)
+                    
                 }
             });
         }

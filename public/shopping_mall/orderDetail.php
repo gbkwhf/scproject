@@ -104,7 +104,7 @@
 		$.ajax({
 			type: 'POST',
 			dataType: "json",
-			url: commonsUrl + '/api/gxsc/v2/get/base_order/info' + versioninfos,
+			url: commonsUrl + 'api/gxsc/v2/get/base_order/info' + versioninfos,
 			data: {
 				base_order_id: $_GET['base_order_id'],
 				ss: getCookie('openid')
@@ -155,7 +155,7 @@
 		$.ajax({
 			type: 'POST',
 			dataType: "json",
-			url: commonsUrl + '/api/gxsc/v2/get/sub_order/info' + versioninfos,
+			url: commonsUrl + 'api/gxsc/v2/get/sub_order/info' + versioninfos,
 			data: {
 				sub_order_id: $_GET['sub_order_id'],
 				ss: getCookie('openid')
