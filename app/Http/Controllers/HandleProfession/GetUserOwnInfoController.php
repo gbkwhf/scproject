@@ -72,8 +72,8 @@ class GetUserOwnInfoController extends Controller{
             return $this->setStatusCode(1044)->respondWithError($this->message);
         }
 
-        //(3)判断用户所 提现金额手续费(提现金额的3%) + 提现金额   是否小于等于 用户余额
-        $require_money = $request->money + ($request->money / 100 * 3);
+        //(3)判断用户所 提现金额手续费(提现金额的5%) + 提现金额   是否小于等于 用户余额
+        $require_money = $request->money + ($request->money / 100 * 5);
         if($require_money >  $is_member->balance){ //余额不足 1102
             return $this->setStatusCode(1102)->respondWithError($this->message);
         }
