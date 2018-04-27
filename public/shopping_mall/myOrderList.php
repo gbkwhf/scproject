@@ -81,6 +81,9 @@
 					
 			</div>
 		</div>
+
+	<p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">暂无商品,敬请期待!</p>	
+		
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -152,6 +155,11 @@
 					try {
 						if (res.code == "1") {
 							let data = res.result
+							if(data.length==0){
+								$(".show").show()
+							}else{
+								$(".show").hide()
+							}
 							for (let val=0; val<data.length;val++) {
 
 								if(val>=0){
@@ -310,6 +318,11 @@
 				try {
 					if (res.code == "1") {
 						let data = res.result
+						if(data.length==0){
+								$(".show").show()
+							}else{
+								$(".show").hide()
+							}
 						for (let val=0; val<data.length;val++) {
 							$(".shopInfoBox").append(' <div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">交易成功</div></div>')
 								let temp = $("#commentList").html()
