@@ -41,9 +41,9 @@
 							var number = goodList[k].number == "" ? "无" : goodList[k].number; //商品数量
 							var state = stateCheck(goodList[k].state, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price); //商品状态
 							var state1 = goodList[k].state == "0"; //商品状态
-							html += "<div class='storeConHei' ext_id=" + ext_id + " onclick='goDetail(" + ext_id + ")'>" +
+							html += "<div class='storeConHei' >" +
 								"<div class='nextCheck'>" + state + "</div>" +
-								"<div class='nextShopImg'>" +
+								"<div class='nextShopImg' ext_id=" + ext_id + " onclick='goDetail(" + ext_id + ")'>" +
 								"<img src=" + goods_url + " alt='' />" +
 								"</div>" +
 								"<div class='rightDiv'>" +
