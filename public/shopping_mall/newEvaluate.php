@@ -17,7 +17,7 @@
     <div>
         <div class="header">
             <div class="header_first">
-                <img src="images/shopImage.png" alt="">
+                <img src="" alt="">
             </div>
             <div class="header_last">
                 <p>商品评分</p>
@@ -86,47 +86,14 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-    
+    let flieimg=new FormData(); 
     $(".header_first img").attr("src",$_GET["img"])
     $("input[type=file]").change(function (e) {
         let file=getObjectURL(this.files[0])
+        flieimg.append("upfile",this.files[0])
         $("#addImg").append("<img src=''/>")
         $("#addImg img:last").attr("src",file)
         $(".upflie").hide()
-        let flieimg=new FormData(); 
-        flieimg.append("upfile",this.files[0])
-        flieimg.append("ss",getCookie('openid'))
-        flieimg.append("buy_goods_id",$_GET["buy_goods_id"])
-        $("button").click(function () {
-            if($("textarea[name='msg']").val()==""){
-                layer.msg("评论为空")
-                return false
-            }else if($("textarea[name='msg']").val().length<=10){
-                layer.msg("给点面子，在写的点吧！")
-                return false
-            }else {
-                console.log(flieimg)
-                flieimg.append("contents",$("textarea[name='msg']").val())
-                $.ajax({
-                    url: commonsUrl + "/api/gxsc/publish/goods/comment" + versioninfos,
-                    type: "post",
-                    dataType: 'JSON',    
-                    cache: false,    
-                    processData: false,    
-                    contentType: false,
-                    async:false,
-                    data: flieimg,
-                    success: function(res) {
-                        console.log(res)
-                        if(res.code==1){
-                            layer.msg("评价成功")
-                        }else{
-                            layer.msg(res.msg)
-                        }
-                    }
-                });
-            }
-        })
     })
 
     //建立一個可存取到該file的url
@@ -142,7 +109,38 @@
         return url ;
     }
 
-
+        $("button").click(function () {
+            if($("textarea[name='msg']").val()==""){
+                layer.msg("评论为空")
+                return false
+            }else if($("textarea[name='msg']").val().length<=5){
+                layer.msg("给点面子，在写的点吧！")
+                return false
+            }else {
+                flieimg.append("ss",getCookie('openid'))
+                flieimg.append("buy_goods_id",$_GET["buy_goods_id"])
+                flieimg.append("contents",$("textarea[name='msg']").val())
+                $.ajax({
+                    url: commonsUrl + "/api/gxsc/publish/goods/comment" + versioninfos,
+                    type: "post",
+                    dataType: 'JSON',    
+                    cache: false,    
+                    processData: false,    
+                    contentType: false,
+                    async:false,
+                    data: flieimg,
+                    success: function(res) {
+                        console.log(res)
+                        if(res.code==1){
+                            layer.msg("评价成功")
+                            location.href='myOrderList.php?orderId=2'
+                        }else{
+                            layer.msg(res.msg)
+                        }
+                    }
+                });
+            }
+        })
 
     
 </script>
