@@ -296,7 +296,13 @@ class MemberController  extends Controller
  		$member->where('ys_bills.type','=',$request->type);
  		$search['type']=$request->type;
  	} 	
- 	$data = $member->select('ys_member.name','ys_member.mobile','amount','pay_describe','type','ys_bills.created_at') ->paginate(10);
+ 	if ($request->agency != ''){
+ 		$member->where('ys_employee.agency_id','=',$request->agency);
+ 		$search['agency']=$request->agency;
+ 	} 	
+ 	$data = $member->select('ys_member.invite_id','ys_member.name','ys_member.mobile','amount','pay_describe','type','ys_bills.created_at')
+ 			->leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 	 		->paginate(10);
  	
 
  	
@@ -311,7 +317,131 @@ class MemberController  extends Controller
  	);
  	foreach ($data as &$val){
  		$val['type']=$typeArr[$val['type']];
+ 		
+ 		
+ 		
+ 		//邀请人
+ 		$invite_info=\App\MemberModel::where('ys_member.user_id',$val->invite_id)
+ 		->leftjoin('ys_employee','ys_employee.user_id','=','ys_member.user_id')
+ 		->leftjoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')
+ 		->select('ys_member.name','ys_agency.name as agency_name')
+ 		->first();
+ 		$agenyc_name=empty($invite_info->agency_name)?'':"($invite_info->agency_name)";
+ 			
+ 		$val['invite_id']=empty($val->invite_id)?'':$invite_info->name.$agenyc_name;
+ 		
  	}
- 	return view('membercashbacklist',['data'=>$data,'search'=>$search,'total'=>$total]);
+ 	 	//所有经销商
+ 	$agency_list=\App\AgencyModel::get();
+ 	return view('membercashbacklist',['data'=>$data,'search'=>$search,'total'=>$total,'agency_list'=>$agency_list]);
  }
+ 
+ 
+ 
+ public function CashBackListExcel(Request $request){
+ 
+ 
+ 
+ 	$member=\App\BillModel::leftjoin('ys_member','ys_member.user_id','=','ys_bills.user_id')->orderBy('ys_bills.created_at','desc');
+ 		
+ 	$search=[];
+ 	if ($request->start != ''){
+ 		$member->where('ys_bills.created_at','>=',$request->start.' 00:00:00');
+ 		$search['start']=$request->start;
+ 	}
+ 	if ($request->end != ''){
+ 		$member->where('ys_bills.created_at','<',$request->end.' 59:59:59');
+ 		$search['end']=$request->end;
+ 	}
+ 	if ($request->mobile != ""){
+ 		$member->where('ys_member.mobile','like','%'.$request->mobile.'%');
+ 		$search['mobile']=$request->mobile;
+ 	}
+ 	if ($request->name != ""){
+ 		$member->where('ys_member.name','like','%'.$request->name.'%');
+ 		$search['name']=$request->name;
+ 	}
+ 	if ($request->type != ""){
+ 		$member->where('ys_bills.type','=',$request->type);
+ 		$search['type']=$request->type;
+ 	}
+ 	if ($request->agency != ''){
+ 		$member->where('ys_employee.agency_id','=',$request->agency);
+ 		$search['agency']=$request->agency;
+ 	}
+ 	//会员名	手机号	金额	描述	类型	门店  员工 	时间
+ 	$data = $member->select('ys_member.name','ys_member.mobile','amount','pay_describe','type','ys_member.invite_id as store_name','ys_member.invite_id as employee_name','ys_bills.created_at')
+ 	->leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
+ 	->get();
+ 	
+ 	
+ 	
+ 	
+ 	$total=$member->sum('ys_bills.amount');
+ 	
+ 	//1购物日返，2邀请返利，3系统返现 ，4购物月返
+ 	$typeArr=array(
+ 			'1'=>'购物日返',
+ 			'2'=>'邀请返现',
+ 			'3'=>'系统返现',
+ 			'4'=>'购物月返',
+ 			'5'=>'',
+ 	);
+ 	foreach ($data as &$val){
+ 		$val['type']=$typeArr[$val['type']];
+ 			
+ 			
+ 			
+ 		//邀请人
+ 		$invite_info=\App\MemberModel::where('ys_member.user_id',$val->store_name)
+ 		->leftjoin('ys_employee','ys_employee.user_id','=','ys_member.user_id')
+ 		->leftjoin('ys_agency','ys_agency.id','=','ys_employee.agency_id')
+ 		->select('ys_member.name','ys_agency.name as agency_name')
+ 		->first();
+ 		$agenyc_name=empty($invite_info->agency_name)?'':"$invite_info->agency_name";
+ 	
+ 		//$val['invite_id']=empty($val->invite_id)?'':$invite_info->name.$agenyc_name;
+ 		
+ 		$val['store_name']=empty($val->store_name)?'':$agenyc_name;
+ 		$val['employee_name']=empty($val->store_name)?'':$invite_info->name;
+ 		
+ 			
+ 	}
+ 	
+ 
+ //dd($data);
+ 
+ 	$arr_data=$data->toArray();
+ 	if (empty($arr_data)){
+ 		return back();
+ 	}
+ 	//，
+ 	foreach($arr_data as $k=>$v){
+ 		$new_arr[$k]=$v;
+ 	}
+ 	// 输出Excel文件头，可把user.csv换成你要的文件名
+ 	header('Content-Type: application/vnd.ms-excel');
+ 	header('Content-Disposition: attachment;filename="用户返现列表.csv"');
+ 	header('Cache-Control: max-age=0');
+ 
+ 	// 打开PHP文件句柄，php://output 表示直接输出到浏览器
+ 	$fp = fopen('php://output', 'a');
+ 
+ 	// 输出Excel列名信息 会员名	手机号	金额	描述	类型	门店  员工 	时间
+ 	$head = array('会员名','注册手机','金额','描述','类型','门店','员工','时间');
+ 	foreach ($head as $i => $v) {
+ 		// CSV的Excel支持GBK编码，一定要转换，否则乱码
+ 		$head[$i] = iconv('utf-8', 'gbk',$v);
+ 	}
+ 	// 将数据通过fputcsv写到文件句柄
+ 	fputcsv($fp, $head);
+ 	foreach ($new_arr as $key => $val) {
+ 		foreach($val as $k=>$v){
+ 			$new[$k] = iconv('utf-8', 'gbk//IGNORE', strval($v)."\t");
+ 		}
+ 		fputcsv($fp, $new);
+ 	}
+ 
+ }
+ 
 }

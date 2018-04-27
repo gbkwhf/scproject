@@ -133,6 +133,9 @@ class SupplierController  extends Controller
      ];
      $validator = \Validator::make($input,$rules,$massage);
      if($validator->passes()){
+     	if($request->class_id <= 0){
+     		return back() -> with('errors','门店分类未选择');
+     	}
 
 
          if ($request->hasFile('image')){//图片上传
@@ -227,8 +230,15 @@ class SupplierController  extends Controller
          'password.required' =>'密码不能为空',
      ];
      $validator = \Validator::make($input,$rules,$massage);
+     
 
-     if($validator->passes()){
+     
+     
+
+     if($validator->passes()){     	
+     	if($request->class_id <= 0){
+     		return back() -> with('errors','门店分类未选择');
+     	}
 
 
          if ($request->hasFile('image')){//图片上传

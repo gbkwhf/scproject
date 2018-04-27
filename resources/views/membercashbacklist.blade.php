@@ -36,6 +36,14 @@
                   <div class="box-tools2 ">
                       <form class="form-horizontal" id ="form_action" action="{{url('member/cashbacklist')}}" method="get">
                           <div style="width: 800px;" class="input-group input-group-sm row">
+                             <div class="col-lg-2">
+	                            <select name="agency"  class="form-control pull-right"  style="width: 150px">
+	                                <option value="">经销商</option>
+			                          @foreach ($agency_list as $agency)
+			                          <option @if(isset($_GET['agency'])) @if($_GET['agency'] == $agency->id) selected="selected" @endif @endif value="{{$agency->id}}">{{$agency->name}}</option>
+			                          @endforeach
+	                            </select>
+                              </div>                           
                               <div class="col-lg-2">
                                   <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
                               </div>
@@ -45,9 +53,11 @@
                              <div class="col-lg-2">
 	                            <select name="type"  class="form-control pull-right"  >	                                
                                     <option value=''>类型</option>
-                                    <option @if(isset($_GET['type']) && $_GET['type'] == 1) selected @endif  value="1">购物返现</option>
+                                    <option @if(isset($_GET['type']) && $_GET['type'] == 1) selected @endif  value="1">购物日返</option>
                                     <option @if(isset($_GET['type']) && $_GET['type'] == 2) selected @endif value="2">邀请返现</option>
                                     <option @if(isset($_GET['type']) && $_GET['type'] == 3) selected @endif value="3">系统返现</option>
+                                    <option @if(isset($_GET['type']) && $_GET['type'] == 4) selected @endif value="4">购物月返</option>
+                                    
 	                            </select>
                               </div>                                
                               <div class="col-lg-2">
@@ -58,7 +68,7 @@
                                   <input type="text" placeholder="会员名" class="form-control  " style="float:left;width:141px" name="name" value="{{ $_GET['name'] or ''}}">
                                   <button class="btn btn-default" style="position:absolute;right:-47px;height:34px;" type="submit"><i class="fa fa-search"></i></button>                                  
                               </div>
-
+                              <div style="position:absolute;right:-120px;margin-top:-12px;"> <button type="button" class="btn bg-olive margin" onclick="getOrderExcel()">导出</button></div>
                           </div>
                       </form>
                   </div>
@@ -72,6 +82,7 @@
                   <th>金额</th>
                   <th>描述</th>
                   <th>类型</th>
+                  <th>来源</th>
                    <th>时间</th>
                 </tr>                
                 @foreach ($data as $member)    				
@@ -81,6 +92,7 @@
 	                  <td>{{ $member->amount }}</td>	                  
 	                  <td>{{ $member->pay_describe }}</td>
 	                  <td>{{ $member->type }}</td>
+	                  <td>{{ $member->invite_id }}</td>
 	                  <td>{{ $member->created_at }}</td>	
 	                </tr>                
 				@endforeach               
@@ -104,5 +116,13 @@
             elem: '#end', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
             event: 'focus' //响应事件。如果没有传入event，则按照默认的click
         });
+
+        function getOrderExcel(){
+        	$("#form_action").attr('action',"{{ url('member/cashbacklistexcel') }}");
+        	$("#form_action").attr('method','post');	
+        	$("#form_action").submit();
+        	$("#form_action").attr('action',"{{ url('member/cashbacklist') }}");
+        	$("#form_action").attr('method','get');	        	        	
+        } 
     </script>
 @endsection

@@ -61,9 +61,8 @@ class SupplierManageController  extends Controller
  	];
  	foreach ($data as $val){
  		$goods_name='';
- 		$goods_list=\App\OrderGoodsModel::where('sub_id',$val->order_id)
- 						->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
- 						->selectRaw("ys_goods.name,ys_goods.supplier_price,ys_order_goods.num") 						
+ 		$goods_list=\App\OrderGoodsModel::where('sub_id',$val->order_id) 						
+ 						->selectRaw("name,supplier_price,num") 						
  						->get(); 	
  		$val->pay_type=$pay_arr[$val->pay_type];
  		$val->state=empty($val->express_num)?'未发货':'已发货';
@@ -83,9 +82,8 @@ class SupplierManageController  extends Controller
  							->join('ys_base_order','ys_sub_order.base_id','=','ys_base_order.id')
  							->select('ys_sub_order.id as order_id','price','pay_type','pay_time','receive_mobile','receive_address','receive_name','express_num','express_name','ys_base_order.user_remark','ys_base_order.manage_remark')						
  							->first(); 	
- 	$goods_name=\App\OrderGoodsModel::where('sub_id',$request->id)
- 							->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
- 							->selectRaw("GROUP_CONCAT(concat(ys_goods.name,'(',ys_order_goods.num,'件)')) as goods_name")
+ 	$goods_name=\App\OrderGoodsModel::where('sub_id',$request->id) 							
+ 							->selectRaw("GROUP_CONCAT(concat(name,'(',num,'件)')) as goods_name")
  							->get(); 	 
  	$data['goods_name']=$goods_name[0]->goods_name;
  	$data['receive_address']=$data['receive_name'].'，'.$data['receive_mobile'].'，'.$data['receive_address'];
@@ -115,8 +113,7 @@ class SupplierManageController  extends Controller
          
          $info = \App\SubOrderModel::where('ys_sub_order.id',$request->id)
          		->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
-         		->leftjoin('ys_goods','ys_goods.id','=','ys_order_goods.goods_id')
-         		->select('ys_sub_order.supplier_id','ys_goods.supplier_price','ys_order_goods.num')         		
+         		->select('ys_sub_order.supplier_id','ys_order_goods.supplier_price','ys_order_goods.num')         		
          		->get();
          $supplier_amount=0;
 		foreach ($info as $val){
@@ -191,9 +188,8 @@ class SupplierManageController  extends Controller
  		
  		
  		//商品总数统计
- 		$total_goods=\App\OrderGoodsModel::where('sub_id',$val->order_id)
- 		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
- 		->selectRaw("ys_goods.name,sum(ys_order_goods.num) as goods_num")
+ 		$total_goods=\App\OrderGoodsModel::where('sub_id',$val->order_id) 		
+ 		->selectRaw("ys_order_goods.name,sum(ys_order_goods.num) as goods_num")
  		->groupBy('name')
  		->get();
  		foreach ($total_goods as $v){
@@ -207,7 +203,7 @@ class SupplierManageController  extends Controller
  		$supplier_amount=0;
  		$goods_list=\App\OrderGoodsModel::where('sub_id',$val->order_id)
  		->leftjoin('ys_goods','ys_order_goods.goods_id','=','ys_goods.id')
- 		->selectRaw("ys_goods.name,ys_goods.supplier_price,ys_order_goods.num")
+ 		->selectRaw("ys_goods.name,ys_order_goods.supplier_price,ys_order_goods.num")
  		->get();
  		foreach ($goods_list as $g){
  			$supplier_amount+=$g->supplier_price*$g->num;
