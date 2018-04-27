@@ -163,7 +163,6 @@
 
 								let num
 								for(let vals=0; vals<data[val].goods_list.length;vals++){
-									console.log(data[val].sub_id)
 									num=data[val].goods_list.length
 										let temp = $("#commentList").html()
 										temp = temp.replace("{{image}}", data[val].goods_list[vals].image)
@@ -181,7 +180,7 @@
 										$(".shopInfoBox").append(aa)
 
 									}else if(id==1){
-										let pay=parseInt(data[val].price)+parseInt(data[val].shipping_price)
+										let pay=parseFloat(data[val].price)+parseFloat(data[val].shipping_price)
 										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+pay+'元(含运费'+data[val].shipping_price+'元)</span></div><div class="wuliuConter"><span class="checkcont phy" id='+data[val].goods_list[0].sub_id+'>查看物流</span><span class="checkcont aff" id="'+data[val].goods_list[0].sub_id+'">确定收货</span></div></div>'
 										$(".shopInfoBox").append(aa)
 										
@@ -312,17 +311,17 @@
 					if (res.code == "1") {
 						let data = res.result
 						for (let val=0; val<data.length;val++) {
-							$(".shopInfoBox").before(' <div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">交易成功</div></div>')
-									let temp = $("#commentList").html()
-									temp = temp.replace("{{image}}", data[val].image)
-									.replace("{{goods_name}}", data[val].goods_name)
-									.replace("{{spec_name}}", data[val].spec_name)
-									.replace("{{price}}", data[val].price)
-									.replace("{{num}}", data[val].num)
-									.replace("{{id}}", data[val].ext_id)
-									$(".shopInfoBox").append(temp)
-									let aa='<div class="shopNumSum"><span class="sumShop">共'+data[val].num+'件商品</span><span class="hejiCon">合计'+data[val].goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+data[val].buy_goods_id+'" data-img="'+data[val].image+'">立即评价</span></div>'
-								$(".shopInfoBox").append(aa)
+							$(".shopInfoBox").append(' <div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">交易成功</div></div>')
+								let temp = $("#commentList").html()
+								temp = temp.replace("{{image}}", data[val].image)
+								.replace("{{goods_name}}", data[val].goods_name)
+								.replace("{{spec_name}}", data[val].spec_name)
+								.replace("{{price}}", data[val].goods_price)
+								.replace("{{num}}", data[val].num)
+								.replace("{{id}}", data[val].ext_id)
+								$(".shopInfoBox").append(temp)
+								let aa='<div class="shopNumSum"><span class="sumShop">共'+data[val].num+'件商品</span><span class="hejiCon">合计'+data[val].goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+data[val].buy_goods_id+'" data-img="'+data[val].image+'">立即评价</span></div>'
+							$(".shopInfoBox").append(aa)
 						}
 
 					}

@@ -79,49 +79,21 @@
         success:function(data){
             if(data.code==1){
               console.log(data);
-			  
-			  $.ajax({
-				type:"post",
-				url: commonsUrl + "api/gxsc/user/avatar" +versioninfos,
-				data:{
-				"uid":data.result.user_id,
-				'ss':getCookie('openid')
-				},
-				success:function(res){
-					console.log(res)
-					if(res.code==1){
-						$(".QRcode").qrcode({
-							render : "canvas",    //设置渲染方式，有table和canvas，使用canvas方式渲染性能相对来说比较好
-							text : commonsUrl+"shopping_mall/register.php?user_id="+data.result.user_id,    //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
-							width : "230",            // //二维码的宽度
-							height : "230",              //二维码的高度
-							background : "#ffffff",       //二维码的后景色
-							foreground : "#000000",        //二维码的前景色
-							src: 'images/head-portrait.png'        //   二维码中间的图片
-						})
-					}else{
-						layer.msg(res.msg);
-					}
-				}
-			});
-
-
-			
-
+			  $(".head img").attr("src",data.result.thumbnail_image_url)
+			  $(".head span").text(data.result.name)
+			  $(".QRcode").qrcode({
+				render : "canvas",    //设置渲染方式，有table和canvas，使用canvas方式渲染性能相对来说比较好
+				text : commonsUrl+"shopping_mall/register.php?user_id="+data.result.user_id,    //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
+				width : "230",            // //二维码的宽度
+				height : "230",              //二维码的高度
+				background : "#ffffff",       //二维码的后景色
+				foreground : "#000000",        //二维码的前景色
+				src: data.result.thumbnail_image_url     //   二维码中间的图片
+			})
             }else{
                 layer.msg(data.msg);
             }
         }
     });
 
-
-	$(".QRcode").qrcode({
-			render : "canvas",    //设置渲染方式，有table和canvas，使用canvas方式渲染性能相对来说比较好
-            text : commonsUrl+"shopping_mall/register.php",    //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
-			width : "230",            // //二维码的宽度
-			height : "230",              //二维码的高度
-			background : "#ffffff",       //二维码的后景色
-			foreground : "#000000",        //二维码的前景色
-			 // src: 'images/shopImage.png'           二维码中间的图片
-	})
 </script>
