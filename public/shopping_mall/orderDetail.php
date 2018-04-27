@@ -120,7 +120,7 @@
 					$(".orderInBox p:nth-child(2)").text("下单时间：" + data.create_time) 
 					$(".orderInBox p:nth-child(3)").text("支付方式：" + TYPE) 
 					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
-					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont" id="'+data.base_order_id+'">立即支付</span></div>')
+					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont pay" id="'+data.base_order_id+'">立即支付</span></div>')
 					for(let i=0;i<data.info.length;i++){
 						console.log(data.info[i])
 
@@ -171,7 +171,7 @@
 					$(".orderInBox p:nth-child(2)").text("下单时间：" + data.create_time) 
 					$(".orderInBox p:nth-child(3)").text("支付方式：" + TYPE) 
 					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
-					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont"  onclick="location.href="logistical.php?sub_order_id='+data.sub_order_id+'"">查看物流</span></div><div class="wuliBox"><span class="checkcont">确认收货</span></div>')
+					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont phy"  data-id="'+data.sub_order_id+'">查看物流</span></div><div class="wuliBox"><span class="checkcont aff" data-id="'+data.sub_order_id+'">确认收货</span></div>')
 						// $(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
 						for(let j=0;j<data.goods_list.length;j++){
 							console.log(data.goods_list[j].num)
@@ -199,7 +199,7 @@
 
 
 	setTimeout(() => {
-		$(".checkcont").click(function(){
+		$(".pay").click(function(){
 			let base_order_id =$(this).attr("id")
 			$.ajax({
 				type: "post",
@@ -250,6 +250,30 @@
 				}
 			})
 		})
+
+			$(".phy").click(function(){
+				location.href='logistical.php?sub_order_id='+$(this).attr("data-id")
+			})
+
+			$(".aff").click(function(){
+				$.ajax({
+					type: "post",
+					dataType: "json",
+					url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
+					data: {
+						sub_order_id: $(this).attr("data-id"),
+						ss: getCookie('openid')
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.code==1){
+							layer.msg("确认成功")
+						}else{
+							layer.msg(res.msg)
+						}
+					}
+				})
+			})
 	}, 200);
 	
 </script>
