@@ -63,21 +63,33 @@ class NotifyController extends Controller
                 'amount'=>$result['price'],//实际收到的总金额
             ];
 
-            DB::beginTransaction(); //开启事务
+            //需要用来更新销量的数组
+            $sales_arr = $this->array_unset_tt($order_info,'goods_id');
+
+            foreach($sales_arr as $k=>$v){
+
+                $buy_num_tmp = 0;
+                foreach($order_info as $kk=>$vv){
+
+                    if($v->goods_id == $vv->goods_id){
+
+                        $buy_num_tmp  += $vv->buy_num;
+                    }
+                }
+                $sales_arr[$k]->buy_num = $buy_num_tmp;
+            }
+
+
+            \DB::beginTransaction(); //开启事务
             //更新主订单信息
             $update1 = \DB::table('ys_base_order')->where('id',$order_id)->update($base);
 
-            //更新商品销量和库存
-            $update_arr = [];
+            $update_arr = [];//更新商品库存
+            $update_arr_goods = []; //更新商品销量
+
             foreach($order_info as $k=>$v){
 
-                if($v->rest_num > $v->buy_num){ //库存充足
-
-                    //更新销量
-                    $update_sales = \DB::table('ys_goods')->where('id',$v->goods_id)->update([
-                                        'sales'=>$v->sales + $v->buy_num,
-                                        'updated_at'=>\DB::Raw('Now()')
-                                    ]);
+                if($v->rest_num >=  $v->buy_num){ //库存充足
 
                     //更新库存
                     $update_num = \DB::table('ys_goods_extend')->where('id',$v->ext_id)->update([
@@ -86,25 +98,43 @@ class NotifyController extends Controller
 
                                     ]);
 
-                    $update = ($update_sales && $update_num) ? 1 : 0;
-
                 }else{//库存不足
-                    $update = 0;
-                    \Log::info('low stocks，goods_id is '.$v->goods_id);
+                    $update_num = 0;
+                    \Log::info('low stocks，goods_id is '.$v->goods_id." ext_id is ".$v->ext_id);
                 }
 
-                array_push($update_arr,$update);
+                array_push($update_arr,$update_num);
             }
+
+
+            foreach($sales_arr as $k=>$v){
+
+                //更新销量
+                $update_sales = \DB::table('ys_goods')->where('id', $v->goods_id)->update([
+                    'sales' => $v->sales + $v->buy_num,
+                    'updated_at' => \DB::Raw('Now()')
+                ]);
+
+                array_push($update_arr_goods, $update_sales);
+            }
+
 
             //下面这个循环的目的是为了保证使用循环更新时的每一项都成功
             foreach($update_arr as $k=>$v){
                 if(!$v){
                     \DB::rollBack();
-                    \Log::info('goodsorder_fail');
+                    \Log::info('goods update kucun is fail');
                     return $result['return_msg _fail'];
                 }
             }
 
+            foreach ($update_arr_goods as $k => $v) {
+                if (!$v) {
+                    \DB::rollBack();
+                    \Log::info('goods update sales is fail');
+                    return $result['return_msg _fail'];
+                }
+            }
             /**
              * 最后提交事务，并且返回主订单id
              */
@@ -119,6 +149,27 @@ class NotifyController extends Controller
             }
 
         }
+    }
+
+
+    //根据二维数组某个字段的值去重
+    //$arr->传入数组   $key->判断的key值
+    public function array_unset_tt($arr,$key){
+        //建立一个目标数组
+        $res = array();
+        foreach ($arr as $value) {
+            //查看有没有重复项
+
+            if(isset($res[$value->$key])){
+                //有：销毁
+                unset($value);
+            }
+            else{
+
+                $res[$value->$key] = $value;
+            }
+        }
+        return $res;
     }
 
 

@@ -197,6 +197,10 @@ Route::group([
           Route::post('get/rebate/bill/list','OtherOnlyController@getRebateBill');
 
 
+    //测试专用
+    Route::post('get/test/data','OtherOnlyController@getTestData');
+
+
         /**
          * 购物车模块  登陆状态才可以访问
          */
@@ -242,6 +246,7 @@ Route::group([
 
 
 });
+
 
 
 
