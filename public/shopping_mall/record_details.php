@@ -264,7 +264,7 @@
 
 		$.ajax({
 			type:"post",
-			url:commonsUrl + "api/gxsc/get/commodity/base_order/info" + versioninfos,
+			url:commonsUrl + "/api/gxsc/v2/get/base_order/info" + versioninfos,
 			data:{'ss':getCookie('openid'),'base_order_id':$_GET['base_order_id']},
 			success:function(data){
 				if(data.code==1){
