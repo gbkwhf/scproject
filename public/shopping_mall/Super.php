@@ -26,7 +26,7 @@
 		<div class="msg">
 			<ul class="tem">
 				<script type="text/html" id="commentList">
-				<li onclick="location.href='reclassify.php?store_first_id={{store_id}}'">
+				<li onclick="location.href='reclassify.php?store_id={{store_id}}'">
 					<div>
 						<img src="{{logo}}" />
 						<p>
@@ -106,7 +106,7 @@
 			let index = $(this).index()
 			$(this).addClass("select").siblings().removeClass("select");
 			// $(".msg li").hide().eq(index).show()
-
+			page=1
 			$(".tem li").remove()
 
 			shop(store_second_id,page)

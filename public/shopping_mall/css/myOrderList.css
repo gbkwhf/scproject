@@ -7,7 +7,7 @@ body,html{
 		   	background-color: #fff;
 		}
 		.ordeBox{
-			width: 27%;
+			width: 33%;
 			height: 55px;
 			/*background-color: lightgoldenrodyellow;*/
 			font-size: 15px;
@@ -16,7 +16,7 @@ body,html{
 			float: left;
 		}
 		.ordeBox1{
-			width: 16%;
+			/* width: 16%; */
 			height: 55px;
 			/*background-color: lightgoldenrodyellow;*/
 			font-size: 15px;
@@ -29,15 +29,21 @@ body,html{
 			margin-left: 17px;
 		}
 		.fukuan{
-			width: 46px;
+			width: 50px;
+			margin: auto
 			/*margin-left: 16px;*/
 		}
 		.fukuan1{
 			width: 46px;
+			margin: auto
 		}
-		#pingjia{
+		.fukuan2{
+			width: 46px;
+			margin: auto
+		}
+		/* #pingjia{
 			margin-left: 10%;
-		}
+		} */
 		/*添加样式*/
 		.getStyle{
 			color: #e63737;
@@ -80,7 +86,7 @@ body,html{
 			height: 104px;
 			width: 100%;
 			/*background-color: red;*/
-			margin-bottom: 22px;
+			margin: 22px 0;
 		}
 		.shopInfoBox{
 			padding-top: 20px;

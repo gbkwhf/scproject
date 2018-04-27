@@ -66,7 +66,7 @@
 				<p>手机号</p>
 				<span></span>
 			</li>	
-			<li onclick="location.href='QRcode.html'"> 
+			<li onclick="location.href='QRcode.php'"> 
 				<p>我的二维码</p>
 				<p>
 					<img style="width: 23px;height: 23px;margin-right: 10.5px;" src="images/QRcode.png" alt="">

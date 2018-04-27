@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/common.css" />
 		<link rel="stylesheet" type="text/css" href="css/newShop_details.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper-3.4.0.min.css">
+
 	</head>
 	<script>
 		//解决IOS微信webview后退不执行JS的问题
@@ -159,8 +160,10 @@
 		<div class="shopImg"></div>
 		<!------------商品评价------------>
 		<div class="shopApprarise aa" id="003">商品评价</div>
-		<div class="apprariseBox">
-			<!--<div class="apprariseNav">
+		<div id="refreshContainer" class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="apprariseBox">
+					<!--<div class="apprariseNav">
 				<div class="userMessage">
 					<div class="userImg">
 						<img src="images/userImg1.png" />
@@ -172,6 +175,8 @@
 				</div>
 				<div class="evaluationContent"></div>
 			</div>-->
+				</div>
+			</div>
 		</div>
 
 	</body>
@@ -179,6 +184,7 @@
 	<script type="text/javascript" src="js/shopDetails.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript" src="js/config.js"></script>
+	<script src="js/mui.min.js"></script>
 	<script type="text/javascript" src="js/swiper-3.4.0.min.js"></script>
 	<script type="text/javascript" src="js/shopDetails.js"></script>
 	<script type="text/javascript" src="js/layer/layer.js"></script>
@@ -233,34 +239,47 @@
 							$('.postNum1').html(rebate_amount + '积分'); //返利积分
 
 							//---------------循环图片（轮播图）-----
+							var t='';
 							$.each(goods_image, function(k, v) {
 								var src = goods_image[k].image;
-								var imgId = goods_image[k].img_id;
-								var t = "<div class='swiper-slide'><image src=" + src + "/></div>";
-								$('.swiper-wrapper').append(t)
-							});
 
-							var img = '';
-							var imConShow = $(".swiper-slide-active img").attr("src");
-							img += '<div class="attrImg"><img src=' + imConShow + ' /></div>' +
-								'<div class="selectName">' +
-								'<p class="shop_name">' + goods_name + '</p>' +
-								'<p class="selectAttr"></p>' +
-								'</div>';
-							$('.attrHead').html(img);
-							$.each(nameBox, function(k, v) {
-								var conTT = $(v).find(".typeHide").html();
-								var attrCon = $(v).find(".typeHide").attr('data-id');
-								if(conTT == undefined) {
-									conTT = '请选择' + arr[k].name;
-
-								} else {
-									conTT = conTT;
-								}
-								biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+								//var imgId = goods_image[k].img_id;
+								 t+= "<div class='swiper-slide'><image src=" + src + "/></div>";
+								
 							});
-							$(".selectAttr").html('已选：' + biaoqian);
-							$('.attributes').html('已选：' + biaoqian);
+						    $('.swiper-wrapper').html(t)
+								var img = '';
+								img += '<div class="attrImg"><img src=""/></div>' +
+									'<div class="selectName">' +
+									'<p class="shop_name">￥' + price + '</p>' +
+									'<p class="selectAttr"></p>' +
+									'</div>';
+									
+								$('.attrHead').html(img);
+						
+								setTimeout(function(){
+									var imConShow = $("#001 .swiper-slide-active img").attr("src");
+									console.log(imConShow);
+									$(".attrImg img").attr('src',imConShow)
+								},300)
+								
+
+						
+								$.each(nameBox, function(k, v) {
+									var conTT = $(v).find(".typeHide").html();
+									var attrCon = $(v).find(".typeHide").attr('data-id');
+									if(conTT == undefined) {
+										conTT = '请选择' + arr[k].name;
+
+									} else {
+										conTT = conTT;
+									}
+									biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+								});
+								$(".selectAttr").html('已选：' + biaoqian);
+								$('.attributes').html('已选：' + biaoqian);
+							
+
 						}
 						//swiper插件实现轮播图
 						var mySwiper = new Swiper('.swiper-container', {
@@ -313,54 +332,89 @@
 			//---------------评价列表-------------
 
 			var winH = $('.apprariseBox').height();
-			$.ajax({
-				type: "post",
-				dataType: 'json',
-				url: commonsUrl + 'api/gxsc/getgoodsextendinfo' + versioninfos,
-				data: {
-					"ss": getCookie('openid'),
-					"ext_id": ext_id
-				},
-				success: function(data) {
-					console.log(data)
-					if(data.code == 1) {
-						var cont = data.result.comment_list;
-						if(cont.length != 0) {
-							var html = '';
-							$.each(cont, function(k, v) {
-								var comment_image = cont[k].comment_image; //评论图
-								var create_time = cont[k].create_time; //时间
-								var images = cont[k].image; //用户头像
-								var name = cont[k].name; //用户名
-								var user_comment = cont[k].user_comment; //评论内容
-								if(images == '') {
-									thumbnail_image_url = 'images/head-portrait.png'
+			pages = 1;
+			showajax(pages);
+
+			function showajax(pages) {
+				layer.ready(function() {
+					layer.load(2);
+				})
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: commonsUrl + 'api/gxsc/getgoodsextendinfo' + versioninfos,
+					data: {
+						"ss": getCookie('openid'),
+						"page": pages, //分页
+						"ext_id": ext_id
+					},
+					success: function(data) {
+						console.log(data)
+						layer.closeAll();
+						if(data.code == 1) {
+							var cont = data.result.comment_list;
+							if(cont.length == 0 && pages == 1) {
+								layer.closeAll();
+								$('.apprariseBox').html('<p>暂无评论哦!</p>');
+								$('.apprariseBox p').css({
+									'text-align': 'center',
+									'color': '#c6bfbf',
+									'line-height': winH + 'px'
+								});
+							} else {
+								console.log(cont);
+								var html = '';
+								$.each(cont, function(k, v) {
+									var comment_image = cont[k].comment_image; //评论图
+									var create_time = cont[k].create_time; //时间
+									var images = cont[k].image; //用户头像
+									var name = cont[k].name; //用户名
+									var user_comment = cont[k].user_comment; //评论内容
+									if(images == '') {
+										images = 'images/head-portrait.png'
+									}
+									html += '<div class="apprariseNav">' +
+										'<div class="userMessage">' +
+										'<div class="userImg">' +
+										'<img src=' + images + ' />' +
+										'</div>' +
+										'<div class="userName">' +
+										'<p class="user-name">' + name + '</p>' +
+										'</div>' +
+										'<div class="apprariseDate">' + create_time + '</div>' +
+										'</div>' +
+										'<div class="evaluationContent">' + user_comment + '</div>' +
+										'</div>'
+								});
+								$('.apprariseBox').append(html); //动态显示评论列表
+								if(cont.length > 0) {
+									mui('#refreshContainer').pullRefresh().refresh(true);
+								} else {
+									layer.msg("已经到底了");
+									mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 								}
-								html += '<div class="apprariseNav">' +
-									'<div class="userMessage">' +
-									'<div class="userImg">' +
-									'<img src=' + images + ' />' +
-									'</div>' +
-									'<div class="userName">' +
-									'<p class="user-name">' + name + '</p>' +
-									'</div>' +
-									'<div class="apprariseDate">' + create_time + '</div>' +
-									'</div>' +
-									'<div class="evaluationContent">' + user_comment + '</div>' +
-									'</div>'
-							});
-							$('.apprariseBox').append(html); //动态显示邀请列表
+
+							}
 						} else {
-							$('.apprariseBox').html('<p>暂无评论哦!</p>');
-							$('.apprariseBox p').css({
-								'text-align': 'center',
-								'color': '#c6bfbf',
-								'line-height': winH + 'px'
-							});
+							layer.msg(data.msg);
 						}
-					} else {
-						layer.msg(data.msg);
 					}
+				});
+			}
+			mui.init({
+				pullRefresh: {
+					container: '#refreshContainer', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+					auto: true, // 可选,默认false.自动上拉加载一次
+					height: 50,
+					up: {
+						callback: function() {
+								pages++;
+								showajax(pages);
+								mui('#refreshContainer').pullRefresh().refresh(true);
+
+							} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+
 				}
 			});
 			//获取购物车中的商品数量

@@ -73,7 +73,7 @@
 						if(data.result.state == 0) { //未绑定
 							location.href = 'register.php';
 						} else if(data.result.state == 1) { //已绑定
-
+						
 						}
 					} else {
 						layer.msg(data.msg);

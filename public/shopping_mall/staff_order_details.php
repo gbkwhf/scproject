@@ -51,7 +51,7 @@
 				<li>支付方式：<span>线下支付</span></li>
 			</ul>-->
 		</div>
-		<a href="javascript:;" class="submit">确认收款，提交订单</a>
+	<!--	<a href="javascript:;" class="submit">确认收款，提交订单</a>-->
 	</div>
 </body>
 <script src="js/jquery.min.js"></script>
@@ -78,7 +78,7 @@
 				//获取订单详情
 				$.ajax({
 					type:"post",
-					url:commonsUrl+"api/gxsc/get/commodity/base_order/info"+versioninfos,
+					url:commonsUrl+"/api/gxsc/v2/get/base_order/info"+versioninfos,
 					data:{
 						'ss':getCookie('openid'),
 						'base_order_id':$_GET['base_order_id']
@@ -134,28 +134,28 @@
 		}
 	});
 	
-	$('.submit').click(function(){
-		$.ajax({
-			type:"post",
-			url:commonsUrl+"api/gxsc/employee/ack/complete/user/commodity/order"+versioninfos,
-			data:{
-				'ss':getCookie('openid'),
-				'base_order_id':$_GET['base_order_id']				
-			},
-			success:function(data){
-				if(data.code==1){
-					console.log(data);
-					layer.msg('提交成功');
-					
-					setTimeout(closewin(),1000)
-					
-				}else{
-					layer.msg(data.msg);
-				}
-			}
-			
-		});
-	})
+//	$('.submit').click(function(){
+//		$.ajax({
+//			type:"post",
+//			url:commonsUrl+"api/gxsc/employee/ack/complete/user/commodity/order"+versioninfos,
+//			data:{
+//				'ss':getCookie('openid'),
+//				'base_order_id':$_GET['base_order_id']				
+//			},
+//			success:function(data){
+//				if(data.code==1){
+//					console.log(data);
+//					layer.msg('提交成功');
+//					
+//					setTimeout(closewin(),1000)
+//					
+//				}else{
+//					layer.msg(data.msg);
+//				}
+//			}
+//			
+//		});
+//	})
 	
 </script>
 <style type="text/css">

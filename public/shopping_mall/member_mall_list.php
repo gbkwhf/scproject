@@ -163,6 +163,12 @@
 							var price1 = con[k].price; //商品价格
 							var ext_id = con[k].ext_id;//商品扩展表id
 							var market_price = con[k].market_price; //原价
+							if(price1==null || price1==undefined){
+								price1='0';
+							}
+							 if(market_price==null || market_price==undefined){
+								market_price='0';
+							}
 							html += '<div class="shopListBox" goods_id=' + goods_id + ' ext_id='+ext_id+' >' +
 								'<div class="shopImg"><img src=' + images + ' /></div>' +
 								'<div class="shopListNames">' + goods_name + '</div>' +

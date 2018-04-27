@@ -69,7 +69,7 @@
 		</div>
 
 		<footer>
-			<p class="actual-payment">实付款：<span>¥3688.00</span></p>
+			<p class="actual-payment">实付款：<span>¥0.00</span></p>
 			<div class="buy-operation">
 				<p onclick="scancode()" class="scanCode">进店扫码<span>到门店付款</span></p>
 				<p onclick="createOrder()" class="substitute" style="display: none;"><span style="padding: 10px 0px 11px ;">替用户创建订单</span></p>
@@ -139,7 +139,7 @@
 						console.log(data);
 						if(data.result.length == 0) {
 							//去新增收货地址
-							$('header').html('<span onclick="location.href=\'receiving_address.php\'" style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
+							$('header').html('<span onclick="location.href=\'address.php\'" style="background:url(images/add-icon.png) no-repeat;background-size:22px 22px;background-position:15px 28px;padding-left: 41px;line-height: 78px;color: #333;overflow: hidden;display: block;">添加收货地址<img src="images/right-arrow.png" width="7" style="display: block;float: right;margin: 32px 10px 0px 0px;"></span>');
 						} else {
 							//筛选默认地址
 							for(var i = 0; i < data.result.length; i++) {
@@ -159,7 +159,7 @@
 		}
 
 		function lastpage(addressId) {
-			location.href = 'receiving_address.php?address_id=' + addressId;
+			location.href = 'address.php?address_id=' + addressId;
 		}
 
 		//身份校验
@@ -329,7 +329,7 @@
 								console.log(data);
 								layer.msg('提交成功');
 								setTimeout(function() {
-									location.href = 'index.php'
+									location.href = 'myOrderList.php'
 								}, 1000);
 							} else {
 								layer.msg(data.msg);
