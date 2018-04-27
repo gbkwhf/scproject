@@ -86,7 +86,6 @@
                   <th>订单来源</th>
                   <th>用户名</th>                  
                   <th>用户手机</th>
-                  <th>订单利润</th>
                    <th>操作</th>
                 </tr>                
                 @foreach ($data as $order)    				
@@ -97,7 +96,7 @@
 	                  <td>{{ $order->order_source }}</td>
 	                  <td>{{ $order->user_name }}</td>
 	                  <td>{{ $order->mobile }}</td>
-	                  <td>{{ $order->all_profit }}</td>	 	                  
+	                  
 	                  <td>
 	                  		<a href="{{ url('manage/orderdetial',['id'=>$order->order_id]) }}"><button class="btn bg-orange margin" type="button">订单详情</button></a>
 	                  </td>

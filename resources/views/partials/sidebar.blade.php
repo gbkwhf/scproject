@@ -14,6 +14,7 @@
                 //获取当前管理员权限  
                 	$power=\App\AdminRoleModel::where('id',Auth::user()->role)->first();
                 	$power_arr=explode(',',$power->power);
+       
 
                  	$route=explode('/',Request::path());
                  	$route1=count($route)>1?$route[1]:'';
@@ -30,7 +31,6 @@
             <li @if (in_array($current_route,['agencylist','agencyadd','agencyedit'])) class="active" @endif @if (!in_array(4,$power_arr)) style="display:none"  @endif   ><a href="{{ url('agencylist') }}"><i class="fa fa-edit"></i><span>经销商列表</span></a></li>
             <li @if (in_array($current_route,['goodslist','goods'])) class="active" @endif @if (!in_array(5,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goodslist') }}"><i class="fa fa-edit"></i><span>商品列表</span></a></li>
             <li @if (in_array($current_route_2,['manage/orderlist','manage/orderdetial'])) class="active" @endif @if (!in_array(6,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
-            <li @if (in_array($current_route_2,['manage/sendmemberbalance'])) class="active" @endif @if (!in_array(7,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/sendmemberbalance') }}"><i class="fa fa-edit"></i><span>会员返现</span></a></li>
             <li @if (in_array($current_route_2,['manage/membercashlist'])) class="active" @endif @if (!in_array(8,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/membercashlist') }}"><i class="fa fa-edit"></i><span>会员提现</span></a></li>
             <li @if (in_array($current_route_2,['manage/suppliercashlist','manage/suppliercashedit'])) class="active" @endif @if (!in_array(9,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/suppliercashlist') }}"><i class="fa fa-edit"></i><span>供应商提现</span></a></li>
             <li @if (in_array($current_route_2,['manage/joinsupplier','manage/joinsupplierdetial'])) class="active" @endif @if (!in_array(10,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/joinsupplier') }}"><i class="fa fa-edit"></i><span>供应商加盟</span></a></li>

@@ -9,7 +9,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/reclassify.css">
-	<title></title>
+	<title>商超店铺</title>
 </head>
 
 <body>
@@ -102,17 +102,19 @@
 
 			$(".clearfix a").click(function (e) {
 				let id = $(this).attr("id")
+				console.log(id)
 				$(".commodity ul li").remove()
 				$.ajax({
 					type: "post",
 					dataType: "json",
-					url: commonsUrl + 'api/gxsc/get/goods_class/list' + versioninfos,
+					url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
 					data: {
-						goods_second_id: id,
+						store_class_id: id,
 						page: "1",
 						ss: getCookie('openid')
 					},
 					success: (res) => {
+						console.log(res)
 						let data = res.result
 						for (let val of data) {
 							let temp = $("#commentList").html()

@@ -170,7 +170,7 @@ $(function() {
 			}
 			//swiper插件实现轮播图
 			var mySwiper = new Swiper('.swiper-container', {
-				autoplay: 1500, //可选选项，自动滑动
+				autoplay: 5000, //可选选项，自动滑动
 				loop: true,
 				pagination: '.swiper-pagination',
 				paginationType: 'custom', //这里分页器类型必须设置为custom,即采用用户自定义配置
@@ -199,6 +199,7 @@ $(function() {
 					layer.msg("商品名称不能为空");
 				} else {
 					location.href = "searchShopList.php?shopName=" + shopName;
+					
 				}
 
 			})

@@ -204,12 +204,20 @@ class HomeController extends Controller
     	
 
     	
-    	if(isset($request->password) && $request->password!=''){
-    		$params['password']=Bcrypt(trim($request->password));
-    	}else{
-    		return back() -> with('errors','密码不能为空');
+    	if(isset($request->pad_password) && $request->pad_password!=''){
+    		$params['password']=Bcrypt(trim($request->pad_password));
+    		//\App\User::where('name','shuangchuang')->update($params);
     	}
-    	\App\User::where('id',1)->update($params);
+
+    	if(isset($request->cai_password) && $request->cai_password!=''){
+    		$params['password']=Bcrypt(trim($request->cai_password));
+    		\App\User::where('name','caiwuyuan')->update($params);
+    	}
+    	
+    	if(isset($request->shou_password) && $request->shou_password!=''){
+    		$params['password']=Bcrypt(trim($request->shou_password));
+    		\App\User::where('name','shouhouyuan')->update($params);
+    	}
     
     
     	Session()->flash('message','保存成功');

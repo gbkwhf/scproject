@@ -129,7 +129,7 @@ input[type="button"] {
 	left: 0;
 	width: 100%;
 }
-/*自定义分页器的样式，这个你自己想要什么样子自己写*/
+/*自定义分页器的样式*/
 .swiper-pagination-customs {
 	width: 12px;
 	height: 2px;
@@ -159,7 +159,7 @@ input[type="button"] {
 	float: left;
 	width: 20%;
 	text-align: center;
-	margin-top: 20px;
+	margin-top: 15px;
 }
 
 .container>ul>li>img {
@@ -176,7 +176,7 @@ input[type="button"] {
 	display: block;
 	width: 100%;
 	text-align: center;
-	margin-top: 9px;
+	margin-top: 7px;
 }
 
 

@@ -58,6 +58,7 @@
 		Route::post('manage/joinsupplierexcel', 'SupplierController@joinSupplierExcel');
 		Route::post('manage/joinsuppliersave', 'SupplierController@joinSupplierSave');
 		Route::get('member/cashbacklist', 'MemberController@CashBackList');
+		Route::post('member/cashbacklistexcel', 'MemberController@CashBackListExcel');
 
 
         //店内分类管理  （供应商）
@@ -184,7 +185,7 @@
 			Route::get('agency/deleteemployee/{id}', 'AgencyManageController@DeleteEmployee');	
 			Route::get('agency/membercashlist', 'AgencyManageController@MemberCashList');
 			Route::post('agency/membercashexcel', 'AgencyManageController@MemberCashExcel');
-			Route::get('agency/memberlist', 'AgencyManageController@');
+			Route::get('agency/memberlist', 'AgencyManageController@memberList');
 			Route::get('agency/memberedit/{id}', 'AgencyManageController@memberEdit');
 			//Route::Post('agency/membersave', 'MemberController@memberSave');
 		});

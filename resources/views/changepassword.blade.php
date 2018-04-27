@@ -31,12 +31,28 @@
              	<form class="form-horizontal" action="{{ url('manage/managepasswordsave') }}" method="post"  >
               <div class="box-body">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" >密码</label>
+                  <label class="col-sm-2 control-label" >普通管理员密码(shuangchuang)</label>
                   <div class="col-sm-10">
-                    <input type="text"  name="password"  placeholder="Enter ..." class="form-control" value="">
+                    <input type="text"  name="pad_password"  placeholder="Enter ..." class="form-control" value="">
                   </div>
                 </div>                                                                                                                                                                                                                                          
               </div>
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >财务密码(caiwuyuan)</label>
+                  <div class="col-sm-10">
+                    <input type="text"  name="cai_password"  placeholder="Enter ..." class="form-control" value="">
+                  </div>
+                </div>                                                                                                                                                                                                                                          
+              </div>
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >售后密码(shouhouyuan)</label>
+                  <div class="col-sm-10">
+                    <input type="text"  name="shou_password"  placeholder="Enter ..." class="form-control" value="">
+                  </div>
+                </div>                                                                                                                                                                                                                                          
+              </div>                                         
               <!-- /.box-body -->
               <div class="box-footer">
              

@@ -46,7 +46,7 @@ form>div {
 }
 
 .camera {
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     margin: 18px 0;
 }
@@ -100,8 +100,12 @@ button{
     color: #fff;
     margin-top: 70px;
 }
-.camera p:nth-of-type(1){
+.camera>div p:nth-of-type(1){
     position: relative;
+}
+.camera>div{
+    display: flex;
+    align-items: center;
 }
 .camera input{
     width: 70px;

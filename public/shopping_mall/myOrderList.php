@@ -23,7 +23,7 @@
 				<div class="fukuan1 commClick" id="1">待收货</div>
 			</div>
 			<div class="ordeBox">
-				<div class="fukuan1 commClick" id="2">待评价</div>
+				<div class="fukuan2 commClick" id="2">待评价</div>
 			</div>
 		</div>
 		<!--下面的内容-->
@@ -40,7 +40,7 @@
 					<!--下面的产品-->
 					<div class="shopInfoBox">
 						<script type="text/html" id="commentList">
-							<div class="shopBoxCon" onclick="">
+							<div class="shopBoxCon" id="{{id}}">
 									<!--图片-->
 									<div class="imgInfo"><img src="{{image}}" alt="" /></div>
 									<!--标题信息-->
@@ -92,8 +92,29 @@
 		var orderId=$_GET['orderId'];
 		let URL="api/gxsc/v2/get/order/info/obligation/list"
 		let id=0
-		console.log(orderId);
-		packaging(URL)
+		console.log(orderId+'******');
+		if(orderId==0){ //待付款
+			$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+			id=0
+			packaging(URL)
+			tabSwitchover()
+		}else if(orderId==1){ //待收货
+			$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+			id=1
+			URL="api/gxsc/v2/get/order/info/list"
+			packaging(URL)
+			tabSwitchover()
+		}else if(orderId==2){//待评价
+			$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+			id=2
+			evaluate()
+			tabSwitchover()
+		}else{
+			$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+			packaging(URL)
+			tabSwitchover()
+		}
+		
 		$(".commClick").click(function(){
 			$(".shopBoxCon").remove();$(".shopNumSum").remove();$(".wuliuConter").remove();$(".orderHea").remove()
 
@@ -103,60 +124,22 @@
 				case "0":
 					URL="api/gxsc/v2/get/order/info/obligation/list"
 					packaging(URL)
+					tabSwitchover()
 				break;
 				case "1":
 					URL="api/gxsc/v2/get/order/info/list"
 					packaging(URL)
+					tabSwitchover()
 				break;
 				case "2":
-					$.ajax({
-					type: "post",
-					url: commonsUrl + "api/gxsc/v2/get/order/info/comment/list"+ versioninfos,
-					data: {
-						page:"1",	
-						ss: getCookie('openid')
-					},
-					success:(res)=>{
-						console.log(res.result)
-						try {
-							if (res.code == "1") {
-								let data = res.result
-								for (let val=0; val<data.length;val++) {
-									$(".orderInfo").before(' <div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">交易成功</div></div>')
-											let temp = $("#commentList").html()
-											temp = temp.replace("{{image}}", data[val].image)
-											.replace("{{goods_name}}", data[val].goods_name)
-											.replace("{{spec_name}}", data[val].spec_name)
-											.replace("{{price}}", data[val].price)
-											.replace("{{num}}", data[val].num)
-											$(".shopInfoBox").append(temp)
-											let aa='<div class="shopNumSum"><span class="sumShop">共'+data[val].num+'件商品</span><span class="hejiCon">合计'+data[val].goods_price+'元(含运费0.00元)</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont">查看物流</span></div><div class="wuliBox"><span class="checkcont">确认收货</span></div></div>'
-										$(".shopInfoBox").append(aa)
-								}
-
-							}
-						} catch (e) {
-							console.log(e)
-						}
-					}
-				})
+				evaluate()
+				tabSwitchover()
+				break;
 			}
 		});
 
 
-		// console.log(orderId+'******');
-		// if(orderId==0){ //待付款
-		// 	$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }else if(orderId==1){ //待收货
-		// 	$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }else if(orderId==2){//待评价
-		// 	$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }else{
-		// 	$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-		// }
-
-
-			function  packaging(URL){
+			function packaging(URL){
 				$.ajax({
 				type: "post",
 				url: commonsUrl + URL+ versioninfos,
@@ -173,12 +156,14 @@
 
 								if(val>=0){
 									 if(id==1){
-										$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">这是我的店铺哈哈哈哈哈哈</div></div>')
+										$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">待收货</div></div>')
 									}
 								}
+								
 
 								let num
 								for(let vals=0; vals<data[val].goods_list.length;vals++){
+									console.log(data[val].sub_id)
 									num=data[val].goods_list.length
 										let temp = $("#commentList").html()
 										temp = temp.replace("{{image}}", data[val].goods_list[vals].image)
@@ -186,21 +171,20 @@
 										.replace("{{spec_name}}", data[val].goods_list[vals].spec_name)
 										.replace("{{price}}", data[val].goods_list[vals].price)
 										.replace("{{num}}", data[val].goods_list[vals].num)
+										.replace("{{id}}", data[val].base_order_id?data[val].base_order_id+"&id=0":data[val].sub_id+"&id=1")
 										$(".shopInfoBox").append(temp)
-										if(id==0){
-											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?base_order_id="+data[val].base_order_id+"&id=0'")
-										}else if(id==1){
-											$(".shopBoxCon").attr("onclick","location.href='orderDetail.php?sub_order_id="+data[val].sub_order_id+"&id=1'")
-										}
 								}
 								if(val>=0){
 									if(id==0){
-										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+data[val].require_amount+'元(含运费0.00元)</span></div><div class="wuliuConter"><span class="checkcont">立即支付</span></div></div>'
+										
+										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+data[val].require_amount+'元</span></div><div class="wuliuConter"><span class="checkcont pay" style="float:right;margin-right:10px;" id="'+data[val].base_order_id+'">立即支付</span></div></div>'
 										$(".shopInfoBox").append(aa)
+
 									}else if(id==1){
-										// $(".shopInfoBox").prepend('<div class="orderHea"><div class="orderStore">这是我的店铺哈哈哈哈哈哈</div></div>')
-										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+data[val].price+'元(含运费'+data[val].shipping_price+'元)</span></div><div class="wuliuConter"><span class="checkcont">查看物流</span><span class="checkcont">确定收货</span></div></div>'
+										let pay=parseInt(data[val].price)+parseInt(data[val].shipping_price)
+										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+pay+'元(含运费'+data[val].shipping_price+'元)</span></div><div class="wuliuConter"><span class="checkcont phy" id='+data[val].goods_list[0].sub_id+'>查看物流</span><span class="checkcont aff" id="'+data[val].goods_list[0].sub_id+'">确定收货</span></div></div>'
 										$(".shopInfoBox").append(aa)
+										
 									}
 									
 								}
@@ -212,6 +196,140 @@
 						console.log(e)
 					}
 				}
+		})
+	}
+
+	function tabSwitchover(){
+		setTimeout(() => {
+			$(".shopBoxCon").click(function(){
+				let thisId=$(this).attr("id")
+				if(id==0){
+					location.href='orderDetail.php?base_order_id='+thisId
+				}else if(id==1){
+					location.href='orderDetail.php?sub_order_id='+thisId
+				}else if(id==2){
+					location.href='newShop_details.php?ext_id='+thisId
+				}
+			})
+
+			$(".phy").click(function(){
+				location.href='logistical.php?sub_order_id='+$(this).attr("id")
+			})
+
+			$(".aff").click(function(){
+				$.ajax({
+					type: "post",
+					dataType: "json",
+					url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
+					data: {
+						sub_order_id: $(this).attr("id"),
+						ss: getCookie('openid')
+					},
+					success: (res) => {
+						console.log(res)
+						if(res.code==1){
+							layer.msg("确认成功")
+						}else{
+							layer.msg(res.msg)
+						}
+					}
+				})
+			})
+
+
+			$(".pay").click(function(){
+			let base_order_id =$(this).attr("id")
+			$.ajax({
+				type: "post",
+				url: commonsUrl + "api/gxsc/pay/goods" + versioninfos,
+				data: {
+					'base_order_id':base_order_id,
+					'filling_type': 3,
+					'open_id': getCookie('openid'),
+					'ss': getCookie('openid')
+				},
+				success: function(data) {
+					if(data.code == 1) {
+						console.log(data);
+						data.result.timeStamp = data.result.timeStamp.toString();
+						retStr = data.result;
+						callpay();
+						//调用微信JS api 支付
+						function jsApiCall() {
+							WeixinJSBridge.invoke(
+								'getBrandWCPayRequest',
+								retStr,
+								function(res) {
+									if(res.err_msg == "get_brand_wcpay_request:ok") {
+										//支付成功
+										location.href = 'myOrderList.php';
+									} else {
+										//												             alert(res.err_msg);
+									}
+								}
+							);
+						}
+
+						function callpay() {
+							if(typeof WeixinJSBridge == "undefined") {
+								if(document.addEventListener) {
+									document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+								} else if(document.attachEvent) {
+									document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+									document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+								}
+							} else {
+								jsApiCall();
+							}
+						}
+					} else {
+						layer.msg(data.msg);
+					}
+				}
+			})
+		})
+
+
+		$(".evaluate").click(function(){
+			location.href='newEvaluate.php?buy_goods_id='+$(this).attr("data-id")+"&img="+$(this).attr("data-img")
+		})
+		
+		}, 200);
+	}
+
+
+	function evaluate(){
+		$.ajax({
+			type: "post",
+			url: commonsUrl + "api/gxsc/v2/get/order/info/comment/list"+ versioninfos,
+			data: {
+				page:"1",	
+				ss: getCookie('openid')
+			},
+			success:(res)=>{
+				console.log(res)
+				try {
+					if (res.code == "1") {
+						let data = res.result
+						for (let val=0; val<data.length;val++) {
+							$(".shopInfoBox").before(' <div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">交易成功</div></div>')
+									let temp = $("#commentList").html()
+									temp = temp.replace("{{image}}", data[val].image)
+									.replace("{{goods_name}}", data[val].goods_name)
+									.replace("{{spec_name}}", data[val].spec_name)
+									.replace("{{price}}", data[val].price)
+									.replace("{{num}}", data[val].num)
+									.replace("{{id}}", data[val].ext_id)
+									$(".shopInfoBox").append(temp)
+									let aa='<div class="shopNumSum"><span class="sumShop">共'+data[val].num+'件商品</span><span class="hejiCon">合计'+data[val].goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+data[val].buy_goods_id+'" data-img="'+data[val].image+'">立即评价</span></div>'
+								$(".shopInfoBox").append(aa)
+						}
+
+					}
+				} catch (e) {
+					console.log(e)
+				}
+			}
 		})
 	}
 		
