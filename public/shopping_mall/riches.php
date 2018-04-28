@@ -85,9 +85,22 @@
 				console.log(data);
 				layer.closeAll();
 				if(data.code == 1) { //请求成功
-					$('.returnNum').html(data.result.all_money); //返利总金额
-					$('.recordMoney').html(data.result.underway_rebate_money); //正在进行中的返利金额
-					$('.recordTime').html(data.result.date); //当前日期
+					//					$('.returnNum').html(data.result.all_money); //返利总金额
+					//					$('.recordMoney').html(data.result.underway_rebate_money); //正在进行中的返利金额
+					//					$('.recordTime').html(data.result.date); //当前日期
+					var ht = '';
+					ht += '<div class="richesBox">' +
+						'<div class="coountReturn">返利总额（积分）</div>' +
+						'<div class="returnNum">' + data.result.all_money + '</div>' +
+						'</div>' +
+						'<div class="mallRecordBox1">' +
+						'<div class="recordLeft">交易完成返利</div>' +
+						'<div class="recordRight">' +
+						'<div class="recordMoney">' + data.result.underway_rebate_money + '</div>' +
+						'<div class="recordTime">' + data.result.date + '</div>' +
+						'</div>' +
+						'</div>';
+					$('.daBox').html(ht);
 					var con = data.result.bill_list;
 					if(con.length == 0 && page == 1) {
 						layer.closeAll();
@@ -101,19 +114,7 @@
 					} else {
 
 						console.log(con);
-//						var ht='';
-//						ht+='<div class="richesBox">'+
-//							'<div class="coountReturn">返利总额（积分）</div>'+
-//							'<div class="returnNum">'+data.result.all_money+'</div>'+
-//							'</div>'+
-//							'<div class="mallRecordBox1">'+
-//							'<div class="recordLeft">交易完成返利</div>'+
-//							'<div class="recordRight">'+
-//							'<div class="recordMoney">'+data.result.underway_rebate_money+'</div>'+
-//							'<div class="recordTime">'+data.result.date+'</div>'+
-//							'</div>'+
-//							'</div>';
-//							$('.daBox').html(ht);
+
 						var html = '';
 						$.each(con, function(k, v) {
 							var amount = con[k].amount; //返利金额
@@ -128,7 +129,7 @@
 								'</div>';
 						});
 						$('.rebateRecordBox').append(html); //动态显示商品列表
-						
+
 						if(con.length > 0) {
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 							//mui('#refreshContainer').pullRefresh().refresh(true);
