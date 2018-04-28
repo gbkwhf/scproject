@@ -43,6 +43,7 @@
     border: none;
     background: #f3f2f2;
     padding: 10px;
+    font-size: 14px;
 }
 
 .camera {
@@ -99,6 +100,7 @@ button{
     border-radius: 5px;
     color: #fff;
     margin-top: 70px;
+    font-size: 16px;
 }
 .camera>div form{
     position: relative;

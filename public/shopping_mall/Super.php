@@ -43,7 +43,7 @@
 				</ul>
 			</div>
 		</div>
-
+		<p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">暂无商品,敬请期待!</p>
 </body>
 
 </html>
@@ -131,7 +131,7 @@
 		var scrollHeight = $(this).scrollTop();//滚动高度  
 		if ((contentHeight - viewHeight) / scrollHeight <= 1) {
 			page++
-			shop(store_second_id,page)
+			shop(store_second_id,page,show)
 		}
 	})
 
@@ -139,7 +139,7 @@
 
 
 	// // 门店	
-	function shop(id,page) {
+	function shop(id,page,show) {
 		$.ajax({
 			type: "POST",
 			dataType: "json",
@@ -152,6 +152,13 @@
 			success: (res) => {
 				console.log(res)
 				let data = res.result
+				if(data.length==0){
+					if(!show){
+						$(".show").show()
+					}
+				}else{
+					$(".show").hide()
+				}
 				for (let val of data) {
 					let temp = $("#commentList").html()
 					temp = temp.replace("{{logo}}", val.logo).replace("{{store_name}}", val.store_name).replace("{{store_id}}", val.store_id)
