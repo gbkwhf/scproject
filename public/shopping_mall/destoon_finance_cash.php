@@ -70,7 +70,7 @@
 							success:function(data){
 								if(data.code==1){
 									console.log(data);
-									$('.balance').html('可提现金额：¥<span class="balanceMoney">'+(data.result.balance-data.result.balance*0.03).toFixed(2)+'</span>');
+									$('.balance').html('可提现金额：¥<span class="balanceMoney">'+(data.result.balance-data.result.balance*0.05).toFixed(2)+'</span>');
 								}else{
 									layer.msg(data.msg);
 								}
