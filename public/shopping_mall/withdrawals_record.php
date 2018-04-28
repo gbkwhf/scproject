@@ -33,7 +33,7 @@
 	<!--确认收款-->
 	<div class="qrsk">
 		<ul class="explain-list">
-			<li><em>1、</em>提现成功后会从您的余额中扣除3%手续费。</li>
+			<li><em>1、</em>提现成功后会从您的余额中扣除5%手续费。</li>
 			<li><em>2、</em>请仔细核对提现金额，确认后不可撤销；</li>
 		</ul>
 		<div class="btn-box-pop">

@@ -38,7 +38,7 @@
 		<div class="inquiry">
 			<ul class="explain-list">
 				<li><em>1、</em>需线下向用户支付<span style="color: #d57232;"></span>元；</li>
-				<li><em>2、</em>提现成功后会从用户余额扣除3%手续费。</li>
+				<li><em>2、</em>提现成功后会从用户余额扣除5%手续费。</li>
 				<li><em>3、</em>请仔细核对提现金额和会员手机号，确认后不可撤销；</li>
 			</ul>
 			<div class="btn-box-pop">
