@@ -113,6 +113,7 @@
 			//确认提现
 			$('.confirm').click(function(){
 				$.ajax({
+					
 					type:'post',
 					url:commonsUrl + 'api/gxsc/replace/user/withdraw/deposit' + versioninfos,
 					data:{
