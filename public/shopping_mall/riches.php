@@ -22,7 +22,7 @@
 						<div class="returnNum"></div>
 					</div>
 					<div class="mallRecordBox1">
-						<div class="recordLeft">交易完成返利</div>
+						<div class="recordLeft">正在交易</div>
 						<div class="recordRight">
 							<div class="recordMoney"></div>
 							<div class="recordTime"></div>
@@ -94,7 +94,7 @@
 						'<div class="returnNum">' + data.result.all_money + '</div>' +
 						'</div>' +
 						'<div class="mallRecordBox1">' +
-						'<div class="recordLeft">交易完成返利</div>' +
+						'<div class="recordLeft">正在交易</div>' +
 						'<div class="recordRight">' +
 						'<div class="recordMoney">' + data.result.underway_rebate_money + '</div>' +
 						'<div class="recordTime">' + data.result.date + '</div>' +
