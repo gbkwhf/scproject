@@ -250,6 +250,7 @@ class Kernel extends ConsoleKernel
        	
        	 
        
-       })->monthly()->dailyAt('00:30');
+       })-everyMinute();
+	//})->monthly()->dailyAt('00:30');
     }
 }
