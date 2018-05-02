@@ -43,7 +43,30 @@ class PaymentController extends Controller
     	}
     	if($order->state == 1){ //订单已支付
     		return $this->setStatusCode(6101)->respondWithError($this->message);
-    	} 
+    	}
+
+
+        //重新下单购买的时候，查看商品库存是否充足
+        $order_info = \DB::table('ys_base_order as a')
+                        ->leftjoin('ys_sub_order as b','a.id','=','b.base_id')
+                        ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id')
+                        ->leftjoin('ys_goods as d','c.goods_id','=','d.id')
+                        ->leftjoin('ys_goods_extend as e','c.ext_id','=','e.id')
+                        ->select('a.require_amount','c.goods_id','c.num as buy_num','c.ext_id','e.num as rest_num','d.sales')
+                        ->where('a.id',$request->base_order_id)
+                        ->get();
+
+        foreach($order_info as $k=>$v){
+
+            if($v->rest_num < $v->buy_num){ //库存不足  1046
+
+                \Log::info('low stocks，goods_id is '.$v->goods_id." ext_id is ".$v->ext_id);
+                return $this->setStatusCode(1046)->respondWithError($this->message);
+
+            }
+        }
+
+
     	//支付方式
     	$filling_type=config('clinic-config.filling_type.'.$request->filling_type);
     	

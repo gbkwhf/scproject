@@ -369,10 +369,12 @@
 									var create_time = cont[k].create_time; //时间
 									var images = cont[k].image; //用户头像
 									var name = cont[k].name; //用户名
-									var user_comment = cont[k].user_comment; //评论内容
+									var user_comment = cont[k].user_comment==''?'无':cont[k].user_comment; //评论内容
+									var ShowImg=isShowImg(cont[k].comment_image);
 									if(images == '') {
 										images = 'images/head-portrait.png'
 									}
+									
 									html += '<div class="apprariseNav">' +
 										'<div class="userMessage">' +
 										'<div class="userImg">' +
@@ -384,6 +386,7 @@
 										'<div class="apprariseDate">' + create_time + '</div>' +
 										'</div>' +
 										'<div class="evaluationContent">' + user_comment + '</div>' +
+										'<div class="evaImg" style="display:'+ShowImg+'"><img src='+comment_image+' /></div>'+
 										'</div>'
 								});
 								$('.apprariseBox').append(html); //动态显示评论列表
@@ -400,6 +403,14 @@
 						}
 					}
 				});
+			}
+			
+			function isShowImg(tIm){//判断评论的图片为空是隐藏，否则显示
+				if(tIm==''||tIm==null){
+					return 'none';
+				}else{
+					return 'block'
+				}
 			}
 			mui.init({
 				pullRefresh: {

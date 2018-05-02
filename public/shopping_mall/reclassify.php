@@ -43,6 +43,7 @@
 		</script>
 		</ul>
 	</div>
+	<p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">暂无商品,敬请期待!</p>	
 </body>
 
 </html>
@@ -87,6 +88,11 @@
 				success: (res) => {
 				    console.log(res)
 					let data = res.result
+					if(data.length==0){
+						$(".show").show()
+					}else{
+						$(".show").hide()
+					}
 					for (let val of data) {
 						let temp = $("#commentList").html()
 						temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)

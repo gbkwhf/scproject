@@ -16,17 +16,20 @@
 	<body>
 		<div id="refreshContainer" class="mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div class="richesBox">
-					<div class="coountReturn">返利总额（积分）</div>
-					<div class="returnNum"></div>
-				</div>
-				<div class="mallRecordBox1">
-					<div class="recordLeft">正在交易</div>
-					<div class="recordRight">
-						<div class="recordMoney"></div>
-						<div class="recordTime"></div>
+				<div class="daBox">
+					<div class="richesBox">
+						<div class="coountReturn">返利总额（积分）</div>
+						<div class="returnNum"></div>
+					</div>
+					<div class="mallRecordBox1">
+						<div class="recordLeft">正在交易</div>
+						<div class="recordRight">
+							<div class="recordMoney"></div>
+							<div class="recordTime"></div>
+						</div>
 					</div>
 				</div>
+
 				<div class="noneBox"></div>
 				<div class="recordName">返利记录</div>
 
@@ -82,11 +85,23 @@
 				console.log(data);
 				layer.closeAll();
 				if(data.code == 1) { //请求成功
-					var t = [];
+					//					$('.returnNum').html(data.result.all_money); //返利总金额
+					//					$('.recordMoney').html(data.result.underway_rebate_money); //正在进行中的返利金额
+					//					$('.recordTime').html(data.result.date); //当前日期
+					var ht = '';
+					ht += '<div class="richesBox">' +
+						'<div class="coountReturn">返利总额（积分）</div>' +
+						'<div class="returnNum">' + data.result.all_money + '</div>' +
+						'</div>' +
+						'<div class="mallRecordBox1">' +
+						'<div class="recordLeft">正在交易</div>' +
+						'<div class="recordRight">' +
+						'<div class="recordMoney">' + data.result.underway_rebate_money + '</div>' +
+						'<div class="recordTime">' + data.result.date + '</div>' +
+						'</div>' +
+						'</div>';
+					$('.daBox').html(ht);
 					var con = data.result.bill_list;
-					$('.returnNum').html(data.result.all_money); //返利总金额
-					$('.recordMoney').html(data.result.underway_rebate_money); //正在进行中的返利金额
-					$('.recordTime').html(data.result.date); //当前日期
 					if(con.length == 0 && page == 1) {
 						layer.closeAll();
 						$('.rebateRecordBox').html('<p>暂无返利记录哦！</p>');
@@ -95,15 +110,16 @@
 							'text-align': 'center',
 							'color': '#8f8f94'
 						});
+						//mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 					} else {
+
 						console.log(con);
-						t.push(con);
-						console.log(t);
+
 						var html = '';
 						$.each(con, function(k, v) {
-							var amount = con[k].amount; //商品id
-							var created_at = con[k].created_at; //商品名称
-							var pay_describe = con[k].pay_describe; //商品图片
+							var amount = con[k].amount; //返利金额
+							var created_at = con[k].created_at; //返利时间
+							var pay_describe = con[k].pay_describe; //返利描述
 							html += '<div class="mallRecordBox">' +
 								'<div class="recordLeft">' + pay_describe + '</div>' +
 								'<div class="recordRight">' +
@@ -113,8 +129,10 @@
 								'</div>';
 						});
 						$('.rebateRecordBox').append(html); //动态显示商品列表
+
 						if(con.length > 0) {
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+							//mui('#refreshContainer').pullRefresh().refresh(true);
 						} else {
 							layer.msg("已经到底了");
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -137,7 +155,7 @@
 						page++;
 						showajax(page);
 						mui('#refreshContainer').pullRefresh().endPullupToRefresh();
-
+						//mui('#refreshContainer').pullRefresh().refresh(true);
 					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 			}
 

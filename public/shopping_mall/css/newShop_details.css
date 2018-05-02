@@ -645,7 +645,14 @@ input[type="button"] {
 	color: #333333;
 	padding-bottom: 10px;
 }
-
+.evaImg{
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+.evaImg img{
+	width: 60px;
+	height: 60px;
+}
 .swiper-slide {
 	margin-top: 45px;
 }

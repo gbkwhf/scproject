@@ -89,8 +89,9 @@ body,html{
 			margin: 22px 0;
 		}
 		.shopInfoBox{
-			padding-top: 20px;
+			/* padding-top: 20px; */
 			background-color: #fff;
+			overflow: hidden;
 		}
 		.imgInfo{
 			width: 121px;
@@ -166,7 +167,7 @@ body,html{
 		.wuliBox{
 			width: 33%;
 			display: inline-block;
-			float: left;
+			float: right;
 		}
 		.checkcont{
 		    padding: 4px 11px;

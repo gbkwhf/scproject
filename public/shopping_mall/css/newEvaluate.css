@@ -1,12 +1,12 @@
-form {
+.form {
     overflow: hidden;
 }
-form>p{
+.form>p{
     width: 100%;
     height: 1px;
     background-color: #e5e5e5;
 }
-form>div {
+.form>div {
     width: 92%;
     margin: 0 auto;
     overflow: hidden;
@@ -43,6 +43,7 @@ form>div {
     border: none;
     background: #f3f2f2;
     padding: 10px;
+    font-size: 14px;
 }
 
 .camera {
@@ -99,8 +100,9 @@ button{
     border-radius: 5px;
     color: #fff;
     margin-top: 70px;
+    font-size: 16px;
 }
-.camera>div p:nth-of-type(1){
+.camera>div form{
     position: relative;
 }
 .camera>div{
