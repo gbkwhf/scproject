@@ -119,18 +119,18 @@ class Kernel extends ConsoleKernel
        		$today_data=date('Y-m');
        		\Log::info('月返现读取文件内容，'.serialize($log_file));
        		//检查重复执行
-       		// 			if($log_date==$today_data){
-       		// 				\Log::info('月返现同一天内重复执行，已退出');
-       		// 				exit();
-       		// 			}
+       		 			if($log_date==$today_data){
+       		 				\Log::info('月返现同一天内重复执行，已退出');
+       		 				exit();
+       		 			}
        	}else{
-       		$log_date=date('Y-m',strtotime('-1 days'));
+       		$log_date=date('Y-m',strtotime('-1 months'));
        	}
        	
        	
        	$data=[];
        	//时间节点
-       	$start_time=date('Y-m-d',strtotime("$log_date +1month")).' 00:00:00';
+       	$start_time=date('Y-m-d',strtotime("$log_date")).' 00:00:00';
        	$end_time=date('Y-m-d',strtotime("$start_time +1 month -1 day")).' 23:59:59';
        	// 				dump($start_time);
        	// 				dump($end_time);
