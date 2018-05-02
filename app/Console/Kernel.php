@@ -202,18 +202,23 @@ class Kernel extends ConsoleKernel
        		// 					dump($bcd_total);
        		// 					dump($all_amount);
        		if($val->user_lv>0){
-       			$money=$user_lvs_config[$val->user_lv]['rate']*$all_amount;
-       			$params=[
-       			'user_id'=>$val->user_id,
-       			'amount'=>$money,
-       			'pay_describe'=>'购物月返',
-       			'created_at'=>date('Y-m-d H:i:s',time()),
-       			'type'=>1,
-       			];
-       				
-       			//dump($params);
-       			$user_insert=\App\BillModel::insert($params);
-       	
+				//检查是否满足月最低消费
+
+				if($all_amount >= $user_lvs_config[$val->user_lv]['month_min']){
+					$money=$user_lvs_config[$val->user_lv]['rate']*$all_amount;
+					$params=[
+						'user_id'=>$val->user_id,
+						'amount'=>$money,
+						'pay_describe'=>'购物月返',
+						'created_at'=>date('Y-m-d H:i:s',time()),
+						'type'=>1,
+					];
+
+					//dump($params);
+					$user_insert=\App\BillModel::insert($params);
+				}else{
+					$money=0;
+				}
        		}else{
        			$money=0;
        		}
