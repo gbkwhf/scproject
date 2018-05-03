@@ -74,6 +74,9 @@
 <script src="js/layer/layer.js"></script>
 <script>
     $(function(){
+        if($_GET["id"]==3){
+            $(".newAdd").attr("href","newAddress.php?id=3")
+        }
         // 获取地址信息
         $.ajax({
                 type: "post",

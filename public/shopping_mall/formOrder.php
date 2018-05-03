@@ -159,7 +159,7 @@
 		}
 
 		function lastpage(addressId) {
-			location.href = 'address.php?address_id=' + addressId;
+			location.href = 'address.php?address_id=' + addressId+'&id=3';
 		}
 
 		//身份校验

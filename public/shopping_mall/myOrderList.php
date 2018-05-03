@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/myOrderList.css"/>
 	</head>
 	<body>
+	<div id="body">
 		<!--顶部-->
 		<div class="orderHeader">
 			<!-- <div class="ordeBox" >
@@ -84,6 +85,7 @@
 
 	<p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">暂无商品,敬请期待!</p>	
 		
+	</div>
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -91,7 +93,8 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script type="text/javascript">
-	$(function(){
+
+		let page=1
 		var orderId=$_GET['orderId'];
 		let URL="api/gxsc/v2/get/order/info/obligation/list"
 		let id=0
@@ -99,13 +102,13 @@
 		if(orderId==0){ //待付款
 			$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=0
-			packaging(URL)
+			packaging(URL,page)
 			tabSwitchover()
 		}else if(orderId==1){ //待收货
 			$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=1
 			URL="api/gxsc/v2/get/order/info/list"
-			packaging(URL)
+			packaging(URL,page)
 			tabSwitchover()
 		}else if(orderId==2){//待评价
 			$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
@@ -114,11 +117,12 @@
 			tabSwitchover()
 		}else{
 			$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-			packaging(URL)
+			packaging(URL,page)
 			tabSwitchover()
 		}
 		
 		$(".commClick").click(function(){
+			page=1
 			$(".shopBoxCon").remove();$(".shopNumSum").remove();$(".wuliuConter").remove();$(".orderHea").remove()
 
 			$(this).addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
@@ -126,12 +130,12 @@
 			switch(id){
 				case "0":
 					URL="api/gxsc/v2/get/order/info/obligation/list"
-					packaging(URL)
+					packaging(URL,page)
 					tabSwitchover()
 				break;
 				case "1":
 					URL="api/gxsc/v2/get/order/info/list"
-					packaging(URL)
+					packaging(URL,page)
 					tabSwitchover()
 				break;
 				case "2":
@@ -142,12 +146,12 @@
 		});
 
 
-			function packaging(URL){
+			function packaging(URL,page){
 				$.ajax({
 				type: "post",
 				url: commonsUrl + URL+ versioninfos,
 				data: {
-					page:"1",	
+					page:page,	
 					ss: getCookie('openid')
 				},
 				success:(res)=>{
@@ -155,11 +159,18 @@
 					try {
 						if (res.code == "1") {
 							let data = res.result
-							if(data.length==0){
+							if(page==1){
+								if(data.length==0){
 								$(".show").show()
 							}else{
 								$(".show").hide()
 							}
+							}else{
+								if(data.length==0){
+									layer.msg("没有更多了！")
+								}
+							}
+							
 							for (let val=0; val<data.length;val++) {
 
 								if(val>=0){
@@ -344,6 +355,15 @@
 			}
 		})
 	}
-		
-	})
+
+	
+	$(this).scroll(function () {
+        var viewHeight = $(this).height();//可见高度  
+        var contentHeight = $("#body").get(0).scrollHeight;//内容高度  
+        var scrollHeight = $(this).scrollTop();//滚动高度  
+        if ((contentHeight - viewHeight) / scrollHeight <= 1) {
+            page++
+			packaging(URL,page)
+        }
+    })
 </script>
