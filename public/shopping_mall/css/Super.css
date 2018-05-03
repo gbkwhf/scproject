@@ -1,6 +1,6 @@
 .wrapper02 {position:relative;height: 1.2rem;width: 100%;overflow: hidden;margin:0 auto}
 /* .wrapper02 .scroller {position:absolute} */
-.wrapper02 .scroller li {height: .8rem;color:#333;float: left;line-height: .75rem;font-size: .4rem;text-align: center;margin-top: .2rem}
+.wrapper02 .scroller li {height: .8rem;color:#333;float: left;line-height: .8rem;font-size: .4rem;text-align: center;margin-top: .2rem}
 .wrapper02 .scroller li a{color:#333;display:block;margin:0 .3rem}
 .wrapper02 .scroller li.cur{background:#e63737;border-radius: 50px}
 .wrapper02 .scroller li.cur a{color:#fff;}
