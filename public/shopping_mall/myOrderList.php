@@ -14,17 +14,17 @@
 	<div id="body">
 		<!--顶部-->
 		<div class="orderHeader">
-			<!-- <div class="ordeBox" >
-				<div class="quanbu commClick getStyle" id="">全部</div>
-			</div> -->
-			<div class="ordeBox">
-				<div class="fukuan commClick getStyle" id="0">待付款</div>
+			<div class="ordeBox" >
+				<div class="quanbu commClick getStyle" id="0">全部</div>
 			</div>
 			<div class="ordeBox">
-				<div class="fukuan1 commClick" id="1">待收货</div>
+				<div class="fukuan commClick" id="1">待付款</div>
 			</div>
 			<div class="ordeBox">
-				<div class="fukuan2 commClick" id="2">待评价</div>
+				<div class="fukuan1 commClick" id="2">待收货</div>
+			</div>
+			<div class="ordeBox">
+				<div class="fukuan2 commClick" id="3">待评价</div>
 			</div>
 		</div>
 		<!--下面的内容-->
@@ -96,28 +96,31 @@
 
 		let page=1
 		var orderId=$_GET['orderId'];
-		let URL="api/gxsc/v2/get/order/info/obligation/list"
+		let URL="api/gxsc/v2/get/order/info/all/list"
 		let id=0
 		console.log(orderId+'******');
-		if(orderId==0){ //待付款
-			$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+		if(orderId==0){ //全部
+			$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+			
 			id=0
 			packaging(URL,page)
 			tabSwitchover()
-		}else if(orderId==1){ //待收货
-			$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+		}else if(orderId==1){ //带付款
+			$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=1
+			URL="api/gxsc/v2/get/order/info/obligation/list"
+			packaging(URL,page)
+			tabSwitchover()
+		}else if(orderId==2){//待收货
+			$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+			id=2
 			URL="api/gxsc/v2/get/order/info/list"
 			packaging(URL,page)
 			tabSwitchover()
-		}else if(orderId==2){//待评价
+		}else{//待评价
 			$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-			id=2
-			evaluate()
-			tabSwitchover()
-		}else{
-			$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-			packaging(URL,page)
+			id=3
+			evaluate(page)
 			tabSwitchover()
 		}
 		
@@ -128,19 +131,24 @@
 			$(this).addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=$(this).attr("id")
 			switch(id){
-				case "0":
+				case "0": //全部
+					URL="api/gxsc/v2/get/order/info/all/list"
+					packaging(URL,page)
+					tabSwitchover()
+				break;
+				case "1": //带付款
 					URL="api/gxsc/v2/get/order/info/obligation/list"
 					packaging(URL,page)
 					tabSwitchover()
 				break;
-				case "1":
+				case "2": //带收货
 					URL="api/gxsc/v2/get/order/info/list"
 					packaging(URL,page)
 					tabSwitchover()
 				break;
-				case "2":
-				evaluate()
-				tabSwitchover()
+				case "3": //带评价
+					evaluate(page)
+					tabSwitchover()
 				break;
 			}
 		});
@@ -170,15 +178,48 @@
 									layer.msg("没有更多了！")
 								}
 							}
-							
-							for (let val=0; val<data.length;val++) {
+
+							if(id==0){
+								for(let val of data){
+									let order_status
+									if(val.order_status==0){
+										order_status="待发货"
+									}else if(val.order_status==1){
+										order_status="待收货"
+									}else if(val.order_status==2){
+										order_status="待评价"
+									}else{
+										order_status="交易完成"
+									}
+									$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+val.supplier_name+'</div><div class="orderStatus">'+order_status+'</div></div>')
+									let temp = $("#commentList").html()
+										temp = temp.replace("{{image}}", val.image)
+										.replace("{{goods_name}}", val.goods_name)
+										.replace("{{spec_name}}", val.spec_name)
+										.replace("{{price}}", val.goods_price)
+										.replace("{{num}}", val.num)
+										$(".shopInfoBox").append(temp)
+									if(val.order_status==0){
+										let aa='<div class="shopNumSum"><span class="hejiCon">合计'+val.goods_price+'元</span></div><div class="wuliuConter"><span class="checkcont pay" style="float:right;margin-right:10px;" id="'+val.base_order_id+'">立即支付</span></div></div>'
+										$(".shopInfoBox").append(aa)
+									}else if(val.order_status==1){
+										let pay=parseFloat(val.price)+parseFloat(val.shipping_price)
+										let aa='<div class="shopNumSum"><span class="hejiCon">合计'+pay+'元(含运费'+val.shipping_price+'元)</span></div><div class="wuliuConter"><span class="checkcont phy" id='+val.sub_id+'>查看物流</span><span class="checkcont aff" id="'+data[val].goods_list[0].sub_id+'">确定收货</span></div></div>'
+										$(".shopInfoBox").append(aa)
+									}else if(val.order_status==2){
+										let aa='<div class="shopNumSum"><span class="sumShop">共'+val.num+'件商品</span><span class="hejiCon">合计'+val.goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+data[val].buy_goods_id+'" data-img="'+data[val].image+'">立即评价</span></div>'
+										$(".shopInfoBox").append(aa)
+									}
+								}
+							}else{
+								for (let val=0; val<data.length;val++) {
 
 								if(val>=0){
-									 if(id==1){
+									if(id==2){
 										$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">待收货</div></div>')
 									}
 								}
-								
+
 
 								let num
 								for(let vals=0; vals<data[val].goods_list.length;vals++){
@@ -193,12 +234,12 @@
 										$(".shopInfoBox").append(temp)
 								}
 								if(val>=0){
-									if(id==0){
+									if(id==1){
 										
 										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+data[val].require_amount+'元</span></div><div class="wuliuConter"><span class="checkcont pay" style="float:right;margin-right:10px;" id="'+data[val].base_order_id+'">立即支付</span></div></div>'
 										$(".shopInfoBox").append(aa)
 
-									}else if(id==1){
+									}else if(id==2){
 										let pay=parseFloat(data[val].price)+parseFloat(data[val].shipping_price)
 										let aa='<div class="shopNumSum"><span class="sumShop">共'+num+'件商品</span><span class="hejiCon">合计'+pay+'元(含运费'+data[val].shipping_price+'元)</span></div><div class="wuliuConter"><span class="checkcont phy" id='+data[val].goods_list[0].sub_id+'>查看物流</span><span class="checkcont aff" id="'+data[val].goods_list[0].sub_id+'">确定收货</span></div></div>'
 										$(".shopInfoBox").append(aa)
@@ -207,7 +248,10 @@
 									
 								}
 
+								}
 							}
+							
+							
 
 						}
 					} catch (e) {
@@ -221,11 +265,11 @@
 		setTimeout(() => {
 			$(".shopBoxCon").click(function(){
 				let thisId=$(this).attr("id")
-				if(id==0){
+				if(id==1){
 					location.href='orderDetail.php?base_order_id='+thisId
-				}else if(id==1){
-					location.href='orderDetail.php?sub_order_id='+thisId
 				}else if(id==2){
+					location.href='orderDetail.php?sub_order_id='+thisId
+				}else if(id==3){
 					location.href='newShop_details.php?ext_id='+thisId
 				}
 			})
@@ -316,12 +360,12 @@
 	}
 
 
-	function evaluate(){
+	function evaluate(page){
 		$.ajax({
 			type: "post",
 			url: commonsUrl + "api/gxsc/v2/get/order/info/comment/list"+ versioninfos,
 			data: {
-				page:"1",	
+				page:page,	
 				ss: getCookie('openid')
 			},
 			success:(res)=>{
@@ -363,7 +407,12 @@
         var scrollHeight = $(this).scrollTop();//滚动高度  
         if ((contentHeight - viewHeight) / scrollHeight <= 1) {
             page++
-			packaging(URL,page)
+			if(orderId==3||id==3){
+				evaluate(page)
+			}else{
+				packaging(URL,page)
+			}
+			
         }
     })
 </script>

@@ -45,19 +45,19 @@
 			</div>
 		</header>
 		<div class="user-Box" >
-			<div class="obligation" orderId='0' onclick="location.href='myOrderList.php?orderId=0'">
+			<div class="obligation" orderId='0' onclick="location.href='myOrderList.php?orderId=1'">
 				<dl>
 					<dt><img src="images/obligation.png"/></dt>
 					<dd>待付款</dd>
 				</dl>
 			</div>
-			<div class="receipt" orderId='1' onclick="location.href='myOrderList.php?orderId=1'">
+			<div class="receipt" orderId='1' onclick="location.href='myOrderList.php?orderId=2'">
 				<dl>
 					<dt><img src="images/receipt.png"/></dt>
 					<dd>待收货</dd>
 				</dl>
 			</div>
-			<div class="evaluated" orderId='2' onclick="location.href='myOrderList.php?orderId=2'">
+			<div class="evaluated" orderId='2' onclick="location.href='myOrderList.php?orderId=3'"> 
 				<dl>
 					<dt><img src="images/evaluated.png"/></dt>
 					<dd>待评价</dd>
@@ -72,7 +72,7 @@
 		</div>
 		<div class="kong"></div>
 		<ul class="menu-list">
-			<li onclick="location.href='myOrderList.php'">
+			<li onclick="location.href='myOrderList.php?orderId=0'">
 				我的订单
 				<img src="images/right-arrow.png" width="8"/>
 			</li>

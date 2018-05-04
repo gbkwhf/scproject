@@ -7,7 +7,7 @@ body,html{
 		   	background-color: #fff;
 		}
 		.ordeBox{
-			width: 33%;
+			width: 25%;
 			height: 55px;
 			/*background-color: lightgoldenrodyellow;*/
 			font-size: 15px;
@@ -26,7 +26,7 @@ body,html{
 		}
 		.quanbu{
 			width: 33px;
-			margin-left: 17px;
+			margin: auto;
 		}
 		.fukuan{
 			width: 50px;
