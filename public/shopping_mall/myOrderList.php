@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="css/common.css">
 		<link rel="stylesheet" type="text/css" href="css/myOrderList.css"/>
 	</head>
-	<body>  
+	<body>
 	<div id="body">
 		<!--顶部-->
 		<div class="orderHeader">
@@ -185,7 +185,7 @@
 										.replace("{{spec_name}}", val.spec_name)
 										.replace("{{price}}", val.goods_price)
 										.replace("{{num}}", val.num)
-										.replace("{{goods_id}}", val.goods_id)
+										.replace("{{goods_id}}", val.ext_id)
 										$(".shopInfoBox").append(temp)
 									if(val.order_status==2){
 										let aa='<div class="shopNumSum"><span class="sumShop">共'+val.num+'件商品</span><span class="hejiCon">合计'+val.goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+data[val].buy_goods_id+'" data-img="'+data[val].image+'">立即评价</span></div>'

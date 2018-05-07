@@ -100,7 +100,7 @@
 <script type="text/javascript">
 	console.log($_GET['id'])
 	if($_GET['id']==0){
-		$(".orderDetHe").text("待付款")
+		$(".orderDetHe").text("待付款 ( 亲，赶快下单哈！)")
 		
 		$.ajax({
 			type: 'POST',
@@ -117,24 +117,7 @@
 					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.user_name + "   " +data.user_mobile)
 					$(".addreIndo").text("地址 : " + data.address)
-					switch(data.state){
-						case "0":
-						$(".peisong").text("在途中")
-						break;
-						case "1":
-						$(".peisong").text("已发货")
-						break;
-						case "2":
-						$(".peisong").text("疑难件")
-						break;
-						case "3":
-						$(".peisong").text("已签收")
-						break;
-						case "4":
-						$(".peisong").text("已退货")
-						break;
-					}
-					
+					$(".peisong").text(data.info[0].express.state)
 					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
 					$(".orderInBox p:nth-child(2)").text("") 
 					$(".orderInBox p:nth-child(3)").text("下单时间：" + data.create_time) 
@@ -170,7 +153,6 @@
 			}
 		})
 	}else{
-		$(".orderDetHe").text("待收货")
 		
 		$.ajax({
 			type: 'POST',
@@ -187,23 +169,13 @@
 					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.name + "   " +data.mobile)
 					$(".addreIndo").text("地址 : " + data.address)
-					switch(data.state){
-						case "0":
-						$(".peisong").text("在途中")
-						break;
-						case "1":
-						$(".peisong").text("已发货")
-						break;
-						case "2":
-						$(".peisong").text("疑难件")
-						break;
-						case "3":
-						$(".peisong").text("已签收")
-						break;
-						case "4":
-						$(".peisong").text("已退货")
-						break;
+					$(".peisong").text(data.express.state)
+					if(data.express.state=="未发货"){
+						$(".orderDetHe").text("等待卖家发货")
+					}else{
+						$(".orderDetHe").text(data.express.state)
 					}
+					
 					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
 					$(".orderInBox p:nth-child(2)").text("物流单号：" + data.express_num) 
 					$(".orderInBox p:nth-child(3)").text("下单时间：" + data.create_time) 
