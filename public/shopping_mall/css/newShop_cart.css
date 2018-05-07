@@ -226,6 +226,7 @@ label input {
 	border-left: solid 1px #626262;
 	border-right: solid 1px #626262;
 	text-align: center;
+	-webkit-appearance:none;
 }
 
 .shopCartCon {
