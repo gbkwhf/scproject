@@ -183,7 +183,7 @@
 								for(let val of data){
 									let order_status
 									if(val.order_status==0){
-										order_status="待发货"
+										order_status="待付款"
 									}else if(val.order_status==1){
 										order_status="待收货"
 									}else if(val.order_status==2){
@@ -265,6 +265,7 @@
 		setTimeout(() => {
 			$(".shopBoxCon").click(function(){
 				let thisId=$(this).attr("id")
+				console.log(id,thisId)
 				if(id==1){
 					location.href='orderDetail.php?base_order_id='+thisId
 				}else if(id==2){

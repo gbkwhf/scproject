@@ -127,6 +127,10 @@ body,html{
 			margin-top: 11px;
 			margin-left: 36px;
 			font-size: 14px;
+			text-overflow:ellipsis;
+			overflow:hidden;
+			white-space:nowrap;
+			color: #f5997b;
 		}
 		.biao1{
 			color: #f5997b;
