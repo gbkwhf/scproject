@@ -132,21 +132,25 @@
 			id=$(this).attr("id")
 			switch(id){
 				case "0": //全部
+					orderId,id=0
 					URL="api/gxsc/v2/get/order/info/all/list"
 					packaging(URL,page)
 					tabSwitchover()
 				break;
 				case "1": //带付款
+					orderId,id=1
 					URL="api/gxsc/v2/get/order/info/obligation/list"
 					packaging(URL,page)
 					tabSwitchover()
 				break;
 				case "2": //带收货
+					orderId,id=2
 					URL="api/gxsc/v2/get/order/info/list"
 					packaging(URL,page)
 					tabSwitchover()
 				break;
 				case "3": //带评价
+					orderId,id=3
 					evaluate(page)
 					tabSwitchover()
 				break;
@@ -183,7 +187,7 @@
 								for(let val of data){
 									let order_status
 									if(val.order_status==0){
-										order_status="待付款"
+										order_status="待发货"
 									}else if(val.order_status==1){
 										order_status="待收货"
 									}else if(val.order_status==2){
@@ -231,6 +235,7 @@
 										.replace("{{price}}", data[val].goods_list[vals].price)
 										.replace("{{num}}", data[val].goods_list[vals].num)
 										.replace("{{id}}", data[val].base_order_id?data[val].base_order_id+"&id=0":data[val].sub_id+"&id=1")
+										
 										$(".shopInfoBox").append(temp)
 								}
 								if(val>=0){
