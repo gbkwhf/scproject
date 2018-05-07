@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="css/common.css">
 		<link rel="stylesheet" type="text/css" href="css/myOrderList.css"/>
 	</head>
-	<body>
+	<body>  
 	<div id="body">
 		<!--顶部-->
 		<div class="orderHeader">
