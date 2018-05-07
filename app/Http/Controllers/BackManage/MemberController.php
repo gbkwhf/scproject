@@ -443,5 +443,72 @@ class MemberController  extends Controller
  	}
  
  }
- 
+
+	public  function answerQuestion (Request $request){
+
+		$par=\App\AfterExchangeModel::selectRaw('ys_after_exchange.*,ys_after_exchange.merchant_reply as state,ys_member.name')
+							->leftjoin('ys_member','ys_member.user_id','=','ys_after_exchange.user_id');
+
+
+
+		$search=array();
+		if ($request->start != ''){
+			$par->where('ys_after_exchange.created_at','>=',$request->start.' 00:00:00');
+			$search['start']=$request->start;
+		}
+		if ($request->end != ''){
+			$par->where('ys_after_exchange.created_at','<',$request->end.' 59:59:59');
+			$search['end']=$request->end;
+		}
+		if (isset($request->state) && $request->state == 0){
+			$par->where('merchant_reply','=','');
+			$search['state']=$request->state;
+		}elseif (isset($request->state) && $request->state == 1){
+			$par->where('merchant_reply','!=',' ');
+			$search['state']=$request->state;
+		}
+
+		$data=$par->orderBy('id','desc')->paginate(10);
+
+
+
+
+		foreach ($data as &$val){
+			$val->state=empty($val->state)?'未回复':'已回复';
+			$val->user_problem=str_limit($val->user_problem,20);
+
+		}
+
+
+		return view('answerquestionlist',['data'=>$data,'search'=>$search]);
+	}
+
+
+
+	public  function answerQuestionDetial (Request $request){
+
+
+
+
+		$data=\App\AfterExchangeModel::where('id',$request->id)
+				->leftjoin('ys_member','ys_member.user_id','=','ys_after_exchange.user_id')
+				->selectRaw('ys_after_exchange.*,ys_member.name')
+				->first();
+
+
+		return view('answerquestiondetial',['data'=>$data]);
+	}
+	public  function answerQuestionSave (Request $request){
+
+
+			$res=\App\AfterExchangeModel::where('id',$request->id)->update(['merchant_reply'=>$request->reply]);
+			if($res === false){
+				return back() -> with('errors','数据更新失败');
+			}else{
+				Session()->flash('message','保存成功');
+				return redirect('manage/answerquestion');
+			}
+
+	}
+
 }

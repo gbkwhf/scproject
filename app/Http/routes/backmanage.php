@@ -159,6 +159,10 @@
         Route::get('commody/class/manage/second/add', 'CommodyCLaManController@comClasManSecAdd');//添加二级商品分类
         Route::post('commody/class/manage/second/add/save', 'CommodyCLaManController@comClasManSecSave');//保存二级商品分类信息
 
+		Route::get('manage/answerquestion', 'MemberController@answerQuestion');//用户咨询列表
+		Route::get('manage/answerquestiondetial/{id}', 'MemberController@answerQuestionDetial');//回复用户咨询
+		Route::post('manage/answerquestionsave', 'MemberController@answerQuestionSave');//回复用户咨询
+
 
 
 

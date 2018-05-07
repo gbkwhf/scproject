@@ -136,8 +136,13 @@
 					layer.msg(msg)
 					let address_id=data.result.address_id
 					setTimeout(function () {
-                        location.href='address.php?address_id='+address_id
-                    },1500)
+                        if($_GET['id']==3){
+                            location.href='formOrder.php'
+                        }else{
+                            location.href='address.php?address_id='+address_id
+                        }
+                        
+                    },1000)
                 }
             });
         }

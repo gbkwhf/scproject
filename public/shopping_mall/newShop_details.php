@@ -196,6 +196,20 @@
 			shopCarts(); //页面加载的时候显示购物车的数量
 			var ext_id = $_GET['ext_id']; //获取商品id
 			console.log(ext_id + '+++++');
+//			var goods_second_id = $_GET['goods_second_id']; //获取商品id
+//			console.log(goods_second_id);
+//			mui.back = function() {
+//				if(goods_second_id) {
+//					if(mui.os.plus) {
+//						plus.webview.currentWebview().hide();
+//						plus.webview.open('member_mall_list.php?goods_second_id=' + goods_second_id, 'member_mall_list.php');
+//					} else {
+//						mui.openWindow('member_mall_list.php?goods_second_id=' + goods_second_id)
+//					}
+//				}
+//
+//			}
+
 			getCon(ext_id);
 			var exYId = ''; //点击加入购物车  确定的exit_id;
 			function getCon(ext_id) {
@@ -239,46 +253,43 @@
 							$('.postNum1').html(rebate_amount + '积分'); //返利积分
 
 							//---------------循环图片（轮播图）-----
-							var t='';
+							var t = '';
 							$.each(goods_image, function(k, v) {
 								var src = goods_image[k].image;
 
 								//var imgId = goods_image[k].img_id;
-								 t+= "<div class='swiper-slide'><image src=" + src + "/></div>";
-								
+								t += "<div class='swiper-slide'><image src=" + src + "/></div>";
+
 							});
-						    $('.swiper-wrapper').html(t)
-								var img = '';
-								img += '<div class="attrImg"><img src=""/></div>' +
-									'<div class="selectName">' +
-									'<p class="shop_name">￥' + price + '</p>' +
-									'<p class="selectAttr"></p>' +
-									'</div>';
-									
-								$('.attrHead').html(img);
-						
-								setTimeout(function(){
-									var imConShow = $("#001 .swiper-slide-active img").attr("src");
-									console.log(imConShow);
-									$(".attrImg img").attr('src',imConShow)
-								},300)
-								
+							$('.swiper-wrapper').html(t)
+							var img = '';
+							img += '<div class="attrImg"><img src=""/></div>' +
+								'<div class="selectName">' +
+								'<p class="shop_name">￥' + price + '</p>' +
+								'<p class="selectAttr"></p>' +
+								'</div>';
 
-						
-								$.each(nameBox, function(k, v) {
-									var conTT = $(v).find(".typeHide").html();
-									var attrCon = $(v).find(".typeHide").attr('data-id');
-									if(conTT == undefined) {
-										conTT = '请选择' + arr[k].name;
+							$('.attrHead').html(img);
 
-									} else {
-										conTT = conTT;
-									}
-									biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
-								});
-								$(".selectAttr").html('已选：' + biaoqian);
-								$('.attributes').html('已选：' + biaoqian);
-							
+							setTimeout(function() {
+								var imConShow = $("#001 .swiper-slide-active img").attr("src");
+								console.log(imConShow);
+								$(".attrImg img").attr('src', imConShow)
+							}, 300)
+
+							$.each(nameBox, function(k, v) {
+								var conTT = $(v).find(".typeHide").html();
+								var attrCon = $(v).find(".typeHide").attr('data-id');
+								if(conTT == undefined) {
+									conTT = '请选择' + arr[k].name;
+
+								} else {
+									conTT = conTT;
+								}
+								biaoqian += '<span class="cl" attrCon=' + attrCon + '>' + conTT + '</span>'
+							});
+							$(".selectAttr").html('已选：' + biaoqian);
+							$('.attributes').html('已选：' + biaoqian);
 
 						}
 						//swiper插件实现轮播图
@@ -369,10 +380,12 @@
 									var create_time = cont[k].create_time; //时间
 									var images = cont[k].image; //用户头像
 									var name = cont[k].name; //用户名
-									var user_comment = cont[k].user_comment; //评论内容
+									var user_comment = cont[k].user_comment == '' ? '此用户没有填写评论' : cont[k].user_comment; //评论内容
+									var ShowImg = isShowImg(cont[k].comment_image);
 									if(images == '') {
 										images = 'images/head-portrait.png'
 									}
+
 									html += '<div class="apprariseNav">' +
 										'<div class="userMessage">' +
 										'<div class="userImg">' +
@@ -384,6 +397,7 @@
 										'<div class="apprariseDate">' + create_time + '</div>' +
 										'</div>' +
 										'<div class="evaluationContent">' + user_comment + '</div>' +
+										'<div class="evaImg" style="display:' + ShowImg + '"><img src=' + comment_image + ' /></div>' +
 										'</div>'
 								});
 								$('.apprariseBox').append(html); //动态显示评论列表
@@ -400,6 +414,14 @@
 						}
 					}
 				});
+			}
+
+			function isShowImg(tIm) { //判断评论的图片为空是隐藏，否则显示
+				if(tIm == '' || tIm == null) {
+					return 'none';
+				} else {
+					return 'block'
+				}
 			}
 			mui.init({
 				pullRefresh: {

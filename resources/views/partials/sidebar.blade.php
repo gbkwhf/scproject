@@ -41,6 +41,7 @@
             <li @if (in_array($current_route_2,['spec/list'])) class="active" @endif @if (!in_array(14,$power_arr)) style="display:none"  @endif   ><a href="{{ url('spec/list') }}"><i class="fa fa-edit"></i><span>商品规格管理</span></a></li>
             <li @if (in_array($current_route_2,['goods/type/list'])) class="active" @endif @if (!in_array(15,$power_arr)) style="display:none"  @endif   ><a href="{{ url('goods/type/list') }}"><i class="fa fa-edit"></i><span>商品类型管理</span></a></li>
             <li @if (in_array($current_route_2,['commody/class/manage/list'])) class="active" @endif @if (!in_array(16,$power_arr)) style="display:none"  @endif   ><a href="{{ url('commody/class/manage/list') }}"><i class="fa fa-edit"></i><span>商品分类管理</span></a></li>
+            <li @if (in_array($current_route_2,['manage/answerquestion'])) class="active" @endif @if (!in_array(17,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/answerquestion') }}"><i class="fa fa-edit"></i><span>售后咨询</span></a></li>
 
             
 
