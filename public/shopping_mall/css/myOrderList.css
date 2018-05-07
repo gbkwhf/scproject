@@ -54,6 +54,7 @@ body,html{
 			height: 58px;
 			border-bottom: solid 1px #eeeeee;
 			background-color: #fff;
+			border-top: 7px solid #f3f2f2
 		}
 		
 		.orderStore{
@@ -188,4 +189,5 @@ body,html{
 		.orGe{
 			height: 7px;
 			background:#f3f2f2 ;
+			display: none
 		}

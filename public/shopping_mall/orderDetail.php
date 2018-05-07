@@ -264,7 +264,7 @@
 										//支付成功
 										location.href = 'myOrderList.php';
 									} else {
-										//												             alert(res.err_msg);
+										//	 alert(res.err_msg);
 									}
 								}
 							);
