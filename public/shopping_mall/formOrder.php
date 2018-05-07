@@ -329,7 +329,7 @@
 								console.log(data);
 								layer.msg('提交成功');
 								setTimeout(function() {
-									location.href = 'myOrderList.php'
+									location.href = 'myOrderList.php?orderId=0'
 								}, 1000);
 							} else {
 								layer.msg(data.msg);
