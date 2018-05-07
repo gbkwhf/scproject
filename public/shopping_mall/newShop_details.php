@@ -196,19 +196,19 @@
 			shopCarts(); //页面加载的时候显示购物车的数量
 			var ext_id = $_GET['ext_id']; //获取商品id
 			console.log(ext_id + '+++++');
-			var goods_second_id = $_GET['goods_second_id']; //获取商品id
-			console.log(goods_second_id);
-			mui.back = function() {
-				if(goods_second_id) {
-					if(mui.os.plus) {
-						plus.webview.currentWebview().hide();
-						plus.webview.open('member_mall_list.php?goods_second_id=' + goods_second_id, 'member_mall_list.php');
-					} else {
-						mui.openWindow('member_mall_list.php?goods_second_id=' + goods_second_id)
-					}
-				}
-
-			}
+//			var goods_second_id = $_GET['goods_second_id']; //获取商品id
+//			console.log(goods_second_id);
+//			mui.back = function() {
+//				if(goods_second_id) {
+//					if(mui.os.plus) {
+//						plus.webview.currentWebview().hide();
+//						plus.webview.open('member_mall_list.php?goods_second_id=' + goods_second_id, 'member_mall_list.php');
+//					} else {
+//						mui.openWindow('member_mall_list.php?goods_second_id=' + goods_second_id)
+//					}
+//				}
+//
+//			}
 
 			getCon(ext_id);
 			var exYId = ''; //点击加入购物车  确定的exit_id;
