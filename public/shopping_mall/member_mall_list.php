@@ -114,6 +114,7 @@
 			}
 		});
 	});
+	
 	pageNum = 1;
 	shopList(pageNum, 1);
 	//专区切换
@@ -210,6 +211,21 @@
 
 		}
 	});
+	setTimeout(function(){
+		var b='';
+		var goods_second_id = $_GET['goods_second_id'];
+		if(goods_second_id){
+			$.each(".moreWid .classify", function(k,v) {
+				var g=$(v).attr('goods_second_id');
+				if(g==goods_second_id){
+					$(v).addClass('addStyleMi').siblings().removeClass('addStyleMi');
+					b=g;
+				}
+			});
+			console.log(b+'dddddddd');
+		}
+		
+	},300)
 	//获取购物车中的商品数量
 	var tarr = [];
 	var numberShop = 0;
@@ -245,9 +261,10 @@
 //	}
 mui('body').on('tap', '.shopListBox', function() {
 	var ext_id = $(this).attr('ext_id');
+	var goods_second_id =$(".addStyleMi").attr("goods_second_id")
 	console.log(ext_id);
 	mui.openWindow({
-		url: "newShop_details.php?ext_id=" + ext_id
+		url: "newShop_details.php?ext_id=" + ext_id+'&goods_second_id='+goods_second_id
 	})
 })
 </script>
