@@ -187,12 +187,10 @@
 										.replace("{{num}}", val.num)
 										.replace("{{goods_id}}", val.ext_id)
 										$(".shopInfoBox").append(temp)
-									if(val.order_status==2){
-										let aa='<div class="shopNumSum"><span class="sumShop">共'+val.num+'件商品</span><span class="hejiCon">合计'+val.goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+data[val].buy_goods_id+'" data-img="'+data[val].image+'">立即评价</span></div>'
-										$(".shopInfoBox").append(aa)
-									}
-
-									
+										if(val.order_status==2){
+											let aa='<div class="shopNumSum"><span class="sumShop">共'+val.num+'件商品</span><span class="hejiCon">合计'+val.goods_price+'元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="'+val.buy_goods_id+'" data-img="'+val.image+'">立即评价</span></div>'
+											$(".shopInfoBox").append(aa)
+										}	
 								}
 							}else{
 								for (let val=0; val<data.length;val++) {
@@ -274,6 +272,9 @@
 						console.log(res)
 						if(res.code==1){
 							layer.msg("确认成功")
+							$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+							id=3
+							evaluate(page)
 						}else{
 							layer.msg(res.msg)
 						}
@@ -356,11 +357,11 @@
 				try {
 					if (res.code == "1") {
 						let data = res.result
-						if(data.length==0){
-								$(".show").show()
-							}else{
-								$(".show").hide()
-							}
+						if(data.length==0&&page==1){
+							$(".show").show()
+						}else{
+							$(".show").hide()
+						}
 						for (let val=0; val<data.length;val++) {
 							$(".shopInfoBox").append(' <div class="orderHea"><div class="orderStore">'+data[val].supplier_name+'</div><div class="orderStatus">交易成功</div></div>')
 								let temp = $("#commentList").html()
@@ -385,6 +386,7 @@
 
 	
 	$(this).scroll(function () {
+		tabSwitchover()
         var viewHeight = $(this).height();//可见高度  
         var contentHeight = $("#body").get(0).scrollHeight;//内容高度  
         var scrollHeight = $(this).scrollTop();//滚动高度  
