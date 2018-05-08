@@ -47,13 +47,15 @@ body,html{
 		/*添加样式*/
 		.getStyle{
 			color: #e63737;
-			border-bottom: solid 1px #e63737;
+			border-bottom: solid 2px #e63737;
+			font-weight: bold
 		}
 		.orderHea{
 			width: 100%;
 			height: 58px;
 			border-bottom: solid 1px #eeeeee;
 			background-color: #fff;
+			border-top: 2px solid #f3f2f2
 		}
 		
 		.orderStore{
@@ -186,6 +188,7 @@ body,html{
 			clear: both;
 		}
 		.orGe{
-			height: 7px;
+			height: 2px;
 			background:#f3f2f2 ;
+			display: none
 		}

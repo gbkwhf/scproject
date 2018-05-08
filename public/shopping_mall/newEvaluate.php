@@ -90,7 +90,7 @@
     $(".header_first img").attr("src",$_GET["img"])
     $("input[type=file]").change(function (e) {
         let file=getObjectURL(this.files[0])
-        flieimg.append("upfile",this.files[0])
+        flieimg.append("image",this.files[0])
         $("#addImg").append("<img src=''/>")
         $("#addImg img:last").attr("src",file)
         $(".upflie").hide()
@@ -133,7 +133,7 @@
                         console.log(res)
                         if(res.code==1){
                             layer.msg("评价成功")
-                            location.href='myOrderList.php?orderId=2'
+                            location.href='myOrderList.php?orderId=3'
                         }else{
                             layer.msg(res.msg)
                         }

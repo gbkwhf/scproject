@@ -27,7 +27,7 @@
 				<div class="head-portrait">
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
-				<p><span class="user_names"></span><img src="images/userIcon.png" width="13"/></p>
+				<p><span class="user_names"></span><img src="images/huiyuan.png" width="13"/></p>
 				<div class="rank"><span class="userRank"></span><img src="images/personBack.png" width="6"/></div>
 			</div>
 			

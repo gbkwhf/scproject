@@ -34,6 +34,8 @@
 }
 .user-info p img{
 	margin-left: 8px;
+	width: 13px;
+	height: 12px;
 }
 .rank{
 	float: right;
