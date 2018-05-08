@@ -12,6 +12,14 @@
 		<link rel="stylesheet" type="text/css" href="css/newShop_cart.css" />
 		<link rel="stylesheet" type="text/css" href="css/commfooter.css"/>
 	</head>
+	 <script>
+        //解决IOS微信webview后退不执行JS的问题
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
 	<body>
 		<!---->
 		<div class="shopBox1">
