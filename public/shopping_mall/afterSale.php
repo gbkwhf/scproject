@@ -119,7 +119,7 @@
                     success: (res) => {
                         console.log(res)
                         if(res.code==1){
-                            layer.msg("评论成功");
+                            layer.msg("留言成功");
                             $(".aa").val("")
                             
                             $.ajax({
@@ -166,7 +166,7 @@
                             })
 
                         }else{
-                            layer.msg("评论失败");
+                            layer.msg("留言失败");
                         }
                     },
                     error: (res) => {

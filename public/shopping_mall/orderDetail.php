@@ -30,10 +30,10 @@
 		</div>
 		<!--个人信息-->
 		<div class="personInfo">
-			<div class="perInfoma">收货人：黄豆子 181*****9546</div>
-			<div class="addreIndo">地址：陕西省哈陕西省哈哈哈哈哈哈哈哈哈陕西省哈哈哈哈哈哈哈哈哈陕西省哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
+			<div class="perInfoma"></div>
+			<div class="addreIndo"></div>
 		</div>
-
+		<div style="height:7px;background:#f3f2f2"></div>
 		<div class="boxContent">
 			<div class="orderInfo">
 
@@ -127,7 +127,7 @@
 					for(let i=0;i<data.info.length;i++){
 						console.log(data.info[i])
 
-						$(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
+						$(".shopInfoBox").append('<div class="orderHea" style="border:none"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
 						for(let j=0;j<data.info[i].goods_list.length;j++){
 							console.log(data.info[i].goods_list[j].num)
 							let temp = $("#commentList").html()
@@ -182,7 +182,7 @@
 					$(".orderInBox p:nth-child(4)").text("支付方式：" + TYPE) 
 					$(".orderInBox p:nth-child(5)").text("留言信息：" + data.user_remark) 
 					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont phy"  data-id="'+data.sub_order_id+'">查看物流</span></div><div class="wuliBox"><span class="checkcont aff" data-id="'+data.sub_order_id+'">确认收货</span></div>')
-						// $(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
+						// $(".shopInfoBox").append('<div class="orderHea" style="border:none"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
 						for(let j=0;j<data.goods_list.length;j++){
 							console.log(data.goods_list[j].num)
 							let temp = $("#commentList").html()

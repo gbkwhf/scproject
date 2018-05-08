@@ -60,7 +60,7 @@
 			</div>
 		</div>
 
-	<p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">暂无商品,敬请期待!</p>	
+	<p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">你还没有相关的订单</p>	
 		
 	</div>
 	</body>
