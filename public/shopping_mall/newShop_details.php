@@ -335,6 +335,8 @@
 							console.log(conId);
 							exYId = conId;
 							console.log(exYId + 'ddddd');
+//							exYId = conId;
+							getCon(conId);
 						}
 					}
 				});
@@ -536,7 +538,6 @@
 								valueList.push(listObj);
 							}
 							console.log(valueList);
-
 						} else {
 							layer.msg(data.msg);
 						}
