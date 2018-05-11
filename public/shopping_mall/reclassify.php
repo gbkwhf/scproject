@@ -115,7 +115,7 @@
 					dataType: "json",
 					url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
 					data: {
-						store_class_id: id,
+						store_class_id: ，id,
 						page: "1",
 						ss: getCookie('openid')
 					},

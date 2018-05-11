@@ -349,7 +349,7 @@
 			type: "post",
 			url: commonsUrl + "api/gxsc/v2/get/order/info/comment/list"+ versioninfos,
 			data: {
-				page:page,	
+				page:page,
 				ss: getCookie('openid')
 			},
 			success:(res)=>{

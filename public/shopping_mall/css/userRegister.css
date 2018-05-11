@@ -11,7 +11,7 @@ input[type="button"]{-webkit-appearance: none;}
 	/*background-size: cover;*/
 }
 .registerBox{
-	height: 217px;
+	/* height: 217px; */
 	background-color: #dd3d3e;
 	overflow: hidden;
 }
@@ -40,6 +40,15 @@ input[type="button"]{-webkit-appearance: none;}
 	margin-left: 27px;
 	padding-left: 6px;
 }
+.inCode{
+	overflow: hidden;
+}
+.invite{
+	background: #fc7500;
+	margin-top: 17px;
+	text-align: center;
+	color: #fff
+}
 .getCode{
 	width: 23%;
 	height: 39px;
@@ -66,9 +75,21 @@ input[type="button"]{-webkit-appearance: none;}
 	color: #ffffff;
 }
 .regFooter{
-	height: 280px;
+	/* height: 280px; */
 	background-color: #dd3d3e;
 	overflow: hidden;
+	position: fixed;
+	bottom: 0
+}
+.consent{
+	margin: 20px 27px;
+	display: flex;
+	align-items: center;
+	color: #fff
+}
+.consent>input{
+	margin: 0 5px;
+	background: #fff
 }
 .activeBox{
 	width: 85%;
