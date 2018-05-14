@@ -32,6 +32,7 @@
 		<div class="personInfo">
 			<div class="perInfoma"></div>
 			<div class="addreIndo"></div>
+			<img src="images/address.png" alt="">
 		</div>
 		<div style="height:7px;background:#f3f2f2"></div>
 		<div class="boxContent">
