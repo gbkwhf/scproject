@@ -204,7 +204,7 @@ class MemberController  extends Controller
 			'user_lv'=>$request->user_lv,
  	);
  	$a=\App\MemberModel::where('user_id',$request->user_id)->update($params);
-	 if($request->state==0){
+	 if($request->state==2){
 		 \App\Session::where('user_id',$request->user_id)->delete();
 	 }
  	return redirect('memberlist');

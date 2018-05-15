@@ -64,7 +64,7 @@
                   <div class="col-sm-10">
                       <select class="form-control" name="state">
                       	<option @if (isset($data) &&  $data->state == 1) selected="" @endif value="1" >正常</option>
-                      	<option @if (isset($data) &&  $data->state == 0) selected="" @endif value="0">禁止登陆</option>                      	                                          
+                      	<option @if (isset($data) &&  $data->state == 2) selected="" @endif value="2">禁止登陆</option>
                   	  </select>
                   </div>
                 </div>
