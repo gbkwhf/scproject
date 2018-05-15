@@ -57,6 +57,14 @@ body,html{
 			/*height: 78px;*/
 			width: 100%;
 			background-color: #fff;
+			position: relative;
+		}
+		.personInfo img{
+			position: absolute;
+			top: 30px;
+			left: 17px;
+			width: 15px;
+			height: 20px
 		}
 		.perInfoma{
 			height: 15px;

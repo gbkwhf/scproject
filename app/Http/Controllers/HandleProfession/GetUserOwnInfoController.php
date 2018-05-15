@@ -198,9 +198,9 @@ class GetUserOwnInfoController extends Controller{
             return $this->setStatusCode(1048)->respondWithError($this->message);
         }
         //继续判断用户余额是否充足
-        //(2)判断用户所 提现金额手续费(提现金额的3%) + 提现金额   是否小于等于 用户余额
+        //(2)判断用户所 提现金额手续费(提现金额的5%) + 提现金额   是否小于等于 用户余额
         $member_info  = \DB::table('ys_member')->where('user_id',$user_id)->first();
-        $require_money = abs($bills_info->amount) + (abs($bills_info->amount) / 100 * 3);
+        $require_money = abs($bills_info->amount) + (abs($bills_info->amount) / 100 * 5);
         if($require_money >  $member_info->balance){ //余额不足 1102
             return $this->setStatusCode(1102)->respondWithError($this->message);
         }
@@ -208,7 +208,7 @@ class GetUserOwnInfoController extends Controller{
         //（3）扣余额，写手续费流水，并且更改提现流水的状态为已完成
         $insert_data = [
             'user_id' => $user_id,
-            'amount' => "-".(abs($bills_info->amount) / 100 * 3),
+            'amount' => "-".(abs($bills_info->amount) / 100 * 5),
             'pay_describe' => "提现扣除手续费",
             'created_at' => date("Y-m-d H:i:s"),
             'finished_at' => date("Y-m-d H:i:s"),

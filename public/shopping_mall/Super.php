@@ -17,10 +17,17 @@
 	<div class="clarity"></div>
 	<div id="body">
 
-		<div class="list">
-			<ul>
-				<img src="images/bot.png" id="show" />
-			</ul>
+		<div class="wrapper wrapper02" id="wrapper02">
+			<div class="scroller">
+				<ul class="clearfix">
+					<script type="text/html" id="navList">
+						<li>
+							<a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>
+						</li>
+					</script>
+				</ul>
+			</div>
+			<img src="images/bot.png" id="show" alt="">
 		</div>
 
 		<div class="msg">
@@ -50,6 +57,9 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
 <script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/navbar/flexible.js"></script>
+<script type="text/javascript" src="js/navbar/iscroll.js"></script>
+<script type="text/javascript" src="js/navbar/navbarscroll.js"></script>
 <script type="text/javascript">
 	let page=1
 	let store_second_id
@@ -80,14 +90,13 @@
 		success: (res) => {
 			let data = res.result;
 			store_second_id = data[0].store_second_id
-			for (let i = 0; i < data.length; i++) {
-				if (i == 0) {
-					$(".list ul").append("<li id=" + data[i].store_second_id + " " + 'class="select"' + '>' + data[i].store_second_name + "</li>")
-				} else {
-					$(".list ul").append("<li id=" + data[i].store_second_id + '>' + data[i].store_second_name + "</li>")
-				}
-				$(".float ul").append("<li id=" + data[i].store_second_id + '>' + data[i].store_second_name + "</li>")
+			for (let val of data) {
+				let temp = $("#navList").html()
+				temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+				$(".clearfix").append(temp)
+				$(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
 			}
+				
 		}
 	})
 
@@ -99,9 +108,9 @@
 	setTimeout(() => {
 		shop(store_second_id,page)
 
+		$('.wrapper').navbarscroll();
 
-
-		$(".list li").click(function (e) {
+		$(".clearfix li").click(function (e) {
 			store_second_id = e.target.id
 			let index = $(this).index()
 			$(this).addClass("select").siblings().removeClass("select");
@@ -116,10 +125,18 @@
 
 		$(".float li").click(function () {
 			let store_second_id = $(this).attr("id")
+			let index=$(this).index()
+			let nums= -parseInt(index)/0.045
+			$(".scroller").attr("style","width: 498px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
 			$(".tem li").remove()
 			shop(store_second_id,page)
 			$(".float").hide()
 			$(".clarity").hide()
+			$(".clearfix li").each(function(){
+				if(index==$(this).index()){
+					$(this).addClass("cur").siblings().removeClass("cur")
+				}
+			})
 		})
 	}, 200);
 

@@ -7,7 +7,7 @@ body,html{
 		   	background-color: #fff;
 		}
 		.ordeBox{
-			width: 33%;
+			width: 25%;
 			height: 55px;
 			/*background-color: lightgoldenrodyellow;*/
 			font-size: 15px;
@@ -26,7 +26,7 @@ body,html{
 		}
 		.quanbu{
 			width: 33px;
-			margin-left: 17px;
+			margin: auto;
 		}
 		.fukuan{
 			width: 50px;
@@ -47,13 +47,15 @@ body,html{
 		/*添加样式*/
 		.getStyle{
 			color: #e63737;
-			border-bottom: solid 1px #e63737;
+			border-bottom: solid 2px #e63737;
+			font-weight: bold
 		}
 		.orderHea{
 			width: 100%;
 			height: 58px;
 			border-bottom: solid 1px #eeeeee;
 			background-color: #fff;
+			border-top: 2px solid #f3f2f2
 		}
 		
 		.orderStore{
@@ -127,6 +129,10 @@ body,html{
 			margin-top: 11px;
 			margin-left: 36px;
 			font-size: 14px;
+			text-overflow:ellipsis;
+			overflow:hidden;
+			white-space:nowrap;
+			color: #f5997b;
 		}
 		.biao1{
 			color: #f5997b;
@@ -182,6 +188,7 @@ body,html{
 			clear: both;
 		}
 		.orGe{
-			height: 7px;
+			height: 2px;
 			background:#f3f2f2 ;
+			display: none
 		}

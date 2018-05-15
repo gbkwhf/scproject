@@ -8,55 +8,47 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/common.css">
 		<meta charset="UTF-8">
-		<title>二维码名片</title>
+		<title>退回押金</title>
 	</head>
 	<style type="text/css">
 		.box{
-			background: rgba(0,0,0,0.5);
 			width: 100%;
 			overflow: hidden;
 		}
 		.box>div{
 			width: 92%;
 			margin: 32.5px auto;
-			background: #fff;
 			border-radius: 5px;
 			padding-top: 29px;
 			padding-bottom: 60px;
 		}
+		.box>div>h1{
+			margin:15px auto
+		}
 		.box>div>p{
-			text-align: center;
-			color: #999;
+			font-size:22px
 		}
-		.head{
-			margin-left: 30px;
-			display: flex;
-			align-items: center;
+		.box>div>span{
+			color:#c94d10
 		}
-		.head img{
-			width: 55px;
-			height: 55px;
-			margin-right: 13px;
-		}
-		.QRcode{
-			width: 66%;
-			margin: 10px auto;
-			display: block;
+		.box>div>button{
+			width:100%;
+			height:40px;
+			border:none;
+			color:#FFF;
+			background:#4d6dfc;
+			border-radius: 5px;
+			margin-top:300px
 		}
 	</style>
 	<body>
 		<div class="box">
 			<div>
-				<div class="head">
-					<img src="images/userImg1.png"/>
-					<span>盛夏</span>
-				</div>
-				<div class="QRcode"> 
-					<!-- <img src="images/code.png"/> -->
-				</div>
-				<p>
-					扫一扫二维码图案，接受我的邀请<br />进入双创共享商城
-				</p>
+				<p>开通邀请时的押金</p>
+				<h1>299元</h1>
+				<span>提示 : 退回押金后既不能享受邀请好友且享受返利</span>
+
+				<button>确认退回押金</button>
 			</div>
 		</div>
 	</body>

@@ -103,6 +103,7 @@
 
         // 添加提问
         $("#submit").click(function () {
+            page=1
             let msg = $(".aa").val()
             if (msg == "") {
                 layer.msg("评论内容为空");
@@ -118,10 +119,54 @@
                     success: (res) => {
                         console.log(res)
                         if(res.code==1){
-                            layer.msg("评论成功");
+                            layer.msg("留言成功");
                             $(".aa").val("")
+                            
+                            $.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                url: commonsUrl + 'api/gxsc/get/after/consult/list' + versioninfos,
+                                data: {
+                                    page: page,
+                                    ss: getCookie('openid')
+                                },
+                                success: (res) => {
+                                    console.log(res)
+                                    $("#after>div").remove()
+                                    $("#num").text(res.result.num)
+                                    try {
+                                        if (res.code == "1") {
+                                            let data = res.result.data
+                                            for (let val of data) {
+                                                var content = val.merchant_reply;
+
+                                                let temp = $("#commentList").html()
+                                                temp = temp.replace("{{createTime}}", val.created_at)
+                                                    .replace("{{name}}", val.name)
+                                                    .replace("{{commentContent}}", content)
+                                                    .replace("{{problem}}", val.user_problem);
+                                                $("#after").append(temp)
+                                                if (!content) {
+                                                    content = '';
+                                                    $(".ask").hide()
+                                                }
+                                            }
+
+                                        }
+                                    } catch (e) {
+                                        console.log(e)
+                                    }
+
+
+
+                                },
+                                error: (res) => {
+                                    console.log(res)
+                                }
+                            })
+
                         }else{
-                            layer.msg("评论失败");
+                            layer.msg("留言失败");
                         }
                     },
                     error: (res) => {
@@ -170,6 +215,9 @@
                                     content = '';
                                     $(".ask").hide()
                                 }
+                            }
+                            if(res.result.data.length==0){
+                                layer.msg("没有更多了！")
                             }
 
                         }

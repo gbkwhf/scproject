@@ -41,7 +41,8 @@ input[type="button"] {
 	font-size: 14px;
 }
 .addStyleMi{
-	border-bottom: solid 2px #eb3737;
+	height: 51px;
+	border-bottom: solid 3px #eb3737;
 	font-weight: bold;
 	color: #eb3737;
 	font-size: 14px;
