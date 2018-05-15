@@ -681,7 +681,8 @@ class AuthController extends Controller
             'balance'=>is_null($profile->balance) ? 0 : $profile->balance, //余额
             'yesterday_return_money'=>$return_money, //昨日返利
             'total_amount'=>$profile->total_amount,
-            'user_lv'=>$profile->user_lv
+            'user_lv'=>$profile->user_lv,
+            'invite_role'=>$profile->invite_role
 
         ];
         return $this->respond($this->format($params));
