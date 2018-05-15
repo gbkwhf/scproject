@@ -5,6 +5,6 @@
 return [
     //支付回调路由
     'goods_order'=>'ys::goods_notify',
-    'service_order'=>'ys::service_notify',
+    'deposit_order'=>'ys::deposit_notify',
 
 ];

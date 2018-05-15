@@ -98,8 +98,8 @@ Route::group(['prefix' => 'api/gxsc'], function () {
 
 	//商品订单支付回调
     Route::any('ys-goods-notify/{type}',['as'=>'ys::goods_notify','uses'=>'NotifyController@goodsNotify']);
-    //服务订单支付回调
-//    Route::any('ys-service-notify/{type}',['as'=>'ys::service_notify','uses'=>'NotifyController@serviceNotify']);
+    //支付押金回调
+    Route::any('ys-deposit-notify/{type}',['as'=>'ys::deposit_notify','uses'=>'NotifyController@depositNotify']);
 
 
 });

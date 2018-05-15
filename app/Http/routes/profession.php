@@ -245,6 +245,9 @@ Route::group([
 
 
 
+            //用户申请邀请权限
+            Route::post('userapplyinviterole','OtherOnlyController@applyInviteRole');
+
 });
 
 

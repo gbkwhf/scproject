@@ -293,6 +293,8 @@ class UnitePay
     	];
     
     	$response = $gateway->purchase(array_merge($options,$extend))->send();
+
+        //dd($response);
     
     	$this->response=$response;
     
