@@ -72,6 +72,7 @@
                   <th>联系电话</th>
                   <th>性别</th>
                   <th>注册时间</th>
+                  <th>邀请权限</th>
                   <th>邀请人</th>
                   <th>领取礼品</th>
                   <th>状态</th>
@@ -83,6 +84,7 @@
 	                  <td>{{ $member->mobile }}</td>
 	                  <td>{{ $member->sex }}</td>	                  
 	                  <td>{{ $member->created_at }}</td>
+                      <td>{{ $member->invite_role }}</td>
 	                  <td>{{ $member->invite_id }}</td>
 	                  <td>{{ $member->gift }}</td>
 	                  <td>{{ $member->state }}</td>	

@@ -138,6 +138,7 @@ class Kernel extends ConsoleKernel
        	$personal=\App\BaseOrderModel::where('pay_time','>=',$start_time)->where('pay_time','<',$end_time)
        	->leftjoin('ys_sub_order','ys_sub_order.base_id','=','ys_base_order.id')
        	->leftjoin('ys_member','ys_member.user_id','=','ys_base_order.user_id')
+		->where('ys_member.state',1)
        	->where('ys_base_order.state',1)
        	->where('ys_sub_order.receive_state',1)
        	->where('ys_sub_order.all_rebate','>',0)
@@ -235,6 +236,11 @@ class Kernel extends ConsoleKernel
        		}
        		//dump($user_lv);
        		$user_update=\App\MemberModel::where('user_id',$val->user_id)->update(['balance'=>$val->balance+$money,'total_amount'=>$user_money,'user_lv'=>$user_lv]);
+
+			//如果等级提升取消用户邀请权限
+			if($user_lv > $val->user_lv){
+				$user_update=\App\MemberModel::where('user_id',$val->user_id)->update(['invite_role'=>0]);
+			}
        	
        	}
        	if ($user_insert==false || $user_update==false) {

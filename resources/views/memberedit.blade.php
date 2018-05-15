@@ -29,6 +29,12 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" >已交押金</label>
+                  <div class="col-sm-10">
+                    <input type="text"  disabled="true "   placeholder="Enter ..." class="form-control" value="{{ $data->deposit or '' }}">
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 control-label" >注册手机号</label>
                   <div class="col-sm-10">
                     <input type="text"  disabled="true " placeholder="Enter ..." class="form-control" value="{{ $data->mobile or '' }}">
@@ -61,7 +67,30 @@
                       	<option @if (isset($data) &&  $data->state == 0) selected="" @endif value="0">禁止登陆</option>                      	                                          
                   	  </select>
                   </div>
-                </div>                                                                                                                                                                                           
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >是否有邀请权限</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="invite_role">
+                      <option @if (isset($data) &&  $data->invite_role == 1) selected="" @endif value="1" >有</option>
+                      <option @if (isset($data) &&  $data->invite_role == 0) selected="" @endif value="0">无</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" >会员等级</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="user_lv">
+                      <option @if (isset($data) &&  $data->user_lv == 0) selected="" @endif value="0">无</option>
+                      <option @if (isset($data) &&  $data->user_lv == 1) selected="" @endif value="1" >一级</option>
+                      <option @if (isset($data) &&  $data->user_lv == 2) selected="" @endif value="2" >二级</option>
+                      <option @if (isset($data) &&  $data->user_lv == 3) selected="" @endif value="3" >三级</option>
+                      <option @if (isset($data) &&  $data->user_lv == 4) selected="" @endif value="4" >四级</option>
+                      <option @if (isset($data) &&  $data->user_lv == 5) selected="" @endif value="5" >五级</option>
+
+                    </select>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

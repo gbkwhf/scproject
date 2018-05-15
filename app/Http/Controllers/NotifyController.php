@@ -207,8 +207,10 @@ class NotifyController extends Controller
     
     
     		$updateOrder=\App\ApplyInviteRoleModel::where('order_id',$order_id)->update(array('state'=>1,'updated_at'=>date('Y-m-d H:i:s',time())));
-    
-    
+            $o_info=\App\ApplyInviteRoleModel::where('order_id',$order_id)->first();
+
+            \App\MemberModel::where('user_id',$o_info->user_id)->increment('deposit',$o_info->price);
+
     
     		if ($updateOrder) {
     			DB::commit();

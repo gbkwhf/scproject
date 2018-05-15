@@ -162,7 +162,9 @@
 		Route::get('manage/answerquestion', 'MemberController@answerQuestion');//用户咨询列表
 		Route::get('manage/answerquestiondetial/{id}', 'MemberController@answerQuestionDetial');//回复用户咨询
 		Route::post('manage/answerquestionsave', 'MemberController@answerQuestionSave');//回复用户咨询
-
+		Route::get('manage/depositorder', 'MemberController@depositOrder');//押金订单列表
+		Route::get('manage/depositorderdetial/{id}', 'MemberController@depositOrderDetial');//处理押金订单
+		Route::post('manage/depositordersave', 'MemberController@depositOrderSave');//保存
 
 
 

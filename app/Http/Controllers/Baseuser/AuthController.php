@@ -916,6 +916,13 @@ class AuthController extends Controller
         }else{ //否则，直接绑定openId即可
 
 
+            $u_info=\App\MemberModel::where('user_id',$had_mobile->user_id)->first();
+
+            if($u_info->state==2){
+                return $this->setStatusCode(6201)->respondWithError($this->message);
+            }
+
+
             $session = (new Session)->createSession($had_mobile->user_id);
             $is_exist = \DB::table('ys_session_info')->where('user_id',$had_mobile->user_id)->first();
 
