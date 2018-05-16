@@ -247,6 +247,8 @@ Route::group([
 
             //用户申请邀请权限
             Route::post('userapplyinviterole','OtherOnlyController@applyInviteRole');
+            //用户申请退出押金
+            Route::post('userapplyreturn','OtherOnlyController@applyReturn');
 
 });
 

@@ -43,6 +43,7 @@
             <li @if (in_array($current_route_2,['commody/class/manage/list'])) class="active" @endif @if (!in_array(16,$power_arr)) style="display:none"  @endif   ><a href="{{ url('commody/class/manage/list') }}"><i class="fa fa-edit"></i><span>商品分类管理</span></a></li>
             <li @if (in_array($current_route_2,['manage/answerquestion'])) class="active" @endif @if (!in_array(17,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/answerquestion') }}"><i class="fa fa-edit"></i><span>售后咨询</span></a></li>
             <li @if (in_array($current_route_2,['manage/depositorder'])) class="active" @endif @if (!in_array(18,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/depositorder') }}"><i class="fa fa-edit"></i><span>押金订单</span></a></li>
+            <li @if (in_array($current_route_2,['manage/returnapply'])) class="active" @endif @if (!in_array(19,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/returnapply') }}"><i class="fa fa-edit"></i><span>用户退出</span></a></li>
 
             
 

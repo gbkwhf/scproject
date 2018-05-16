@@ -525,38 +525,38 @@ class MemberController  extends Controller
 
 
 
-		$par=\App\ApplyInviteRoleModel::where('ys_apply_inviterole.state',1)->selectRaw('ys_apply_inviterole.*,ys_member.name as user_name,ys_member.mobile as user_mobile')
-			->leftjoin('ys_member','ys_member.user_id','=','ys_apply_inviterole.user_id');
+	$par=\App\ApplyInviteRoleModel::where('ys_apply_inviterole.state',1)->selectRaw('ys_apply_inviterole.*,ys_member.name as user_name,ys_member.mobile as user_mobile')
+		->leftjoin('ys_member','ys_member.user_id','=','ys_apply_inviterole.user_id');
 
 
 
-		$search=array();
-		if ($request->start != ''){
-			$par->where('ys_apply_inviterole.created_at','>=',$request->start.' 00:00:00');
-			$search['start']=$request->start;
-		}
-		if ($request->end != ''){
-			$par->where('ys_apply_inviterole.created_at','<',$request->end.' 59:59:59');
-			$search['end']=$request->end;
-		}
-		if (isset($request->state)){
-			$par->where('ys_apply_inviterole.confirm_state',$request->state);
-			$search['state']=$request->state;
-		}
-
-		$data=$par->orderBy('ys_apply_inviterole.created_at','desc')->paginate(10);
-
-
-
-
-		foreach ($data as &$val){
-			$val->confirm_state=empty($val->confirm_state)?'未确认':'已确认';
-
-		}
-
-
-		return view('depositorderlist',['data'=>$data,'search'=>$search]);
+	$search=array();
+	if ($request->start != ''){
+		$par->where('ys_apply_inviterole.created_at','>=',$request->start.' 00:00:00');
+		$search['start']=$request->start;
 	}
+	if ($request->end != ''){
+		$par->where('ys_apply_inviterole.created_at','<',$request->end.' 59:59:59');
+		$search['end']=$request->end;
+	}
+	if (isset($request->state)){
+		$par->where('ys_apply_inviterole.confirm_state',$request->state);
+		$search['state']=$request->state;
+	}
+
+	$data=$par->orderBy('ys_apply_inviterole.created_at','desc')->paginate(10);
+
+
+
+
+	foreach ($data as &$val){
+		$val->confirm_state=empty($val->confirm_state)?'未确认':'已确认';
+
+	}
+
+
+	return view('depositorderlist',['data'=>$data,'search'=>$search]);
+}
 
 
 
@@ -585,6 +585,77 @@ class MemberController  extends Controller
 		}else{
 			Session()->flash('message','保存成功');
 			return redirect('manage/depositorder');
+		}
+
+	}
+
+	public  function returnApply (Request $request){
+
+
+
+		$par=\App\ApplyReturnModel::select('ys_apply_return.*','ys_member.*','ys_member.created_at as user_created_at','ys_apply_return.created_at as apply_created_at')->leftjoin('ys_member','ys_member.user_id','=','ys_apply_return.user_id');
+
+
+
+		$search=array();
+		if ($request->start != ''){
+			$par->where('ys_apply_return.created_at','>=',$request->start.' 00:00:00');
+			$search['start']=$request->start;
+		}
+		if ($request->end != ''){
+			$par->where('ys_apply_return.created_at','<',$request->end.' 59:59:59');
+			$search['end']=$request->end;
+		}
+		if (isset($request->state) && $request->state!=-1){
+			$par->where('ys_apply_return.confirm_state',$request->state);
+			$search['state']=$request->state;
+		}
+
+		$data=$par->orderBy('ys_apply_return.created_at','desc')->paginate(10);
+
+
+
+		foreach ($data as &$val){
+			$val->confirm_state=empty($val->confirm_state)?'未确认':'已确认';
+
+		}
+
+		//dd($data);
+
+		return view('returnapplylist',['data'=>$data,'search'=>$search]);
+	}
+
+
+
+	public  function returnApplyDetial (Request $request){
+
+
+
+
+		$data=\App\ApplyReturnModel::where('ys_apply_return.id',$request->id)
+			->leftjoin('ys_member','ys_member.user_id','=','ys_apply_return.user_id')
+			->first();
+
+
+		return view('returnapplydetial',['data'=>$data]);
+	}
+	public  function returnApplySave (Request $request){
+
+		$o_info=\App\ApplyReturnModel::where('id',$request->id)->first();
+
+
+
+		if($request->confirm_state==1){
+			$res=\App\ApplyReturnModel::where('id',$request->id)->update(['confirm_state'=>1]);
+			\App\MemberModel::where('user_id',$o_info->user_id)->update(['invite_role'=>0,'state'=>2]);
+		}
+
+
+		if($res === false){
+			return back() -> with('errors','数据更新失败');
+		}else{
+			Session()->flash('message','保存成功');
+			return redirect('manage/returnapply');
 		}
 
 	}

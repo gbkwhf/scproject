@@ -6,7 +6,7 @@
     Home
 @endsection
 
-@section('contentheader_title','押金订单')
+@section('contentheader_title','用户申请退出')
 
 
 
@@ -34,7 +34,7 @@
                         <div class="box-header">
                <br><br>
                   <div class="box-tools2 ">
-                      <form class="form-horizontal" id ="form_action" action="{{url('manage/depositorder')}}" method="get">
+                      <form class="form-horizontal" id ="form_action" action="{{url('manage/returnapply')}}" method="get">
                           <div style="width: 800px;" class="input-group input-group-sm row">
                               <div class="col-lg-2">
                                   <input type="text"  placeholder="起始日期" id="start" class="inline laydate-icon form-control" style="float:left;" name="start" value="{{ $_GET['start'] or ''}}">
@@ -45,8 +45,8 @@
                               <div class="col-lg-2">
 	                            <select name="state"  class="form-control pull-right"  style="width: 135px">
 	                                <option value=-1>状态</option>
-	                                <option @if(isset($_GET['state'])) @if($_GET['state'] == 0) selected="selected" @endif @endif  value=0>未回复</option>
-	                                <option @if(isset($_GET['state'])) @if($_GET['state'] == 1) selected="selected" @endif @endif  value=1>已回复</option>
+	                                <option @if(isset($_GET['state'])) @if($_GET['state'] == 0) selected="selected" @endif @endif  value=0>未确认</option>
+	                                <option @if(isset($_GET['state'])) @if($_GET['state'] == 1) selected="selected" @endif @endif  value=1>已确认</option>
 	                            </select>
                               </div>                                                                                                                                             
                               <div class="col-lg-2" style="position:relative">
@@ -64,25 +64,23 @@
                 <tbody><tr>
                   <th>用户名</th>
                   <th>注册手机</th>
-                  <th>联系人</th>
-                  <th>联系电话</th>
+                  <th>注册时间</th>
                   <th>用户等级</th>
-                  <th>金额</th>
+                  <th>已交押金</th>
+                   <th>申请时间</th>
                   <th>状态</th>
-                  <th>时间</th>
                 </tr>                
                 @foreach ($data as $bill)    				
 	    			<tr>
-	    			  <td>{{ $bill->user_name }}</td>
-	                  <td>{{ $bill->user_mobile }}</td>
-	                  <td>{{ $bill->name }}</td>
+	    			  <td>{{ $bill->name }}</td>
 	                  <td>{{ $bill->mobile }}</td>
-                      <td>{{ $bill->user_lv }}</td>
-                      <td>{{ $bill->price }}</td>
-                      <td>{{ $bill->confirm_state }}</td>
-                      <td>{{ $bill->created_at }}</td>
+	                  <td>{{ $bill->user_created_at }}</td>
+	                  <td>{{ $bill->user_lv }}</td>
+                      <td>{{ $bill->deposit }}</td>
+                      <td>{{ $bill->apply_created_at }}</td>
+                        <td>{{ $bill->confirm_state }}</td>
 	                  <td>
-	                  		<a href="{{ url('manage/depositorderdetial',['id'=>$bill->order_id]) }}"><button class="btn bg-orange margin" type="button">详情</button></a>
+	                  		<a href="{{ url('manage/returnapplydetial',['id'=>$bill->id]) }}"><button class="btn bg-orange margin" type="button">详情</button></a>
 	                  </td>
 	                </tr>                
 				@endforeach               
