@@ -68,15 +68,15 @@
 			</li>	
 			<li>
 				<p>邀请码</p>
-				<span>2345</span>
+				<span class="code">2345</span>
 			</li>
 			<li>
 				<p>级别</p>
-				<span>666级</span>
+				<span class="level">666级</span>
 			</li>
 			<li>
 				<p>状态</p>
-				<span>开通</span>
+				<span class="Open">开通</span>
 			</li>
 
 			<li onclick="location.href='QRcode.php'"> 
@@ -116,6 +116,9 @@
               console.log(data);
               $(".container>ul>li").eq(0).children('span').html(data.result.name);
               $(".container>ul>li").eq(1).children('span').html(data.result.mobile);
+			  $(".code").text(data.result.user_id)
+			  $(".level").text(data.result.is_member=0?"会员":"员工")
+			  $(".Open").text(data.result.invite_role=0?"未开通":"开通")
               setCookie("username",data.result.name);
             }else{
                 layer.msg(data.msg);
