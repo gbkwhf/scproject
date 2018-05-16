@@ -80,7 +80,7 @@
 				我的财富
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="location.href='invitationList.php'">
+			<li onclick="location.href='invitation.php'">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
 			</li>

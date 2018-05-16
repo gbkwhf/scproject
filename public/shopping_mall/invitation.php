@@ -29,7 +29,7 @@
 <script src="js/config.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
-
+    let invite_role	
     requesturl = commonsUrl+'shopping_mall/invitation.php';
     getWxConfig(requesturl);
 
@@ -38,9 +38,9 @@
         url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
         data:{'ss':getCookie('openid')},
         success:function(data){
-
+            invite_role	=data.invite_role	
             var user_id = data.result.user_id;//用户id
-            console.log(user_id);
+            console.log(data);
             wx.ready(function () {
 //        var tzurl = encodeURIComponent(commonsUrl+'/shopping_mall/userRegister.php?user_id='+user_id);
                 wx.onMenuShareAppMessage({
@@ -87,10 +87,15 @@
        $(".inviBtn2,.inviBtn1").css("margin-top",winH-110+"px")
 
 	$(".inviBtn1").click(function(){
-		$('.popBox').show()
-			$('.popBox').click(function() {
-				$('.popBox').hide()
-			})
+        if(invite_role==0){
+            location.href='myinvite.php'
+        }else{
+            $('.popBox').show()
+            $('.popBox').click(function() {
+                $('.popBox').hide()
+            })
+        }
+           
 	})
 
 	
