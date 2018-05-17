@@ -47,6 +47,7 @@
 		 var user_id = $_GET['user_id'].split('user_id')[0];//用户id
         setCookie("openid",'{{$open_id}}');
         console.log(getCookie("openid"))
+        console.log(user_id)
 		//获取openId
 		$.ajax({
 	        type:"get",
@@ -54,6 +55,7 @@
 	        data:{
 	            "code":$_GET['code']
 	        },success:function(data){
+                console.log(data)
 	            if(data.code==1){
 	                if(getCookie("openid")){
 	                    setCookie("is_member",data.result.is_member);
