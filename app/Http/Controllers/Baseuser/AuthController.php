@@ -682,7 +682,8 @@ class AuthController extends Controller
             'yesterday_return_money'=>$return_money, //昨日返利
             'total_amount'=>$profile->total_amount,
             'user_lv'=>$profile->user_lv,
-            'invite_role'=>$profile->invite_role
+            'invite_role'=>$profile->invite_role,
+            'deposit'=>$profile->deposit
 
         ];
         return $this->respond($this->format($params));
