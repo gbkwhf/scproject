@@ -44,10 +44,8 @@
 <script type="text/javascript" src="/shopping_mall/js/config.js"></script>
 <script type="text/javascript" src="/shopping_mall/js/layer/layer.js"></script>
     <script>
-		var user_id = $_GET['user_id'];//用户id
-        $(".invite").text("邀请码 : "+user_id)
-		console.log($_GET['code']); 
-		console.log($_GET['user_id']);
+		 var user_id = $_GET['user_id'].split('user_id')[0];//用户id
+        setCookie("openid",'{{$open_id}}');
 		//获取openId
 		$.ajax({
 	        type:"get",
