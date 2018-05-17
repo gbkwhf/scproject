@@ -61,7 +61,12 @@
 <script type="text/javascript">
 	let height=$(document).height()
 	$(".box").css("height",height)
+	console.log($_GET["user_lv"])
+	const grade=$_GET["user_lv"]
+	// switch(grade){
+	// 	case 0:
 
+	// }
 	$("button").click(function(){
 			$.ajax({
 			type:"post",

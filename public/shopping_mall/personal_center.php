@@ -80,7 +80,7 @@
 				我的财富
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="invitation()">
+			<li class="myinviat" onclick="invitation()">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
@@ -209,6 +209,9 @@
   					$('.balance p').html(data.result.balance);
   					$('.cashback p').html(data.result.total_amount);
   					$('.userRank').html('会员等级：'+data.result.user_lv);
+					if(data.result.user_lv==0){
+						$(".myinviat").hide()
+					}
   				}else if(data.code==1011){
   					layer.msg('身份已失效，请重新绑定');
   					setTimeout(function(){location.href='register.php';},1000);

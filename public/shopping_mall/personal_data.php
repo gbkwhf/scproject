@@ -79,7 +79,7 @@
 				<span class="Open">开通</span>
 			</li>
 
-			<li class="send" onclick="location.href='QRcode.php'"> 
+			<li class="send"> 
 				<p>退回押金</p>
 				<p>
 					<img style="width: 7.5;height: 13px;" src="images/right-arrow.png" alt="">
@@ -117,7 +117,7 @@
               $(".container>ul>li").eq(0).children('span').html(data.result.name);
               $(".container>ul>li").eq(1).children('span').html(data.result.mobile);
 			  $(".code span").text(data.result.user_id)
-			  $(".level").text(data.result.is_member==0?"会员":"员工")
+			  $(".level").text('LV'+data.result.user_lv)
 			  $(".Open").text(data.result.invite_role==0?"未开通":"开通")
               setCookie("username",data.result.name);
 			  if(data.result.invite_role==0){
@@ -127,6 +127,10 @@
             }else{
                 layer.msg(data.msg);
             }
+
+			$(".send").click(function(){
+				location.href='QRcode.php?user_lv=' + data.result.user_lv
+			})
         }
     });
 		
