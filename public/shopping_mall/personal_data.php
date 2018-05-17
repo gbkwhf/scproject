@@ -66,9 +66,9 @@
 				<p>手机号</p>
 				<span></span>
 			</li>	
-			<li>
+			<li class="code">
 				<p>邀请码</p>
-				<span class="code">2345</span>
+				<span>2345</span>
 			</li>
 			<li>
 				<p>级别</p>
@@ -79,7 +79,7 @@
 				<span class="Open">开通</span>
 			</li>
 
-			<li onclick="location.href='QRcode.php'"> 
+			<li class="send" onclick="location.href='QRcode.php'"> 
 				<p>退回押金</p>
 				<p>
 					<img style="width: 7.5;height: 13px;" src="images/right-arrow.png" alt="">
@@ -109,17 +109,21 @@
         type:"post",
         url: commonsUrl + "api/gxsc/user/profile" +versioninfos,
         data:{
-           'ss':getCookie('openid')
+           'ss':getCookie('openid')	
         },
         success:function(data){
             if(data.code==1){
               console.log(data);
               $(".container>ul>li").eq(0).children('span').html(data.result.name);
               $(".container>ul>li").eq(1).children('span').html(data.result.mobile);
-			  $(".code").text(data.result.user_id)
-			  $(".level").text(data.result.is_member=0?"会员":"员工")
-			  $(".Open").text(data.result.invite_role=0?"未开通":"开通")
+			  $(".code span").text(data.result.user_id)
+			  $(".level").text(data.result.is_member==0?"会员":"员工")
+			  $(".Open").text(data.result.invite_role==0?"未开通":"开通")
               setCookie("username",data.result.name);
+			  if(data.result.invite_role==0){
+				$(".code").hide()
+				$(".send").hide()
+			  }
             }else{
                 layer.msg(data.msg);
             }
