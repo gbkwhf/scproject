@@ -668,6 +668,15 @@ class AuthController extends Controller
             }
         }
 
+        if($profile->invite_role==0){
+            $user_lvs_config=config('clinic-config.deposit');
+            $next_deposit=$user_lvs_config[$profile->user_lv+1];
+            $need_deposit=$next_deposit-$profile->deposit;
+        }else{
+            $need_deposit=0;
+        }
+
+
         $params = [
             'user_id'=>	$user_id,
             'mobile'=>$profile->mobile,
@@ -683,7 +692,9 @@ class AuthController extends Controller
             'total_amount'=>$profile->total_amount,
             'user_lv'=>$profile->user_lv,
             'invite_role'=>$profile->invite_role,
-            'deposit'=>$profile->deposit
+            'deposit'=>$profile->deposit,
+            'need_deposit'=>$need_deposit,
+
 
         ];
         return $this->respond($this->format($params));
