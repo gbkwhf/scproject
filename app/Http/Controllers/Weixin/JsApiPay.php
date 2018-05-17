@@ -61,7 +61,7 @@ class JsApiPay  extends Controller
         }
 
 
-        return view('publicjs.share',['open_id'=>$ogit pen_id,'invite_id'=>$invite_id]);
+        return view('publicjs.share',['open_id'=>$open_id,'invite_id'=>$invite_id]);
     }
 
 
