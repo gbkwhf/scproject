@@ -63,10 +63,22 @@
 	$(".box").css("height",height)
 	console.log($_GET["user_lv"])
 	const grade=$_GET["user_lv"]
-	// switch(grade){
-	// 	case 0:
-
-	// }
+	switch(grade){
+                case "1":
+                    $("h1").text("300元")
+                break;
+                case "2":
+                    $("h1").text("1000元")
+                break;   
+                case "3":
+                    $("h1").text("5000元")
+                break;
+                case "4":
+                    $("h1").text("10000元")
+                break;    
+                default:
+                    $("h1").text("20000元")
+            }
 	$("button").click(function(){
 			$.ajax({
 			type:"post",
