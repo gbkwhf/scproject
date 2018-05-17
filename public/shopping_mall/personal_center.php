@@ -227,7 +227,7 @@
 					invite_role	=data.result.invite_role	
 					var user_id = data.result.user_id;//用户id
 					console.log(data);
-					if(invite_role==1){
+					if(invite_role==0){
 						location.href='myinvite.php'
 					}else{
 						location.href='invitation.php'
