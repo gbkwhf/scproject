@@ -38,7 +38,7 @@ class JsApiPay  extends Controller
     //邀请分享
     public function inviteRegister(){
 
-
+        $invite_id = $_GET['user_id'];
 
        $session_id = session_id();
 
@@ -61,7 +61,7 @@ class JsApiPay  extends Controller
         }
 
 
-        return view('publicjs.share',['open_id'=>$open_id]);
+        return view('publicjs.share',['open_id'=>$open_id,'invite_id'=>$invite_id]);
     }
 
 

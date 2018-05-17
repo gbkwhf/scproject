@@ -27,7 +27,7 @@
 				<div class="head-portrait">
 					<img src="images/head-portrait.png" width="55"/>
 				</div>
-				<p><span class="user_names"></span><img src="images/huiyuan.png" width="13"/></p>
+				<p><span class="user_names"></span><img class="member" src="images/huiyuan.png" width="13"/></p>
 				<div class="rank"><span class="userRank"></span><img src="images/personBack.png" width="6"/></div>
 			</div>
 			
@@ -80,7 +80,7 @@
 				我的财富
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="location.href='invitation.php'">
+			<li class="myinviat" onclick="invitation()">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
@@ -209,6 +209,10 @@
   					$('.balance p').html(data.result.balance);
   					$('.cashback p').html(data.result.total_amount);
   					$('.userRank').html('会员等级：'+data.result.user_lv);
+					if(data.result.user_lv==0){
+						$(".myinviat").hide()
+						$(".member").hide()
+					}
   				}else if(data.code==1011){
   					layer.msg('身份已失效，请重新绑定');
   					setTimeout(function(){location.href='register.php';},1000);
@@ -218,7 +222,23 @@
   			}
   		});
   		
-  		
+  		function invitation(){
+			$.ajax({
+				type:'post',
+				url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
+				data:{'ss':getCookie('openid')},
+				success:function(data){
+					invite_role	=data.result.invite_role	
+					var user_id = data.result.user_id;//用户id
+					console.log(data);
+					if(invite_role==0){
+						location.href='myinvite.php'
+					}else{
+						location.href='invitation.php'
+					}
+				}
+			})
+		  }
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

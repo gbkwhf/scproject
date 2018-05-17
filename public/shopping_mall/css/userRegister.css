@@ -71,6 +71,7 @@ input[type="button"]{-webkit-appearance: none;}
 	text-align: center;
 	margin-left: 27%;
 	margin-top: 25px;
+	margin-bottom: 25px;
 	float: left;
 	color: #ffffff;
 }
@@ -78,8 +79,6 @@ input[type="button"]{-webkit-appearance: none;}
 	/* height: 280px; */
 	background-color: #dd3d3e;
 	overflow: hidden;
-	position: fixed;
-	bottom: 0
 }
 .consent{
 	margin: 20px 27px;
