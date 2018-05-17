@@ -145,7 +145,7 @@
                         		layer.msg("注册成功");
                         	},300);
 							
-						    location.href='index.php';
+						    location.href='/shopping_mall/index.php'
                             
                         }else{
                             layer.msg(data.msg);
