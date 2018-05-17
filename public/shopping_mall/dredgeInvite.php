@@ -84,71 +84,81 @@ $.ajax({
                 case "4":
                     $(".per").text("10000元")
                 break;    
+                default:
+                    $(".per").text("20000元")
+                    $("button").css("background","#b5b5b5")
+                    
             }
 
-             
+           
               $("button").click(function(){
-                const name=$("input[name='name']").val()
-                const pel=$("input[name='pel']").val()
-                const reg=/^[1][3,4,5,7,8][0-9]{9}$/
-                if(name.length==0){
-                    layer.msg("名字不能为空")
-                }else if(pel.length==0){
-                    layer.msg("手机号不能为空")
-                }else if(!reg.test(pel)){
-                    layer.msg("手机号格式有误")
+                if(data.result.user_lv!="1"||data.result.user_lv!="2"||data.result.user_lv!="3"||data.result.user_lv!="4"){
+                    layer.msg("事业合伙人需支付金额较大，故采用线下支付银行到账后，自动开通邀请权限")
                 }else{
-            
-                    $.ajax({
-                        type:"post",
-                        url:commonsUrl + 'api/gxsc/userapplyinviterole' + versioninfos,
-                        data:{
-                            mobile:pel,
-                            name:name,
-                            open_id: getCookie("openid"),
-                            ss:getCookie('openid')
-                        },
-                        success:data=>{
-                            console.log(data)
-                            if(data.code == 1) {
-                                console.log(data);
-                                data.result.timeStamp = data.result.timeStamp.toString();
-                                retStr = data.result;
-                                callpay();
-                                //调用微信JS api 支付
-                                function jsApiCall() {
-                                    WeixinJSBridge.invoke(
-                                        'getBrandWCPayRequest',
-                                        retStr,
-                                        function(res) {
-                                            if(res.err_msg == "get_brand_wcpay_request:ok") {
-                                                //支付成功
-                                                location.href = 'myOrderList.php';
-                                            } else {
-                                                //												             alert(res.err_msg);
+                    const name=$("input[name='name']").val()
+                    const pel=$("input[name='pel']").val()
+                    const reg=/^[1][3,4,5,7,8][0-9]{9}$/
+                    if(name.length==0){
+                        layer.msg("名字不能为空")
+                    }else if(pel.length==0){
+                        layer.msg("手机号不能为空")
+                    }else if(!reg.test(pel)){
+                        layer.msg("手机号格式有误")
+                    }else{
+                
+                        $.ajax({
+                            type:"post",
+                            url:commonsUrl + 'api/gxsc/userapplyinviterole' + versioninfos,
+                            data:{
+                                mobile:pel,
+                                name:name,
+                                open_id: getCookie("openid"),
+                                ss:getCookie('openid')
+                            },
+                            success:data=>{
+                                console.log(data)
+                                if(data.code == 1) {
+                                    console.log(data);
+                                    data.result.timeStamp = data.result.timeStamp.toString();
+                                    retStr = data.result;
+                                    callpay();
+                                    //调用微信JS api 支付
+                                    function jsApiCall() {
+                                        WeixinJSBridge.invoke(
+                                            'getBrandWCPayRequest',
+                                            retStr,
+                                            function(res) {
+                                                if(res.err_msg == "get_brand_wcpay_request:ok") {
+                                                    //支付成功
+                                                    location.href = 'myOrderList.php';
+                                                } else {
+                                                    //												             alert(res.err_msg);
+                                                }
                                             }
-                                        }
-                                    );
-                                }
-
-                                function callpay() {
-                                    if(typeof WeixinJSBridge == "undefined") {
-                                        if(document.addEventListener) {
-                                            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                                        } else if(document.attachEvent) {
-                                            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                                            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                                        }
-                                    } else {
-                                        jsApiCall();
+                                        );
                                     }
+
+                                    function callpay() {
+                                        if(typeof WeixinJSBridge == "undefined") {
+                                            if(document.addEventListener) {
+                                                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                                            } else if(document.attachEvent) {
+                                                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                                                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                                            }
+                                        } else {
+                                            jsApiCall();
+                                        }
+                                    }
+                                } else {
+                                    layer.msg(data.msg);
                                 }
-                            } else {
-                                layer.msg(data.msg);
                             }
-                        }
-                    })
+                        })
+                    }
                 }
+
+               
             })
         }
     });
