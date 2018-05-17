@@ -681,7 +681,8 @@ class AuthController extends Controller
             'balance'=>is_null($profile->balance) ? 0 : $profile->balance, //余额
             'yesterday_return_money'=>$return_money, //昨日返利
             'total_amount'=>$profile->total_amount,
-            'user_lv'=>$profile->user_lv
+            'user_lv'=>$profile->user_lv,
+            'invite_role'=>$profile->invite_role
 
         ];
         return $this->respond($this->format($params));
@@ -913,6 +914,13 @@ class AuthController extends Controller
 
 
         }else{ //否则，直接绑定openId即可
+
+
+            $u_info=\App\MemberModel::where('user_id',$had_mobile->user_id)->first();
+
+            if($u_info->state==2){
+                return $this->setStatusCode(6201)->respondWithError($this->message);
+            }
 
 
             $session = (new Session)->createSession($had_mobile->user_id);

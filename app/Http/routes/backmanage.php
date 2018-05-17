@@ -162,8 +162,12 @@
 		Route::get('manage/answerquestion', 'MemberController@answerQuestion');//用户咨询列表
 		Route::get('manage/answerquestiondetial/{id}', 'MemberController@answerQuestionDetial');//回复用户咨询
 		Route::post('manage/answerquestionsave', 'MemberController@answerQuestionSave');//回复用户咨询
-
-
+		Route::get('manage/depositorder', 'MemberController@depositOrder');//押金订单列表
+		Route::get('manage/depositorderdetial/{id}', 'MemberController@depositOrderDetial');//处理押金订单
+		Route::post('manage/depositordersave', 'MemberController@depositOrderSave');//保存
+		Route::get('manage/returnapply', 'MemberController@returnApply');//用户退出申请列表
+		Route::get('manage/returnapplydetial/{id}', 'MemberController@returnApplyDetial');//处理退出申请
+		Route::post('manage/returnapplysave', 'MemberController@returnApplySave');//保存
 
 
     });	

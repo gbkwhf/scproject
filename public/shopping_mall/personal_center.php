@@ -80,7 +80,7 @@
 				我的财富
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
-			<li onclick="location.href='invitationList.php'">
+			<li onclick="invitation()">
 				我的邀请
 				<img src="images/right-arrow.png" width="8"/>
 			</li>
@@ -218,7 +218,23 @@
   			}
   		});
   		
-  		
+  		function invitation(){
+			$.ajax({
+				type:'post',
+				url:commonsUrl + 'api/gxsc/user/profile' + versioninfos,
+				data:{'ss':getCookie('openid')},
+				success:function(data){
+					invite_role	=data.result.invite_role	
+					var user_id = data.result.user_id;//用户id
+					console.log(data);
+					if(invite_role==0){
+						location.href='myinvite.php'
+					}else{
+						location.href='invitation.php'
+					}
+				}
+			})
+		  }
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{

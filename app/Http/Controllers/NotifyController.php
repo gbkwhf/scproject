@@ -178,15 +178,15 @@ class NotifyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function serviceNotify($type=null)
+    public function depositNotify($type=null)
     {
     
-    	$object=new \Acme\Repository\UnitePay($type,'service_order');
-    
+    	$object=new \Acme\Repository\UnitePay($type,'deposit_order');
+
     	$result=$object->completePurchase();
-    
+
     	\Log::info('the '.$type.' notify  request_params is',$_REQUEST);
-    
+
     	//验证失败
     	if($result===false){
     		\Log::info('the '.$type.' check sign  fail ');
@@ -194,8 +194,9 @@ class NotifyController extends Controller
     	}
     	//返回相关关订单信息
     	if($result){
-    
-    		$order=\App\OrdersModel::where('order_id',$result['order_id'])->first();
+
+            $order_id = explode("_",$result['order_id'])[0];
+    		$order=\App\ApplyInviteRoleModel::where('order_id',$order_id)->first();
     		 
     		if($result['price']<$order->price){
     			\Log::info('the '.$type.' maybe hack');
@@ -205,17 +206,19 @@ class NotifyController extends Controller
     		//成功更新订单
     
     
-    		$updateOrder=\App\OrdersModel::where('order_id',$result['order_id'])->update(array('pay_state'=>1,'payment_at'=>date('Y-m-d H:i:s',time())));
-    
-    
+    		$updateOrder=\App\ApplyInviteRoleModel::where('order_id',$order_id)->update(array('state'=>1,'updated_at'=>date('Y-m-d H:i:s',time())));
+            $o_info=\App\ApplyInviteRoleModel::where('order_id',$order_id)->first();
+
+            \App\MemberModel::where('user_id',$o_info->user_id)->increment('deposit',$o_info->price);
+
     
     		if ($updateOrder) {
     			DB::commit();
-    			\Log::info('serviceorder_success');
+    			\Log::info('deposit_order_success');
     			return $result['return_msg_ok'];
     		} else {
     			DB::rollBack();
-    			\Log::info('serviceorder_fail');
+    			\Log::info('deposit_order_fail');
     			return $result['return_msg _fail'];
     		}
     

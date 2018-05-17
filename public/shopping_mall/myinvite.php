@@ -44,7 +44,7 @@
         <img src="images/banimg.png" alt="">
         <div>
             <div>尚未开通邀请权限</div>
-            <button>邀请开通</button>
+            <button onclick="location.href='dredgeInvite.php'">邀请开通</button>
             <p>邀请操作说明</p>
             <p>1、开通邀请权限，必须是平台注册用户。</p>
             <p>2、开通邀请权限需要支付相应级别的押金。</p>

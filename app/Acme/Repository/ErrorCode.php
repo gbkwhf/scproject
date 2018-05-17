@@ -85,6 +85,10 @@ class ErrorCode
     const GOODS_CANT_PUY = "6103";      //商品已下架
 
 
+    const USER_CANT_APPLY = "6200";      //用户等级不能申请邀请权限
+    const USER_CANT_LOGIN = "6201";      //账号已禁用
+    const USER_ALSO_APPLY = "6202";      //已经申请
+
 
     const SYSTEM_VERSION_LOW = "9997"; //系统版本过低
     const SYSTEM_ERR = "9998";   //系统错误
@@ -189,6 +193,9 @@ class ErrorCode
         "6016"=>"评价内容和评价图片不能同时为空",
         "6017"=>"没找到记录或您无权确认收货",
         "6018"=>"未找到物流信息，不能确认收货",
+        "6200"=>"当前等级无法申请",
+        "6201"=>"账号已禁用",
+        "6202"=>"不能重复申请",
 
 
 

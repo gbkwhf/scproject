@@ -18,9 +18,11 @@ class MemberController  extends Controller
 
  public  function memberList (Request $request){
 
- 	//dd(Auth::user());
+
+		 //dd(Auth::user());
  	 $member=\App\MemberModel::leftjoin('ys_employee','ys_employee.user_id','=','ys_member.invite_id')
  	 			->leftjoin('ys_invite_member','ys_invite_member.user_id','=','ys_member.user_id')
+		 		->selectRaw('ys_member.*')
  	 			->orderBy('ys_member.created_at','desc');
  	 
  	 $search=[];
@@ -58,6 +60,7 @@ class MemberController  extends Controller
         }
  		$val['sex']=$sexArr[$val['sex']];
  		$val['state']=$val['state']==1?'正常':'禁止登陆';
+		$val['invite_role']=$val['invite_role']==1?'有':'无';
  		
  		$val['gift']=empty($val['gift'])?'':$invite_gift[$val['gift']];
  
@@ -71,6 +74,7 @@ class MemberController  extends Controller
  		
  		$val['invite_id']=empty($val->invite_id)?'':$invite_info->name.$agenyc_name;
  	}
+	 //dd($data);
  	//所有经销商
  	$agency_list=\App\AgencyModel::get();
 	return view('memberlist',['data'=>$data,'search'=>$search,'agency_list'=>$agency_list]);
@@ -196,8 +200,13 @@ class MemberController  extends Controller
 
  	$params=array(
  			'state'=>$request->state,
+			'invite_role'=>$request->invite_role,
+			'user_lv'=>$request->user_lv,
  	);
  	$a=\App\MemberModel::where('user_id',$request->user_id)->update($params);
+	 if($request->state==2){
+		 \App\Session::where('user_id',$request->user_id)->delete();
+	 }
  	return redirect('memberlist');
  }
  
@@ -511,4 +520,143 @@ class MemberController  extends Controller
 
 	}
 
+
+	public  function depositOrder (Request $request){
+
+
+
+	$par=\App\ApplyInviteRoleModel::where('ys_apply_inviterole.state',1)->selectRaw('ys_apply_inviterole.*,ys_member.name as user_name,ys_member.mobile as user_mobile')
+		->leftjoin('ys_member','ys_member.user_id','=','ys_apply_inviterole.user_id');
+
+
+
+	$search=array();
+	if ($request->start != ''){
+		$par->where('ys_apply_inviterole.created_at','>=',$request->start.' 00:00:00');
+		$search['start']=$request->start;
+	}
+	if ($request->end != ''){
+		$par->where('ys_apply_inviterole.created_at','<',$request->end.' 59:59:59');
+		$search['end']=$request->end;
+	}
+	if (isset($request->state)){
+		$par->where('ys_apply_inviterole.confirm_state',$request->state);
+		$search['state']=$request->state;
+	}
+
+	$data=$par->orderBy('ys_apply_inviterole.created_at','desc')->paginate(10);
+
+
+
+
+	foreach ($data as &$val){
+		$val->confirm_state=empty($val->confirm_state)?'未确认':'已确认';
+
+	}
+
+
+	return view('depositorderlist',['data'=>$data,'search'=>$search]);
+}
+
+
+
+	public  function depositOrderDetial (Request $request){
+
+
+
+
+		$data=\App\ApplyInviteRoleModel::where('ys_apply_inviterole.order_id',$request->id)
+			->leftjoin('ys_member','ys_member.user_id','=','ys_apply_inviterole.user_id')
+			->selectRaw('ys_apply_inviterole.*,ys_member.name as user_name')
+			->first();
+
+
+		return view('depositorderdetial',['data'=>$data]);
+	}
+	public  function depositOrderSave (Request $request){
+
+		$o_info=\App\ApplyInviteRoleModel::where('order_id',$request->id)->first();
+		$res=\App\ApplyInviteRoleModel::where('order_id',$request->id)->update(['confirm_state'=>$request->confirm_state]);
+
+		\App\MemberModel::where('user_id',$o_info->user_id)->update(['invite_role'=>$request->confirm_state]);
+
+		if($res === false){
+			return back() -> with('errors','数据更新失败');
+		}else{
+			Session()->flash('message','保存成功');
+			return redirect('manage/depositorder');
+		}
+
+	}
+
+	public  function returnApply (Request $request){
+
+
+
+		$par=\App\ApplyReturnModel::select('ys_apply_return.*','ys_member.*','ys_member.created_at as user_created_at','ys_apply_return.created_at as apply_created_at')->leftjoin('ys_member','ys_member.user_id','=','ys_apply_return.user_id');
+
+
+
+		$search=array();
+		if ($request->start != ''){
+			$par->where('ys_apply_return.created_at','>=',$request->start.' 00:00:00');
+			$search['start']=$request->start;
+		}
+		if ($request->end != ''){
+			$par->where('ys_apply_return.created_at','<',$request->end.' 59:59:59');
+			$search['end']=$request->end;
+		}
+		if (isset($request->state) && $request->state!=-1){
+			$par->where('ys_apply_return.confirm_state',$request->state);
+			$search['state']=$request->state;
+		}
+
+		$data=$par->orderBy('ys_apply_return.created_at','desc')->paginate(10);
+
+
+
+		foreach ($data as &$val){
+			$val->confirm_state=empty($val->confirm_state)?'未确认':'已确认';
+
+		}
+
+		//dd($data);
+
+		return view('returnapplylist',['data'=>$data,'search'=>$search]);
+	}
+
+
+
+	public  function returnApplyDetial (Request $request){
+
+
+
+
+		$data=\App\ApplyReturnModel::where('ys_apply_return.id',$request->id)
+			->leftjoin('ys_member','ys_member.user_id','=','ys_apply_return.user_id')
+			->first();
+
+
+		return view('returnapplydetial',['data'=>$data]);
+	}
+	public  function returnApplySave (Request $request){
+
+		$o_info=\App\ApplyReturnModel::where('id',$request->id)->first();
+
+
+
+		if($request->confirm_state==1){
+			$res=\App\ApplyReturnModel::where('id',$request->id)->update(['confirm_state'=>1]);
+			\App\MemberModel::where('user_id',$o_info->user_id)->update(['invite_role'=>0,'state'=>2]);
+		}
+
+
+		if($res === false){
+			return back() -> with('errors','数据更新失败');
+		}else{
+			Session()->flash('message','保存成功');
+			return redirect('manage/returnapply');
+		}
+
+	}
 }
