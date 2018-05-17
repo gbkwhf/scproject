@@ -48,6 +48,7 @@
         setCookie("openid",'{{$open_id}}');
         console.log(getCookie("openid"))
         console.log(user_id)
+        $(".invite").text("邀请码 : "+user_id)
 		//获取openId
 		$.ajax({
 	        type:"get",
