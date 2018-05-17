@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     	<meta name="apple-mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no" />
    	 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-    	<link rel="stylesheet" href="css/common.css">
-    	<link rel="stylesheet" href="css/userRegister.css">
+        <link rel="stylesheet" href="/shopping_mall/css/common.css">
+        <link rel="stylesheet" href="/shopping_mall/css/userRegister.css">
 	</head>
 	<body>
 		<div class="usregHead"></div>
@@ -20,7 +20,7 @@
                 <div class="getCode" onkeyup="value=value.replace(/[^0-9.]/g,'') " onclick="getcode()">获取验证码</div>
 			</div>
             <div class="userMobil">
-            <p class="inpmobile invite">邀请码: {{$invite_id}}</p>
+            <p class="inpmobile invite">邀请码: </p>
 			</div>
             <p class="consent">
             <input type="checkbox" name="consent" id="" style="-webkit-appearance:checkbox"/>同意授权条约
@@ -38,12 +38,14 @@
 		</div>
 	</body>
 </html>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/config.js"></script>
-    <script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/jquery.min.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/jquery.min.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/common.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/config.js"></script>
+<script type="text/javascript" src="/shopping_mall/js/layer/layer.js"></script>
     <script>
 		var user_id = $_GET['user_id'];//用户id
+        $(".invite").text("邀请码 : "+user_id)
 		console.log($_GET['code']); 
 		console.log($_GET['user_id']);
 		//获取openId
