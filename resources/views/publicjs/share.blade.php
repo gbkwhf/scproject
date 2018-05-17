@@ -46,6 +46,7 @@
     <script>
 		 var user_id = $_GET['user_id'].split('user_id')[0];//用户id
         setCookie("openid",'{{$open_id}}');
+        console.log(getCookie("openid"))
 		//获取openId
 		$.ajax({
 	        type:"get",
