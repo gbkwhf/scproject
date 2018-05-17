@@ -136,6 +136,7 @@
                         "invite_id":user_id
                     },
                     success:function(data){
+                        console.log(data)
                         layer.closeAll();
                         if(data.code==1){
                         	setTimeout(function(){
