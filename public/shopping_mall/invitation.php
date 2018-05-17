@@ -41,17 +41,12 @@
             invite_role	=data.result.invite_role	
             var user_id = data.result.user_id;//用户id
             console.log(data);
-            if(invite_role==0){
-                location.href='myinvite.php'
-            }else{
-                   
-            }
-            wx.ready(function () {
+             wx.ready(function () {
     //        var tzurl = encodeURIComponent(commonsUrl+'/shopping_mall/userRegister.php?user_id='+user_id);
                     wx.onMenuShareAppMessage({
                         title: '双创共享商城', // 分享标题
                         desc: '双创共享商城免费注册送大礼', // 分享描述
-                        link: commonsUrl + 'shopping_mall/userRegister.php?user_id='+user_id, // 分享链接
+                        link: commonsUrl+'api/gxsc/invite/others/register?user_id='+user_id, // 分享链接
                         imgUrl: commonsUrl+'/shopping_mall/images/logoimg.png', // 分享图标
                         type: '', // 分享类型,music、video或link，不填默认为link
                         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -67,7 +62,7 @@
                     wx.onMenuShareTimeline({
                         title: '双创共享商城', // 分享标题
                         desc: '双创共享商城免费注册送大礼', // 分享描述
-                        link: commonsUrl + 'shopping_mall/userRegister.php?user_id='+user_id, // 分享链接
+                        link: commonsUrl+'api/gxsc/invite/others/register?user_id='+user_id, // 分享链接
                         imgUrl: commonsUrl+'/shopping_mall/images/logoimg.png', // 分享图标
                         type: '', // 分享类型,music、video或link，不填默认为link
                         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
