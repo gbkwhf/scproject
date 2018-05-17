@@ -97,7 +97,7 @@
             layer.load(2);
             $.ajax({
                 url:commonsUrl+'api/gxsc/auth/send/user/sms'+versioninfos,
-                timeout:TIMEOUT,
+                // timeout:TIMEOUT,
                 method:'POST',
                 data:{
                 	service_type:5,
@@ -128,7 +128,7 @@
             	inpmobile = $('#inpmobile').val();
                 $.ajax({
                     url:commonsUrl+'api/gxsc/bind/user/openId'+versioninfos,
-                    timeout:TIMEOUT,
+                    // timeout:TIMEOUT,
                     method:'POST',
                     data:{
                         'pin':verify,
