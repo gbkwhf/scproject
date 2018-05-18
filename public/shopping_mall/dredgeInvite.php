@@ -50,7 +50,7 @@
             </li>
             <li>
                 <label>支付金额 : &nbsp;&nbsp;</label>
-                <span class="per">20000元</span>
+                <span class="per"></span>
             </li>
         </ul>
         <button>去开通支付邀请权限</button>
@@ -69,30 +69,15 @@ $.ajax({
            'ss':getCookie('openid')	
         },
         success:function(data){
-            
-              console.log(data.result.user_lv);
-              switch(data.result.user_lv){
-                case "1":
-                    $(".per").text("300元")
-                break;
-                case "2":
-                    $(".per").text("1000元")
-                break;   
-                case "3":
-                    $(".per").text("5000元")
-                break;
-                case "4":
-                    $(".per").text("10000元")
-                break;    
-                default:
-                    $(".per").text("20000元")
-                    $("button").css("background","#b5b5b5")
-                    
-            }
+              $(".per").text(data.result.need_deposit==0?data.result.deposit+"元":data.result.need_deposit+"元")
+              console.log(data.result);
+                if(data.result.user_lv=="5"){
+                $("button").css("background","#b5b5b5")
+              }
 
            
               $("button").click(function(){
-                if(data.result.user_lv!="1"||data.result.user_lv!="2"||data.result.user_lv!="3"||data.result.user_lv!="4"){
+                if(data.result.user_lv=="5"){
                     layer.msg("事业合伙人需支付金额较大，故采用线下支付银行到账后，自动开通邀请权限")
                 }else{
                     const name=$("input[name='name']").val()
