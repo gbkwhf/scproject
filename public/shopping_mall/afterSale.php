@@ -23,7 +23,7 @@
             <div style="margin:0 0 40px 15px;overflow: hidden">
                 <div class="user">
                     <img src="images/name.png" alt="">
-                    <span>{{name}}}</span>
+                    <span>{{name}}</span>
                 </div>
                 <div class="reply">
                     <img src="images/ask.png" alt="">

@@ -41,8 +41,8 @@
 <body>
     <div class="header">
         <div>
-            <p>正在处理中</p>
-            <p>7日内办理退款，请您耐心等待~</p>
+            <p class="flist">正在处理中</p>
+            <p class="last">7日内办理退款，请您耐心等待~</p>
         </div>
     </div>
     <p class="cashPledge">
@@ -56,6 +56,12 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+    
+    if($_GET["degId"]==1){
+        $(".flist").text("正在开通中")
+        $(".last").text("系统审核后即可开通，请您耐心等待~")
+        $(".cashPledge").hide()
+    }
     $.ajax({
         type:"post",
         url: commonsUrl + "api/gxsc/user/profile" +versioninfos,
