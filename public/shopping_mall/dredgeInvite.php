@@ -79,10 +79,7 @@ $.ajax({
               $("button").click(function(){
                 if(data.result.user_lv=="5"){
                     layer.msg("事业合伙人需支付金额较大，故采用线下支付银行到账后，自动开通邀请权限")
-                    setTimeout(() => {
-                       
-                        location.href='deposit.php?degId=1'
-                    }, 1000);
+                    window.onbeforeunload=function(){history.back(-2)}
                 }else{
                     const name=$("input[name='name']").val()
                     const pel=$("input[name='pel']").val()

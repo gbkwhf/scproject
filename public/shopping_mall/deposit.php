@@ -56,6 +56,7 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+    window.onbeforeunload=function(){history.back(-3)}
     
     if($_GET["degId"]==1){
         $(document).attr("title","开通邀请权限");        
