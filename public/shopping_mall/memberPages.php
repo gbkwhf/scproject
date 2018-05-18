@@ -99,7 +99,7 @@
 
 		</div>
 		<!-------------福利区------->
-		<div class="welfare"><img src="images/welfare.png" /></div>
+		<!--<div class="welfare"><img src="images/welfare.png" /></div>-->
 		<div class="noDiv"></div>
 		<!----------------大分类区------->
 		<div class="classfiyTitle">发现好货</div>
