@@ -396,7 +396,7 @@
 												function(res) {
 													if(res.err_msg == "get_brand_wcpay_request:ok") {
 														//支付成功
-														location.href = 'myOrderList.php';
+														location.href = 'myOrderList.php?orderId=0';
 													} else {
 														//												             alert(res.err_msg);
 													}
