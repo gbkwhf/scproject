@@ -42,7 +42,7 @@
     <div class="header">
         <div>
             <p>正在处理中</p>
-            <p>7日内办里退款，请您耐心等待~</p>
+            <p>7日内办理退款，请您耐心等待~</p>
         </div>
     </div>
     <p class="cashPledge">
