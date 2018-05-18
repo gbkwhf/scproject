@@ -671,7 +671,7 @@ class AuthController extends Controller
         if($profile->invite_role==0){
             $user_lvs_config=config('clinic-config.deposit');
             if($profile->user_lv<5){
-                $next_deposit=$user_lvs_config[$profile->user_lv+1];
+                $next_deposit=$user_lvs_config[$profile->user_lv];
                 $need_deposit=$next_deposit-$profile->deposit;
             }else{
                 $next_deposit=5;
