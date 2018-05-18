@@ -115,7 +115,7 @@ $.ajax({
                                             function(res) {
                                                 if(res.err_msg == "get_brand_wcpay_request:ok") {
                                                     //支付成功
-                                                    location.href = 'myOrderList.php';
+                                                   layer.msg("支付成功")
                                                 } else {
                                                     //												             alert(res.err_msg);
                                                 }
