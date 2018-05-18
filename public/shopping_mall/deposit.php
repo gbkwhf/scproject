@@ -58,6 +58,7 @@
 <script>
     
     if($_GET["degId"]==1){
+        $(document).attr("title","开通邀请权限");        
         $(".flist").text("正在开通中")
         $(".last").text("系统审核后即可开通，请您耐心等待~")
         $(".cashPledge").hide()
