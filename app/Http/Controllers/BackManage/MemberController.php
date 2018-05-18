@@ -647,7 +647,7 @@ class MemberController  extends Controller
 
 		if($request->confirm_state==1){
 			$res=\App\ApplyReturnModel::where('id',$request->id)->update(['confirm_state'=>1]);
-			\App\MemberModel::where('user_id',$o_info->user_id)->update(['invite_role'=>0,'state'=>2]);
+			\App\MemberModel::where('user_id',$o_info->user_id)->update(['invite_role'=>0,'state'=>2,'balance'=>0,'deposit'=>0]);
 
 			\App\Session::where('user_id',$o_info->user_id)->delete();
 		}
