@@ -43,7 +43,7 @@
     <div class="invite">
         <img src="images/banimg.png" alt="">
         <div>
-            <div>尚未开通邀请权限</div>
+            <div class="dredge">尚未开通邀请权限</div>
             <button onclick="location.href='dredgeInvite.php'">邀请开通</button>
             <p>邀请操作说明</p>
             <p>1、开通邀请权限，必须是平台注册用户。</p>
@@ -53,3 +53,26 @@
     </div>
 </body>
 </html>
+<script src="js/jquery.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="js/config.js"></script>
+<script>
+    $.ajax({
+			type: "post",
+			url: commonsUrl + "api/gxsc/user/profile" + versioninfos,
+			data: {
+				"ss": getCookie('openid')	
+			},
+			success: function(data) {
+				if(data.code == 1) {
+					console.log(data.result)
+                    if(data.result.need_deposit!=0){
+                        $(".dredge").text("您的会员等级升级啦，去补齐对应级别的金额")
+                    }
+				} else {
+					layer.msg(data.msg);
+				}
+			}
+		});
+</script>

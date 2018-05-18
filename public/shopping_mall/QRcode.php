@@ -61,41 +61,35 @@
 <script type="text/javascript">
 	let height=$(document).height()
 	$(".box").css("height",height)
-	console.log($_GET["user_lv"])
-	const grade=$_GET["user_lv"]
-	switch(grade){
-                case "1":
-                    $("h1").text("300元")
-                break;
-                case "2":
-                    $("h1").text("1000元")
-                break;   
-                case "3":
-                    $("h1").text("5000元")
-                break;
-                case "4":
-                    $("h1").text("10000元")
-                break;    
-                default:
-                    $("h1").text("20000元")
-            }
-	$("button").click(function(){
-			$.ajax({
-			type:"post",
-			url: commonsUrl + "api/gxsc/userapplyreturn" +versioninfos,
-			data:{
-			'ss':getCookie('openid')
-			},
-			success:function(data){
-				console.log(data)
-				if(data.code==1){
-					layer.msg("退回成功");
-				}else{
-					layer.msg(data.msg);
-				}
-			}
-		});
-	})
-	
-
+	$.ajax({
+        type:"post",
+        url: commonsUrl + "api/gxsc/user/profile" +versioninfos,
+        data:{
+           'ss':getCookie('openid')	
+        },
+        success:function(data){
+			$("h1").text(data.result.deposit+"元")	
+			$("button").click(function(){
+					$.ajax({
+					type:"post",
+					url: commonsUrl + "api/gxsc/userapplyreturn" +versioninfos,
+					data:{
+					'ss':getCookie('openid')
+					},
+					success:function(data){
+						console.log(data)
+						if(data.code==1){
+							if(data.result=="提交成功"){
+								layer.msg("退回成功");
+							}else{
+								location.href='deposit.php'
+							}
+						}else{
+							layer.msg(data.msg);
+						}
+					}
+				});
+			})
+        }
+    });
 </script>

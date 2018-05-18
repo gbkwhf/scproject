@@ -129,7 +129,11 @@
             }
 
 			$(".send").click(function(){
-				location.href='QRcode.php?user_lv=' + data.result.user_lv
+				if(data.result.deposit=="0.00"){
+					location.href="deposit.php"
+				}else{
+					location.href='QRcode.php?user_lv=' + data.result.user_lv
+				}
 			})
         }
     });
