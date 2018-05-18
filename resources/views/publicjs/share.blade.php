@@ -29,7 +29,7 @@
 		</div>
 		<div class="regFooter">
 			<div class="maImg">
-				<p><img src="images/ma.jpg"/></p>
+				<p><img src="/shopping_mall/images/ma.jpg"/></p>
 				<p style="padding-left: 69.5%;color: #ffffff;font-size: 12px;">双创共享</p>
 			</div>
 			<!--<div class="peopleImg"><img src="images/people.png"/></div>-->
