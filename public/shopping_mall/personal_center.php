@@ -232,7 +232,11 @@
 					var user_id = data.result.user_id;//用户id
 					console.log(data);
 					if(invite_role==0){
-						location.href='myinvite.php'
+						if(data.result.deposit=="0.00"){
+							location.href='myinvite.php'
+						}else{
+							location.href='deposit.php'
+						}
 					}else{
 						location.href='invitation.php'
 					}
