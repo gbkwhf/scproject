@@ -79,11 +79,7 @@
 					success:function(data){
 						console.log(data)
 						if(data.code==1){
-							if(data.result=="提交成功"){
-								layer.msg("退回成功");
-							}else{
-								location.href='deposit.php'
-							}
+							location.href='deposit.php'
 						}else{
 							layer.msg(data.msg);
 						}

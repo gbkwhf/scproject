@@ -235,7 +235,7 @@
 						if(data.result.deposit=="0.00"){
 							location.href='myinvite.php'
 						}else{
-							location.href='deposit.php'
+							location.href='deposit.php?degId=1'
 						}
 					}else{
 						location.href='invitation.php'
