@@ -91,7 +91,6 @@
         }
         //绑定
         function reg(){
-            layer.load(2);
             verify = $('#verify').val();
             inpmobile = $('#inpmobile').val();
             let checked=$("input[type='checkbox']").is(':checked')
