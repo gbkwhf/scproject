@@ -110,6 +110,7 @@
 		setTimeout(() => {
 			$('.wrapper').navbarscroll();
 			$(".clearfix a").click(function (e) {
+				page=1
 				let id = $(this).attr("id")
 				console.log(id)
 				$(".commodity ul li").remove()

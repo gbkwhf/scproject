@@ -96,7 +96,42 @@
 				$(".clearfix").append(temp)
 				$(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
 			}
-				
+
+
+			setTimeout(() => {
+				shop(store_second_id,page)
+
+				$('.wrapper').navbarscroll();
+
+				$(".clearfix li").click(function (e) {
+					store_second_id = e.target.id
+					let index = $(this).index()
+					$(this).addClass("select").siblings().removeClass("select");
+					// $(".msg li").hide().eq(index).show()
+					page=1
+					$(".tem li").remove()
+
+					shop(store_second_id,page)
+				})
+
+
+
+				$(".float li").click(function () {
+					let store_second_id = $(this).attr("id")
+					let index=$(this).index()
+					let nums= -parseInt(index)/0.045
+					$(".scroller").attr("style","width: 498px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
+					$(".tem li").remove()
+					shop(store_second_id,page)
+					$(".float").hide()
+					$(".clarity").hide()
+					$(".clearfix li").each(function(){
+						if(index==$(this).index()){
+							$(this).addClass("cur").siblings().removeClass("cur")
+						}
+					})
+				})
+			}, 200);	
 		}
 	})
 
@@ -105,40 +140,7 @@
 
 
 
-	setTimeout(() => {
-		shop(store_second_id,page)
-
-		$('.wrapper').navbarscroll();
-
-		$(".clearfix li").click(function (e) {
-			store_second_id = e.target.id
-			let index = $(this).index()
-			$(this).addClass("select").siblings().removeClass("select");
-			// $(".msg li").hide().eq(index).show()
-			page=1
-			$(".tem li").remove()
-
-			shop(store_second_id,page)
-		})
-
-
-
-		$(".float li").click(function () {
-			let store_second_id = $(this).attr("id")
-			let index=$(this).index()
-			let nums= -parseInt(index)/0.045
-			$(".scroller").attr("style","width: 498px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
-			$(".tem li").remove()
-			shop(store_second_id,page)
-			$(".float").hide()
-			$(".clarity").hide()
-			$(".clearfix li").each(function(){
-				if(index==$(this).index()){
-					$(this).addClass("cur").siblings().removeClass("cur")
-				}
-			})
-		})
-	}, 200);
+	
 
 
 
