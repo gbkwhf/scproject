@@ -119,8 +119,8 @@
 				$(".float li").click(function () {
 					let store_second_id = $(this).attr("id")
 					let index=$(this).index()
-					let nums= -parseInt(index)/0.045
-					$(".scroller").attr("style","width: 498px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
+					let nums= -parseInt(index)/0.03
+					$(".scroller").attr("style","width: "+ data.length*98 +"px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
 					$(".tem li").remove()
 					shop(store_second_id,page)
 					$(".float").hide()
