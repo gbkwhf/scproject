@@ -60,6 +60,8 @@
 <script type="text/javascript" src="js/config.js"></script>
 <script>
 	console.log($_GET['store_id'])
+	console.log(decodeURI($_GET['name']))
+	$("title").text(decodeURI($_GET['name']))
 	// 获取导航列表
 	$.ajax({
 		type: "post",
