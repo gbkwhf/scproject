@@ -147,7 +147,7 @@
 				}catch(e){
 					console.log(e)
 				}
-				
+				delay()
 			},
 			error: (res) => {
 				console.log(res)
@@ -200,7 +200,7 @@
 				}catch(e){
 					console.log(e)
 				}
-				
+				delay()
 			},
 			error: (res) => {
 				console.log(res)
@@ -209,7 +209,8 @@
 	}
 
 
-	setTimeout(() => {
+	function delay(){
+		setTimeout(() => {
 		$(".pay").click(function(){
 			let base_order_id =$(this).attr("id")
 			$.ajax({
@@ -286,5 +287,6 @@
 				})
 			})
 	}, 200);
+	}
 	
 </script>
