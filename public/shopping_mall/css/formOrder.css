@@ -156,6 +156,7 @@ html,body{
 }
 .shop_attr{
 	height: 18px;
+	line-height: 18px;
 	color: #f5997b;
 	padding-top: 5px;
 	overflow: hidden;
