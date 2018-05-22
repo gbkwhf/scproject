@@ -33,11 +33,11 @@
 		<div class="msg">
 			<ul class="tem">
 				<script type="text/html" id="commentList">
-				<li onclick="location.href='reclassify.php?store_id={{store_id}}'">
+				<li onclick="location.href='reclassify.php?store_id={{store_id}}&name={{name}}'">
 					<div>
 						<img src="{{logo}}" />
 						<p>
-							<span>{{store_name}}</span>
+							<span style="font-size:.4rem">{{store_name}}</span>
 							<span>进入专场</span>
 						</p>
 					</div>
@@ -63,7 +63,13 @@
 <script type="text/javascript">
 	let page=1
 	let store_second_id
-
+	if($_GET["store_first_id"]==1){
+		$("title").text("商超")
+	}else if($_GET["store_first_id"]==1){
+		$("title").text("精品馆")
+	}else{
+		$("title").text("土特产")
+	}
 
 	$(".clarity").css("height", $(this).height() + "px")
 
@@ -119,7 +125,7 @@
 				$(".float li").click(function () {
 					let store_second_id = $(this).attr("id")
 					let index=$(this).index()
-					let nums= -parseInt(index)/0.03
+					let nums= -parseInt(index)/0.02
 					$(".scroller").attr("style","width: "+ data.length*98 +"px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
 					$(".tem li").remove()
 					shop(store_second_id,page)
@@ -180,7 +186,7 @@
 				}
 				for (let val of data) {
 					let temp = $("#commentList").html()
-					temp = temp.replace("{{logo}}", val.logo).replace("{{store_name}}", val.store_name).replace("{{store_id}}", val.store_id)
+					temp = temp.replace("{{logo}}", val.logo).replace("{{store_name}}", val.store_name).replace("{{store_id}}", val.store_id).replace("{{name}}", val.store_name)
 					$(".tem").append(temp)
 				}
 			}
