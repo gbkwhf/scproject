@@ -81,7 +81,7 @@
 				$(".clearfix").append(temp)
 			}
 			
-			
+			$('.wrapper').navbarscroll();
 			// 获取商品列表数据  
 			$.ajax({
 				type: "post",
@@ -111,7 +111,7 @@
 	})
 	$(function () {
 		setTimeout(() => {
-			$('.wrapper').navbarscroll();
+			
 			$(".clearfix a").click(function (e) {
 				page=1
 				let id = $(this).attr("id")

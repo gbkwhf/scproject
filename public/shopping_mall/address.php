@@ -81,25 +81,25 @@
                                   setTimeout(() => {
                                     //跳转
                                     $(".your-adress02").click(function(){
-                                        $(this).addClass("active").text("默认地址")
+                                        if($_GET["id"]==3){
+                                            $(this).addClass("active").text("默认地址")
                                             .parent().parent().parent().siblings().find("span.zdy-icon-radio").removeClass("active").text("设为默认");
                                     
-                                        let id=$(this).attr("id")
+                                            let id=$(this).attr("id")
 
-                                        $.ajax({
-                                            type: "post",
-                                            url: commonsUrl + "/api/gxsc/handle/delivery/goods/default/address" + versioninfos,
-                                            data: {
-                                                address_id:id,
-                                                ss: getCookie('openid')
-                                            },
-                                            success: function(data) {
-                                                console.log(data)
+                                            $.ajax({
+                                                type: "post",
+                                                url: commonsUrl + "/api/gxsc/handle/delivery/goods/default/address" + versioninfos,
+                                                data: {
+                                                    address_id:id,
+                                                    ss: getCookie('openid')
+                                                },
+                                                success: function(data) {
+                                                    console.log(data)
+                                                }
+                                            });
+                                                location.href="formOrder.php"
                                             }
-                                        });
-                                        if($_GET["id"]==3){
-                                            location.href="formOrder.php"
-                                        }
                                     })
                                     
 
