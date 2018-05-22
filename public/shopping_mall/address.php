@@ -20,12 +20,12 @@
 
 <div class="xp-content02">
     <script type="text/html" id="commentList">
-        <div class="bianji-dizhi" onclick="skip({{skipid}})">
+        <div class="bianji-dizhi">
             <div class="tt09">
                 <span>{{name}}</span>
                 <span>{{mobile}}</span>
             </div>
-            <div class="your-adress02">
+            <div class="your-adress02" id="{{skipid}}">
                 地址:{{address}}
             </div>
             <div class="bianji-shanchu mui-clearfix">
@@ -80,12 +80,27 @@
 
                                   setTimeout(() => {
                                     //跳转
-                                    function skip(id){
-                                        // if($_GET["id"]==3){
-                                        //     alert(id)
-                                        // }
-                                        alert(id)
-                                    }
+                                    $(".your-adress02").click(function(){
+                                        $(this).addClass("active").text("默认地址")
+                                            .parent().parent().parent().siblings().find("span.zdy-icon-radio").removeClass("active").text("设为默认");
+                                    
+                                        let id=$(this).attr("id")
+
+                                        $.ajax({
+                                            type: "post",
+                                            url: commonsUrl + "/api/gxsc/handle/delivery/goods/default/address" + versioninfos,
+                                            data: {
+                                                address_id:id,
+                                                ss: getCookie('openid')
+                                            },
+                                            success: function(data) {
+                                                console.log(data)
+                                            }
+                                        });
+                                        if($_GET["id"]==3){
+                                            location.href="formOrder.php"
+                                        }
+                                    })
                                     
 
                                     //改变样式同时改变右边的文字

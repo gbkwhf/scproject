@@ -103,15 +103,13 @@
 				$(".clearfix").append(temp)
 				$(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
 			}
-			$('.wrapper').navbarscroll();
+
+
+			
 
 			setTimeout(() => {
-				
-				
-
+				$('.wrapper').navbarscroll();
 				shop(store_second_id,page)
-
-
 				$(".clearfix li").click(function (e) {
 					store_second_id = e.target.id
 					let index = $(this).index()
