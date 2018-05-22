@@ -100,6 +100,11 @@
 						shopList(1, $(".addStyleMi").attr("goods_second_id"));
 						$('.shopBox').html('');
 						$('.classify').click(function() {
+							setTimeout(function(){
+								mui('#refreshContainer').pullRefresh().refresh(true);
+							},300);
+							
+							
 							$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
 							$('.shopBox').html('');
 							shopList(1, $(".addStyleMi").attr("goods_second_id"));
@@ -180,7 +185,7 @@
 						$('.shopBox').append(html); //动态商品列表
 						if(data.result.length > 0) {
 							mui('#refreshContainer').pullRefresh().refresh(true);
-							//mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+//							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 						} else {
 							layer.msg("已经到底了");
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -203,8 +208,8 @@
 				callback: function() {
 						pageNum++;
 						shopList(pageNum, $(".addStyleMi").attr("goods_second_id"));
-						//                	 mui('#refreshContainer').pullRefresh().endPullupToRefresh();
-						mui('#refreshContainer').pullRefresh().refresh(true);
+						 mui('#refreshContainer').pullRefresh().endPullupToRefresh();
+//						mui('#refreshContainer').pullRefresh().refresh(true);
 					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 			}
 
