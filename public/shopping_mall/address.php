@@ -82,11 +82,7 @@
                                     //跳转
                                     $(".your-adress02").click(function(){
                                         if($_GET["id"]==3){
-                                            $(this).addClass("active").text("默认地址")
-                                            .parent().parent().parent().siblings().find("span.zdy-icon-radio").removeClass("active").text("设为默认");
-                                    
                                             let id=$(this).attr("id")
-
                                             $.ajax({
                                                 type: "post",
                                                 url: commonsUrl + "/api/gxsc/handle/delivery/goods/default/address" + versioninfos,
