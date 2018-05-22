@@ -394,7 +394,9 @@ function uploadPic($file){
 			$new_entension=$entension;
 		}
 		$mimeTye = $file -> getMimeType();
-		if(!in_array($mimeTye,array('image/jpeg','image/png'))){
+
+
+		if(!in_array($mimeTye,array('image/jpeg','image/png','image/gif'))){
 				die("{code': 6045,'msg':'文件类型不允许'}");
 				return false;
 		}
