@@ -94,6 +94,7 @@
 			store_first_id: $_GET['store_first_id']
 		},
 		success: (res) => {
+			console.log(res)
 			let data = res.result;
 			store_second_id = data[0].store_second_id
 			for (let val of data) {
@@ -102,12 +103,14 @@
 				$(".clearfix").append(temp)
 				$(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
 			}
-
+			$('.wrapper').navbarscroll();
 
 			setTimeout(() => {
+				
+				
+
 				shop(store_second_id,page)
 
-				$('.wrapper').navbarscroll();
 
 				$(".clearfix li").click(function (e) {
 					store_second_id = e.target.id

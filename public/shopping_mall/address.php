@@ -16,34 +16,11 @@
     .zdy-icon-radio.active{background: url(images/checked.png) no-repeat;background-size: 1rem 1rem;color: #e63737;}
 </style>
 <body>
-<!--<div>-->
-    <!--<div class="compile">-->
-        <!--<div class="namePel">-->
-            <!--<p>黄豆子</p>-->
-            <!--<p>1369785454</p>-->
-        <!--</div>-->
-        <!--<div class="address">-->
-            <!--地址: 美国加拿大-->
-        <!--</div>-->
-        <!--<div class="editoDel">-->
-            <!--<p><input type="radio" name="tacitly" checked> 默认地址</p>-->
-            <!--<div>-->
-                <!--<p>-->
-                    <!--<img src="images/edito.png  " alt="">编辑-->
-                <!--</p>-->
-
-                <!--<p>-->
-                    <!--<img src="images/deleCon.png" alt="">删除-->
-                <!--</p>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 
 
 <div class="xp-content02">
     <script type="text/html" id="commentList">
-        <div class="bianji-dizhi">
+        <div class="bianji-dizhi" onclick="skip({{skipid}})">
             <div class="tt09">
                 <span>{{name}}</span>
                 <span>{{mobile}}</span>
@@ -95,8 +72,67 @@
                                     .replace("{{is_default}}",val.is_default==1?" active":"") 
                                     .replace("{{address_id}}",val.address_id)
                                     .replace("{{deladdress_id}}",val.address_id)
+                                    .replace("{{skipid}}",val.address_id)
                                     .replace("{{compileid}}",val.address_id)
                                 $(".xp-content02").append(temp)
+
+
+
+                                  setTimeout(() => {
+                                    //跳转
+                                    function skip(id){
+                                        // if($_GET["id"]==3){
+                                        //     alert(id)
+                                        // }
+                                        alert(id)
+                                    }
+                                    
+
+                                    //改变样式同时改变右边的文字
+                                    $("span.zdy-icon-radio").click(function(){
+                                        $(this).addClass("active").text("默认地址")
+                                            .parent().parent().parent().siblings().find("span.zdy-icon-radio").removeClass("active").text("设为默认");
+                                    
+                                        let id=$(this).attr("id")
+
+                                        $.ajax({
+                                            type: "post",
+                                            url: commonsUrl + "/api/gxsc/handle/delivery/goods/default/address" + versioninfos,
+                                            data: {
+                                                address_id:id,
+                                                ss: getCookie('openid')
+                                            },
+                                            success: function(data) {
+                                                console.log(data)
+                                            }
+                                        });
+                                    });
+
+
+                                    $("#del span").click(function(){
+                                        let id=$(this).attr("data-id")
+                                        $.ajax({
+                                            type: "post",
+                                            url: commonsUrl + "/api/gxsc/delete/delivery/goods/address" + versioninfos,
+                                            data: {
+                                                address_id:id,
+                                                ss: getCookie('openid')
+                                            },
+                                            success: function(data) {
+                                                console.log(data)
+                                                layer.msg("删除成功")
+                                            }
+                                        });
+                                        $(this).parents(".bianji-dizhi").remove()
+                                    })
+
+                                    // 编辑
+                                    $("#compile span").click(function(){
+                                        let id=$(this).attr("data-id")
+                                        location.href='newAddress.php?id=1&address_id='+id
+                                    })
+
+                                }, 200);
                     }
                     }catch(e){
                         console.log(e)
@@ -105,52 +141,7 @@
                 }
         });
 
-        setTimeout(() => {
-            //改变样式同时改变右边的文字
-            $("span.zdy-icon-radio").click(function(){
-                $(this).addClass("active").text("默认地址")
-                    .parent().parent().parent().siblings().find("span.zdy-icon-radio").removeClass("active").text("设为默认");
-               
-                let id=$(this).attr("id")
-
-                $.ajax({
-                    type: "post",
-                    url: commonsUrl + "/api/gxsc/handle/delivery/goods/default/address" + versioninfos,
-                    data: {
-                        address_id:id,
-                        ss: getCookie('openid')
-                    },
-                    success: function(data) {
-                        console.log(data)
-                    }
-                });
-            });
-
-
-            $("#del span").click(function(){
-                let id=$(this).attr("data-id")
-                $.ajax({
-                    type: "post",
-                    url: commonsUrl + "/api/gxsc/delete/delivery/goods/address" + versioninfos,
-                    data: {
-                        address_id:id,
-                        ss: getCookie('openid')
-                    },
-                    success: function(data) {
-                        console.log(data)
-                        layer.msg("删除成功")
-                    }
-                });
-                $(this).parents(".bianji-dizhi").remove()
-            })
-
-            // 编辑
-            $("#compile span").click(function(){
-                let id=$(this).attr("data-id")
-                location.href='newAddress.php?id=1&address_id='+id
-            })
-
-        }, 200);
+      
     })
 
 

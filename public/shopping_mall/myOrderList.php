@@ -80,26 +80,22 @@
 			$('.quanbu').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=0
 			packaging(URL,page)
-			tabSwitchover()
 		}else if(orderId==1){ //待付款
 			$(".orGe").show()
 			$('.fukuan').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=1
 			URL="api/gxsc/v2/get/order/info/obligation/list"
 			packaging(URL,page)
-			tabSwitchover()
 			
 		}else if(orderId==2){//待收货
 			$('.fukuan1').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=2
 			URL="api/gxsc/v2/get/order/info/list"
 			packaging(URL,page)
-			tabSwitchover()
 		}else{//待评价
 			$('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
 			id=3
 			evaluate(page)
-			tabSwitchover()
 		}
 		
 		$(".commClick").click(function(){
@@ -114,14 +110,12 @@
 					orderId,id=0
 					URL="api/gxsc/v2/get/order/info/all/list"
 					packaging(URL,page)
-					tabSwitchover()
 				break;
 				case "1": //带付款
 					$(".orGe").show()
 					orderId,id=1
 					URL="api/gxsc/v2/get/order/info/obligation/list"
 					packaging(URL,page)
-					tabSwitchover()
 					
 				break;
 				case "2": //带收货
@@ -129,13 +123,12 @@
 					orderId,id=2
 					URL="api/gxsc/v2/get/order/info/list"
 					packaging(URL,page)
-					tabSwitchover()
 				break;
 				case "3": //带评价
 					$(".orGe").hide()
 					orderId,id=3
 					evaluate(page)
-					tabSwitchover()
+					
 				break;
 			}
 		});
@@ -236,6 +229,8 @@
 					} catch (e) {
 						console.log(e)
 					}
+
+					tabSwitchover()
 				}
 		})
 	}
@@ -380,6 +375,7 @@
 				} catch (e) {
 					console.log(e)
 				}
+				tabSwitchover()
 			}
 		})
 	}

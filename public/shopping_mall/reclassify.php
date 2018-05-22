@@ -72,6 +72,7 @@
 			ss: getCookie('openid')
 		},
 		success: (res) => {
+			console.log(res)
 			let store_class_id=res.result[0].store_class_id
 			let data = res.result
 			for (let val of data) {
