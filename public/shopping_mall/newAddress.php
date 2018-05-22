@@ -75,6 +75,7 @@
     });
 
     if($_GET["id"]==1){
+        $("title").text("编辑收货地址")
         $.ajax({
             type: "post",
             url: commonsUrl + "/api/gxsc/get/delivery/goods/address" + versioninfos,

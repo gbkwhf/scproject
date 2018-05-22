@@ -51,9 +51,7 @@
 <script src="js/layer/layer.js"></script>
 <script>
     $(function(){
-        if($_GET["id"]==3){
-            $(".newAdd").attr("href","newAddress.php?id=3")
-        }
+        
         // 获取地址信息
         $.ajax({
                 type: "post",
@@ -63,6 +61,9 @@
                 },
                 success: function(data) {
 					console.log(data)
+                    if($_GET["id"]==3||data.result.length==0){
+                        $(".newAdd").attr("href","newAddress.php?id=3")
+                    }
                     try{
                         for(let val of data.result){
                             let temp=$("#commentList").html()
@@ -75,8 +76,8 @@
                                     .replace("{{skipid}}",val.address_id)
                                     .replace("{{compileid}}",val.address_id)
                                 $(".xp-content02").append(temp)
-
-
+        
+                               
 
                                   setTimeout(() => {
                                     //跳转
