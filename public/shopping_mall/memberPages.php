@@ -113,7 +113,7 @@
 		<!-----------新品上线------->
 		<div class="newBox">
 			<div class="newShopBox">新品上线</div>
-			<div class="moreShop"><img src="images/back1.png" /></div>
+			<!--<div class="moreShop"><img src="images/back1.png" /></div>-->
 		</div>
 
 		<!----------商品信息----->
