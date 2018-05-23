@@ -3,7 +3,7 @@
 .wrapper03 .scroller {position:absolute}
 .wrapper03 .scroller li {height: 1rem;color:#333;float: left;line-height: 1rem;font-size: .4rem;text-align: center}
 .wrapper03 .scroller li a{color:#333;display:block;margin:0 .2rem;padding:0 .1rem}
-.wrapper03 .scroller li.cur a{color:#eb3737;height:.95rem;border-bottom:.05rem solid #eb3737}
+.wrapper03 .scroller li.cur a{color:#eb3737;height:.95rem;border-bottom:.07rem solid #eb3737;font-weight: bold}
 .clearfix{overflow: hidden;}
 .commodity ul{
     overflow: hidden;
@@ -22,7 +22,7 @@
     overflow: hidden;
 }
 .commodity li>div:nth-child(1) img{
-    width: 100%;
+    width: 80%;
     margin: 30px auto 0px;
     display: block
 }
