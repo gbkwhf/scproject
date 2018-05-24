@@ -33,7 +33,7 @@
 		<div class="msg">
 			<ul class="tem">
 				<script type="text/html" id="commentList">
-				<li onclick="location.href='reclassify.php?store_id={{store_id}}&name={{name}}'">
+				<li onclick="location.href='reclassify.php?store_id={{store_id}}&name={{name}}'" style="border-top:6px solid #f3f2f2">
 					<div>
 						<img src="{{logo}}" />
 						<p>

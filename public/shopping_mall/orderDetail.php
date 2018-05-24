@@ -24,7 +24,7 @@
 			<!--车-->
 			<div class="cheWuliu"></div>
 			<!--配送状态-->
-			<div class="peisong">配送完成</div>
+			<div class="peisong"></div>
 			<!--跳转-->
 			<div class="tiaozhuang"></div>
 		</div>
@@ -113,7 +113,7 @@
 			},
 			success: (res) => {
 				try{
-					console.log(res)
+					console.log(res.result)
 					let data=res.result
 					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.user_name + "   " +data.user_mobile)
@@ -165,8 +165,9 @@
 			},
 			success: (res) => {
 				try{
-					console.log(res)
+					console.log(res.result)
 					let data=res.result
+					encapsulation(data.sub_order_id)
 					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.name + "   " +data.mobile)
 					$(".addreIndo").text("地址 : " + data.address)
@@ -206,6 +207,27 @@
 				console.log(res)
 			}
 		})
+	}
+
+	function encapsulation(sub_order_id){
+		$.ajax({ //获取物流信息
+				type: "post",
+				dataType: 'json',
+				url: commonsUrl + "/api/gxsc/v2/get/sub_order/info" + versioninfos,
+				data: {
+					'ss': getCookie('openid'), //请求参数
+					'sub_order_id': sub_order_id //子订单id
+				},
+				success: function(data) {
+					console.log(data.result)
+					if(data.result.express.data.length!=0){
+						$(".peisong").text(data.result.data[0])
+					}
+					$(".orderWuliu").click(function(){
+						location.href='logistical.php?sub_order_id='+sub_order_id
+					})
+				}
+			});
 	}
 
 
