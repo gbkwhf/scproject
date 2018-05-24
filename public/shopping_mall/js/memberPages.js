@@ -53,7 +53,8 @@ $(function() {
 					$('.shopContent').append(html); //动态显示分类名称
 					$(".secClick").click(function() {
 						var goods_first_id = $(this).attr("goods_first_id");
-						location.href = "member_mall_list.php?goods_first_id=" + goods_first_id;
+						var first_name=$(this).text();
+						location.href = "member_mall_list.php?goods_first_id=" + goods_first_id+"&goods_first_name="+first_name;
 						
 					})
 				} else {

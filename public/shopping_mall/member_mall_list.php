@@ -73,6 +73,9 @@
 		var winW = $(window).width();
 		var winH = $(window).height();
 		var first_id = $_GET['goods_first_id'];
+		var goods_first_name =$_GET['goods_first_name'];
+		var titleName = decodeURIComponent(goods_first_name);
+		$("title").html(titleName);
 		console.log(first_id);
 		$.ajax({ //获取商品二级分类
 			type: "post",
