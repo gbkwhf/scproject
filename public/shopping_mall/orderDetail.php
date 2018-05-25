@@ -167,7 +167,6 @@
 				try{
 					console.log(res.result)
 					let data=res.result
-					encapsulation(data.sub_order_id)
 					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.name + "   " +data.mobile)
 					$(".addreIndo").text("地址 : " + data.address)
@@ -197,7 +196,7 @@
 						}
 
 					$(".shopInfoBox").append('<div class="shopNumSum"><span class="sumShop" style="float: left;margin-left: 17px;">运费：'+data.shipping_price+'元 实付款：'+data.price+'元</span></div>')
-					
+					encapsulation(data.sub_order_id)
 				}catch(e){
 					console.log(e)
 				}
