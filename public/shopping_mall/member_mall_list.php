@@ -16,6 +16,9 @@
 		::-webkit-scrollbar {
 			display: none;
 		}
+		.mui-scrollbar {
+            display: none !important;
+        }
 	</style>
 
 	<body>
