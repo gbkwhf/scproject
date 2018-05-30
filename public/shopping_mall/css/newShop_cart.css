@@ -222,7 +222,7 @@ label input {
 }
 .inpuCon {
 	width: 21px;
-	height: 17px;
+	height: 19px;
 	display: inline-block;
 	float: left;
 	/*background-color: gold;*/
@@ -232,7 +232,7 @@ label input {
 	border: none;
 	outline: none;
 	width: 21px;
-	height: 17px;
+	height: 19px;
 	vertical-align: bottom;
 	/*border-left: solid 1px #626262;
 	border-right: solid 1px #626262;*/
