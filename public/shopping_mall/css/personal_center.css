@@ -84,6 +84,20 @@
 	text-align: center;
 	margin-top: 10px;
 	margin-bottom: 20px;
+	position: relative;
+}
+.obligation>div,.receipt>div,.evaluated>div,.return>div{
+	width: 15px;
+	height: 15px;
+	text-align: center;
+	line-height: 15px;
+	background: #e63636;
+	position: absolute;
+	top: -7px;
+	left: 55%;
+	color: #fff;
+	font-size: 12px;
+	border-radius:50%
 }
 .obligation dl dt img{
 	width: 21px;

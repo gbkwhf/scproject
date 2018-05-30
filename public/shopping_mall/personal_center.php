@@ -46,18 +46,21 @@
 		</header>
 		<div class="user-Box" >
 			<div class="obligation" orderId='0' onclick="location.href='myOrderList.php?orderId=1'">
+				<div></div>
 				<dl>
 					<dt><img src="images/obligation.png"/></dt>
 					<dd>待付款</dd>
 				</dl>
 			</div>
 			<div class="receipt" orderId='1' onclick="location.href='myOrderList.php?orderId=2'">
+				<div></div>
 				<dl>
 					<dt><img src="images/receipt.png"/></dt>
 					<dd>待收货</dd>
 				</dl>
 			</div>
 			<div class="evaluated" orderId='2' onclick="location.href='myOrderList.php?orderId=3'"> 
+				<div></div>
 				<dl>
 					<dt><img src="images/evaluated.png"/></dt>
 					<dd>待评价</dd>
@@ -143,7 +146,12 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-	
+		let payment="api/gxsc/v2/get/order/info/obligation/list"
+		let shipping="api/gxsc/v2/get/order/info/list"
+		let evaluate="api/gxsc/v2/get/order/info/comment/list"
+		encapsulation(payment)
+		encapsulation(shipping)
+		encapsulation(evaluate)
 		if(getCookie('is_member')==1){
 			$('.substitute').show();
 		}
@@ -243,6 +251,48 @@
 				}
 			})
 		  }
+
+		function encapsulation(params) {
+			$.ajax({
+			type: "post",
+			url: commonsUrl + params + versioninfos,
+			data: {
+				ss: getCookie('openid')
+			},
+			success:(res)=>{
+				console.log(res)
+				try {
+					if (res.code == "1") {
+						switch(params){
+							case payment:
+								if(res.result.length!=0){
+									$(".obligation>div").text(res.result.length)
+								}else{
+									$(".obligation>div").hide()
+								}
+							break;
+							case shipping:
+								if(res.result.length!=0){
+									$(".receipt>div").text(res.result.length)
+								}else{
+									$(".receipt>div").hide()
+								}
+							break;
+							case evaluate:
+								if(res.result.length!=0){
+									$(".evaluated>div").text(res.result.length)
+								}else{
+									$(".evaluated>div").hide()
+								}
+							break;
+						}
+					}
+				} catch (e) {
+					console.log(e)
+				}
+			}
+		})
+		}
 </script>
 <style type="text/css">
 	.layui-layer.layui-anim.layui-layer-page{
