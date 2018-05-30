@@ -57,7 +57,7 @@
 								"<div class='addBox'>" +
 								"<div class='Jian minClass' muites=" + goods_id + " conid=" + car_id + ">-</div>" +
 								"<div class='inpuCon'><input type='text' name='' id='' value=" + number + " class='inTeCon' readonly='readonly' /></div>" +
-								"<div class='Jian addClass' add=" + goods_id + " carid=" + car_id + ">+</div>" +
+								"<div class='Jia addClass' add=" + goods_id + " carid=" + car_id + ">+</div>" +
 								"</div>" +
 								"</div>" +
 								"</div>" +

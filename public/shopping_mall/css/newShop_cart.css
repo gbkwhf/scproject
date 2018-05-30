@@ -201,15 +201,25 @@ label input {
 }
 
 .Jian {
-	width: 21px;
+	width: 20px;
 	height: 19px;
 	display: inline-block;
 	float: left;
 	/*background-color: hotpink;*/
 	text-align: center;
 	line-height: 19px;
+	border-right: solid 1px #626262;
 }
-
+.Jia {
+	width: 20px;
+	height: 19px;
+	display: inline-block;
+	float: right;
+	/*background-color: hotpink;*/
+	text-align: center;
+	line-height: 19px;
+	border-left: solid 1px #626262;
+}
 .inpuCon {
 	width: 21px;
 	height: 19px;
@@ -220,11 +230,12 @@ label input {
 
 .inTeCon {
 	border: none;
+	outline: none;
 	width: 21px;
 	height: 19px;
 	vertical-align: bottom;
-	border-left: solid 1px #626262;
-	border-right: solid 1px #626262;
+	/*border-left: solid 1px #626262;
+	border-right: solid 1px #626262;*/
 	text-align: center;
 	-webkit-appearance:none;
 }
