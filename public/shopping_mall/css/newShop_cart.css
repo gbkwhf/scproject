@@ -238,6 +238,7 @@ label input {
 	border-right: solid 1px #626262;*/
 	text-align: center;
 	-webkit-appearance:none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .shopCartCon {
