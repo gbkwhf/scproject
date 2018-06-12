@@ -366,11 +366,11 @@
                             temp = temp.replace("{{image}}", data[val].image)
                                 .replace("{{goods_name}}", data[val].goods_name)
                                 .replace("{{spec_name}}", data[val].spec_name)
-                                .replace("{{price}}", data[val].goods_price * data[val].num)
+                                .replace("{{price}}", data[val].goods_price)
                                 .replace("{{num}}", data[val].num)
                                 .replace("{{id}}", data[val].ext_id)
                             $(".shopInfoBox").append(temp)
-                            let aa = '<div class="shopNumSum"><span class="sumShop">共' + data[val].num + '件商品</span><span class="hejiCon">合计' + data[val].goods_price + '元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="' + data[val].buy_goods_id + '" data-img="' + data[val].image + '">立即评价</span></div>'
+                            let aa = '<div class="shopNumSum"><span class="sumShop">共' + data[val].num + '件商品</span><span class="hejiCon">合计' + data[val].goods_price * data[val].num + '元</span></div><div class="wuliuConter"><div class="wuliBox"><span class="checkcont evaluate" style="float:right;margin-right:10px;" data-id="' + data[val].buy_goods_id + '" data-img="' + data[val].image + '">立即评价</span></div>'
                             $(".shopInfoBox").append(aa)
                         }
 
