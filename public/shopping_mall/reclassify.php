@@ -105,44 +105,43 @@
 						temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
 						$(".commodity ul").append(temp)
 					}
+
+                    $(".clearfix a").click(function (e) {
+                        page=1
+                        let id = $(this).attr("id")
+                        console.log(id)
+                        $(".commodity ul li").remove()
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
+                            data: {
+                                store_class_id: id,
+                                page: "1",
+                                ss: getCookie('openid')
+                            },
+                            success: (res) => {
+                                console.log(res)
+                                let data = res.result
+                                if(data.length==0){
+                                    $(".show").show()
+                                }else{
+                                    $(".show").hide()
+                                }
+                                for (let val of data) {
+                                    let temp = $("#commentList").html()
+                                    temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                    $(".commodity ul").append(temp)
+                                }
+                            }
+                        })
+                    })
 				}
 			})
 		}
 	})
 	$(function () {
 		setTimeout(() => {
-			
-			$(".clearfix a").click(function (e) {
-				page=1
-				let id = $(this).attr("id")
-				console.log(id)
-				$(".commodity ul li").remove()
-				$.ajax({
-					type: "post",
-					dataType: "json",
-					url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
-					data: {
-						store_class_id: id,
-						page: "1",
-						ss: getCookie('openid')
-					},
-					success: (res) => {
-						console.log(res)
-						let data = res.result
-						if(data.length==0){
-						$(".show").show()
-						}else{
-							$(".show").hide()
-						}
-						for (let val of data) {
-							let temp = $("#commentList").html()
-							temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
-							$(".commodity ul").append(temp)
-						}
-					}
-				})
-			})
-
 			$(this).scroll(function () {
 				var viewHeight = $(this).height();//可见高度  
 				var contentHeight = $("#body").get(0).scrollHeight+39;//内容高度  
@@ -176,11 +175,6 @@
 				}
 			})
 		}, 200);
-
-   		
-
-
-
 	})
 
 </script>

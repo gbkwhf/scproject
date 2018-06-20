@@ -178,7 +178,7 @@
                                 let temp = $("#commentList").html()
                                 temp = temp.replace("{{image}}", val.image)
                                     .replace("{{goods_name}}", val.goods_name)
-                                    .replace("{{spec_name}}", val.spec_name)
+                                    .replace("{{spec_name}}", val.spec_name == null ? val.spec_name : "")
                                     .replace("{{price}}", val.goods_price)
                                     .replace("{{num}}", val.num)
                                     .replace("{{goods_id}}", val.ext_id)
