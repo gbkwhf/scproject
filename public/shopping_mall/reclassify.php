@@ -146,7 +146,7 @@
 				var viewHeight = $(this).height();//可见高度  
 				var contentHeight = $("#body").get(0).scrollHeight+39;//内容高度  
 				var scrollHeight = $(this).scrollTop();//滚动高度  
-				if ((contentHeight - viewHeight) / scrollHeight <= 1) {
+				if ((contentHeight - viewHeight) / scrollHeight <= 1) {-
 					page++
 					$.ajax({
 					type: "post",
