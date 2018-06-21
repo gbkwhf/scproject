@@ -65,7 +65,7 @@
 	let store_second_id
 	if($_GET["store_first_id"]==1){
 		$("title").text("商超")
-	}else if($_GET["store_first_id"]==1){
+	}else if($_GET["store_first_id"]==2){
 		$("title").text("精品馆")
 	}else{
 		$("title").text("土特产")
