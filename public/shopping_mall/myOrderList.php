@@ -175,7 +175,7 @@
                                     order_status = "交易完成"
                                 }
                                 $(".shopInfoBox").append('<div class="orderHea"><div class="orderStore">' + val.supplier_name + '</div><div class="orderStatus">' + order_status + '</div></div>')
-                                let temp = $("#commentList").html()
+                                    let temp = $("#commentList").html()
                                 temp = temp.replace("{{image}}", val.image)
                                     .replace("{{goods_name}}", val.goods_name)
                                     .replace("{{spec_name}}", val.spec_name == null ? "" : val.spec_name)

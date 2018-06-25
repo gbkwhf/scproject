@@ -96,6 +96,9 @@
 		success: (res) => {
 			console.log(res)
 			let data = res.result;
+			if(data.length<=4){
+			    $("#show").hide()
+            }
 			store_second_id = data[0].store_second_id
 			for (let val of data) {
 				let temp = $("#navList").html()
