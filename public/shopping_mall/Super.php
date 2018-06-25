@@ -146,14 +146,6 @@
 	})
 
 
-
-
-
-
-	
-
-
-
 	$(this).scroll(function () {
 		var viewHeight = $(this).height();//可见高度  
 		var contentHeight = $("#body").get(0).scrollHeight;//内容高度  

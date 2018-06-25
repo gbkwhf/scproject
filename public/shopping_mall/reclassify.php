@@ -59,12 +59,13 @@
 <script type="text/javascript" src="js/navbar/navbarscroll.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
+<script src="js/layer/layer.js"></script>
 <script>
     $(function () {
         console.log($_GET['store_id'])
         console.log(decodeURI($_GET['name']))
         $("title").text(decodeURI($_GET['name']))
-        let page,id
+        let page, id
         // 获取导航列表
         $.ajax({
             type: "post",
@@ -146,12 +147,11 @@
 
         setTimeout(() => {
             $(this).scroll(function () {
-                var viewHeight = $(this).height();//可见高度
+                var viewHeight = $(window).height();//可见高度
                 var contentHeight = $("#body").get(0).scrollHeight + 39;//内容高度
                 var scrollHeight = $(this).scrollTop();//滚动高度
                 if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-                    -
-                        page++
+                    page++
                     $.ajax({
                         type: "post",
                         dataType: "json",
@@ -164,21 +164,20 @@
                         success: (res) => {
                             console.log(res)
                             let data = res.result
-                            if (data.length == 0) {
-                                $(".show").show()
+                            if (data.length==0) {
+                                layer.msg("没有更多了")
                             } else {
-                                $(".show").hide()
-                            }
-                            for (let val of data) {
-                                let temp = $("#commentList").html()
-                                temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
-                                $(".commodity ul").append(temp)
+                                for (let val of data) {
+                                    let temp = $("#commentList").html()
+                                    temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                    $(".commodity ul").append(temp)
+                                }
                             }
                         }
                     })
                 }
             })
         }, 200);
-    // })
+    })
 
 </script>
