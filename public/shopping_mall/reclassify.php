@@ -68,6 +68,7 @@
         let page = 1
         let id = $_GET['store_id']
         let viewHeight = $(this).height();//可见高度
+        let auto = true
         // 获取导航列表
         $.ajax({
             type: "post",
@@ -114,6 +115,7 @@
 
                         $(".clearfix a").click(function (e) {
                             page = 1
+                            auto = true
                             id = $(this).attr("id")
                             console.log(id)
                             $(".commodity ul li").remove()
@@ -143,36 +145,43 @@
                             })
                         })
                         setTimeout(() => {
+
                             $(this).scroll(function () {
+
                                 var contentHeight = $("#body").get(0).scrollHeight + 39;//内容高度
                                 var scrollHeight = $(this).scrollTop();//滚动高度
                                 if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-                                    page++
-                                    $.ajax({
-                                        type: "post",
-                                        dataType: "json",
-                                        url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
-                                        data: {
-                                            store_class_id: id,
-                                            page: page,
-                                            ss: getCookie('openid')
-                                        },
-                                        success: (res) => {
-                                            console.log(res)
-                                            let data = res.result
-                                            if (data.length == 0) {
-                                                layer.msg("没有更多了")
-                                            } else {
-                                                for (let val of data) {
-                                                    let temp = $("#commentList").html()
-                                                    temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
-                                                    $(".commodity ul").append(temp)
+                                    if (auto) {
+                                        page++
+                                        $.ajax({
+                                            type: "post",
+                                            dataType: "json",
+                                            url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
+                                            data: {
+                                                store_class_id: id,
+                                                page: page,
+                                                ss: getCookie('openid')
+                                            },
+                                            success: (res) => {
+                                                console.log(res)
+                                                let data = res.result
+                                                if (data.length == 0) {
+                                                    layer.msg("没有更多了")
+                                                    auto = false
+                                                } else {
+                                                    for (let val of data) {
+                                                        let temp = $("#commentList").html()
+                                                        temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                                        $(".commodity ul").append(temp)
+                                                    }
                                                 }
                                             }
-                                        }
-                                    })
+                                        })
+                                    }
                                 }
+
                             })
+
                         }, 200);
                     }
                 })
