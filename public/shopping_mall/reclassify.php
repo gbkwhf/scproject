@@ -145,12 +145,9 @@
                         })
                         let viewHeight = $(this).height();//可见高度
                         $(this).scroll(function () {
-                            var contentHeight = $("#body").get(0).scrollHeight + 39;//内容高度
+                            var contentHeight = $("#body").get(0).scrollHeight + 35;//内容高度
                             var scrollHeight = $(this).scrollTop();//滚动高度
-                            alert((contentHeight - viewHeight) / scrollHeight)
                             if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-                                alert((contentHeight - viewHeight) / scrollHeight)
-                                alert(auto)
                                 if (auto) {
                                     page++
                                     $.ajax({

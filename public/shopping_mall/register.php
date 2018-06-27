@@ -112,6 +112,7 @@
                         'un':inpmobile
                     },
                     success:function(data){
+                        alert(data.msg)
                         layer.closeAll();
                         if(data.code==1){
 							layer.msg("绑定成功");
