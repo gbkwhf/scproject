@@ -67,7 +67,6 @@
         $("title").text(decodeURI($_GET['name']))
         let page = 1
         let id = $_GET['store_id']
-        let viewHeight = $(this).height();//可见高度
         let auto = true
         // 获取导航列表
         $.ajax({
@@ -144,46 +143,45 @@
                                 }
                             })
                         })
-                        setTimeout(() => {
-
-                            $(this).scroll(function () {
-                                var contentHeight = $("#body").get(0).scrollHeight + 39;//内容高度
-                                var scrollHeight = $(this).scrollTop();//滚动高度
-                                alert((contentHeight - viewHeight) / scrollHeight <= 1+"11111")
-                                if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-                                    alert((contentHeight - viewHeight) / scrollHeight <= 1+"2222")
-                                    if (auto) {
-                                        page++
-                                        $.ajax({
-                                            type: "post",
-                                            dataType: "json",
-                                            url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
-                                            data: {
-                                                store_class_id: id,
-                                                page: page,
-                                                ss: getCookie('openid')
-                                            },
-                                            success: (res) => {
-                                                console.log(res)
-                                                let data = res.result
-                                                if (data.length == 0) {
-                                                    layer.msg("没有更多了")
-                                                    auto = false
-                                                } else {
-                                                    for (let val of data) {
-                                                        let temp = $("#commentList").html()
-                                                        temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
-                                                        $(".commodity ul").append(temp)
-                                                    }
+                        let viewHeight = $(this).height();//可见高度
+                        $(this).scroll(function () {
+                            var contentHeight = $("#body").get(0).scrollHeight + 39;//内容高度
+                            var scrollHeight = $(this).scrollTop();//滚动高度
+                            // alert((contentHeight - viewHeight) / scrollHeight <= 1)
+                            if ((contentHeight - viewHeight) / scrollHeight <= 1) {
+                                alert((contentHeight - viewHeight) / scrollHeight)
+                                alert(auto)
+                                if (auto) {
+                                    page++
+                                    $.ajax({
+                                        type: "post",
+                                        dataType: "json",
+                                        url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
+                                        data: {
+                                            store_class_id: id,
+                                            page: page,
+                                            ss: getCookie('openid')
+                                        },
+                                        success: (res) => {
+                                            console.log(res)
+                                            let data = res.result
+                                            if (data.length == 0) {
+                                                layer.msg("没有更多了")
+                                                auto = false
+                                            } else {
+                                                for (let val of data) {
+                                                    let temp = $("#commentList").html()
+                                                    temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                                    $(".commodity ul").append(temp)
                                                 }
                                             }
-                                        })
-                                    }
+                                        }
+                                    })
                                 }
+                            }
 
-                            })
+                        })
 
-                        }, 200);
                     }
                 })
             }
