@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>余额明细</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<style>
+    p{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 15px;
+    }
+    .remainder_list{
+        border-bottom: 1px solid #ddd;
+    }
+    .remainder_list>div{
+        width: 92%;
+        margin: 15px auto;
+    }
+    .remainder_list p:nth-of-type(2){
+        color: #ccc;
+    }
+</style>
+<body>
+<div class="remainder">
+    <div class="remainder_list">
+        <div>
+            <p>
+                <span>-656545</span>
+                <span style="color: red">消费成功</span>
+            </p>
+            <p>
+                <span>积分兑换</span>
+                <span style="font-size: 13px;">2018-06-1210:12</span>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="js/config.js"></script>

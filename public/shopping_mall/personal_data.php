@@ -82,7 +82,7 @@
 			<li class="send"> 
 				<p>退回押金</p>
 				<p>
-					<img style="width: 7.5;height: 13px;" src="images/right-arrow.png" alt="">
+					<img style="width: 7.5px;height: 13px;" src="images/right-arrow.png" alt="">
 				</p>
 			</li>	
 				
