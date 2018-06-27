@@ -149,9 +149,9 @@
                             $(this).scroll(function () {
                                 var contentHeight = $("#body").get(0).scrollHeight + 39;//内容高度
                                 var scrollHeight = $(this).scrollTop();//滚动高度
-                                console.log((contentHeight - viewHeight) / scrollHeight <= 1+"11111")
+                                alert((contentHeight - viewHeight) / scrollHeight <= 1+"11111")
                                 if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-                                    console.log((contentHeight - viewHeight) / scrollHeight <= 1+"2222")
+                                    alert((contentHeight - viewHeight) / scrollHeight <= 1+"2222")
                                     if (auto) {
                                         page++
                                         $.ajax({
