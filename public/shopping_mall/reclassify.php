@@ -13,20 +13,20 @@
 </head>
 
 <body>
-
-
-<div class="wrapper wrapper03" id="wrapper03">
-    <div class="scroller">
-        <ul class="clearfix">
-            <script type="text/html" id="navList">
-                <li>
-                    <a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>
-                </li>
-            </script>
-        </ul>
-    </div>
-</div>
 <div id="body">
+
+    <div class="wrapper wrapper03" id="wrapper03">
+        <div class="scroller">
+            <ul class="clearfix">
+                <script type="text/html" id="navList">
+                    <li>
+                        <a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>
+                    </li>
+                </script>
+            </ul>
+        </div>
+    </div>
+
     <div class="commodity">
         <ul>
             <script type="text/html" id="commentList">
@@ -45,9 +45,9 @@
             </script>
         </ul>
     </div>
+
     <p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">
         暂无商品,敬请期待!</p>
-
 </div>
 </body>
 
@@ -68,6 +68,7 @@
         let page = 1
         let id = $_GET['store_id']
         let auto = true
+        let viewHeight = $(this).height();//可见高度
         // 获取导航列表
         $.ajax({
             type: "post",
@@ -79,14 +80,13 @@
             },
             success: (res) => {
                 console.log(res)
-                let store_class_id = res.result[0].store_class_id
+                id = res.result[0].store_class_id
                 let data = res.result
                 for (let val of data) {
                     let temp = $("#navList").html()
                     temp = temp.replace("{{goods_second_name}}", val.store_class_name).replace("{{goods_second_id}}", val.store_class_id)
                     $(".clearfix").append(temp)
                 }
-
                 $('.wrapper').navbarscroll();
                 // 获取商品列表数据
                 $.ajax({
@@ -94,7 +94,7 @@
                     dataType: "json",
                     url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
                     data: {
-                        store_class_id: store_class_id,
+                        store_class_id: id,
                         page: 1,
                         ss: getCookie('openid')
                     },
@@ -143,7 +143,6 @@
                                 }
                             })
                         })
-                        let viewHeight = $(this).height();//可见高度
                         $(this).scroll(function () {
                             var contentHeight = $("#body").get(0).scrollHeight;//内容高度
                             var scrollHeight = $(this).scrollTop();//滚动高度
@@ -176,9 +175,7 @@
                                     })
                                 }
                             }
-
                         })
-
                     }
                 })
             }

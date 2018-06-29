@@ -255,10 +255,24 @@ Route::group([
 
 
 
+/**
+ * 二次开发增加新接口   2018/06/29    xupan
+ */
+
+Route::group([
+
+    'prefix' => 'api/gxsc','namespace' => 'SecondExploit', 'middleware'=> ['check.session:ys_session_info']//,'check.version']
+
+],function (){
+
+
+    //1.获取余额(积分)消耗列表
+    Route::post('get/bill/list/info','UserOwnController@getBillInfo');
+    //2.用户提现申请
+    Route::post('withdraw/deposit/balance','UserOwnController@drawDepositBal');
 
 
 
-
-
+});
 
 
