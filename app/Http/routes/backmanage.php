@@ -169,6 +169,11 @@
 		Route::get('manage/returnapplydetial/{id}', 'MemberController@returnApplyDetial');//处理退出申请
 		Route::post('manage/returnapplysave', 'MemberController@returnApplySave');//保存
 
+		//微信提现
+		Route::get('manage/applytoweixin', 'MemberController@joinSupplierList');
+		Route::get('manage/applytoweixindetial/{id}', 'MemberController@joinSupplierDetial');
+		//Route::post('manage/joinsupplierexcel', 'MemberController@joinSupplierExcel');
+		Route::post('manage/applytoweixinsave', 'MemberController@joinSupplierSave');
 
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {

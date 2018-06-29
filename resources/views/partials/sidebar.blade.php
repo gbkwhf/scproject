@@ -45,10 +45,11 @@
             <li @if (in_array($current_route_2,['manage/depositorder'])) class="active" @endif @if (!in_array(18,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/depositorder') }}"><i class="fa fa-edit"></i><span>押金订单</span></a></li>
             <li @if (in_array($current_route_2,['manage/returnapply'])) class="active" @endif @if (!in_array(19,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/returnapply') }}"><i class="fa fa-edit"></i><span>用户退出</span></a></li>
 
-            
+            <li @if (in_array($current_route_2,['manage/applytoweixin','manage/applytoweixindetial'])) class="active" @endif @if (!in_array(20,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/applytoweixin') }}"><i class="fa fa-edit"></i><span>微信提现</span></a></li>
 
-            
-        	<!-- 供应商功能 -->	    
+
+
+            <!-- 供应商功能 -->
 			<li @if (in_array($current_route_2,['supplier/orderlist','supplier/orderdetial'])) class="active" @endif @if (!in_array(30,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplier/orderlist') }}"><i class="fa fa-edit"></i><span>订单列表</span></a></li>
 			<li @if (in_array($current_route_2,['supplier/supplierbillslist','supplier/suppliercashadd'])) class="active" @endif @if (!in_array(30,$power_arr)) style="display:none"  @endif   ><a href="{{ url('supplier/supplierbillslist') }}"><i class="fa fa-edit"></i><span>提现记录</span></a></li>            
         	<!-- 经销商功能 -->	    
