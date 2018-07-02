@@ -10,6 +10,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\Weixin;
 
 
 class MemberController  extends Controller
@@ -663,6 +664,140 @@ class MemberController  extends Controller
 	}
 
 
+	public  function applyToweixin (Request $request){
+
+
+
+		$par=\App\ApplyMoneyToWeixinModel::select('ys_apply_money_toweixin.*','ys_member.name','ys_member.mobile','ys_apply_money_toweixin.created_at as created_at')->leftjoin('ys_member','ys_member.user_id','=','ys_apply_money_toweixin.user_id');
+
+
+
+
+		$search=array();
+		if ($request->start != ''){
+			$par->where('ys_apply_money_toweixin.created_at','>=',$request->start.' 00:00:00');
+			$search['start']=$request->start;
+		}
+		if ($request->end != ''){
+			$par->where('ys_apply_money_toweixin.created_at','<',$request->end.' 59:59:59');
+			$search['end']=$request->end;
+		}
+		if (isset($request->state) && $request->state!=-1){
+			$par->where('ys_apply_money_toweixin.state',$request->state);
+			$search['state']=$request->state;
+		}
+
+		$data=$par->orderBy('ys_apply_money_toweixin.created_at','desc')->paginate(10);
+
+
+		//state0申请中，1已通过，2，拒绝
+		$stateArr=[
+			0=>'申请中',
+			1=>'已通过',
+			2=>'已拒绝',
+		];
+		foreach ($data as &$val){
+			$val->state=$stateArr[$val->state];
+
+		}
+
+
+		return view('applytoweixinlist',['data'=>$data,'search'=>$search]);
+	}
+
+
+
+	public  function applyToweixinDetial (Request $request){
+
+
+
+
+		$data=\App\ApplyMoneyToWeixinModel::where('ys_apply_money_toweixin.id',$request->id)
+			->select('ys_apply_money_toweixin.*','ys_member.name','ys_member.mobile')
+			->leftjoin('ys_member','ys_member.user_id','=','ys_apply_money_toweixin.user_id')
+			->first();
+
+
+		return view('applytoweixindetial',['data'=>$data]);
+	}
+	public  function applyToweixinSave (Request $request){
+
+		\DB::beginTransaction(); //(开启事务)
+
+		$res=true;
+		$o_info=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->first();
+
+
+		if($o_info->state==0){
+
+			if($request->state==1){
+
+
+
+
+				//打款到微信
+				$mchid = 'xxxxx';          //微信支付商户号 PartnerID 通过微信支付商户资料审核后邮件发送
+				$appid = 'xxxxx';  //微信支付申请对应的公众号的APPID
+				$appKey = 'xxxxx';   //微信支付申请对应的公众号的APP Key
+				$apiKey = 'xxxxx';   //https://pay.weixin.qq.com 帐户设置-安全设置-API安全-API密钥-设置API密钥
+				//①、获取当前访问页面的用户openid（如果给指定用户转账，则直接填写指定用户的openid)
+				$wxPay = new \WxpayService($mchid,$appid,$appKey,$apiKey);
+				$openId ='';
+
+				//②、付款
+				$outTradeNo = uniqid();     //订单号
+				$payAmount = 1;             //转账金额，单位:元。转账最小金额为1元
+				$trueName = '张三';         //收款人真实姓名
+				$result = $wxPay->createJsBizPackage($openId,$payAmount,$outTradeNo,$trueName);
+				echo 'success';
+
+				//修改申请状态
+				$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>1]);
+				$params=[
+					'user_id'=>$o_info->user_id,
+					'amount'=>$o_info->amount,
+					'type'=>1,
+					'desc'=>'提现成功'
+				];
+				\App\BalanceBillModel::create($params);
+
+
+			}elseif ($request->state==2){
+				//修改申请状态
+				//$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>2]);
+				//将余额退回
+				//\App\MemberModel::where('user_id',$o_info->user_id)->increment('balance',$o_info->amount);
+				//插入余额明细
+				$params=[
+					'user_id'=>$o_info->user_id,
+					'amount'=>$o_info->amount,
+					'type'=>2,
+					'desc'=>'提现失败'
+				];
+				\App\BalanceBillModel::create($params);
+
+			}
+
+
+		}else{
+			return back() -> with('errors','不能重复审批');
+		}
+
+
+
+
+
+
+
+		if ($res === false) {
+			\DB::rollBack();
+			return back() -> with('errors','数据更新失败');
+		}else {
+			\DB::commit();
+			return redirect('manage/applytoweixin');
+		}
+
+	}
 
 
 }

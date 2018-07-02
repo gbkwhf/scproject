@@ -170,10 +170,10 @@
 		Route::post('manage/returnapplysave', 'MemberController@returnApplySave');//保存
 
 		//微信提现
-		Route::get('manage/applytoweixin', 'MemberController@joinSupplierList');
-		Route::get('manage/applytoweixindetial/{id}', 'MemberController@joinSupplierDetial');
+		Route::get('manage/applytoweixin', 'MemberController@applyToweixin');
+		Route::get('manage/applytoweixindetial/{id}', 'MemberController@applyToweixinDetial');
 		//Route::post('manage/joinsupplierexcel', 'MemberController@joinSupplierExcel');
-		Route::post('manage/applytoweixinsave', 'MemberController@joinSupplierSave');
+		Route::post('manage/applytoweixinsave', 'MemberController@applyToweixinSave');
 
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
