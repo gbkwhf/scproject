@@ -81,6 +81,9 @@ class GoodsController extends Controller
     	//店内分类
     	$store_class=\App\StoreGoodsClassModel::where('store_id',$request->supplier_id)->orderby('sort','asc')->get();
 
+		//dd($spec_data);
+
+
 
         return view('goods.goodsadd',['check_spec'=>[],'vie_mode'=>0,'v_list'=>json_encode([]),'spec_data'=>$spec_data,'count_spec'=>$count_spec,'store_class'=>$store_class]);
     }
@@ -130,6 +133,9 @@ class GoodsController extends Controller
             	'store_class'=>$request->store_class,
             	'spec_name'=>serialize($request->spec_name),
             	'spec_value'=>serialize($request->spec_value),
+				'goods_gift'=>$request->goods_gift,
+				'use_score'=>$request->goods_gift==2?$request->use_score:0,
+				'can_back'=>$request->can_back,
             	
             );
             $res = GoodsModel::create($params);
@@ -304,7 +310,8 @@ class GoodsController extends Controller
         
         //店内分类
         $store_class=\App\StoreGoodsClassModel::where('store_id',$data->supplier_id)->orderby('sort','asc')->get();
-         
+
+		//dd($data);
              //print_r($v_list);
         return view('goods.goodsadd',['check_spec'=>$check_spec,'vie_mode'=>1,'v_list'=>$v_list,'spec_data'=>$spec_data,'count_spec'=>$count_spec,'data'=>$data,'images'=>$images,'store_class'=>$store_class]);
     }
@@ -355,6 +362,9 @@ class GoodsController extends Controller
             	'store_class'=>$input['store_class'],
             	'spec_name'=>serialize($input['spec_name']),
             	'spec_value'=>serialize($input['spec_value']),
+				'goods_gift'=>$input['goods_gift'],
+				'use_score'=>$input['goods_gift']==2?$input['use_score']:0,
+				'can_back'=>$input['can_back'],
             );
             
             

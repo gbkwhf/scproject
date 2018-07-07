@@ -53,6 +53,36 @@
                             <input type="text" class="form-control" name="name" placeholder="Enter ..." value="{{ $data->name or '' }}">
                         </div>
                     </div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >商品类型</label>
+					<div class="col-sm-10">
+						<input type="radio" onclick="change_goodsgift(1)" @if(!isset($data) || $data->goods_gift == 1) checked="true" @endif value="1"  name="goods_gift">普通商品
+						<input type="radio" onclick="change_goodsgift(2)" @if(isset($data) && $data->goods_gift == 2) checked="true" @endif value="2"  name="goods_gift">积分兑换
+					</div>
+					<script>
+						function change_goodsgift(type) {
+							if(type==1){
+								$('#use_score').hide();
+							}else if(type==2){
+								$('#use_score').show();
+							}
+						}
+					</script>
+
+				</div>
+				<div class="form-group" id="use_score"  @if(isset($data) && $data->use_score > 0) @else style="display:none" @endif >
+					<label class="col-sm-2 control-label" >可用积分</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="use_score" placeholder="Enter ..." value="{{ $data->use_score or 0 }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >可否退货</label>
+					<div class="col-sm-10">
+						<input type="radio"  @if(!isset($data) || $data->can_back == 0) checked="true" @endif value="0"  name="can_back">可以退
+						<input type="radio"  @if(isset($data) && $data->can_back == 1) checked="true" @endif value="1"  name="can_back">不可退
+					</div>
+				</div>
                   <input type="hidden" name="supplier_id" id="supplier_id" value="{{$_GET['supplier_id'] or $data->supplier_id}} ">
                   <input type="hidden" name="class_id" id="class_id" value="{{$_GET['class_id'] or $data->class_id}} ">
                    <div class="form-group">
