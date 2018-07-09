@@ -145,16 +145,24 @@ class WxpayService
             'amount' => intval($totalFee * 100),       //单位 转为分
             'desc'=>'用户提现',            //企业付款操作说明信息
         );
+        \Log::info('log toweixin $config'.$config);
+        \Log::info('log toweixin $unified'.$unified);
+
         $unified['sign'] = self::getSign($unified, $config['key']);
         $responseXml = $this->curlPost('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers', self::arrayToXml($unified));
+        \Log::info('repos seeor'.$responseXml);
         $unifiedOrder = simplexml_load_string($responseXml, 'SimpleXMLElement', LIBXML_NOCDATA);
         if ($unifiedOrder === false) {
             die('parse xml error');
+            \Log::info('parse xml error');
+
         }
         if ($unifiedOrder->return_code != 'SUCCESS') {
+            \Log::info('160 error'.$unifiedOrder->return_msg);
             die($unifiedOrder->return_msg);
         }
         if ($unifiedOrder->result_code != 'SUCCESS') {
+            \Log::info('164 error'.$unifiedOrder->err_code);
             die($unifiedOrder->err_code);
         }
         return true;
