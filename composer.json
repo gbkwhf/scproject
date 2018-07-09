@@ -41,6 +41,7 @@
             "app/Libs/yunpian/YunpianAutoload.php",
             "app/Http/Controllers/Weixin/jssdk.php",
             "app/Http/Controllers/Weixin/wechatCallbackapiTest.php",
+            "app/Http/Controllers/Weixin/WeixinPay.php",
             "app/Http/Controllers/Weixin/jssdk.php"
         ]
     },

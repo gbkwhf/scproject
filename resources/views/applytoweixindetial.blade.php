@@ -58,7 +58,7 @@
                  <div class="form-group">
                       <label class="col-sm-2 control-label" >确认处理</label>
                       <div class="col-sm-10">
-                          <select class="form-control" name="confirm_state">
+                          <select class="form-control" name="state">
                               <option @if (  $data->state == 0) selected="" @endif value="1" >申请中</option>
                               <option @if (isset($data) &&  $data->state == 1) selected="" @endif value="1" >通过</option>
                               <option @if (isset($data) &&  $data->state == 2) selected="" @endif value="0">拒绝</option>

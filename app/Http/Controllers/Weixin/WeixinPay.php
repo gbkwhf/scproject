@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers\Weixin;
 /**
  * 关于微信企业付款的说明
  * 1.微信企业付款要求必传证书，需要到https://pay.weixin.qq.com 账户中心->账户设置->API安全->下载证书，证书路径在第207行和210行修改
@@ -141,15 +142,16 @@ class WxpayService
             'check_name'=>'NO_CHECK',        //校验用户姓名选项。NO_CHECK：不校验真实姓名，FORCE_CHECK：强校验真实姓名
             're_user_name'=>$trueName,                 //收款用户真实姓名（不支持给非实名用户打款）
             'partner_trade_no' => $outTradeNo,
-            'spbill_create_ip' => Request::getClientIp(),
+            'spbill_create_ip' => \Request::getClientIp(),
             'amount' => intval($totalFee * 100),       //单位 转为分
             'desc'=>'用户提现',            //企业付款操作说明信息
         );
-        \Log::info('log toweixin $config'.$config);
-        \Log::info('log toweixin $unified'.$unified);
+        \Log::info('log toweixin $config'.serialize($config));
+        \Log::info('log toweixin $unified'.serialize($unified));
 
         $unified['sign'] = self::getSign($unified, $config['key']);
         $responseXml = $this->curlPost('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers', self::arrayToXml($unified));
+        dd($responseXml);
         \Log::info('repos seeor'.$responseXml);
         $unifiedOrder = simplexml_load_string($responseXml, 'SimpleXMLElement', LIBXML_NOCDATA);
         if ($unifiedOrder === false) {
@@ -205,6 +207,7 @@ class WxpayService
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
         curl_setopt($ch,CURLOPT_SSLCERT,getcwd()."/$path/cert/apiclient_cert.pem");
+
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
         curl_setopt($ch,CURLOPT_SSLKEY,getcwd()."/$path/cert/apiclient_key.pem");

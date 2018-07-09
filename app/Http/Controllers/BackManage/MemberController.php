@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Weixin;
 
 
+
 class MemberController  extends Controller
 {
 
@@ -722,6 +723,7 @@ class MemberController  extends Controller
 	}
 	public  function applyToweixinSave (Request $request){
 
+
 		\DB::beginTransaction(); //(开启事务)
 
 		$res=true;
@@ -741,7 +743,7 @@ class MemberController  extends Controller
 				$appKey = '';   //微信支付申请对应的公众号的APP Key
 				$apiKey = 'e4bff1oc172ae9c1a9f7a319fcaff42e';   //https://pay.weixin.qq.com 帐户设置-安全设置-API安全-API密钥-设置API密钥
 				//①、获取当前访问页面的用户openid（如果给指定用户转账，则直接填写指定用户的openid)
-				$wxPay = new \WxpayService($mchid,$appid,$appKey,$apiKey);
+				$wxPay = new \App\Http\Controllers\Weixin\WxpayService($mchid,$appid,$appKey,$apiKey);
 				$openId =$o_info->open_id;
 
 				//②、付款
