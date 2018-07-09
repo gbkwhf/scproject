@@ -206,11 +206,11 @@ class WxpayService
         //第一种方法，cert 与 key 分别属于两个.pem文件
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLCERT,getcwd()."/$path/cert/apiclient_cert.pem");
+        curl_setopt($ch,CURLOPT_SSLCERT,"/$path/cert/apiclient_cert.pem");
 
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLKEY,getcwd()."/$path/cert/apiclient_key.pem");
+        curl_setopt($ch,CURLOPT_SSLKEY,"/$path/cert/apiclient_key.pem");
         //第二种方式，两个文件合成一个.pem文件
 //        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/all.pem');
         $data = curl_exec($ch);
