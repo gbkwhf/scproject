@@ -736,20 +736,25 @@ class MemberController  extends Controller
 
 
 				//打款到微信
-				$mchid = 'xxxxx';          //微信支付商户号 PartnerID 通过微信支付商户资料审核后邮件发送
-				$appid = 'xxxxx';  //微信支付申请对应的公众号的APPID
-				$appKey = 'xxxxx';   //微信支付申请对应的公众号的APP Key
-				$apiKey = 'xxxxx';   //https://pay.weixin.qq.com 帐户设置-安全设置-API安全-API密钥-设置API密钥
+				$mchid = '1501770681';          //微信支付商户号 PartnerID 通过微信支付商户资料审核后邮件发送
+				$appid = 'wxe1adb0d83562cd82';  //微信支付申请对应的公众号的APPID
+				$appKey = '';   //微信支付申请对应的公众号的APP Key
+				$apiKey = 'e4bff1oc172ae9c1a9f7a319fcaff42e';   //https://pay.weixin.qq.com 帐户设置-安全设置-API安全-API密钥-设置API密钥
 				//①、获取当前访问页面的用户openid（如果给指定用户转账，则直接填写指定用户的openid)
 				$wxPay = new \WxpayService($mchid,$appid,$appKey,$apiKey);
-				$openId ='';
+				$openId =$o_info->open_id;
 
 				//②、付款
-				$outTradeNo = uniqid();     //订单号
-				$payAmount = 1;             //转账金额，单位:元。转账最小金额为1元
-				$trueName = '张三';         //收款人真实姓名
+				$outTradeNo = $o_info->order_id;     //订单号
+				$payAmount = $o_info->amount;             //转账金额，单位:元。转账最小金额为1元
+				$trueName = '';         //收款人真实姓名
 				$result = $wxPay->createJsBizPackage($openId,$payAmount,$outTradeNo,$trueName);
-				echo 'success';
+				\Log::info('log toweixin'.$result);
+
+				if($result){
+					echo 'success';
+				}
+
 
 				//修改申请状态
 				$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>1]);
@@ -764,9 +769,9 @@ class MemberController  extends Controller
 
 			}elseif ($request->state==2){
 				//修改申请状态
-				//$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>2]);
+				$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>2]);
 				//将余额退回
-				//\App\MemberModel::where('user_id',$o_info->user_id)->increment('balance',$o_info->amount);
+				\App\MemberModel::where('user_id',$o_info->user_id)->increment('balance',$o_info->amount);
 				//插入余额明细
 				$params=[
 					'user_id'=>$o_info->user_id,

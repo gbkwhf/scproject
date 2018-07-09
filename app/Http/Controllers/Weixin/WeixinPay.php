@@ -19,6 +19,7 @@
 //$trueName = '张三';         //收款人真实姓名
 //$result = $wxPay->createJsBizPackage($openId,$payAmount,$outTradeNo,$trueName);
 //echo 'success';
+use Illuminate\Http\Request;
 class WxpayService
 {
     protected $mchid;
@@ -137,12 +138,12 @@ class WxpayService
             'mchid' => $config['mch_id'],
             'nonce_str' => self::createNonceStr(),
             'openid' => $openid,
-            'check_name'=>'FORCE_CHECK',        //校验用户姓名选项。NO_CHECK：不校验真实姓名，FORCE_CHECK：强校验真实姓名
+            'check_name'=>'NO_CHECK',        //校验用户姓名选项。NO_CHECK：不校验真实姓名，FORCE_CHECK：强校验真实姓名
             're_user_name'=>$trueName,                 //收款用户真实姓名（不支持给非实名用户打款）
             'partner_trade_no' => $outTradeNo,
-            'spbill_create_ip' => '127.0.0.1',
+            'spbill_create_ip' => Request::getClientIp(),
             'amount' => intval($totalFee * 100),       //单位 转为分
-            'desc'=>'付款',            //企业付款操作说明信息
+            'desc'=>'用户提现',            //企业付款操作说明信息
         );
         $unified['sign'] = self::getSign($unified, $config['key']);
         $responseXml = $this->curlPost('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers', self::arrayToXml($unified));
@@ -175,6 +176,8 @@ class WxpayService
     }
     public function curlPost($url = '', $postData = '', $options = array())
     {
+        $path = config_path();
+
         if (is_array($postData)) {
             $postData = http_build_query($postData);
         }
@@ -193,10 +196,10 @@ class WxpayService
         //第一种方法，cert 与 key 分别属于两个.pem文件
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/cert/apiclient_cert.pem');
+        curl_setopt($ch,CURLOPT_SSLCERT,getcwd()."/$path/cert/apiclient_cert.pem");
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLKEY,getcwd().'/cert/apiclient_key.pem');
+        curl_setopt($ch,CURLOPT_SSLKEY,getcwd()."/$path/cert/apiclient_key.pem");
         //第二种方式，两个文件合成一个.pem文件
 //        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/all.pem');
         $data = curl_exec($ch);
