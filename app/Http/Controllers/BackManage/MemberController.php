@@ -756,22 +756,21 @@ class MemberController  extends Controller
 					//修改申请状态
 					$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>1]);
 					$params=[
-						[
+						'user_id'=>$o_info->user_id,
+						'amount'=>$o_info->amount,
+						'type'=>1,
+						'desc'=>'提现成功'
+
+					];
+					$params_wei=[
 							'user_id'=>$o_info->user_id,
-							'amount'=>$o_info->amount,
-							'type'=>1,
-							'desc'=>'提现成功'
-						],
-						[
-							'user_id'=>$o_info->user_id ,
 							'amount'=>round($o_info->amount*$wei_cost,2),
 							'type'=>1,
 							'desc'=>'提现手续费'
-						],
-
 					];
-					\App\BalanceBillModel::create($params);
 
+					$res=\App\BalanceBillModel::create($params);
+					$res=\App\BalanceBillModel::create($params_wei);
 
 				}else{
 					return back() -> with('errors','付款失败');
@@ -788,21 +787,19 @@ class MemberController  extends Controller
 				\App\MemberModel::where('user_id',$o_info->user_id)->increment('balance',$cost);
 				//插入余额明细
 				$params=[
-					[
 						'user_id'=>$o_info->user_id,
 						'amount'=>$o_info->amount,
 						'type'=>1,
 						'desc'=>'提现失败'
-					],
-					[
-						'user_id'=>$o_info->user_id ,
-						'amount'=>round($o_info->amount*$wei_cost,2),
-						'type'=>1,
-						'desc'=>'手续费退回'
-					],
 				];
-				\App\BalanceBillModel::create($params);
-
+				$params_wei=[
+					'user_id'=>$o_info->user_id,
+					'amount'=>round($o_info->amount*$wei_cost,2),
+					'type'=>1,
+					'desc'=>'手续费退回'
+				];
+				$res=\App\BalanceBillModel::create($params);
+				$res=\App\BalanceBillModel::create($params_wei);
 			}
 
 

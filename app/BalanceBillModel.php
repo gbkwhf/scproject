@@ -8,6 +8,7 @@ class BalanceBillModel extends Model
 {
     protected  $table = "ys_balance_bill";
     protected  $primaryKey = 'id';
+    protected $guarded = [];
 
 
 }
