@@ -60,9 +60,9 @@
     <p>提现金额</p>
     <div>
         <span style="font-size: 30px"> ￥</span>
-        <input type="text">
+        <input maxlength="5" type="text" name="money">
     </div>
-    <span>提现最大额度20,000元</span>
+    <span>提现最大额度20,000元,提现金额为 <span class="lastMoney"></span></span>
 </div>
 <button>提现</button>
 </body>
@@ -72,10 +72,17 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+    let val = ""
+    $("input[name='money']").on("input propertychange", function () {
+        $(".lastMoney").text(($(this).val() * 0.95).toFixed(2))
+        val = $(".lastMoney").text()
+    })
+
     $("button").click(function () {
-        let val = $("input").val()
         if (val == '') {
             layer.msg("请输入金额")
+        } else if (val > 20000) {
+            layer.msg("提现金额不能大于20000")
         } else {
             $.ajax({
                 type: 'post',
