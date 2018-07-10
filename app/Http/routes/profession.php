@@ -270,6 +270,10 @@ Route::group([
     Route::post('get/bill/list/info','UserOwnController@getBillInfo');
     //2.用户提现申请
     Route::post('withdraw/deposit/balance','UserOwnController@drawDepositBal');
+    //3.用户取消订单
+    Route::post('user/cancel/order','UserOwnController@cancelOrder');
+    //4,退货
+    Route::post('user/return/goods','UserOwnController@userReturnGoods');
 
 
 
