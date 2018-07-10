@@ -65,6 +65,7 @@ class Kernel extends ConsoleKernel
     		->where('ys_base_order.state',1)
     		->where('ys_sub_order.receive_state',1)
     		->where('ys_sub_order.all_rebate','>',0)
+			->where('ys_sub_order.back_state',0)
     		->groupBy('ys_base_order.user_id')
     		->selectRaw('ys_base_order.user_id,sum(ys_sub_order.all_rebate) as all_rebate')
     		->get();

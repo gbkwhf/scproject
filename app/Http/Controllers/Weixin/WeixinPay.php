@@ -151,21 +151,24 @@ class WxpayService
 
         $unified['sign'] = self::getSign($unified, $config['key']);
         $responseXml = $this->curlPost('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers', self::arrayToXml($unified));
-        dd($responseXml);
+
         \Log::info('repos seeor'.$responseXml);
         $unifiedOrder = simplexml_load_string($responseXml, 'SimpleXMLElement', LIBXML_NOCDATA);
         if ($unifiedOrder === false) {
-            die('parse xml error');
+           // die('parse xml error');
             \Log::info('parse xml error');
+            return false;
 
         }
         if ($unifiedOrder->return_code != 'SUCCESS') {
             \Log::info('160 error'.$unifiedOrder->return_msg);
-            die($unifiedOrder->return_msg);
+            //die($unifiedOrder->return_msg);
+            return false;
         }
         if ($unifiedOrder->result_code != 'SUCCESS') {
             \Log::info('164 error'.$unifiedOrder->err_code);
-            die($unifiedOrder->err_code);
+           // die($unifiedOrder->err_code);
+            return false;
         }
         return true;
     }

@@ -725,6 +725,7 @@ class MemberController  extends Controller
 
 
 		\DB::beginTransaction(); //(开启事务)
+		$wei_cost=config('clinic-config.wei_cost');
 
 		$res=true;
 		$o_info=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->first();
@@ -733,9 +734,6 @@ class MemberController  extends Controller
 		if($o_info->state==0){
 
 			if($request->state==1){
-
-
-
 
 				//打款到微信
 				$mchid = '1501770681';          //微信支付商户号 PartnerID 通过微信支付商户资料审核后邮件发送
@@ -752,34 +750,56 @@ class MemberController  extends Controller
 				$trueName = '';         //收款人真实姓名
 				$result = $wxPay->createJsBizPackage($openId,$payAmount,$outTradeNo,$trueName);
 				\Log::info('log toweixin'.$result);
+				if($result){//成功
+					//echo 'success';
 
-				if($result){
-					echo 'success';
+					//修改申请状态
+					$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>1]);
+					$params=[
+						[
+							'user_id'=>$o_info->user_id,
+							'amount'=>$o_info->amount,
+							'type'=>1,
+							'desc'=>'提现成功'
+						],
+						[
+							'user_id'=>$o_info->user_id ,
+							'amount'=>round($o_info->amount*$wei_cost,2),
+							'type'=>1,
+							'desc'=>'提现手续费'
+						],
+
+					];
+					\App\BalanceBillModel::create($params);
+
+
+				}else{
+					return back() -> with('errors','付款失败');
 				}
 
 
-				//修改申请状态
-				$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>1]);
-				$params=[
-					'user_id'=>$o_info->user_id,
-					'amount'=>$o_info->amount,
-					'type'=>1,
-					'desc'=>'提现成功'
-				];
-				\App\BalanceBillModel::create($params);
 
 
 			}elseif ($request->state==2){
 				//修改申请状态
 				$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>2]);
 				//将余额退回
-				\App\MemberModel::where('user_id',$o_info->user_id)->increment('balance',$o_info->amount);
+				$cost=$o_info->amount+round($o_info->amount*$wei_cost,2);
+				\App\MemberModel::where('user_id',$o_info->user_id)->increment('balance',$cost);
 				//插入余额明细
 				$params=[
-					'user_id'=>$o_info->user_id,
-					'amount'=>$o_info->amount,
-					'type'=>2,
-					'desc'=>'提现失败'
+					[
+						'user_id'=>$o_info->user_id,
+						'amount'=>$o_info->amount,
+						'type'=>1,
+						'desc'=>'提现失败'
+					],
+					[
+						'user_id'=>$o_info->user_id ,
+						'amount'=>round($o_info->amount*$wei_cost,2),
+						'type'=>1,
+						'desc'=>'手续费退回'
+					],
 				];
 				\App\BalanceBillModel::create($params);
 
@@ -789,11 +809,6 @@ class MemberController  extends Controller
 		}else{
 			return back() -> with('errors','不能重复审批');
 		}
-
-
-
-
-
 
 
 		if ($res === false) {
