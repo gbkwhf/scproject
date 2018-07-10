@@ -96,11 +96,15 @@
                 success: res => {
                     console.log(res)
                     try {
-                        layer.msg(res.msg)
-                        setTimeout(function () {
-                            location.href = 'remainingProgress.php?money=' + $(".lastMoney").text()
-                        },2000)
-                    }catch (e) {
+                        if (res.code != 7003) {
+                            layer.msg(res.msg)
+                            setTimeout(function () {
+                                location.href = 'remainingProgress.php?money=' + $(".lastMoney").text()
+                            }, 2000)
+                        } else {
+                            layer.msg("提现金额必须大于1元")
+                        }
+                    } catch (e) {
                         console.log(e)
                     }
                 }
