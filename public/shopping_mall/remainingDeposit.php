@@ -96,13 +96,15 @@
                 success: res => {
                     console.log(res)
                     try {
-                        if (res.code != 7003) {
+                        if (res.code == "1") {
                             layer.msg(res.msg)
                             setTimeout(function () {
-                                location.href = 'remainingProgress.php?money=' + $(".lastMoney").text()
+                                location.href = 'remainingProgress.php?money=' + val
                             }, 2000)
-                        } else {
+                        } else if (res.code == 7003) {
                             layer.msg("提现金额必须大于1元")
+                        } else {
+                            layer.msg(res.msg)
                         }
                     } catch (e) {
                         console.log(e)
