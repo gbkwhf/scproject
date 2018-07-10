@@ -780,6 +780,8 @@ class MemberController  extends Controller
 
 
 			}elseif ($request->state==2){
+
+			
 				//修改申请状态
 				$res=\App\ApplyMoneyToWeixinModel::where('id',$request->id)->update(['state'=>2]);
 				//将余额退回
