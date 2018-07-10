@@ -14,7 +14,7 @@
         width: 92%;
         margin: 0 auto;
     }
-    a{
+    .remaining>a{
         text-align: right;
         display: block;
         margin-top: 19px;
@@ -32,15 +32,27 @@
         background: #4d6dfc;
         color: #fff;
     }
+    .rule>p{
+        text-align: left;
+        color: #c94d10;
+        font-size: 12px;
+        line-height: 18px;
+    }
 </style>
 <body>
 <div class="remaining">
-    <a href="#">余额明细</a>
+    <a href="remainingDetail.php">余额明细</a>
     <div>
         <p style="font-size: 15px;">账户余额 (积分)</p>
-        <p style="font-size: 28px;margin-top: 20px;">456321</p>
+        <p style="font-size: 28px;margin-top: 20px;" class="balance"></p>
     </div>
-    <button>提现</button>
+    <button><a href="remainingDeposit.php" style="color: #fff;">提现</a></button>
+    <div style="margin: 20px auto;" class="rule">
+        <p>积分提现规则 : </p>
+        <p>1、积分可在平台消费获得相应的积分;</p>
+        <p>2、积分仅可在双创平台使用，可用于兑换积分兑换区的商品;</p>
+        <p>3、平台消费所获得积分可用于提现，但需扣除5%的手续费;</p>
+    </div>
 </div>
 </body>
 </html>
@@ -48,3 +60,8 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
+<script>
+    $(function () {
+        $(".balance").text($_GET['balance'])
+    })
+</script>
