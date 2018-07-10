@@ -72,9 +72,10 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-    let val = $("input").val()
+    let val = ""
     $("input[name='money']").on("input propertychange", function () {
         $(".lastMoney").text(($(this).val() * 0.95).toFixed(2))
+        val = $(".lastMoney").text()
     })
 
     $("button").click(function () {
