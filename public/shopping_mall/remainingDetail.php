@@ -32,10 +32,10 @@
     }
 </style>
 <body>
-<div class="remainder">
+<div class="remainder" id="body">
 
-        <script id="test" type="text/html">
-            <div class="remainder_list">
+    <script id="test" type="text/html">
+        <div class="remainder_list">
             <div>
                 <p>
                     <span>-{{amount}}</span>
@@ -46,12 +46,11 @@
                     <span style="font-size: 13px;">{{created_at}}</span>
                 </p>
             </div>
-            </div>
-        </script>
-
+        </div>
+    </script>
 </div>
 <span style="display:block;line-height: 616px; text-align: center; color: rgb(198, 191, 191)" class="show">
-    暂无商品,敬请期待!</span>
+    暂无交易</span>
 </body>
 </html>
 <script src="js/jquery.min.js"></script>
@@ -59,32 +58,49 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+    const viewHeight = $(this).height();//可见高度
+    let page = 1
     $(function () {
-        $.ajax({
-            type: 'post',
-            url: commonsUrl + "/api/gxsc/get/bill/list/info" + versioninfos,
-            data: {
-                "ss": getCookie('openid'),
-                "page": 1
-            },
-            success: res => {
-                console.log(res.result)
-                try {
-                    let data=res.result
-                    data.length == 0 ? $(".show").show() : $(".show").hide()
-                    for (let val of data) {
-                        let temp = $("#test").html()
-                        temp = temp.replace("{{amount}}", val.amount)
-                                   .replace("{{type}}", val.type == 1 ? "提现" : "积分兑换")
-                                   .replace("{{desc}}", val.desc)
-                                   .replace("{{created_at}}", val.created_at)
-                        $(".remainder").append(temp)
-                    }
-                } catch (e) {
-                    console.log(e)
-                }
+        remainDetil(page)
+        $(this).scroll(function () {
+            var contentHeight = $("#body").get(0).scrollHeight;//内容高度
+            var scrollHeight = $(this).scrollTop();//滚动高度
+            if ((contentHeight - viewHeight) / scrollHeight <= 1) {
+                page++
+                remainDetil(page)
             }
         })
+
+        function remainDetil(page) {
+            $.ajax({
+                type: 'post',
+                url: commonsUrl + "/api/gxsc/get/bill/list/info" + versioninfos,
+                data: {
+                    "ss": getCookie('openid'),
+                    "page": page
+                },
+                success: res => {
+                    console.log(res.result)
+                    try {
+                        let data = res.result
+                        if (page != 1 || data.length != 0) {
+                            layer.msg("没有更多了！")
+                        }
+                        data.length == 0 ? $(".show").show() : $(".show").hide()
+                        for (let val of data) {
+                            let temp = $("#test").html()
+                            temp = temp.replace("{{amount}}", val.amount)
+                                .replace("{{type}}", val.type == 1 ? "提现" : "积分兑换")
+                                .replace("{{desc}}", val.desc)
+                                .replace("{{created_at}}", val.created_at)
+                            $(".remainder").append(temp)
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+            })
+        }
     })
 </script>
 
