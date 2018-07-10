@@ -64,13 +64,13 @@
     <div class="complete">
         <p>
             <span>提现金额</span>
-            <span>￥ 10000</span>
+            <span class="money"></span>
         </p>
         <p>
             <span>提现至微信</span>
             <span>微信零钱</span>
         </p>
-        <button>完成</button>
+        <button><a href="personal_center.php" style="color: #b6b6b6">完成</a></button>
     </div>
 </div>
 </body>
@@ -79,3 +79,6 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
+<script>
+    $(".money").text("￥ " + $_GET["money"])
+</script>

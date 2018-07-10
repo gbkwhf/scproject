@@ -62,7 +62,7 @@
         <span style="font-size: 30px"> ￥</span>
         <input maxlength="5" type="text" name="money">
     </div>
-    <span>提现最大额度20,000元,提现金额为 <span class="lastMoney"></span></span>
+    <span>提现最大额度20,000元,可提现金额为 <span style="color: #c94d10;" class="lastMoney"></span></span>
 </div>
 <button>提现</button>
 </body>
@@ -72,17 +72,19 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-    let val = ""
-    $("input[name='money']").on("input propertychange", function () {
-        $(".lastMoney").text(($(this).val() * 0.95).toFixed(2))
-        val = $(".lastMoney").text()
-    })
-
+    $(".lastMoney").text(($_GET["balance"] - $_GET["balance"] * 0.05).toFixed(2))
     $("button").click(function () {
+        let val = $("input").val()
         if (val == '') {
             layer.msg("请输入金额")
+            return
         } else if (val > 20000) {
             layer.msg("提现金额不能大于20000")
+            return
+        }
+        if (val > $(".lastMoney").text()) {
+            layer.msg("余额不足")
+            return
         } else {
             $.ajax({
                 type: 'post',
@@ -93,9 +95,17 @@
                 },
                 success: res => {
                     console.log(res)
-                    location.href = 'remainingProgress.php'
+                    try {
+                        layer.msg(res.msg)
+                        setTimeout(function () {
+                            location.href = 'remainingProgress.php?money=' + $(".lastMoney").text()
+                        },2000)
+                    }catch (e) {
+                        console.log(e)
+                    }
                 }
             })
+            return
         }
     })
 </script>

@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/common.css">
     <title>余额</title>
 </head>
 <style>
-    .remaining{
+    .remaining {
         width: 92%;
         margin: 0 auto;
     }
-    .remaining>a{
+
+    .remaining > a {
         text-align: right;
         display: block;
         margin-top: 19px;
         color: #000;
     }
-    .remaining>div{
+
+    .remaining > div {
         text-align: center;
         margin: 50px 0 70px 0;
     }
-    button{
+
+    button {
         width: 100%;
         height: 40px;
         border: none;
@@ -32,7 +35,8 @@
         background: #4d6dfc;
         color: #fff;
     }
-    .rule>p{
+
+    .rule > p {
         text-align: left;
         color: #c94d10;
         font-size: 12px;
@@ -46,7 +50,7 @@
         <p style="font-size: 15px;">账户余额 (积分)</p>
         <p style="font-size: 28px;margin-top: 20px;" class="balance"></p>
     </div>
-    <button><a href="remainingDeposit.php" style="color: #fff;">提现</a></button>
+    <button><a class="Deposit" href="" style="color: #fff;">提现</a></button>
     <div style="margin: 20px auto;" class="rule">
         <p>积分提现规则 : </p>
         <p>1、积分可在平台消费获得相应的积分;</p>
@@ -63,5 +67,6 @@
 <script>
     $(function () {
         $(".balance").text($_GET['balance'])
+        $(".Deposit").attr("href", "remainingDeposit.php?balance=" + $_GET['balance'])
     })
 </script>
