@@ -53,7 +53,7 @@
         <div>
             <p>发起提现申请</p>
             <p style="margin-top: 50px">
-                <span style="font-size:16px;color: #000;">审核后台中</span><br>
+                <span style="font-size:16px;color: #000;">后台审核中</span><br>
                 <span style="font-size: 12px">预计24小时内到账</span>
             </p>
             <p style="margin-top: 50px">
