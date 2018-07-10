@@ -5,38 +5,43 @@
     <title>余额提现</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="css/common.css">
 </head>
 <style>
-    body{
+    body {
         background: #f3f2f2;
     }
-    header{
+
+    header {
         padding-left: 4%;
         height: 50px;
         display: flex;
         align-items: center;
         background: #fff;
     }
-    .money{
+
+    .money {
         width: 92%;
         padding: 30px 4%;
         background: #fff;
         margin-top: 8px;
     }
-    .money input{
+
+    .money input {
         border: none;
         font-size: 23px;
     }
-    .money>div{
+
+    .money > div {
         margin: 20px 0 10px;
         border-bottom: 1px solid #f3f2f2;
         display: flex;
         align-items: center;
     }
-    button{
+
+    button {
         width: 92%;
         display: block;
         margin: 30px auto;
@@ -66,3 +71,24 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
+<script>
+    $("button").click(function () {
+        let val = $("input").val()
+        if (val == '') {
+            layer.msg("请输入金额")
+        } else {
+            $.ajax({
+                type: 'post',
+                url: commonsUrl + "/api/gxsc/withdraw/deposit/balance" + versioninfos,
+                data: {
+                    "ss": getCookie('openid'),
+                    "money": val
+                },
+                success: res => {
+                    console.log(res)
+                    location.href = 'remainingProgress.php'
+                }
+            })
+        }
+    })
+</script>

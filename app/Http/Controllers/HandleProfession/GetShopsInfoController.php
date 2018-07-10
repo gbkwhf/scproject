@@ -62,9 +62,12 @@ class GetShopsInfoController extends Controller{
 
         $http = getenv('HTTP_REQUEST_URL');
         //商品详情
-        $goods = \DB::table('ys_goods')->select('id as goods_id','name as goods_name','num','price','sales','content','sales as img_url')
-                  ->where('state',1) //0下架1上架
-                  ->where('id',$goods_id)->first();
+        $goods = \DB::table('ys_goods as a')
+                  ->leftjoin('ys_goods_extend as b','a.id','=','b.goods_id')
+                  ->select('a.id as goods_id','a.name as goods_name','b.num','b.price','a.sales','a.content','a.sales as img_url','a.goods_gift','a.use_score')
+                  ->where('a.state',1) //0下架1上架
+                  ->where('a.id',$goods_id)
+                  ->first();
 
         $goods = empty($goods) ? [] : $goods;
 
