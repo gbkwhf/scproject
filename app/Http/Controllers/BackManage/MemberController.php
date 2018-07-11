@@ -804,18 +804,16 @@ class MemberController  extends Controller
 				$res=\App\BalanceBillModel::create($params_wei);
 			}
 
-
 		}else{
 			return back() -> with('errors','不能重复审批');
 		}
-
 
 		if ($res === false) {
 			\DB::rollBack();
 			return back() -> with('errors','数据更新失败');
 		}else {
 			\DB::commit();
-			return redirect('manage/applytoweixin');
+			return redirect('manage/returnorder');
 		}
 
 	}

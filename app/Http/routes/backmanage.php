@@ -172,9 +172,12 @@
 		//微信提现
 		Route::get('manage/applytoweixin', 'MemberController@applyToweixin');
 		Route::get('manage/applytoweixindetial/{id}', 'MemberController@applyToweixinDetial');
-		//Route::post('manage/joinsupplierexcel', 'MemberController@joinSupplierExcel');
 		Route::post('manage/applytoweixinsave', 'MemberController@applyToweixinSave');
 
+		//订单退款
+		Route::get('manage/returnorder', 'OrderController@returnOrder');
+		Route::get('manage/returnorderdetial/{id}', 'OrderController@returnOrderDetial');
+		Route::post('manage/returnordersave', 'OrderController@returnOrderSave');
     });	
 		Route::group(['namespace' => 'BackManage' ,'middleware'=> ['auth','role:3']], function () {
 			//供应商功能			

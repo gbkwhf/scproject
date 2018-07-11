@@ -46,6 +46,7 @@
             <li @if (in_array($current_route_2,['manage/returnapply'])) class="active" @endif @if (!in_array(19,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/returnapply') }}"><i class="fa fa-edit"></i><span>用户退出</span></a></li>
 
             <li @if (in_array($current_route_2,['manage/applytoweixin','manage/applytoweixindetial'])) class="active" @endif @if (!in_array(20,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/applytoweixin') }}"><i class="fa fa-edit"></i><span>微信提现</span></a></li>
+            <li @if (in_array($current_route_2,['manage/returnorder','manage/returnorderdetial'])) class="active" @endif @if (!in_array(21,$power_arr)) style="display:none"  @endif   ><a href="{{ url('manage/returnorder') }}"><i class="fa fa-edit"></i><span>订单退货</span></a></li>
 
 
 

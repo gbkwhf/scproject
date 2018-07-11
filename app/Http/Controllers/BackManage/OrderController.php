@@ -326,6 +326,95 @@ class OrderController extends Controller
 			
 			
 	}
-	
+	public  function returnOrder (Request $request){
+
+
+
+		$par=\App\ReturnOrderModel::select('ys_return_order.*','ys_member.name','ys_member.mobile','ys_return_order.created_at as created_at')->leftjoin('ys_member','ys_member.user_id','=','ys_return_order.user_id');
+
+
+
+
+		$search=array();
+		if ($request->start != ''){
+			$par->where('ys_return_order.created_at','>=',$request->start.' 00:00:00');
+			$search['start']=$request->start;
+		}
+		if ($request->end != ''){
+			$par->where('ys_return_order.created_at','<',$request->end.' 59:59:59');
+			$search['end']=$request->end;
+		}
+		if (isset($request->state) && $request->state!=-1){
+			$par->where('ys_return_order.state',$request->state);
+			$search['state']=$request->state;
+		}
+
+		$data=$par->orderBy('ys_return_order.created_at','desc')->paginate(10);
+
+
+		//state0申请中，1已通过，2，拒绝
+		$stateArr=[
+			0=>'申请中',
+			1=>'已通过',
+			2=>'已拒绝',
+		];
+		foreach ($data as &$val){
+			$val->state=$stateArr[$val->state];
+
+		}
+
+
+		return view('orderreturnlist',['data'=>$data,'search'=>$search]);
+	}
+
+
+
+	public  function returnOrderDetial (Request $request){
+
+
+
+
+		$data=\App\ReturnOrderModel::where('ys_return_order.id',$request->id)
+			->select('ys_return_order.*','ys_member.name','ys_member.mobile')
+			->leftjoin('ys_member','ys_member.user_id','=','ys_return_order.user_id')
+			->first();
+
+
+		return view('orderreturndetial',['data'=>$data]);
+	}
+	public  function returnOrderSave (Request $request){
+
+
+		\DB::beginTransaction(); //(开启事务)
+
+
+		$res=true;
+		$o_info=\App\ReturnOrderModel::where('id',$request->id)->first();
+
+
+		if($o_info->state==0){
+
+			if($request->state==1){
+			//修改订单状态为已退款
+				$res=\App\ReturnOrderModel::where('id',$request->id)->update(['state'=>1]);
+				$res=\App\SubOrderModel::where('base_id',$o_info->base_order_id)->update(['back_state'=>1]);
+			}elseif ($request->state==2){
+				//修改申请状态
+				$res=\App\ReturnOrderModel::where('id',$request->id)->update(['state'=>2]);
+			}
+		}else{
+			return back() -> with('errors','不能重复审批');
+		}
+
+
+		if ($res === false) {
+			\DB::rollBack();
+			return back() -> with('errors','数据更新失败');
+		}else {
+			\DB::commit();
+			return redirect('manage/applytoweixin');
+		}
+
+	}
 	
 }

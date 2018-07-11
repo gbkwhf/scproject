@@ -143,6 +143,8 @@ class Kernel extends ConsoleKernel
        	->where('ys_base_order.state',1)
        	->where('ys_sub_order.receive_state',1)
        	->where('ys_sub_order.all_rebate','>',0)
+		->where('ys_sub_order.back_state',0)
+		->where('ys_sub_order.use_score',0)
        	->groupBy('ys_base_order.user_id')
        	->selectRaw('ys_member.balance,ys_member.total_amount,ys_member.user_lv,ys_base_order.user_id,sum(ys_sub_order.price) as amount')
        	->get();
@@ -196,6 +198,8 @@ class Kernel extends ConsoleKernel
        		->where('ys_base_order.state',1)
        		->where('ys_sub_order.receive_state',1)
        		->where('ys_sub_order.all_rebate','>',0)
+			->where('ys_sub_order.back_state',0)
+			->where('ys_sub_order.use_score',0)
        		->whereIn('ys_base_order.user_id', $bcd_user)
        		->sum('ys_sub_order.price');
        	
