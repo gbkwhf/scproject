@@ -63,6 +63,13 @@
 				<!--</div>-->
 
 			</div>
+			<div class="accoreBox">
+				<!--<div class="amountBox">
+				 <div class="amount">兑换积分</div>
+				 <div class="moneys"></div>
+			  </div>-->
+			</div>
+
 			<div class="note">
 				<p>备注：</p><input type="text" placeholder="给商家留言（选填）" />
 			</div>
@@ -159,7 +166,7 @@
 		}
 
 		function lastpage(addressId) {
-			location.href = 'address.php?address_id=' + addressId+'&id=3';
+			location.href = 'address.php?address_id=' + addressId + '&id=3';
 		}
 
 		//身份校验
@@ -173,9 +180,11 @@
 			$('.scanCode').hide();
 			$('.substitute').show();
 		}
-
 		var shoppingDetails = JSON.parse(localStorage.getItem('moneyArr'));
 		console.log(shoppingDetails);
+		var score = $_GET['score'];
+		console.log(score);
+
 		var reallPrice = 0;
 		for(var i = 0; i < shoppingDetails.length; i++) {
 			//				console.log(shoppingDetails[i].sumprice);
@@ -207,7 +216,17 @@
 				var shopId = shopList[k].shopId;
 				var spec_name = shopList[k].spec_name;
 				var img = shopList[k].src;
-
+				var use_score = shopList[k].use_score; //商品单积分
+				var goods_gift = shopList[k].goods_gift;
+				console.log("商品类别"+goods_gift)
+				var show = isForm(shopList[k].goods_gift);
+				console.log(show)
+				var ht = '';
+				ht += ' <div class="amountBox" style="display:' + show + '">' +
+					'<div class="amount">兑换积分</div>' +
+					' <div class="money1">' + score + '</div>' +
+					'</div>';
+				$('.accoreBox').html(ht);
 				html += '<div class="product_img">' +
 					'<img src="' + img + '"/>' +
 					'</div>' +
@@ -215,11 +234,11 @@
 					'<p class="shopName">' + name + '</p>' +
 					'<p class="shop_attr">' + spec_name + '</p>' +
 					'<p class="moneyBox"><span class="price">¥' + price + '</span>' +
+					'<span class="price1" style="display:' + show + '"> +'+use_score+'积分</span>'+
 					'<span class="shop_num">+' + numbers + '</span>' +
 					'</p>' +
 					'</div>';
 			});
-
 			html += '<div class="amountBox">' +
 				'<div class="amount">商品金额（小计）</div>' +
 				'<div class="moneys">' + '¥' + t.sumprice + '</div>' +
@@ -229,7 +248,16 @@
 				'<div class="moneys">¥' + t.mianYou + '</div>' +
 				'</div></div><div class="kong"></div>';
 			$('.js-details').html(html);
+
 		});
+
+		function isForm(goods_gift) {
+			if(goods_gift == 1) {
+				return 'none';
+			} else {
+				return 'block'
+			}
+		};
 		//'<p>备注：</p><input type="text" placeholder="给商家留言（选填）" />' 
 		//		for(var i = 0; i < shoppingDetails.length; i++) {
 		//			shoppingList += '<div class="product_img">' +

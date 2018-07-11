@@ -49,9 +49,11 @@
 		<div class="shopIntroduce"></div>
 		<!--------------商品单价------>
 		<div class="shopPrice">
-			<div class="priceBox"><span class="price"></span><span class="originalCost"></span></div>
-			<!--<div class="bor"></div>-->
-			<!--<div class="super" onclick="location.href='super_return.php'">超级返?</div>-->
+			<!--<div class="priceBox">
+				<div class="price"></div>
+				<div class="originalCost"></div>
+				<div class="useScore"></div>
+			</div>-->
 		</div>
 		<div class="saleBox">
 			<div class="postage">邮费：<span class="postNum"></span></div>
@@ -239,14 +241,28 @@
 							var spec_value = con.spec_value; //规格值
 							var store_id = con.store_id; //店id
 							var value_list = con.value_list; //规格值列表
+							var goods_gift = con.goods_gift;//商品类别
+							console.log(goods_gift+"商品类别");
+							var show = isShowI(con.goods_gift);
+							console.log("应该是"+show);
+							var shows = isShow(con.goods_gift);
+							var use_score = con.use_score;//可用积分
 							var biaoqian = '';
 							var nameBox = $(".arrBox");
 							$("#hhId").attr("goosId", g_id);
 							//------------进行赋值---------------
 							$('.swiper-pagination-total').html(goods_image.length); //轮播图计数
 							$('.shopIntroduce').html(goods_name); //商品名
-							$('.price').html('¥' + price); //商品单价
-							$('.originalCost').html('原价' + market_price + '元')
+							var ht='';
+							ht+='<div class="priceBox">'+
+								'<div class="price">￥'+price+'</div>'+
+								'<div class="originalCost" style="display:' + shows + '">原价 '+ market_price +' 元</div>'+
+								'<div class="useScore" style="display:' + show + '">需'+use_score+'积分</div>'+
+								'</div>';
+								$('.shopPrice').html(ht);
+//							$('.price').html('¥' + price); //商品单价
+//							$('.originalCost').html('原价' + market_price + '元');
+//							$('.useScore').html('需'+use_score+'积分');
 							$('.shopImg').html(content); //商品内容
 							$('.saleNum').html(sales); //销量
 							$('.postNum').html(shipping_price + '元'); //运费
@@ -301,7 +317,21 @@
 
 					}
 				});
-			}
+			};
+			function isShowI(goods_gift) { 
+				if(goods_gift == 1) {
+					return 'none';
+				} else {
+					return 'block'
+				}
+			};
+			function isShow(goods_gift) { 
+				if(goods_gift == 1) {
+					return 'block';
+				} else {
+					return 'none'
+				}
+			};
 			setTimeout(function() {
 				var biaoqian = '';
 				var arrBox = $(".arrBox")

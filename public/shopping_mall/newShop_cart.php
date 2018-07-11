@@ -36,7 +36,7 @@
 				</label>
 			</div>
 			<!--中间的商铺名称-->
-			<div class="storeName1">合计:<span class="totalPrice"></span>元</div>
+			<div class="storeName1">合计:<span class="totalPrice"></span>元 </div>
 			<!--右边的返回内容-->
 			<div class="storeBack1">结算</div>
 		</div>

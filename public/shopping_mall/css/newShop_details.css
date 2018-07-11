@@ -152,7 +152,15 @@ input[type="button"] {
 	font-size: 18px;
 	color: #ef833b;
 }
-
+.price{
+	float: left;
+}
+.useScore{
+	float: left;
+	color: #f87a35;
+	font-size: 12px;
+	padding-left: 8px;
+}
 .saleBox,
 .selectAttributes {
 	height: 38px;
@@ -370,6 +378,7 @@ input[type="button"] {
 }
 
 .originalCost {
+	float: left;
 	font-size: 12px;
 	color: #999999;
 	padding-left: 8px;

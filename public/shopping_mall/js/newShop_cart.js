@@ -11,11 +11,10 @@
 				console.log(data)
 				if(data.code == 1) { //请求成功
 					var con = data.result.info;
-
 					//					console.log(con);
 					var html = '';
 					$.each(con, function(c, t) {
-						html += "<div class='shopCartCon' suppid=" + con[c].supplier_id + " supContent=" + t.supplier_name + " freePrice=" + t.free_shipping + " shop_price=" + data.result.shipping_price + " conPrice=" + data.result.price + ">" +
+						html += "<div class='shopCartCon'  suppid=" + con[c].supplier_id + " supContent=" + t.supplier_name + " freePrice=" + t.free_shipping + " shop_price=" + data.result.shipping_price + " conPrice=" + data.result.price + ">" +
 							"<div class='storeBox'>" +
 							"<div class='checkLeft'>" +
 							"<label class='seconLabel'>" +
@@ -32,14 +31,17 @@
 							var first_class_id = goodList[k].first_class_id;
 							var created_at = goodList[k].created_at;
 							var ext_id = goodList[k].ext_id;
+//							goods_gift="+con[c].goods_gift+" use_score="+con[c].use_score+"
 							var goods_id = goodList[k].goods_id; //商品id
 							var spec_name = goodList[k].spec_name; //规格
 							var shop_price = goodList[k].shipping_price; //运费
+							var goods_gift = goodList[k].goods_gift;//
+							var use_score=goodList[k].use_score;
 							var goods_name = goodList[k].goods_name == "" ? "无" : goodList[k].goods_name; //商品名称
 							var goods_price = goodList[k].price == "" ? "无" : goodList[k].price; //商品单价
 							var goods_url = goodList[k].image == "" ? "无" : goodList[k].image; //商品图片
 							var number = goodList[k].number == "" ? "无" : goodList[k].number; //商品数量
-							var state = stateCheck(goodList[k].state, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price); //商品状态
+							var state = stateCheck(goodList[k].state, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price,goods_gift,use_score); //商品状态
 							var state1 = goodList[k].state == "0"; //商品状态
 							html += "<div class='storeConHei' >" +
 								"<div class='nextCheck'>" + state + "</div>" +
@@ -78,11 +80,11 @@
 			}
 		});
 
-		function stateCheck(sta, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price) {
+		function stateCheck(sta, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price,goods_gift,use_score) {
 			if(sta == 0) { //0是未选中 
-				return '<label class="childLabel" state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + '><input type="checkbox"  class="input childInput" incar=' + car_id + ' /></label>';
+				return '<label class="childLabel" goods_gift='+goods_gift+' use_score='+use_score+'  state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + '><input type="checkbox"  class="input childInput" incar=' + car_id + ' /></label>';
 			} else {
-				return '<label class="childLabel checked" state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + '><input type="checkbox" incar=' + car_id + ' class="input childInput" checkcon="true"/></label>';
+				return '<label class="childLabel checked" goods_gift='+goods_gift+' use_score='+use_score+' state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + '><input type="checkbox" incar=' + car_id + ' class="input childInput" checkcon="true"/></label>';
 			}
 		}
 
@@ -580,6 +582,7 @@
 				success: function(data) {
 					if(data.code == 1) { //请求成功
 						pricenum = data.result.price;
+						 score =data.result.score;
 						$(".totalPrice").text(pricenum);
 						//						$("#returnprice").val(data.result.return);
 						//						$("#noreturnprice").val(data.result.no_return);
@@ -621,6 +624,8 @@
 									'number': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".inTeCon").val(),
 									'spec_name': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".shopPro1").text(),
 									'shop_price': $(v).find(".conStore").find("label.checked").eq(c).attr("shop_price"), //运费
+									'use_score': $(v).find(".conStore").find("label.checked").eq(c).attr("use_score"),
+									'goods_gift': $(v).find(".conStore").find("label.checked").eq(c).attr("goods_gift")
 									//							
 								}
 								obj.arrCon.push(arrcon);
@@ -672,7 +677,7 @@
 					console.log(nextArr);
 
 					localStorage.setItem("moneyArr", JSON.stringify(nextArr));
-					window.location.href = 'formOrder.php';
+					window.location.href = 'formOrder.php?score='+score;
 					//					} else {
 					//						$('.submitbox').children('p').text('您返利区的价钱为￥' + returnprice + "，非返利区的价钱为￥" + noreturnprice + "，返利区商品需大于等于￥1280才有返利，确认提交吗？");
 					//						var Layer = layer.open({

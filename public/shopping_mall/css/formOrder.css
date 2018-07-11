@@ -170,6 +170,7 @@ html,body{
 }
 .price{
 	color: #eb3738;
+	float: left;
 }
 .shop_num{
 	float: right;
@@ -355,13 +356,21 @@ html,body{
 	float: left;
 }
 .moneys{
-		float: right;
+	float: right;
 	line-height: 42px;
 	padding-right: 15px;
 	color: #b3b3b3;
 }
-
-
+.money1{
+	float: right;
+	line-height: 42px;
+	padding-right: 30px;
+	color: #f5997b;
+}
+.price1{
+	float: left;
+	color: #f5997b;
+}
 .explain-buy{
 	padding: 25px 4%;
 	background: #fff;
