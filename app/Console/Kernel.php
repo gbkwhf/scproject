@@ -48,7 +48,28 @@ class Kernel extends ConsoleKernel
     		$log_date=date('Y-m-d',strtotime('-1 days'));
     		$log_file['total']['total_profit']=0;
     	}
-    	
+
+		//新写的供应商结算程序，每日运行，查找20天前，已经发货的，供应商结算金额，累加到供应商余额，
+		$shiping_time=date('Y-m-d',strtotime('-20 days',strtotime($log_date)));
+		$suppli_order=\App\SubOrderModel::whereNotNull('express_num')->where('shipping_time','>=',$shiping_time.' 00:00:00')
+			->where('shipping_time','<',$shiping_time.' 23:59:59')
+			->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+			->select('ys_sub_order.supplier_id')
+			->selectRaw('sum(ys_order_goods.num*supplier_price) as supplier_sum')
+			->groupBy('ys_sub_order.supplier_id')
+			->get();
+		foreach($suppli_order as $s_val){
+			$params=[
+				'supplier_id'=>$s_val->supplier_id,
+				'amount'=>$s_val->supplier_sum,
+				'created_at'=>date('Y-m-d H:i:s',time()),
+				'pay_describe'=>'销售收入',
+				'type'=>1
+			];
+			$res=\App\SupplierBillsModel::insert($params);
+			$res = \App\SupplierModel::where('id',$s_val->supplier_id)->increment('balance',$s_val->supplier_sum);
+		}
+
     	
     	$data=[];
     	

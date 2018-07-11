@@ -37,6 +37,12 @@
                   	{{ $data->balance or '' }}
                   </div>
                 </div>
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label" >冻结中金额</label>
+                      <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;">
+                          {{ $data->not_amount or '' }}
+                      </div>
+                  </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" >申请中提现金额</label>
                   <div class="col-sm-10" style="margin-bottom: 0;padding-top: 7px;">

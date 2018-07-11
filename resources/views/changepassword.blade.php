@@ -52,8 +52,16 @@
                     <input type="text"  name="shou_password"  placeholder="Enter ..." class="form-control" value="">
                   </div>
                 </div>                                                                                                                                                                                                                                          
-              </div>                                         
-              <!-- /.box-body -->
+              </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >招商密码(zhaoshang)</label>
+                            <div class="col-sm-10">
+                                <input type="text"  name="zhao_password"  placeholder="Enter ..." class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
               <div class="box-footer">
              
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />                

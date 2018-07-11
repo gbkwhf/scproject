@@ -218,6 +218,10 @@ class HomeController extends Controller
     		$params['password']=Bcrypt(trim($request->shou_password));
     		\App\User::where('name','shouhouyuan')->update($params);
     	}
+		if(isset($request->zhao_password) && $request->zhao_password!=''){
+			$params['password']=Bcrypt(trim($request->zhao_password));
+			\App\User::where('name','zhaoshang')->update($params);
+		}
     
     
     	Session()->flash('message','保存成功');

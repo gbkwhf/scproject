@@ -2,7 +2,7 @@
 <header class="main-header">
                 <?php
                 //获取当前管理员权限  
- 					if(Auth::user()->role==1 || Auth::user()->role==4 || Auth::user()->role==5 || Auth::user()->role==6){
+ 					if(Auth::user()->role==1 || Auth::user()->role==4 || Auth::user()->role==5 || Auth::user()->role==6|| Auth::user()->role==7){
  						$index='admin';
  					}elseif(Auth::user()->role==2){//经销商
  						$index='agencyadmin';

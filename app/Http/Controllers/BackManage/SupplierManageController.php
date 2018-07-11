@@ -108,26 +108,32 @@ class SupplierManageController  extends Controller
         $params=array(
                 'express_name'=>trim($request->express_name),
                 'express_num'=>trim($request->express_num),
+				'shipping_time'=>date('Y-m-d H:i:s',time()),
+
         );
          $res = \App\SubOrderModel::where('id',$request->id)->update($params);
-         
-         $info = \App\SubOrderModel::where('ys_sub_order.id',$request->id)
-         		->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
-         		->select('ys_sub_order.supplier_id','ys_order_goods.supplier_price','ys_order_goods.num')         		
-         		->get();
-         $supplier_amount=0;
-		foreach ($info as $val){
-			$supplier_amount+=$val->supplier_price*$val->num;
-		}
-         $params=[
-        	'supplier_id'=>$info[0]->supplier_id,	
-        	'amount'=>+$supplier_amount,
-        	'created_at'=>date('Y-m-d H:i:s',time()),
-        	'pay_describe'=>'销售收入',
-        	'type'=>1
-         ];
-         $res=\App\SupplierBillsModel::insert($params);
-         $res = \App\SupplierModel::where('id',$info[0]->supplier_id)->increment('balance',$supplier_amount);          
+
+////发货后给供应商增加余额
+//         $info = \App\SubOrderModel::where('ys_sub_order.id',$request->id)
+//         		->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')
+//         		->select('ys_sub_order.supplier_id','ys_order_goods.supplier_price','ys_order_goods.num')
+//         		->get();
+//         $supplier_amount=0;
+//		foreach ($info as $val){
+//			$supplier_amount+=$val->supplier_price*$val->num;
+//		}
+//         $params=[
+//        	'supplier_id'=>$info[0]->supplier_id,
+//        	'amount'=>+$supplier_amount,
+//        	'created_at'=>date('Y-m-d H:i:s',time()),
+//        	'pay_describe'=>'销售收入',
+//        	'type'=>1
+//         ];
+//         $res=\App\SupplierBillsModel::insert($params);
+//         $res = \App\SupplierModel::where('id',$info[0]->supplier_id)->increment('balance',$supplier_amount);
+
+
+
          if($res === false){
              return back() -> with('errors','数据更新失败');
          }else{
@@ -307,6 +313,22 @@ class SupplierManageController  extends Controller
  	$res = \App\SupplierCashApplyModel::where('supplier_id',$supplier_id)->where('state',0)->sum('amount');
 	$data->apply_amount=$res;
 	$data->balance=$data->balance-$res;
+
+
+
+	 //冻结金额(供应商没发货，或者发货后20天内的，小于等于20) 是空 或者昨天
+	 $dtime=date('Y-m-d',strtotime(' -20 days')).' 00:00:00';
+//dump($dtime);
+	 $not_order=\App\SubOrderModel::where('supplier_id',$supplier_id)->where(function ($query) use($dtime)  {
+		 	$query->whereNull('shipping_time')->orWhere('shipping_time', '>', "{$dtime}");
+		 })->leftjoin('ys_order_goods','ys_order_goods.sub_id','=','ys_sub_order.id')->get();
+
+	 $supplier_amount=0;
+		foreach ($not_order as $val){
+			$supplier_amount+=$val->supplier_price*$val->num;
+		}
+	 $data['not_amount']=$supplier_amount;
+
  	return view('supplierbilladd',['data'=>$data]);
  }
  
