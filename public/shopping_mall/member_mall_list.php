@@ -16,9 +16,10 @@
 		::-webkit-scrollbar {
 			display: none;
 		}
+		
 		.mui-scrollbar {
-            display: none !important;
-        }
+			display: none !important;
+		}
 	</style>
 
 	<body>
@@ -63,7 +64,7 @@
 			<img src="images/shopping-cart.png" />
 			<span></span>
 		</div>-->
-		<div class="popBox" style="display: none;">
+		<div class="popBox" style="display: none !important">
 			<div class="pops">
 				<p style="text-align: center;margin-top: 14px;margin-bottom: 14px;font-size: 16px;">温馨提示</p>
 				<div style="text-align: center;color: #999999;padding: 0 0 15px 0;">积分兑换区商品不参与返利哦<br /> 并且不接受退换货操作~<br />积分兑换的商品需单独进行购买</div>
@@ -81,13 +82,21 @@
 <script src="js/mui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		
+
 		var winW = $(window).width();
 		var winH = $(window).height();
 		var first_id = $_GET['goods_first_id'];
-		var goods_first_name =$_GET['goods_first_name'];
+		var goods_first_name = $_GET['goods_first_name'];
 		var titleName = decodeURIComponent(goods_first_name);
 		$("title").html(titleName);
+		if(titleName == '积分兑换'){
+			alertornot()
+		}else{
+			$(".popBox").hide();
+		}
+//		if(goods_first_name=='粮油副食'){
+//			$(".popBox").css('display','');
+//		}
 		console.log(first_id);
 		$.ajax({ //获取商品二级分类
 			type: "post",
@@ -115,11 +124,11 @@
 						shopList(1, $(".addStyleMi").attr("goods_second_id"));
 						$('.shopBox').html('');
 						$('.classify').click(function() {
-							setTimeout(function(){
+							setTimeout(function() {
 								mui('#refreshContainer').pullRefresh().refresh(true);
-							},300);
-							
-							
+							}, 300);
+
+							$('.popBox').hide();
 							$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
 							$('.shopBox').html('');
 							shopList(1, $(".addStyleMi").attr("goods_second_id"));
@@ -181,28 +190,29 @@
 							var goods_name = con[k].goods_name; //商品名称
 							var images = con[k].image; //商品图片
 							var price1 = con[k].price; //商品价格
-							var ext_id = con[k].ext_id;//商品扩展表id
+							var ext_id = con[k].ext_id; //商品扩展表id
 							var market_price = con[k].market_price; //原价
-							var goods_gift = con[k].goods_gift;//商品类别
-							if(goods_gift==1){
-								$(".popBox").hide();
-							}else{
-								$(".popBox").show();
-								$(".confirm,.cancels").click(function(){
-									$(".popBox").hide();
-								});
-							};
-//							console.log("这是普通商品"+goods_gift);
+							var goods_gift = con[k].goods_gift; //商品类别
+//							if(goods_gift == 1) {
+//								$(".popBox").hide();
+//							} else {
+//								alertornot()
+//								$(".popBox").show();
+//								$(".confirm,.cancels").click(function() {
+//									$(".popBox").hide();
+//								});
+//							};
+							//							console.log("这是普通商品"+goods_gift);
 							var show = isShowImg(con[k].goods_gift);
-							var shows =isShow(con[k].goods_gift);
-							var use_score = con[k].use_score;//可用积分
-							if(price1==null || price1==undefined){
-								price1='0';
+							var shows = isShow(con[k].goods_gift);
+							var use_score = con[k].use_score; //可用积分
+							if(price1 == null || price1 == undefined) {
+								price1 = '0';
 							}
-							 if(market_price==null || market_price==undefined){
-								market_price='0';
+							if(market_price == null || market_price == undefined) {
+								market_price = '0';
 							}
-							html += '<div class="shopListBox" goods_id=' + goods_id + ' ext_id='+ext_id+' >' +
+							html += '<div class="shopListBox" goods_id=' + goods_id + ' ext_id=' + ext_id + ' >' +
 								'<div class="shopImg"><img src=' + images + ' /></div>' +
 								'<div class="shopListNames">' + goods_name + '</div>' +
 								'<div class="shops"><span class="shopPrice">￥' + price1 + '</span> <span class="useScore" style="display:' + show + '">需' + use_score + '积分</span>' +
@@ -213,7 +223,7 @@
 						$('.shopBox').append(html); //动态商品列表
 						if(data.result.length > 0) {
 							mui('#refreshContainer').pullRefresh().refresh(true);
-//							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+							//							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 						} else {
 							layer.msg("已经到底了");
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -227,20 +237,56 @@
 			}
 		});
 	};
-	function isShowImg(goods_gift) { 
+
+	function isShowImg(goods_gift) {
 		if(goods_gift == 1) {
 			return 'none';
 		} else {
 			return 'block'
 		}
 	};
-	function isShow(goods_gift) { 
+
+	function isShow(goods_gift) {
 		if(goods_gift == 1) {
 			return 'block';
 		} else {
 			return 'none'
 		}
+	};
+	var once_per_session = 1
+	function get_cookie(Name) {
+		var search = Name + "="
+		var returnvalue = "";
+		if(document.cookie.length > 0) {
+			offset = document.cookie.indexOf(search)
+			if(offset != -1) { // if cookie exists
+				offset += search.length
+				end = document.cookie.indexOf(";", offset);
+				if(end == -1)
+					end = document.cookie.length;
+				returnvalue = unescape(document.cookie.substring(offset, end))
+			}
+		}
+		return returnvalue;
 	}
+
+	function alertornot() {
+		if(get_cookie('alerted') == '') {
+			loadalert()
+			document.cookie = "alerted=yes"
+		}
+	}
+
+	function loadalert() {
+		$(".popBox").show();
+		$(".confirm,.cancels").click(function() {
+			$(".popBox").hide();
+		});
+	}
+
+	
+		
+
 	mui.init({
 		pullRefresh: {
 			container: '#refreshContainer', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
@@ -250,8 +296,8 @@
 				callback: function() {
 						pageNum++;
 						shopList(pageNum, $(".addStyleMi").attr("goods_second_id"));
-						 mui('#refreshContainer').pullRefresh().endPullupToRefresh();
-//						mui('#refreshContainer').pullRefresh().refresh(true);
+						mui('#refreshContainer').pullRefresh().endPullupToRefresh();
+						//						mui('#refreshContainer').pullRefresh().refresh(true);
 					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 			}
 
@@ -286,15 +332,15 @@
 		}
 	});
 
-//	function goDetail(goods_id) {
-//		//		console.log(goods_id);
-//		location.href = "newShop_details.php?goods_id=" + goods_id;
-//	}
-mui('body').on('tap', '.shopListBox', function() {
-	var ext_id = $(this).attr('ext_id');
-	console.log(ext_id);
-	mui.openWindow({
-		url: "newShop_details.php?ext_id=" + ext_id
+	//	function goDetail(goods_id) {
+	//		//		console.log(goods_id);
+	//		location.href = "newShop_details.php?goods_id=" + goods_id;
+	//	}
+	mui('body').on('tap', '.shopListBox', function() {
+		var ext_id = $(this).attr('ext_id');
+		console.log(ext_id);
+		mui.openWindow({
+			url: "newShop_details.php?ext_id=" + ext_id
+		})
 	})
-})
 </script>
