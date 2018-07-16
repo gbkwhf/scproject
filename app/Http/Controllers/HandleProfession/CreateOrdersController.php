@@ -591,7 +591,7 @@ class CreateOrdersController extends Controller{
                        ->leftjoin('ys_sub_order as b','a.id','=','b.base_id') //子订单
                        ->leftjoin('ys_order_goods as c','b.id','=','c.sub_id') //子订单和商品对应表
                        ->leftjoin('ys_goods as d','d.id','=','c.goods_id')
-                       ->select('a.create_time','b.id as sub_order_id','b.price','b.express_name','b.express_num','c.goods_id','c.num','d.name as goods_name','d.name as image')
+                       ->select('a.create_time','b.id as sub_order_id','b.price','b.express_name','b.express_num','c.goods_id','c.num','d.name as goods_name','d.name as image','d.goods_gift','d.use_score')
                        ->where('a.state',1) //0未付款  1已付款
                        ->where('user_id',$user_id)
                        ->orderBy('create_time','desc')
