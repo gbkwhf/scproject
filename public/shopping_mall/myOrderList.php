@@ -59,7 +59,14 @@
             </div>
         </div>
     </div>
-
+    <div class="popBox" style="display: none !important">
+        <div class="pops">
+            <p style="text-align: center;margin-top: 14px;margin-bottom: 14px;font-size: 16px;">特别提醒</p>
+            <div style="width: 70%;margin: auto;text-align: center;color: #999999;padding: 0 0 15px 0;">点击确认收货后将不能退换货操作请您三思哦~</div>
+            <div class="confirm" id="confirmId">确定</div>
+            <div class="cancels" id="cancelsId">取消</div>
+        </div>
+    </div>
     <p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">你还没有相关的订单</p>
 
 </div>
@@ -70,7 +77,6 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script type="text/javascript">
-
     let page = 1
     var orderId = $_GET['orderId'];
     let URL = "api/gxsc/v2/get/order/info/all/list"
@@ -131,7 +137,6 @@
                 $(".orGe").hide()
                 orderId, id = 3
                 evaluate(page)
-
                 break;
         }
     });
@@ -146,7 +151,7 @@
                 ss: getCookie('openid')
             },
             success: (res) => {
-                console.log(res.result)
+                console.log(res)
                 try {
                     if (res.code == "1") {
                         let data = res.result
@@ -198,6 +203,7 @@
                                 }
 
 
+
                                 let num
                                 for (let vals = 0; vals < data[val].goods_list.length; vals++) {
                                     num = data[val].goods_list.length
@@ -213,20 +219,21 @@
                                 }
                                 if (val >= 0) {
                                     if (id == 1) {
-
                                         let aa = '<div class="shopNumSum" ><span class="sumShop">共' + num + '件商品</span><span class="hejiCon">合计' + data[val].require_amount + '元(含运费' + data[val].shipping_price + '元)</span></div><div class="wuliuConter" style="border-bottom: 7px solid #f3f2f2;"><span class="checkcont pay" style="float:right;margin-right:10px;" id="' + data[val].base_order_id + '">立即支付</span></div></div>'
                                         $(".shopInfoBox").append(aa)
                                     } else if (id == 2) {
                                         let pay = parseFloat(data[val].price) + parseFloat(data[val].shipping_price)
-                                        let aa = '<div class="shopNumSum"><span class="sumShop">共' + num + '件商品</span><span class="hejiCon">合计' + pay + '元(含运费' + data[val].shipping_price + '元)</span></div><div class="wuliuConter"><span class="checkcont phy" id=' + data[val].goods_list[0].sub_id + '>查看物流</span><span class="checkcont aff" id="' + data[val].goods_list[0].sub_id + '">确定收货</span></div></div>'
-                                        $(".shopInfoBox").append(aa)
-
+                                        if(data[val].back_state == 0 && data[val].can_back == 0 && data[val].goods_list[0].goods_gift == 1){
+                                            let aa = '<div class="shopNumSum"><span class="sumShop">共' + num + '件商品</span><span class="hejiCon">合计' + pay + '元(含运费' + data[val].shipping_price + '元)</span></div><div class="wuliuConter"><span class="checkcont phy" id=' + data[val].goods_list[0].sub_id + '>查看物流</span><span class="checkcont aff" id="' + data[val].goods_list[0].sub_id + '"  onclick="affirm(' + data[val].goods_list[0].sub_id + ')">确定收货</span><span class="checkcont" id="' + data[val].goods_list[0].sub_id + '" onclick="apply(' + data[val].base_id + ')">申请退货</span></div></div>'
+                                            $(".shopInfoBox").append(aa)
+                                        }else{
+                                            let aa = '<div class="shopNumSum"><span class="sumShop">共' + num + '件商品</span><span class="hejiCon">合计' + pay + '元(含运费' + data[val].shipping_price + '元)</span></div><div class="wuliuConter"><span class="checkcont phy" id=' + data[val].goods_list[0].sub_id + '>查看物流</span><span class="checkcont aff" id="' + data[val].goods_list[0].sub_id + '"  onclick="affirm(' + data[val].goods_list[0].sub_id + ')">确定收货</span></div></div>'
+                                            $(".shopInfoBox").append(aa)
+                                        }
                                     }
                                 }
                             }
                         }
-
-
                     }
                 } catch (e) {
                     console.log(e)
@@ -239,6 +246,7 @@
 
     function tabSwitchover() {
         setTimeout(() => {
+
             $(".shopBoxCon").click(function () {
                 let thisId = $(this).attr("id")
                 if (id == 0) {
@@ -256,28 +264,28 @@
                 location.href = 'logistical.php?sub_order_id=' + $(this).attr("id")
             })
 
-            $(".aff").click(function () {
-                $.ajax({
-                    type: "post",
-                    dataType: "json",
-                    url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
-                    data: {
-                        sub_order_id: $(this).attr("id"),
-                        ss: getCookie('openid')
-                    },
-                    success: (res) => {
-                        console.log(res)
-                        if (res.code == 1) {
-                            layer.msg("确认成功")
-                            $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-                            id = 3
-                            evaluate(page)
-                        } else {
-                            layer.msg(res.msg)
-                        }
-                    }
-                })
-            })
+            // $(".aff").click(function () {
+            //     $.ajax({
+            //         type: "post",
+            //         dataType: "json",
+            //         url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
+            //         data: {
+            //             sub_order_id: $(this).attr("id"),
+            //             ss: getCookie('openid')
+            //         },
+            //         success: (res) => {
+            //             console.log(res)
+            //             if (res.code == 1) {
+            //                 layer.msg("确认成功")
+            //                 $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+            //                 id = 3
+            //                 evaluate(page)
+            //             } else {
+            //                 layer.msg(res.msg)
+            //             }
+            //         }
+            //     })
+            // })
 
 
             $(".pay").click(function () {
@@ -399,4 +407,71 @@
 
         }
     })
+
+    function affirm(options) {
+        $(".popBox").show()
+
+        $(".confirm").click(function () {
+            $(".popBox").hide()
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
+                data: {
+                    sub_order_id: options,
+                    ss: getCookie('openid')
+                },
+                success: (res) => {
+                    console.log(res)
+                    if (res.code == 1) {
+                        layer.msg("确认成功")
+                        $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+                        id = 3
+                        evaluate(page)
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }
+            })
+        })
+
+        $(".cancels").click(function () {
+            $(".popBox").hide()
+        })
+
+    }
+
+
+
+    function apply(options) {
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: commonsUrl + 'api/gxsc/user/return/goods' + versioninfos,
+            data: {
+                base_order_id: options,
+                ss: getCookie('openid')
+            },
+            success: (res) => {
+                console.log(res)
+                try {
+                    if (res.code == 1){
+                        layer.msg("申请成功")
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }catch (e) {
+                    console.log(e)
+                }
+                // if (res.code == 1) {
+                //     layer.msg("确认成功")
+                //     $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+                //     id = 3
+                //     evaluate(page)
+                // } else {
+                //     layer.msg(res.msg)
+                // }
+            }
+        })
+    }
 </script>
