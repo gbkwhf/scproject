@@ -60,6 +60,7 @@
 <script>
     const viewHeight = $(this).height();//可见高度
     let page = 1
+    let pageTrue = true
     $(function () {
         remainDetil(page)
         $(this).scroll(function () {
@@ -72,34 +73,41 @@
         })
 
         function remainDetil(page) {
-            $.ajax({
-                type: 'post',
-                url: commonsUrl + "/api/gxsc/get/bill/list/info" + versioninfos,
-                data: {
-                    "ss": getCookie('openid'),
-                    "page": page
-                },
-                success: res => {
-                    console.log(res.result)
-                    try {
-                        let data = res.result
-                        if (page != 1 || data.length != 0) {
-                            layer.msg("没有更多了！")
+            if (pageTrue){
+                $.ajax({
+                    type: 'post',
+                    url: commonsUrl + "/api/gxsc/get/bill/list/info" + versioninfos,
+                    data: {
+                        "ss": getCookie('openid'),
+                        "page": page
+                    },
+                    success: res => {
+                        console.log(res.result)
+                        try {
+                            let data = res.result
+                            if (page != 1 || data.length == 0 ) {
+                                layer.msg("没有更多了！")
+                                pageTrue = false
+                            }
+                            if(page == 1){
+                                data.length == 0 ? $(".show").show() : $(".show").hide()
+                            }
+                            for (let val of data) {
+                                let temp = $("#test").html()
+                                temp = temp.replace("{{amount}}", val.amount)
+                                    .replace("{{type}}", val.type == 1 ? "提现" : "积分兑换")
+                                    .replace("{{desc}}", val.desc)
+                                    .replace("{{created_at}}", val.created_at)
+                                $(".remainder").append(temp)
+                            }
+                        } catch (e) {
+                            console.log(e)
                         }
-                        data.length == 0 ? $(".show").show() : $(".show").hide()
-                        for (let val of data) {
-                            let temp = $("#test").html()
-                            temp = temp.replace("{{amount}}", val.amount)
-                                .replace("{{type}}", val.type == 1 ? "提现" : "积分兑换")
-                                .replace("{{desc}}", val.desc)
-                                .replace("{{created_at}}", val.created_at)
-                            $(".remainder").append(temp)
-                        }
-                    } catch (e) {
-                        console.log(e)
                     }
-                }
-            })
+                })
+            }else {
+
+            }
         }
     })
 </script>
