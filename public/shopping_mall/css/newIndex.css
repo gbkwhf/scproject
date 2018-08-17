@@ -26,6 +26,7 @@ input[type="button"] {
 	/*height: 107px;*/
 	margin: 0 auto;
 	margin-top: 22px;
+	margin-bottom: 22px;
 }
 .gameBox{
 	width: 92%;
