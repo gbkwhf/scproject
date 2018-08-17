@@ -17,13 +17,12 @@
 		<div class="member" onclick="location.href='memberPages.php'">
 			<img src="images/gxMall.png" />
 		</div>
-		<!--<div class="no_member">
-			<img src="images/nomember.jpg" onclick="location.href='outsider.php?first_id=4'" />
-		</div>-->
 		<div class="gameBox" onclick="waitting()">
 			<img src="images/amusement.png" />
 		</div>
-		
+		<div class="no_member">
+			<img src="images/result_good.png" onclick="location.href='regulation.php'" />
+		</div>
 
 	</body>
 	<script src="js/jquery.min.js"></script>

@@ -269,24 +269,18 @@
 		}
 		return returnvalue;
 	}
-
 	function alertornot() {
 		if(get_cookie('alerted') == '') {
 			loadalert()
 			document.cookie = "alerted=yes"
 		}
 	}
-
 	function loadalert() {
 		$(".popBox").show();
 		$(".confirm,.cancels").click(function() {
 			$(".popBox").hide();
 		});
 	}
-
-	
-		
-
 	mui.init({
 		pullRefresh: {
 			container: '#refreshContainer', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等

@@ -35,8 +35,8 @@
 							var goods_id = goodList[k].goods_id; //商品id
 							var spec_name = goodList[k].spec_name; //规格
 							var shop_price = goodList[k].shipping_price; //运费
-							var goods_gift = goodList[k].goods_gift;//
-							var use_score=goodList[k].use_score;
+							var goods_gift = goodList[k].goods_gift;//商品类别：1代表普通商品 2代表积分商品
+							var use_score=goodList[k].use_score;//单个商品所需积分数
 							var goods_name = goodList[k].goods_name == "" ? "无" : goodList[k].goods_name; //商品名称
 							var goods_price = goodList[k].price == "" ? "无" : goodList[k].price; //商品单价
 							var goods_url = goodList[k].image == "" ? "无" : goodList[k].image; //商品图片
