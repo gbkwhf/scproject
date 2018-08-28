@@ -219,7 +219,7 @@
                                 }
                                 if (val >= 0) {
                                     if (id == 1) {
-                                        let aa = '<div class="shopNumSum" ><span class="sumShop">共' + num + '件商品</span><span class="hejiCon">合计' + data[val].require_amount + '元(含运费' + data[val].shipping_price + '元)</span></div><div class="wuliuConter" style="border-bottom: 7px solid #f3f2f2;"><span class="checkcont pay" style="float:right;margin-right:10px;" id="' + data[val].base_order_id + '">立即支付</span></div></div>'
+                                        let aa = '<div class="shopNumSum" ><span class="sumShop">共' + num + '件商品</span><span class="hejiCon">合计' + data[val].require_amount + '元(含运费' + data[val].shipping_price + '元)</span></div><div class="wuliuConter" style="border-bottom: 7px solid #f3f2f2;"><span class="checkcont cancellation" style="float:right;margin-right:20px;" onclick="cancellation('+ data[val].base_order_id + ')" id="' + data[val].base_order_id + '">取消订单</span><span class="checkcont pay" style="float:right;margin-right:20px;" id="' + data[val].base_order_id + '">立即支付</span></div></div>'
                                         $(".shopInfoBox").append(aa)
                                     } else if (id == 2) {
                                         let pay = parseFloat(data[val].price) + parseFloat(data[val].shipping_price)
@@ -259,6 +259,8 @@
                     location.href = 'newShop_details.php?ext_id=' + thisId
                 }
             })
+
+
 
             $(".phy").click(function () {
                 location.href = 'logistical.php?sub_order_id=' + $(this).attr("id")
@@ -441,7 +443,28 @@
 
     }
 
-
+    function cancellation(id) {
+        $.ajax({
+                    type: 'POST',
+                    url: commonsUrl + '/api/gxsc/user/cancel/order' + versioninfos,
+                    data: {
+                        ss: getCookie('openid'),
+                        base_order_id: id
+                    },
+                    success:res=>{
+                        console.log(res)
+                        try {
+                            if (res.code == 1){
+                                layer.msg("取消成功")
+                            }else {
+                                layer.msg(res.msg)
+                            }
+                        }catch (e) {
+                            console.log(e)
+                        }
+                    }
+                })
+    }
 
     function apply(options) {
         $.ajax({

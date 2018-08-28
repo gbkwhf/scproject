@@ -72,7 +72,7 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-    $(".lastMoney").text(($_GET["balance"] - $_GET["balance"] * 0.05).toFixed(2))
+    $(".lastMoney").text(($_GET["balance"] - $_GET["balance"] * 0.08).toFixed(2))
     $("button").click(function () {
         let val = $("input").val()
         if (val == '') {
