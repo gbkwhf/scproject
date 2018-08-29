@@ -450,22 +450,28 @@
         $(".confirm").click(function () {
             $(".popBox").hide()
             $.ajax({
-                type: "post",
-                dataType: "json",
-                url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
+                type: 'POST',
+                url: commonsUrl + '/api/gxsc/user/cancel/order' + versioninfos,
                 data: {
-                    sub_order_id: options,
-                    ss: getCookie('openid')
+                    ss: getCookie('openid'),
+                    base_order_id: id
                 },
-                success: (res) => {
+                success:res=>{
                     console.log(res)
-                    if (res.code == 1) {
-                        layer.msg("确认成功")
-                        $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-                        id = 3
-                        evaluate(page)
-                    } else {
-                        layer.msg(res.msg)
+                    try {
+                        if (res.code == 1){
+                            layer.msg("取消成功")
+                            // $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+                            id = 1
+                            $('.shopBoxCon').remove()
+                            $('.shopNumSum').remove()
+                            $('.wuliuConter').remove()
+                            packaging(URL,page)
+                        }else {
+                            layer.msg(res.msg)
+                        }
+                    }catch (e) {
+                        console.log(e)
                     }
                 }
             })
@@ -474,6 +480,7 @@
         $(".cancels").click(function () {
             $(".popBox").hide()
         })
+
     }
 
     function apply(options) {
