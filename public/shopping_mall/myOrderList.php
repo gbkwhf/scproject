@@ -62,7 +62,7 @@
     <div class="popBox" style="display: none !important">
         <div class="pops">
             <p style="text-align: center;margin-top: 14px;margin-bottom: 14px;font-size: 16px;">特别提醒</p>
-            <div style="width: 70%;margin: auto;text-align: center;color: #999999;padding: 0 0 15px 0;">点击确认收货后将不能退换货操作请您三思哦~</div>
+            <div class="content" style="width: 70%;margin: auto;text-align: center;color: #999999;padding: 0 0 15px 0;">点击确认收货后将不能退换货操作请您三思哦~</div>
             <div class="confirm" id="confirmId">确定</div>
             <div class="cancels" id="cancelsId">取消</div>
         </div>
@@ -412,7 +412,7 @@
 
     function affirm(options) {
         $(".popBox").show()
-
+        $('.content').text('点击确认收货后将不能退换货操作请您三思哦~')
         $(".confirm").click(function () {
             $(".popBox").hide()
             $.ajax({
@@ -444,26 +444,36 @@
     }
 
     function cancellation(id) {
-        $.ajax({
-                    type: 'POST',
-                    url: commonsUrl + '/api/gxsc/user/cancel/order' + versioninfos,
-                    data: {
-                        ss: getCookie('openid'),
-                        base_order_id: id
-                    },
-                    success:res=>{
-                        console.log(res)
-                        try {
-                            if (res.code == 1){
-                                layer.msg("取消成功")
-                            }else {
-                                layer.msg(res.msg)
-                            }
-                        }catch (e) {
-                            console.log(e)
-                        }
+        page=1
+        $(".popBox").show()
+        $('.content').text('确定取消订单吗？')
+        $(".confirm").click(function () {
+            $(".popBox").hide()
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: commonsUrl + 'api/gxsc/v2/ack/receive/goods' + versioninfos,
+                data: {
+                    sub_order_id: options,
+                    ss: getCookie('openid')
+                },
+                success: (res) => {
+                    console.log(res)
+                    if (res.code == 1) {
+                        layer.msg("确认成功")
+                        $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
+                        id = 3
+                        evaluate(page)
+                    } else {
+                        layer.msg(res.msg)
                     }
-                })
+                }
+            })
+        })
+
+        $(".cancels").click(function () {
+            $(".popBox").hide()
+        })
     }
 
     function apply(options) {
