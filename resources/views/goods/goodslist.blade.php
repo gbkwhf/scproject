@@ -61,6 +61,7 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tbody><tr>
+                            <th >ID</th>
                             <th width="10%">名称</th>
                             <th>排序</th>                            
                             <th>销售价</th>
@@ -68,11 +69,13 @@
                             <th>销量</th>
                             <th>库存</th>
                             <th>状态</th>
-                            <th>供应商</th>                              
+                            <th>供应商</th>
+                            <th>发布时间</th>
                             <th>操作</th>
                         </tr>
                         @foreach ($data as $goods)
                             <tr>
+                                <td>{{ $goods['id'] }}</td>
                                 <td>{{ str_limit($goods['name'],10)  }}</td>
                                 <td>{{ $goods['sort'] }}</td>                                
                                 <td>{{ $goods['price'] }}</td>
@@ -81,6 +84,7 @@
                                 <td>{{ $goods['num'] }}</td>
 								<td>{{ $goods['state'] }}</td>
 								<td>{{ $goods['supplier_id'] }}</td>
+                                <td>{{ $goods['created_at'] }}</td>
                                 <td>
                                     <a href="{{ url('goods/goodsedit',['id'=>$goods['id']]) }}"><button class="btn bg-orange margin" type="button">编辑</button></a>
                                     <a href="javascript:if(confirm('确实要删除吗?'))location='{{ url('goods/goodsdel',['id'=>$goods['id']]) }}'"><button class="btn bg-maroon margin" type="button">删除</button></a>

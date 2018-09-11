@@ -36,7 +36,13 @@
                         <div class="col-sm-10">
                             <input type="text"  name="sort"  placeholder="Enter ..." class="form-control" value="{{ $data->sort}}">
                         </div>
-                    </div>                    
+                    </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >商品ID</label>
+                <div class="col-sm-10">
+                    <input type="text"  name="url"  placeholder="Enter ..." class="form-control" value="{{ $data->url}}">
+                </div>
+            </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="inputEmail3">Banner图</label>

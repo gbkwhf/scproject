@@ -35,7 +35,12 @@
                             <input type="text"  name="sort"  placeholder="Enter ..." class="form-control" value="255">
                         </div>
                     </div>
-
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >商品ID</label>
+                <div class="col-sm-10">
+                    <input type="text"  name="url"  placeholder="Enter ..." class="form-control" >
+                </div>
+            </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="inputEmail3">banner图</label>

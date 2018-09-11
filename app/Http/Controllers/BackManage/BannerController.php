@@ -54,7 +54,8 @@ class BannerController   extends Controller{
 
                 $res  = \DB::table('ys_banner_manage')->insert([
                     'img_url'=>$file_name,
-                    'sort'=>$request->sort
+                    'sort'=>$request->sort,
+                    'url'=>$request->url
                 ]);
 
 
@@ -76,7 +77,7 @@ class BannerController   extends Controller{
     public function bannerEdit($id)
     {
 
-        $banner_info = \DB::table('ys_banner_manage')->select('id','img_url','sort')->where('id',$id)->first();
+        $banner_info = \DB::table('ys_banner_manage')->select('id','img_url','sort','url')->where('id',$id)->first();
 
         return view('bannerEdit',['data'=>$banner_info]);
 
@@ -95,7 +96,8 @@ class BannerController   extends Controller{
 
             $res  = \DB::table('ys_banner_manage')->where('id',$request->edit_id)->update([
                 'img_url'=>$file_name,
-                'sort'=>$request->sort
+                'sort'=>$request->sort,
+                'url'=>$request->url
             ]);
 
 
@@ -103,7 +105,8 @@ class BannerController   extends Controller{
 
             $res  = \DB::table('ys_banner_manage')->where('id',$request->edit_id)->update([
 
-                        'sort'=>$request->sort
+                        'sort'=>$request->sort,
+                        'url'=>$request->url
                     ]);
 
         }

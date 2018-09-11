@@ -19,7 +19,7 @@ class GoodsController extends Controller
     	$search=[];
         $data = GoodsModel::orderBy('sort','asc')->orderBy('created_at','desc')
         		->join('ys_supplier','ys_goods.supplier_id','=','ys_supplier.id')
-        		->selectRaw('ys_goods.id,ys_goods.name,sort,sales,ys_goods.state,ys_supplier.name as supplier_id');
+        		->selectRaw('ys_goods.created_at,ys_goods.id,ys_goods.name,sort,sales,ys_goods.state,ys_supplier.name as supplier_id');
                 
         if($request->name !=''){
             $data->where('ys_goods.name','like','%'.$request->name.'%');

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Lang;
 class AuthController extends Controller
 {
 	protected $username = 'name';
+	protected $redirectPath = '/admin';
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
