@@ -191,7 +191,7 @@ class GetShopsInfoController extends Controller{
     public function getBannerList(Request $request)
     {
 
-        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->limit(6)->get();
+        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort','url')->orderBy('sort','asc')->limit(6)->get();
 
         if(!empty($banner_list)){
 
