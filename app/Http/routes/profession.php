@@ -159,6 +159,8 @@ Route::post('api/gxsc/joinsupplier','HandleProfession\JoinManageController@joinS
 
     //获取banner轮播图
    Route::post('api/gxsc/get/banner/list','HandleProfession\GetShopsInfoController@getBannerList');
+//banner商品列表
+Route::post('api/gxsc/bannergoods','SecondExploit\GoodsController@getBannerGoods');
 
 
 /**

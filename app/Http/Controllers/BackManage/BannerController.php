@@ -47,7 +47,9 @@ class BannerController   extends Controller{
     //保存
     public function bannerSave(Request $request){
 
-            if ($request->hasFile('image')){//图片上传
+        $url=trim(str_replace('，',',',$request->url),',');
+
+        if ($request->hasFile('image')){//图片上传
 
                 $up_res=uploadPic($request->file('image')[0]);
                 $file_name=$up_res;
@@ -55,7 +57,7 @@ class BannerController   extends Controller{
                 $res  = \DB::table('ys_banner_manage')->insert([
                     'img_url'=>$file_name,
                     'sort'=>$request->sort,
-                    'url'=>$request->url
+                    'url'=>$url
                 ]);
 
 
@@ -87,6 +89,8 @@ class BannerController   extends Controller{
     //保存编辑
     public function bannerEditSave(Request $request){
 
+        $url=trim(str_replace('，',',',$request->url),',');
+
 
 
         if ($request->hasFile('image')){//图片上传
@@ -97,7 +101,7 @@ class BannerController   extends Controller{
             $res  = \DB::table('ys_banner_manage')->where('id',$request->edit_id)->update([
                 'img_url'=>$file_name,
                 'sort'=>$request->sort,
-                'url'=>$request->url
+                'url'=>$url
             ]);
 
 
@@ -106,15 +110,16 @@ class BannerController   extends Controller{
             $res  = \DB::table('ys_banner_manage')->where('id',$request->edit_id)->update([
 
                         'sort'=>$request->sort,
-                        'url'=>$request->url
+                        'url'=>$url
                     ]);
 
         }
 
-        if($res){
-            return redirect('banner/list');
-        }else{
+        if($res===false){
             return back() -> with('errors','数据填充失败');
+
+        }else{
+            return redirect('banner/list');
         }
 
 
