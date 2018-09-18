@@ -28,9 +28,9 @@ class BannerController   extends Controller{
     public function bannerList(Request $request)
     {
 
-        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->paginate(6);
+        $banner_list = \DB::table('ys_banner_manage')->select('id','img_url','sort','url')->orderBy('sort','asc')->paginate(6);
 
-        $num  = \DB::table('ys_banner_manage')->select('id','img_url','sort')->orderBy('sort','asc')->get();
+        $num  = \DB::table('ys_banner_manage')->select('id','img_url','sort','url')->orderBy('sort','asc')->get();
 
         return view('bannerlist',['data'=>$banner_list,'num'=>$num]);
 
