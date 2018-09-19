@@ -19,9 +19,8 @@ $(function() {
 						numberShop += parseInt(value.number)
 					})
 				})
-				console.log(numberShop + 'iiiiiii')
+				console.log(numberShop + 'iiiiiii');
 				$('.shopCar span').html(numberShop);
-
 			} else {
 				layer.msg(data.msg);
 			}
@@ -53,9 +52,9 @@ $(function() {
 					$('.shopContent').append(html); //动态显示分类名称
 					$(".secClick").click(function() {
 						var goods_first_id = $(this).attr("goods_first_id");
-						var first_name=$(this).text();
-						location.href = "member_mall_list.php?goods_first_id=" + goods_first_id+"&goods_first_name="+first_name;
-						
+						var first_name = $(this).text();
+						location.href = "member_mall_list.php?goods_first_id=" + goods_first_id + "&goods_first_name=" + first_name;
+
 					})
 				} else {
 					layer.msg(data.msg);
@@ -91,14 +90,14 @@ $(function() {
 					var html = '';
 					$.each(con, function(k, v) {
 						var goods_id = con[k].goods_id; //商品id
-						var ext_id = con[k].ext_id;//扩展表id
+						var ext_id = con[k].ext_id; //扩展表id
 						var goods_name = con[k].goods_name; //商品名称
 						var images = con[k].image; //商品图片
 						var price = con[k].price; //商品价格
-						var market_price = con[k].market_price;//市场价
-						var spec_name = con[k].spec_name;//规格名称
+						var market_price = con[k].market_price; //市场价
+						var spec_name = con[k].spec_name; //规格名称
 						console.log(goods_id);
-						html += '<div class="shopBox" goods_id=' + goods_id + ' ext_id='+ext_id+' onclick="goDetail(' + ext_id + ')">' +
+						html += '<div class="shopBox" goods_id=' + goods_id + ' ext_id=' + ext_id + ' onclick="goDetail(' + ext_id + ')">' +
 							'<div class="shopImg"><img src=' + images + ' /></div>' +
 							'<div class="shopName">' + goods_name + '</div>' +
 							'<div class="shopMessage">' +
@@ -112,15 +111,15 @@ $(function() {
 					});
 					$('.shop_Box').append(html); //动态显示商品列表
 
-				}else{
+				} else {
 					$('.newBox').hide();
 				}
-//				if(con.length > 0) {
-//					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
-//				} else {
-//					layer.msg("已经到底了");
-//					mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
-//				}
+				//				if(con.length > 0) {
+				//					mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+				//				} else {
+				//					layer.msg("已经到底了");
+				//					mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+				//				}
 
 			} else {
 				layer.msg(data.msg);
@@ -146,7 +145,7 @@ $(function() {
 	//
 	//		}
 	//	});
-	//banner图轮播
+	//----------------banner图轮播-------------
 	$.ajax({
 		type: "post",
 		dataType: 'json',
@@ -158,37 +157,64 @@ $(function() {
 			console.log(data)
 			if(data.code == 1) { //请求成功
 				var con = data.result.banner; //
+				var len = con.length;
+				console.log(len + "我是轮播图的数量");
 				var sort = con.sort; //排序
 				//---------------循环图片（轮播图）-----
 				$.each(con, function(k, v) {
 					var src = con[k].img_url; //图片地址
 					var imgId = con[k].id; //图片id
 					var sort = con[k].sort; //排序
-					var t = "<div class='swiper-slide'> <img src=" + src + " /></div>";
+					var imgurl = con[k].url; //商品id
+					console.log(imgurl);
+					var t = "<div class='swiper-slide'><a href='javascript:void(0)' imgId=" + imgId + " onclick='goDetails(" + imgId + "," + imgurl + ")'  imgurl=" + imgurl + " > <img src=" + src + "  imgurl=" + imgurl + "  /></a></div>";
 					$('.swiper-wrapper').append(t)
 
 				});
-			}
-			//swiper插件实现轮播图
-			var mySwiper = new Swiper('.swiper-container', {
-				autoplay: 5000, //可选选项，自动滑动
-				loop: true,
-				pagination: '.swiper-pagination',
-				paginationType: 'custom', //这里分页器类型必须设置为custom,即采用用户自定义配置
-				paginationCustomRender: function(swiper, current, total) {
-					var customPaginationHtml = "";
-					for(var i = 0; i < total; i++) {
-						//判断哪个分页器此刻应该被激活  
-						if(i == (current - 1)) {
-							customPaginationHtml += '<span class="swiper-pagination-customs swiper-pagination-customs-active"></span>';
-						} else {
-							customPaginationHtml += '<span class="swiper-pagination-customs"></span>';
+			};
+			if(len <= 1) {
+				console.log("不能滑动");
+				//swiper插件实现轮播图
+				var mySwiper = new Swiper('.swiper-container', {
+					//autoplay: false, //可选选项，自动滑动
+					loop: false,
+					pagination: '.swiper-pagination',
+					paginationType: 'custom', //这里分页器类型必须设置为custom,即采用用户自定义配置
+					paginationCustomRender: function(swiper, current, total) {
+						var customPaginationHtml = "";
+						for(var i = 0; i < total; i++) {
+							//判断哪个分页器此刻应该被激活  
+							if(i == (current - 1)) {
+								customPaginationHtml += '<span class="swiper-pagination-customs swiper-pagination-customs-active"></span>';
+							} else {
+								customPaginationHtml += '<span class="swiper-pagination-customs"></span>';
+							}
 						}
+						return customPaginationHtml;
 					}
-					return customPaginationHtml;
-				}
-			});
-
+				});
+			} else {
+				console.log("可以滑动");
+				//swiper插件实现轮播图
+				var mySwiper = new Swiper('.swiper-container', {
+					autoplay: 5000, //可选选项，自动滑动
+					loop: true,
+					pagination: '.swiper-pagination',
+					paginationType: 'custom', //这里分页器类型必须设置为custom,即采用用户自定义配置
+					paginationCustomRender: function(swiper, current, total) {
+						var customPaginationHtml = "";
+						for(var i = 0; i < total; i++) {
+							//判断哪个分页器此刻应该被激活  
+							if(i == (current - 1)) {
+								customPaginationHtml += '<span class="swiper-pagination-customs swiper-pagination-customs-active"></span>';
+							} else {
+								customPaginationHtml += '<span class="swiper-pagination-customs"></span>';
+							}
+						}
+						return customPaginationHtml;
+					}
+				});
+			}
 		}
 	});
 	//-----------搜索----------
@@ -200,7 +226,7 @@ $(function() {
 					layer.msg("商品名称不能为空");
 				} else {
 					location.href = "searchShopList.php?shopName=" + shopName;
-					
+
 				}
 
 			})
@@ -219,10 +245,20 @@ $(function() {
 	});
 });
 
-function goDetail(ext_id) {
-		//		console.log(goods_id);
-		location.href = "newShop_details.php?ext_id=" + ext_id;
+function goDetails(imgId, imgurl) {
+	console.log(imgurl + "ooooo");
+	console.log(imgId);
+	if(imgurl == '' || imgurl == undefined || imgurl == null) {
+		console.log("imgId是空的，不跳转到列表页");
+	} else {
+		location.href = "promotionPage.php?imgId=" + imgId //
 	}
+}
+
+function goDetail(ext_id) {
+	//		console.log(goods_id);
+	location.href = "newShop_details.php?ext_id=" + ext_id;
+}
 
 function waitting() {
 	layer.msg('暂未开通，敬请期待哦！')
