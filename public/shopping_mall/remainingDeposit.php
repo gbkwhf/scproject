@@ -60,7 +60,7 @@
     <p>提现金额</p>
     <div>
         <span style="font-size: 30px"> ￥</span>
-        <input maxlength="5" type="text" name="money">
+        <input type="text" name="money">
     </div>
     <span>提现最大额度20,000元,可提现金额为 <span style="color: #c94d10;" class="lastMoney"></span></span>
 </div>
