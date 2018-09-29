@@ -158,7 +158,6 @@
 						//mui('#refreshContainer').pullRefresh().refresh(true);
 					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 			}
-
 		}
 	});
 </script>

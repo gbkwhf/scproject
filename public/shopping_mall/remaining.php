@@ -50,7 +50,7 @@
         <p style="font-size: 15px;">账户余额 (积分)</p>
         <p style="font-size: 28px;margin-top: 20px;" class="balance"></p>
     </div>
-    <button><a class="Deposit" href="" style="color: #fff;">提现</a></button>
+    <button class="Deposit" style="color: #fff;">提现</button>
     <div style="margin: 20px auto;" class="rule">
         <p>积分提现规则 : </p>
         <p>1、积分可在平台消费获得相应的积分;</p>
@@ -66,7 +66,15 @@
 <script src="js/config.js"></script>
 <script>
     $(function () {
+        console.log($_GET['balance'])
         $(".balance").text($_GET['balance'])
-        $(".Deposit").attr("href", "remainingDeposit.php?balance=" + $_GET['balance'])
+        $(".Deposit").click(function () {
+            if ($_GET['balance'] <= 0) {
+                layer.msg("您的账户余额为0，无法提现！")
+            }else{
+                location.href = "remainingDeposit.php?balance=" + $_GET['balance']
+            }
+        })
+
     })
 </script>
