@@ -200,6 +200,7 @@ $(function() {
 					autoplay: 5000, //可选选项，自动滑动
 					loop: true,
 					pagination: '.swiper-pagination',
+					autoplayDisableOnInteraction : false,
 					paginationType: 'custom', //这里分页器类型必须设置为custom,即采用用户自定义配置
 					paginationCustomRender: function(swiper, current, total) {
 						var customPaginationHtml = "";
