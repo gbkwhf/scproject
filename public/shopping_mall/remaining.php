@@ -52,7 +52,7 @@
     </div>
     <button class="Deposit" style="color: #fff;">提现</button>
     <div style="margin: 20px auto;" class="rule">
-        <p>积分提现规则 : </p>
+        <p>积分提现规则 :  </p>
         <p>1、积分可在平台消费获得相应的积分;</p>
         <p>2、积分仅可在双创平台使用，可用于兑换积分兑换区的商品;</p>
         <p>3、平台消费所获得积分可用于提现，但需扣除8%的手续费;</p>
@@ -65,6 +65,7 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
+    //
     $(function () {
         console.log($_GET['balance'])
         $(".balance").text($_GET['balance'])
