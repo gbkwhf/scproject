@@ -23,23 +23,38 @@
 	</style>
 
 	<body>
+    <div class="clarity"></div>
 		<!----------商品分类-->
-		<div class="moreBox">
-			<div class="moreWid">
-				<!--<div class="classify addStyleMi">食品干货</div>
-				<div class="classify">精选海鲜</div>
-				<div class="classify">茶饮酒水</div>
-				<div class="classify">休闲食品</div>
-				<div class="classify">营养滋补</div>
-				<div class="classify">精选海鲜</div>
-				<div class="classify">茶饮酒水</div>
-				<div class="classify">食品干货</div>-->
-			</div>
-		</div>
+<!--		<div class="moreBox">-->
+<!--			<div class="moreWid">-->
+<!--				<!--<div class="classify addStyleMi">食品干货</div>-->
+<!--				<div class="classify">精选海鲜</div>-->
+<!--				<div class="classify">茶饮酒水</div>-->
+<!--				<div class="classify">休闲食品</div>-->
+<!--				<div class="classify">营养滋补</div>-->
+<!--				<div class="classify">精选海鲜</div>-->
+<!--				<div class="classify">茶饮酒水</div>-->
+<!--				<div class="classify">食品干货</div>-->
+
+<!--			</div>
+<!--		</div>
+  <!--      <img src="images/bot.png" id="show" alt="">-->
+        <div class="wrapper wrapper02" id="wrapper02">
+            <div class="scroller">
+                <ul class="clearfix">
+                    <script type="text/html" id="navList">
+                        <li>
+                            <a href="javascript:void(0)" goods_second_id="{{goods_second_id}}">{{goods_second_name}}</a>
+                        </li>
+                    </script>
+                </ul>
+            </div>
+            <img src="images/bot.png" id="show" alt="">
+        </div>
 		<!-------商品列表------>
 		<div id="refreshContainer" class="mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div style="margin-top: 52px;" class="shopBox">
+				<div style="margin-top: 45px;" class="shopBox">
 					<!--<div class="shopListBox">
 				<div class="shopImg"><img src="images/shop1.png" /></div>
 				<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
@@ -59,6 +74,11 @@
 				</div>
 			</div>
 		</div>
+        <div class="float">
+            <ul>
+                <img src="images/top.png" id="hide" />
+            </ul>
+        </div>
 		<!--购物车-->
 		<!--<div class="shopping-cart" onclick="location.href='newShop_cart.php'">
 			<img src="images/shopping-cart.png" />
@@ -80,6 +100,9 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script src="js/mui.min.js"></script>
+<script type="text/javascript" src="js/navbar/flexible.js"></script>
+<script type="text/javascript" src="js/navbar/iscroll.js"></script>
+<script type="text/javascript" src="js/navbar/navbarscroll.js"></script>
 <script type="text/javascript">
 	$(function() {
 
@@ -88,6 +111,17 @@
 		var first_id = $_GET['goods_first_id'];
 		var goods_first_name = $_GET['goods_first_name'];
 		var titleName = decodeURIComponent(goods_first_name);
+        $(".clarity").css("height", $(this).height() + "px")
+        $("#show").click(function () {
+            $(".float").show()
+            $(".clarity").show()
+        })
+
+        $("#hide").click(function () {
+            $(".float").hide()
+            $(".clarity").hide()
+        })
+
 		$("title").html(titleName);
 		if(titleName == '积分兑换'){
 			alertornot()
@@ -110,36 +144,70 @@
 				console.log(data)
 				if(data.code == 1) { //请求成功
 					var con = data.result;
+                    if(con.length <= 4){
+                        $("#show").hide()
+                    }
 					if(con.length != 0) {
-						console.log(con);
-						var html = '';
-						$.each(con, function(k, v) {
-							var goods_second_id = con[k].goods_second_id; //二级分类id
-							console.log(goods_second_id);
-							var second_name = con[k].goods_second_name; //分类名称
-							html += "<div class='classify' goods_second_id=" + goods_second_id + ">" + second_name + "</div>"
-						});
-						$('.moreWid').append(html); //动态显示分类名称
-						$(".classify").eq(0).addClass("addStyleMi").siblings().removeClass("addStyleMi");
-						shopList(1, $(".addStyleMi").attr("goods_second_id"));
-						$('.shopBox').html('');
-						$('.classify').click(function() {
+                        // 修改（开始）------------------------------------
+                        for (let val of con) {
+                            let temp = $("#navList").html()
+                            temp = temp.replace("{{goods_second_name}}", val.goods_second_name).replace("{{goods_second_id}}", val.goods_second_id)
+                            $(".clearfix").append(temp)
+                            $(".float ul").append("<li id=" + val.goods_second_id + '>' + val.goods_second_name + "</li>")
+                        }
+                        $('.wrapper').navbarscroll();
+                        // （结束）------------------------------------
+
+
+
+						// var html = '';
+						// $.each(con, function(k, v) {
+						// 	var goods_second_id = con[k].goods_second_id; //二级分类id
+						// 	console.log(con[k]);
+						// 	var second_name = con[k].goods_second_name; //分类名称
+						// 	html += "<div class='classify' goods_second_id=" + goods_second_id + ">" + second_name + "</div>"
+                         //    $(".float ul").append("<li id=" + con[k].goods_second_id + '>' +  con[k].goods_second_name + "</li>")
+						// });
+						// $('.moreWid').append(html); //动态显示分类名称
+						// $(".classify").eq(0).addClass("addStyleMi").siblings().removeClass("addStyleMi");
+
+                        // 修改（开始）------------------------------------
+						shopList(1, $(".cur a").attr("goods_second_id"));
+						// $('.shopBox').html('');
+						$('.clearfix li').click(function() {
 							setTimeout(function() {
 								mui('#refreshContainer').pullRefresh().refresh(true);
 							}, 300);
-
 							$('.popBox').hide();
-							$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
+							$(this).addClass('cur').siblings().removeClass('cur');
 							$('.shopBox').html('');
-							shopList(1, $(".addStyleMi").attr("goods_second_id"));
+							shopList(1, $(".cur a").attr("goods_second_id"));
 							pageNum = 1;
 						})
+                        // (结束)------------------------------------
 					} else {
 						layer.msg(data.msg);
 					}
 
 				}
 
+                // 修改（开始）------------------------------------
+                $(".float li").click(function () {
+                    let index=$(this).index()
+                    let nums= -parseInt(index)/0.02
+                    console.log(nums)
+                    $(".scroller").attr("style","width: "+ con.length*98 +"px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate("+nums+"px, 0px) translateZ(0px);")
+                    $('.shopBox').html('');
+                    shopList(1, $(this).attr("id"));
+                    $(".float").hide()
+                    $(".clarity").hide()
+                    $(".clearfix li").each(function(){
+                        if(index==$(this).index()){
+                            $(this).addClass("cur").siblings().removeClass("cur")
+                        }
+                    })
+                })
+                // （结束）------------------------------------
 			}
 		});
 	});
@@ -152,7 +220,6 @@
 		layer.ready(function() {
 			layer.load(2);
 		})
-		console.log(goods_second_id);
 		var winH = $(window).height();
 		var html = '';
 		var con = "";
@@ -289,7 +356,7 @@
 			up: {
 				callback: function() {
 						pageNum++;
-						shopList(pageNum, $(".addStyleMi").attr("goods_second_id"));
+						shopList(pageNum, $(".cur a").attr("goods_second_id"));
 						mui('#refreshContainer').pullRefresh().endPullupToRefresh();
 						//						mui('#refreshContainer').pullRefresh().refresh(true);
 					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；

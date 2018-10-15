@@ -3,19 +3,81 @@ body {
 	background: #FFFFFF;
 }
 
-img {
-	width: 100%;
-	display: block;
-	border: none;
-	vertical-align: bottom;
-	border: none;
-}
+/*img {*/
+	/*width: 100%;*/
+	/*display: block;*/
+	/*border: none;*/
+	/*vertical-align: bottom;*/
+	/*border: none;*/
+/*}*/
 
 input[type="button"] {
 	-webkit-appearance: none;
 }
 
 
+
+.wrapper02 {position:relative;height: 1.2rem;width: 100%;overflow: hidden;margin:0 auto;z-index: 6;border-bottom: 2px solid #e5e5e5;}
+/* .wrapper02 .scroller {position:absolute} */
+.wrapper02 .scroller li {height: .8rem;color:#333;float: left;line-height: .8rem;font-size: .4rem;text-align: center;margin-top: .2rem}
+.wrapper02 .scroller li a{color:#333;display:block;margin:0 .3rem}
+.wrapper02 .scroller li.cur{height: 37px;font-weight: bold;color: #eb3737;font-size: .4rem;}
+.wrapper02 .scroller li.cur a{color:#eb3737;border-bottom: solid 4px #eb3737;}
+.wrapper02 img{
+	width: 35px;
+	height: 30px;
+	position: absolute;
+	right: 0;
+	top: 8px
+}
+
+
+
+#show{
+	width: 35px;
+	height: 30px;
+	position: fixed;
+	right: 0;
+	top: 8px;
+	z-index: 999;
+}
+
+.clarity{
+	position: fixed;
+	top: 0;
+	display: none;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 99;
+}
+
+.float {
+	width: 100%;
+	position: fixed;
+	right: 0;
+	top: 0;
+	background: white;
+	padding-top: 15px;
+	display: none;
+	z-index: 999;
+}
+.float ul {
+	position: relative;
+}
+.float img {
+	position: absolute;
+	right: 0px;
+	width: 33px;
+	height: 25px;
+}
+.float li {
+	width: 100%;
+	height: 37px;
+	line-height: 37px;
+	padding-left: 14px;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 14px;
+}
 /*----------内容开始------------*/
 
 .moreBox {
