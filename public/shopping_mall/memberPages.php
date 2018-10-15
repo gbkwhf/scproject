@@ -110,12 +110,12 @@
 				<div class="boutiqueGallery" onclick="location.href='Super.php?store_first_id=2'"><img src="images/bount.png"/></div>
 			</div>
 		</div>
+		<div class="noDiv"></div>
 		<!-----------新品上线------->
 		<div class="newBox">
 			<div class="newShopBox">新品上线</div>
 			<!--<div class="moreShop"><img src="images/back1.png" /></div>-->
 		</div>
-
 		<!----------商品信息----->
 		<div id="refreshContainer" class="mui-scroll-wrapper">
 			<div class="mui-scroll">

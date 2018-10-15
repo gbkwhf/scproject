@@ -107,7 +107,7 @@ $(function() {
 							'</div>' +
 							'<div class="toBuy">立即抢购</div>' +
 							'</div>' +
-							'</div>'
+							'</div><div class="noDiv"></div>'
 					});
 					$('.shop_Box').append(html); //动态显示商品列表
 
