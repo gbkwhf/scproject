@@ -17,7 +17,7 @@ input[type="button"] {
 
 
 
-.wrapper02 {position:relative;height: 1.03rem;width: 100%;overflow: hidden;margin:0 auto;z-index: 6;border-bottom: 2px solid #e5e5e5;}
+.wrapper02 {position:relative;height: 1.05rem;width: 100%;overflow: hidden;margin:0 auto;z-index: 6;border-bottom: 2px solid #e5e5e5;}
 /* .wrapper02 .scroller {position:absolute} */
 .wrapper02 .scroller li {height: .8rem;color:#333;float: left;line-height: .8rem;font-size: .4rem;text-align: center;margin-top: .2rem}
 .wrapper02 .scroller li a{color:#333;display:block;margin:0 .3rem}
