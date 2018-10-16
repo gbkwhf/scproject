@@ -22,7 +22,7 @@ input[type="button"] {
 .wrapper02 .scroller li {height: .8rem;color:#333;float: left;line-height: .8rem;font-size: .4rem;text-align: center;margin-top: .2rem}
 .wrapper02 .scroller li a{color:#333;display:block;margin:0 .3rem}
 .wrapper02 .scroller li.cur{height: 37px;font-weight: bold;color: #eb3737;font-size: .4rem;}
-.wrapper02 .scroller li.cur a{color:#eb3737;border-bottom: solid 4px #eb3737;}
+.wrapper02 .scroller li.cur a{color:#eb3737;border-bottom: solid 2px #eb3737;}
 .wrapper02 img{
 	width: 35px;
 	height: 30px;
