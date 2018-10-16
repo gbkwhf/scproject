@@ -14,20 +14,20 @@
 
 <body>
 <div id="body">
-
-    <div class="wrapper wrapper03" id="wrapper03">
-        <div class="scroller">
-            <ul class="clearfix">
-                <script type="text/html" id="navList">
-                    <li>
-                        <a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>
-                    </li>
-                </script>
-            </ul>
+    <div style="position: fixed;top: 0;left: 0;background: #fff;width: 100%;z-index: 99;">
+        <div class="wrapper wrapper03" id="wrapper03">
+            <div class="scroller">
+                <ul class="clearfix">
+                    <script type="text/html" id="navList">
+                        <li>
+                            <a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>
+                        </li>
+                    </script>
+                </ul>
+            </div>
         </div>
     </div>
-
-    <div class="commodity">
+    <div class="commodity" style="margin-top: 40px;">
         <ul>
             <script type="text/html" id="commentList">
 
