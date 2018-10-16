@@ -52,7 +52,7 @@
 		<!-------商品列表------>
 		<div id="refreshContainer" class="mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div style="margin-top: 52px;" class="shopBox">
+				<div style="margin-top: 51px;" class="shopBox">
 					<!--<div class="shopListBox">
 				<div class="shopImg"><img src="images/shop1.png" /></div>
 				<div class="shopListNames">可玉可求 飘香翡翠手镯女款玉手镯 玉器玉石收手</div>
