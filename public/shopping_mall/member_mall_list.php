@@ -89,7 +89,7 @@
 <div class="popBox" style="display: none !important">
     <div class="pops">
         <p style="text-align: center;margin-top: 14px;margin-bottom: 14px;font-size: 16px;">温馨提示</p>
-        <div style="text-align: center;color: #999999;padding: 0 0 15px 0;">积分兑换区商品不参与返利哦<br/> 并且不接受退换货操作~<br/>积分兑换的商品需单独进行购买
+        <div style="text-align: center;color: #999999;padding: 0 0 15px 0;font-size: 14px;">积分兑换区商品不参与返利哦<br/> 并且不接受退换货操作~<br/>积分兑换的商品需单独进行购买
         </div>
         <div class="confirm" id="confirmId">确定</div>
         <div class="cancels" id="cancelsId">取消</div>
