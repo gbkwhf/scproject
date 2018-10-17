@@ -100,11 +100,11 @@
             success: (res) => {
                 console.log(res)
                 id = res.result[0].store_class_id
-                let data = res.result
-                if (data.length <= 4) {
+                let daTa = res.result
+                if (daTa.length <= 4) {
                     $("#show").hide()
                 }
-                for (let val of data) {
+                for (let val of daTa) {
                     let temp = $("#navList").html()
                     temp = temp.replace("{{goods_second_name}}", val.store_class_name).replace("{{goods_second_id}}", val.store_class_id)
                     $(".clearfix").append(temp)
@@ -138,8 +138,8 @@
                         $(".float li").click(function () {
                             let store_second_id = $(this).attr("id")
                             let index = $(this).index()
-                            let nums = -parseInt(index) / 0.02
-                            $(".scroller").attr("style", "width: " + data.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
+                            let nums = -parseInt(index) / 0.02;
+                            $(".scroller").attr("style", "width: " + daTa.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
                             // $(".tem li").remove()
                             $(".commodity ul li").remove()
                             // shop(store_second_id, page)
