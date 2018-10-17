@@ -14,8 +14,9 @@
 
 <body>
 <div id="body">
-    <div style="position: fixed;top: 0;left: 0;background: #fff;width: 100%;z-index: 99;">
-        <div class="wrapper wrapper03" id="wrapper03">
+    <div class="clarity"></div>
+    <div style="position: fixed;top: 0;left: 0;background: #fff;width: 100%;z-index: 99;border-bottom: 1px solid #ccc;">
+        <div class="wrapper wrapper02" id="wrapper02">
             <div class="scroller">
                 <ul class="clearfix">
                     <script type="text/html" id="navList">
@@ -25,7 +26,13 @@
                     </script>
                 </ul>
             </div>
+            <img src="images/bot.png" id="show" alt="">
         </div>
+    </div>
+    <div class="float">
+        <ul>
+            <img src="images/top.png" id="hide"/>
+        </ul>
     </div>
     <div class="commodity" style="margin-top: 40px;">
         <ul>
@@ -69,6 +76,18 @@
         let id = $_GET['store_id']
         let auto = true
         let viewHeight = $(this).height();//可见高度
+
+        $(".clarity").css("height", $(this).height() + "px")
+
+        $("#show").click(function () {
+            $(".float").show()
+            $(".clarity").show()
+        })
+
+        $("#hide").click(function () {
+            $(".float").hide()
+            $(".clarity").hide()
+        })
         // 获取导航列表
         $.ajax({
             type: "post",
@@ -82,10 +101,14 @@
                 console.log(res)
                 id = res.result[0].store_class_id
                 let data = res.result
+                if (data.length <= 4) {
+                    $("#show").hide()
+                }
                 for (let val of data) {
                     let temp = $("#navList").html()
                     temp = temp.replace("{{goods_second_name}}", val.store_class_name).replace("{{goods_second_id}}", val.store_class_id)
                     $(".clearfix").append(temp)
+                    $(".float ul").append("<li id=" + val.store_class_id + '>' + val.store_class_name + "</li>")
                 }
                 $('.wrapper').navbarscroll();
                 // 获取商品列表数据
@@ -111,6 +134,47 @@
                             temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
                             $(".commodity ul").append(temp)
                         }
+
+                        $(".float li").click(function () {
+                            let store_second_id = $(this).attr("id")
+                            let index = $(this).index()
+                            let nums = -parseInt(index) / 0.02
+                            $(".scroller").attr("style", "width: " + data.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
+                            // $(".tem li").remove()
+                            $(".commodity ul li").remove()
+                            // shop(store_second_id, page)
+                            $(".float").hide()
+                            $(".clarity").hide()
+                            $(".clearfix li").each(function () {
+                                if (index == $(this).index()) {
+                                    $(this).addClass("cur").siblings().removeClass("cur")
+                                }
+                            })
+                            $.ajax({
+                                type: "post",
+                                dataType: "json",
+                                url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
+                                data: {
+                                    store_class_id: store_second_id,
+                                    page: "1",
+                                    ss: getCookie('openid')
+                                },
+                                success: (res) => {
+                                    console.log(res)
+                                    let data = res.result
+                                    if (data.length == 0) {
+                                        $(".show").show()
+                                    } else {
+                                        $(".show").hide()
+                                    }
+                                    for (let val of data) {
+                                        let temp = $("#commentList").html()
+                                        temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                        $(".commodity ul").append(temp)
+                                    }
+                                }
+                            })
+                        })
 
                         $(".clearfix a").click(function (e) {
                             page = 1
