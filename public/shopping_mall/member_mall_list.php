@@ -44,10 +44,10 @@
 		</div>
 		<div class="moreBoxHide" style="display: none;">
 			<div class="moreWidHide">
-				<img src="images/top.png" class="hides" />
+				
 				<!--<div class="classify1">休闲食品</div>-->
 			</div>
-
+			<div class="topImg"><img src="images/top.png" class="hides" /></div>
 		</div>
 		<!-------商品列表------>
 		<div id="refreshContainer" class="mui-scroll-wrapper">
@@ -150,7 +150,14 @@
 							setTimeout(function() {
 								mui('#refreshContainer').pullRefresh().refresh(true);
 							}, 300);
-
+							var indexs=$(this).index();
+							console.log("我是分类的下标"+indexs);
+							var second_id=$(this).attr("goods_second_id");
+							$(".classify1").each(function() {
+								if(second_id == $(this).attr("goods_second_id")) {
+									$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
+								}
+							});
 							$('.popBox').hide();
 							$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
 							$('.shopBox').html('');
@@ -167,14 +174,15 @@
 					var dd = $(this).attr("goods_second_id");
 					$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
 					var xiaBiao = $(this).index();
-					console.log("我的下标"+xiaBiao);
-					if(xiaBiao <=4) {
+					console.log("我的下标" + xiaBiao);
+					if(xiaBiao <= 3) {
 						$('.navBix').scrollLeft(xiaBiao * 0);
+						console.log("不滑动");
 					} else {
 						$('.navBix').scrollLeft(xiaBiao * 50);
 						console.log("我滑动");
 					};
-					
+
 					setTimeout(function() {
 						mui('#refreshContainer').pullRefresh().refresh(true);
 					}, 300);

@@ -186,7 +186,13 @@ input[type="button"] {
     line-height: 37px;
     padding-left: 14px;
     border-bottom: 1px solid #e5e5e5;
-    font-size: 14px;
+    font-size: 16px;
+}
+.topImg{
+	height: 37px;
+	position: absolute;
+	top: 15px;
+	right: 0px;
 }
 .hides{
 	float: right;
