@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<div class="companyBanner"><img src="images/qiye.png" /></div>
+		<div class="companyBanner"><img src="images/shuangguan.jpg" /></div>
 		<div class="member" onclick="location.href='memberPages.php'">
 			<img src="images/gxMall.png" />
 		</div>
