@@ -57,9 +57,9 @@
 <script type="text/javascript">
     $(function () {
         alert('1')
-        let page = 1;
+        // let page = 1;
         alert('2')
-        let store_second_id = '';
+        // let store_second_id = '';
         alert('3')
         // if ($_GET["store_first_id"] == 1) {
         //     $("title").text("商超")
