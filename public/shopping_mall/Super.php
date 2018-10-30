@@ -66,8 +66,8 @@
         alert('123')
         alert(getCookie('openid'))
         alert(getCookie($_GET['store_first_id']))
-        // let page = 1;
-        // let store_second_id = '';
+        let page = 1;
+        let store_second_id = '';
         // if ($_GET["store_first_id"] == 1) {
         //     $("title").text("商超")
         // } else if ($_GET["store_first_id"] == 2) {
