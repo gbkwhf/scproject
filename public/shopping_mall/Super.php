@@ -87,8 +87,8 @@
             dataType: "json",
             url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
             data: {
-                ss: getCookie('openid'),
-                store_first_id: $_GET['store_first_id']
+                'ss': getCookie('openid'),
+                'store_first_id': $_GET['store_first_id']
             },
             success: (res) => {
                 alert('8')
