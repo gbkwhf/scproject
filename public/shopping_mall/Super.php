@@ -60,14 +60,14 @@
         var page = 1;
         alert('2')
         var store_second_id = '';
+        if ($_GET["store_first_id"] == 1) {
+            $("title").text("商超")
+        } else if ($_GET["store_first_id"] == 2) {
+            $("title").text("精品馆")
+        } else {
+            $("title").text("土特产")
+        }
         alert('3')
-        // if ($_GET["store_first_id"] == 1) {
-        //     $("title").text("商超")
-        // } else if ($_GET["store_first_id"] == 2) {
-        //     $("title").text("精品馆")
-        // } else {
-        //     $("title").text("土特产")
-        // }
         // $(".clarity").css("height", $(this).height() + "px")
         // $("#show").click(function () {
         //     $(".float").show()
