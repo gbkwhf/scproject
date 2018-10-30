@@ -91,6 +91,7 @@
 <!--<script src="js/super.js"></script>-->
 <script>
     $(function () {
+        alert('123')
         $.ajax({
             type: "post",
             dataType: "json",
