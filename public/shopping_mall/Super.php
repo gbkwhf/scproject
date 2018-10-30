@@ -145,9 +145,9 @@
         //             layer.msg(res.msg);
         //         }
         //
-        //     }
-        // })
-        //
+            }
+        })
+
         //
         // $(this).scroll(function () {
         //     var viewHeight = $(this).height();//可见高度
