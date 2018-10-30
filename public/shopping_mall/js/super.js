@@ -28,8 +28,9 @@ $(function () {
             'ss': getCookie('openid'),
             'store_first_id': store_first_id
         },
-        success: (res) => {
+        success: res => {
             console.log(res)
+            alert('456')
             try {
                 var data = res.result;
                 if (data.length <= 4) {
