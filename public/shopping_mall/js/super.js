@@ -18,7 +18,7 @@ $(function () {
         $(".clarity").hide()
     })
     var store_first_id = $_GET['store_first_id'];
-    alert(store_first_id)
+    // alert(store_first_id)
     // // 导航分类
     $.ajax({
         type: "post",
@@ -29,8 +29,8 @@ $(function () {
             'store_first_id': store_first_id
         },
         success: res => {
-            console.log(res)
-            alert('456')
+            // console.log(res)
+            // alert('456')
             try {
                 var data = res.result;
                 if (data.length <= 4) {
