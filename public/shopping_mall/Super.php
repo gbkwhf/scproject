@@ -56,8 +56,11 @@
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
     $(function () {
+        alert("1")
         let page = 1;
+        alert("2")
         let store_second_id = '';
+        alert("3")
         if ($_GET["store_first_id"] == 1) {
             $("title").text("商超")
         } else if ($_GET["store_first_id"] == 2) {
@@ -65,19 +68,19 @@
         } else {
             $("title").text("土特产")
         }
-
+        alert("4")
         $(".clarity").css("height", $(this).height() + "px")
-
+        alert("5")
         $("#show").click(function () {
             $(".float").show()
             $(".clarity").show()
         })
-
+        alert("6")
         $("#hide").click(function () {
             $(".float").hide()
             $(".clarity").hide()
         })
-
+        alert("7")
         // // 导航分类
         $.ajax({
             type: "POST",
