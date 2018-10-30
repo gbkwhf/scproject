@@ -99,8 +99,7 @@
                 'ss': getCookie('openid'),
                 'store_first_id': store_first_id
             },
-            success:res=>{
-                console.log(res)
+            success:function (res) {
                 alert(res)
             }
         })
