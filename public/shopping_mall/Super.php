@@ -56,19 +56,7 @@
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
-            data: {
-                ss: getCookie('openid'),
-                store_first_id: $_GET['store_first_id']
-            },
-            success: (res) => {
-                console.log(res)
-                alert(res)
-            }
-        })
+        alert('123')
     })
         // let page = 1;
         // let store_second_id = '';
