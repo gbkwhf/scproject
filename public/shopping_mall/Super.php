@@ -84,8 +84,7 @@
         $(".float").hide()
         $(".clarity").hide()
     })
-
-    alert("789")
+    alert("123")
     console.log($_GET['store_first_id'])
     // 导航分类
     $.ajax({
@@ -97,52 +96,54 @@
             store_first_id: $_GET['store_first_id']
         },
         success: (res) => {
-
-            alert("123")
             console.log(res)
-            let data = res.result;
-            if (data.length <= 4) {
-                $("#show").hide()
-            }
-            store_second_id = data[0].store_second_id
-            for (let val of data) {
-                let temp = $("#navList").html()
-                temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
-                $(".clearfix").append(temp)
-                $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
-            }
+            try {
+                let data = res.result;
+                if (data.length <= 4) {
+                    $("#show").hide()
+                }
+                store_second_id = data[0].store_second_id
+                for (let val of data) {
+                    let temp = $("#navList").html()
+                    temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+                    $(".clearfix").append(temp)
+                    $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
+                }
 
-            // setTimeout(() => {
-            $('.wrapper').navbarscroll();
-            shop(store_second_id, page)
-            $(".clearfix li").click(function (e) {
-                store_second_id = e.target.id
-                let index = $(this).index()
-                $(this).addClass("select").siblings().removeClass("select");
-                // $(".msg li").hide().eq(index).show()
-                page = 1
-                $(".tem li").remove()
-
+                $('.wrapper').navbarscroll();
                 shop(store_second_id, page)
-            })
+                $(".clearfix li").click(function (e) {
+                    store_second_id = e.target.id
+                    let index = $(this).index()
+                    $(this).addClass("select").siblings().removeClass("select");
+                    // $(".msg li").hide().eq(index).show()
+                    page = 1
+                    $(".tem li").remove()
 
-
-            $(".float li").click(function () {
-                let store_second_id = $(this).attr("id")
-                let index = $(this).index()
-                let nums = -parseInt(index) / 0.02
-                $(".scroller").attr("style", "width: " + data.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
-                $(".tem li").remove()
-                shop(store_second_id, page)
-                $(".float").hide()
-                $(".clarity").hide()
-                $(".clearfix li").each(function () {
-                    if (index == $(this).index()) {
-                        $(this).addClass("cur").siblings().removeClass("cur")
-                    }
+                    shop(store_second_id, page)
                 })
-            })
-            // }, 200);
+
+
+                $(".float li").click(function () {
+                    let store_second_id = $(this).attr("id")
+                    let index = $(this).index()
+                    let nums = -parseInt(index) / 0.02
+                    $(".scroller").attr("style", "width: " + data.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
+                    $(".tem li").remove()
+                    shop(store_second_id, page)
+                    $(".float").hide()
+                    $(".clarity").hide()
+                    $(".clearfix li").each(function () {
+                        if (index == $(this).index()) {
+                            $(this).addClass("cur").siblings().removeClass("cur")
+                        }
+                    })
+                })
+            } catch (e) {
+                console.log(e)
+                layer.msg(res.msg);
+            }
+
         }
     })
 
