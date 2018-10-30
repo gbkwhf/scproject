@@ -103,6 +103,12 @@
             },
             success:function (res) {
                 alert(res)
+                for (var val of data) {
+                    var temp = $("#navList").html()
+                    temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+                    $(".tab-head").append(temp)
+                    $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
+                }
             }
         })
     })
