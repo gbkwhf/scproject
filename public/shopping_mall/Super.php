@@ -88,4 +88,21 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
 <script src="js/jquery.min.js"></script>
-<script src="js/super.js"></script>
+<!--<script src="js/super.js"></script>-->
+<script>
+    $(function () {
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
+            data: {
+                'ss': getCookie('openid'),
+                'store_first_id': store_first_id
+            },
+            success:res=>{
+                console.log(res)
+                alert(res)
+            }
+        })
+    })
+</script>
