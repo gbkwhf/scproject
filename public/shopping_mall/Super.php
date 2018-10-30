@@ -14,45 +14,45 @@
 
 <body>
 123
-<div class="clarity"></div>
-<div id="body">
-    <div style="position: fixed;top: 0;left: 0;background: #fff;width: 100%;z-index: 99;">
-        <div class="wrapper wrapper02" id="wrapper02">
-            <div class="scroller">
-                <ul class="clearfix">
-                    <script type="text/html" id="navList">
-                        <li>
-                            <a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>
-                        </li>
-                    </script>
-                </ul>
-            </div>
-            <img src="images/bot.png" id="show" alt="">
-        </div>
-    </div>
-    <div class="msg">
-        <ul class="tem">
-            <script type="text/html" id="commentList">
-                <li onclick="location.href='reclassify.php?store_id={{store_id}}&name={{name}}'"
-                    style="border-top:6px solid #f3f2f2">
-                    <div>
-                        <img src="{{logo}}"/>
-                        <p>
-                            <span style="font-size:.4rem">{{store_name}}</span>
-                            <span>进入专场</span>
-                        </p>
-                    </div>
-                </li>
-            </script>
-        </ul>
-        <div class="float">
-            <ul>
-                <img src="images/top.png" id="hide"/>
-            </ul>
-        </div>
-    </div>
-    <p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">
-        暂无商品,敬请期待!</p>
+<!--<div class="clarity"></div>-->
+<!--<div id="body">-->
+<!--    <div style="position: fixed;top: 0;left: 0;background: #fff;width: 100%;z-index: 99;">-->
+<!--        <div class="wrapper wrapper02" id="wrapper02">-->
+<!--            <div class="scroller">-->
+<!--                <ul class="clearfix">-->
+<!--                    <script type="text/html" id="navList">-->
+<!--                        <li>-->
+<!--                            <a href="javascript:void(0)" id="{{goods_second_id}}">{{goods_second_name}}</a>-->
+<!--                        </li>-->
+<!--                    </script>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <img src="images/bot.png" id="show" alt="">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="msg">-->
+<!--        <ul class="tem">-->
+<!--            <script type="text/html" id="commentList">-->
+<!--                <li onclick="location.href='reclassify.php?store_id={{store_id}}&name={{name}}'"-->
+<!--                    style="border-top:6px solid #f3f2f2">-->
+<!--                    <div>-->
+<!--                        <img src="{{logo}}"/>-->
+<!--                        <p>-->
+<!--                            <span style="font-size:.4rem">{{store_name}}</span>-->
+<!--                            <span>进入专场</span>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            </script>-->
+<!--        </ul>-->
+<!--        <div class="float">-->
+<!--            <ul>-->
+<!--                <img src="images/top.png" id="hide"/>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <p style="line-height: 616px; text-align: center; color: rgb(198, 191, 191);display:none" class="show">-->
+<!--        暂无商品,敬请期待!</p>-->
 </body>
 
 </html>
