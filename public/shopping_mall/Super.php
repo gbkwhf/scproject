@@ -62,6 +62,9 @@
 <script type="text/javascript" src="js/navbar/flexible.js"></script>
 <script type="text/javascript" src="js/navbar/iscroll.js"></script>
 <script type="text/javascript" src="js/navbar/navbarscroll.js"></script>
+<script>
+    alert('123')
+</script>
 <!--<script type="text/javascript">-->
 <!--    $(function () {-->
 <!--        alert('123')-->
