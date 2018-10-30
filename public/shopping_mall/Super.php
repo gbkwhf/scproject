@@ -56,10 +56,11 @@
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        alert('123')
-    })
-        // let page = 1;
-        // let store_second_id = '';
+        alert('1')
+        let page = 1;
+        alert('2')
+        let store_second_id = '';
+        alert('3')
         // if ($_GET["store_first_id"] == 1) {
         //     $("title").text("商超")
         // } else if ($_GET["store_first_id"] == 2) {
@@ -183,5 +184,5 @@
     //         })
     //     }
     //
-    // })
+    })
 </script>
