@@ -20,7 +20,7 @@
         justify-content: space-between;
         padding: 0;
         overflow: auto;
-        height: 50px;
+        height: 70px;
     }
 
     #show{
