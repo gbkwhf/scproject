@@ -81,6 +81,7 @@
             $(".clarity").hide()
         })
         alert('7')
+        var store_first_id = $_GET['store_first_id'];
         // // 导航分类
         $.ajax({
             type: "POST",
@@ -88,7 +89,7 @@
             url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
             data: {
                 'ss': getCookie('openid'),
-                'store_first_id': $_GET['store_first_id']
+                'store_first_id': store_first_id
             },
             success: (res) => {
                 alert('8')
