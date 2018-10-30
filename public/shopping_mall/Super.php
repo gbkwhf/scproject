@@ -64,7 +64,9 @@
 <script type="text/javascript" src="js/navbar/navbarscroll.js"></script>
 <script type="text/javascript">
     $(function () {
-
+        alert('123')
+        alert(getCookie('openid'))
+        alert(getCookie($_GET['store_first_id']))
         let page = 1
         let store_second_id
         if ($_GET["store_first_id"] == 1) {
@@ -87,9 +89,7 @@
             $(".clarity").hide()
         })
         console.log($_GET['store_first_id'])
-        alert('123')
-        alert(getCookie('openid'))
-        alert(getCookie($_GET['store_first_id']))
+
         // 导航分类
         $.ajax({
             type: "POST",
@@ -114,35 +114,35 @@
                         $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
                     }
 
-                    $('.wrapper').navbarscroll();
-                    shop(store_second_id, page)
-                    $(".clearfix li").click(function (e) {
-                        store_second_id = e.target.id
-                        let index = $(this).index()
-                        $(this).addClass("select").siblings().removeClass("select");
-                        // $(".msg li").hide().eq(index).show()
-                        page = 1
-                        $(".tem li").remove()
-
-                        shop(store_second_id, page)
-                    })
-
-
-                    $(".float li").click(function () {
-                        let store_second_id = $(this).attr("id")
-                        let index = $(this).index()
-                        let nums = -parseInt(index) / 0.02
-                        $(".scroller").attr("style", "width: " + data.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
-                        $(".tem li").remove()
-                        shop(store_second_id, page)
-                        $(".float").hide()
-                        $(".clarity").hide()
-                        $(".clearfix li").each(function () {
-                            if (index == $(this).index()) {
-                                $(this).addClass("cur").siblings().removeClass("cur")
-                            }
-                        })
-                    })
+                    // $('.wrapper').navbarscroll();
+                    // shop(store_second_id, page);
+                    // $(".clearfix li").click(function (e) {
+                    //     store_second_id = e.target.id
+                    //     let index = $(this).index()
+                    //     $(this).addClass("select").siblings().removeClass("select");
+                    //     // $(".msg li").hide().eq(index).show()
+                    //     page = 1
+                    //     $(".tem li").remove()
+                    //
+                    //     shop(store_second_id, page)
+                    // })
+                    //
+                    //
+                    // $(".float li").click(function () {
+                    //     let store_second_id = $(this).attr("id")
+                    //     let index = $(this).index()
+                    //     let nums = -parseInt(index) / 0.02
+                    //     $(".scroller").attr("style", "width: " + data.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
+                    //     $(".tem li").remove()
+                    //     shop(store_second_id, page)
+                    //     $(".float").hide()
+                    //     $(".clarity").hide()
+                    //     $(".clearfix li").each(function () {
+                    //         if (index == $(this).index()) {
+                    //             $(this).addClass("cur").siblings().removeClass("cur")
+                    //         }
+                    //     })
+                    // })
                 } catch (e) {
                     console.log(e)
                     layer.msg(res.msg);
