@@ -89,29 +89,29 @@
         // })
 
         // // 导航分类
-        // $.ajax({
-        //     type: "POST",
-        //     dataType: "json",
-        //     url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
-        //     data: {
-        //         ss: getCookie('openid'),
-        //         store_first_id: $_GET['store_first_id']
-        //     },
-        //     success: (res) => {
-        //         console.log(res)
-        //         try {
-        //             let data = res.result;
-        //             if (data.length <= 4) {
-        //                 $("#show").hide()
-        //             }
-        //             store_second_id = data[0].store_second_id
-        //             for (let val of data) {
-        //                 let temp = $("#navList").html()
-        //                 temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
-        //                 $(".clearfix").append(temp)
-        //                 $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
-        //             }
-        //
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
+            data: {
+                ss: getCookie('openid'),
+                store_first_id: $_GET['store_first_id']
+            },
+            success: (res) => {
+                console.log(res)
+                try {
+                    let data = res.result;
+                    if (data.length <= 4) {
+                        $("#show").hide()
+                    }
+                    store_second_id = data[0].store_second_id
+                    for (let val of data) {
+                        let temp = $("#navList").html()
+                        temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+                        $(".clearfix").append(temp)
+                        $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
+                    }
+
         //             $('.wrapper').navbarscroll();
         //             shop(store_second_id, page);
         //             $(".clearfix li").click(function (e) {
@@ -141,13 +141,13 @@
         //                     }
         //                 })
         //             })
-        //         } catch (e) {
-        //             console.log(e)
-        //             layer.msg(res.msg);
-        //         }
-        //
-        //     }
-        // })
+                } catch (e) {
+                    console.log(e)
+                    layer.msg(res.msg);
+                }
+
+            }
+        })
         //
         //
         // $(this).scroll(function () {
