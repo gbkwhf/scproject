@@ -85,6 +85,7 @@
         $(".clarity").hide()
     })
 
+    alert("789")
     console.log($_GET['store_first_id'])
     // 导航分类
     $.ajax({
@@ -96,6 +97,8 @@
             store_first_id: $_GET['store_first_id']
         },
         success: (res) => {
+
+            alert("123")
             console.log(res)
             let data = res.result;
             if (data.length <= 4) {
@@ -108,7 +111,6 @@
                 $(".clearfix").append(temp)
                 $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
             }
-            alert("123")
 
             // setTimeout(() => {
             $('.wrapper').navbarscroll();
