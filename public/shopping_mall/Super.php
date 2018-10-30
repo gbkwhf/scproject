@@ -11,7 +11,41 @@
     <meta charset="UTF-8">
     <title>商超</title>
 </head>
+<style>
+    .tab-head {
+        width: 92%;
+        list-style-type: none;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 0;
+        overflow: auto;
+        height: 50px;
+    }
 
+    #show{
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 45px;
+        height: 40px;
+    }
+
+    .tab-head-item{
+        height: 30px;
+        flex: 1 0 auto;
+        margin: 4px 5px 0;
+        line-height: 30px;
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .select{
+        color: #fff;
+        background: #e63737;
+        border-radius: 30px;
+    }
+</style>
 <body>
 <div class="clarity"></div>
 <div id="body">
