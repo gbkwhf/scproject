@@ -16,7 +16,7 @@
 <div class="clarity"></div>
 <div id="body">
     <div style="position: fixed;top: 0;left: 0;background: #fff;width: 100%;z-index: 99;">
-        <div style="height: 30px;overflow: hidden;position: relative;border-bottom: 1px solid #ccc;">
+        <div style="height: 40px;overflow: hidden;position: relative;border-bottom: 1px solid #ccc;">
             <ul class="tab-head">
                 <script type="text/html" id="navList">
                     <li class="tab-head-item" id="{{goods_second_id}}">{{goods_second_name}}</li>
@@ -56,31 +56,24 @@
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        alert("1")
-        let page = 1;
-        alert("2")
-        let store_second_id = '';
-        alert("3")
-        if ($_GET["store_first_id"] == 1) {
-            $("title").text("商超")
-        } else if ($_GET["store_first_id"] == 2) {
-            $("title").text("精品馆")
-        } else {
-            $("title").text("土特产")
-        }
-        alert("4")
-        $(".clarity").css("height", $(this).height() + "px")
-        alert("5")
-        $("#show").click(function () {
-            $(".float").show()
-            $(".clarity").show()
-        })
-        alert("6")
-        $("#hide").click(function () {
-            $(".float").hide()
-            $(".clarity").hide()
-        })
-        alert("7")
+        // let page = 1;
+        // let store_second_id = '';
+        // if ($_GET["store_first_id"] == 1) {
+        //     $("title").text("商超")
+        // } else if ($_GET["store_first_id"] == 2) {
+        //     $("title").text("精品馆")
+        // } else {
+        //     $("title").text("土特产")
+        // }
+        // $(".clarity").css("height", $(this).height() + "px")
+        // $("#show").click(function () {
+        //     $(".float").show()
+        //     $(".clarity").show()
+        // })
+        // $("#hide").click(function () {
+        //     $(".float").hide()
+        //     $(".clarity").hide()
+        // })
         // // 导航分类
         $.ajax({
             type: "POST",
@@ -92,6 +85,7 @@
             },
             success: (res) => {
                 console.log(res)
+                alert(res)
                 try {
                     let data = res.result;
                     if (data.length <= 4) {

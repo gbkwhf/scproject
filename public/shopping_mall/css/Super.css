@@ -6,22 +6,23 @@
 	justify-content: space-between;
 	padding: 0;
 	overflow: auto;
-	height: 40px;
+	height: 50px;
 }
 
 #show{
 	position: absolute;
 	right: 0;
 	top: 0;
-	width: 35px;
-	height: 30px;
+	width: 45px;
+	height: 40px;
 }
 
 .tab-head-item{
-	height: 28px;
+	height: 30px;
 	flex: 1 0 auto;
-	margin: 0 10px;
-	line-height: 28px;
+	margin: 4px 5px 0;
+	line-height: 30px;
+	padding: 0 10px;
 }
 .tab-head-item>span{
 	display: block;
@@ -29,8 +30,9 @@
 }
 
 .select{
-	/*color: #fff;*/
-	border-bottom: 2px solid #000;
+	color: #fff;
+	background: #e63737;
+	border-radius: 30px;
 }
 /* .list{
 	width: 100%;
