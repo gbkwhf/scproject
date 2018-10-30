@@ -101,14 +101,14 @@
                     }
                     store_second_id = data[0].store_second_id
 
-                    for (var val of data) {
-                        var temp = $("#navList").html()
-                        temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
-                        $(".tab-head").append(temp)
-                        $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
-                    }
-                    $(".tab-head li").eq(0).addClass("select").siblings().removeClass("select");
-                    shop(store_second_id, page);
+                    // for (var val of data) {
+                    //     var temp = $("#navList").html()
+                    //     temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+                    //     $(".tab-head").append(temp)
+                    //     $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
+                    // }
+                    // $(".tab-head li").eq(0).addClass("select").siblings().removeClass("select");
+                    // shop(store_second_id, page);
                     $(".tab-head li").click(function () {
                         console.log($(this).attr('id'))
                         store_second_id = $(this).attr('id')
