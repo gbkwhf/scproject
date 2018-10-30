@@ -57,7 +57,7 @@
 <script type="text/javascript">
     $(function () {
         alert('1')
-        // let page = 1;
+        let page = 1;
         alert('2')
         // let store_second_id = '';
         alert('3')
