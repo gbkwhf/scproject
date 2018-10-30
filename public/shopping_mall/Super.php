@@ -66,27 +66,27 @@
         alert('123')
         alert(getCookie('openid'))
         alert(getCookie($_GET['store_first_id']))
-        let page = 1
-        let store_second_id
-        if ($_GET["store_first_id"] == 1) {
-            $("title").text("商超")
-        } else if ($_GET["store_first_id"] == 2) {
-            $("title").text("精品馆")
-        } else {
-            $("title").text("土特产")
-        }
-
-        $(".clarity").css("height", $(this).height() + "px")
-
-        $("#show").click(function () {
-            $(".float").show()
-            $(".clarity").show()
-        })
-
-        $("#hide").click(function () {
-            $(".float").hide()
-            $(".clarity").hide()
-        })
+        // let page = 1;
+        // let store_second_id = '';
+        // if ($_GET["store_first_id"] == 1) {
+        //     $("title").text("商超")
+        // } else if ($_GET["store_first_id"] == 2) {
+        //     $("title").text("精品馆")
+        // } else {
+        //     $("title").text("土特产")
+        // }
+        //
+        // $(".clarity").css("height", $(this).height() + "px")
+        //
+        // $("#show").click(function () {
+        //     $(".float").show()
+        //     $(".clarity").show()
+        // })
+        //
+        // $("#hide").click(function () {
+        //     $(".float").hide()
+        //     $(".clarity").hide()
+        // })
 
         // // 导航分类
         // $.ajax({
