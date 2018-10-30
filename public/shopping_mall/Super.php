@@ -108,7 +108,7 @@
                 $(".clearfix").append(temp)
                 $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
             }
-
+            alert("123")
 
             // setTimeout(() => {
             $('.wrapper').navbarscroll();
