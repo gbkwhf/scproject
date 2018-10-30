@@ -82,7 +82,8 @@
 		};
 
 		function waitting() {
-			layer.msg('暂未开通，敬请期待哦！')
+//			layer.msg('暂未开通，敬请期待哦！')
+			location.href="http://www.365118.cn/game/index.html "
 		}
 	</script>
 	<style type="text/css">
