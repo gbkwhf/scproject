@@ -18,6 +18,7 @@ $(function () {
         $(".clarity").hide()
     })
     var store_first_id = $_GET['store_first_id'];
+    alert(store_first_id)
     // // 导航分类
     $.ajax({
         type: "post",

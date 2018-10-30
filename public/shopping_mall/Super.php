@@ -99,7 +99,7 @@
             url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
             data: {
                 'ss': getCookie('openid'),
-                'store_first_id': '1'
+                'store_first_id': 1
             },
             success:function (res) {
                 alert(res)
