@@ -28,9 +28,8 @@ $(function () {
             'ss': getCookie('openid'),
             'store_first_id': store_first_id
         },
-        success: res => {
-            // console.log(res)
-            alert(res.msg)
+        success: function(res) {
+            console.log(res)
             try {
                 var data = res.result;
                 if (data.length <= 4) {
@@ -38,11 +37,11 @@ $(function () {
                 }
                 store_second_id = data[0].store_second_id
 
-                for (var val of data) {
+                for (var val in data) {
                     var temp = $("#navList").html()
-                    temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+                    temp = temp.replace("{{goods_second_name}}", data[val].store_second_name).replace("{{goods_second_id}}", data[val].store_second_id)
                     $(".tab-head").append(temp)
-                    $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
+                    $(".float ul").append("<li id=" + data[val].store_second_id + '>' + data[val].store_second_name + "</li>")
                 }
                 $(".tab-head li").eq(0).addClass("select").siblings().removeClass("select");
                 shop(store_second_id, page);
@@ -111,7 +110,7 @@ $(function () {
                 store_second_id: id,
                 page: page
             },
-            success: (res) => {
+            success: function(res) {
                 console.log(res)
                 var data = res.result
                 if (data.length == 0) {
@@ -121,9 +120,9 @@ $(function () {
                 } else {
                     $(".show").hide()
                 }
-                for (var val of data) {
+                for (var val in data) {
                     var temp = $("#commentList").html()
-                    temp = temp.replace("{{logo}}", val.logo).replace("{{store_name}}", val.store_name).replace("{{store_id}}", val.store_id).replace("{{name}}", val.store_name)
+                    temp = temp.replace("{{logo}}", data[val].logo).replace("{{store_name}}", data[val].store_name).replace("{{store_id}}", data[val].store_id).replace("{{name}}", data[val].store_name)
                     $(".tem").append(temp)
                 }
             }
