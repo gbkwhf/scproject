@@ -75,7 +75,7 @@
         var page = 1
         var id = $_GET['store_id']
         var auto = true
-        var viewHeight = $(this).height();//可见高度
+
 
         $(".clarity").css("height", $(this).height() + "px")
 
@@ -207,44 +207,44 @@
                                 }
                             })
                         })
-                        $(this).scroll(function () {
-                            var contentHeight = $("#body").get(0).scrollHeight;//内容高度
-                            var scrollHeight = $(this).scrollTop();//滚动高度
-                            if ((contentHeight - viewHeight) / scrollHeight <= 1) {
-                                if (auto) {
-                                    page++
-                                    $.ajax({
-                                        type: "post",
-                                        dataType: "json",
-                                        url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
-                                        data: {
-                                            store_class_id: id,
-                                            page: page,
-                                            ss: getCookie('openid')
-                                        },
-                                        success: function (res) {
-                                            console.log(res)
-                                            var data = res.result
-                                            if (data.length == 0) {
-                                                layer.msg("没有更多了")
-                                                auto = false
-                                            } else {
-                                                $.each(data, function (val, index) {
-                                                    var temp = $("#commentList").html()
-                                                    temp = temp.replace("{{goods_name}}", data[val].goods_name).replace("{{image}}", data[val].image).replace("{{price}}", data[val].price).replace("{{market_price}}", data[val].market_price).replace("{{ext_id}}", data[val].ext_id)
-                                                    $(".commodity ul").append(temp)
-                                                })
-                                            }
-                                        }
-                                    })
-                                }
-                            }
-                        })
                     }
                 })
             }
         })
-
+        $(this).scroll(function () {
+            var viewHeight = document.documentElement.clientHeight;//可见高度
+            var contentHeight = $("#body").get(0).scrollHeight;//内容高度
+            var scrollHeight = $(this).scrollTop();//滚动高度
+            if ((contentHeight - viewHeight) / scrollHeight <= 1) {
+                if (auto) {
+                    page++
+                    $.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: commonsUrl + 'api/gxsc/get/store_class/goods/list' + versioninfos,
+                        data: {
+                            store_class_id: id,
+                            page: page,
+                            ss: getCookie('openid')
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            var data = res.result
+                            if (data.length == 0) {
+                                layer.msg("没有更多了")
+                                auto = false
+                            } else {
+                                $.each(data, function (val, index) {
+                                    var temp = $("#commentList").html()
+                                    temp = temp.replace("{{goods_name}}", data[val].goods_name).replace("{{image}}", data[val].image).replace("{{price}}", data[val].price).replace("{{market_price}}", data[val].market_price).replace("{{ext_id}}", data[val].ext_id)
+                                    $(".commodity ul").append(temp)
+                                })
+                            }
+                        }
+                    })
+                }
+            }
+        })
 
     })
 
