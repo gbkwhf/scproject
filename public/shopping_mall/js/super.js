@@ -30,7 +30,7 @@ $(function () {
         },
         success: res => {
             // console.log(res)
-            // alert('456')
+            alert(res.msg)
             try {
                 var data = res.result;
                 if (data.length <= 4) {
@@ -81,6 +81,10 @@ $(function () {
                 layer.msg(res.msg);
             }
 
+        },
+        error:err=>{
+            console.log(err)
+            alert(err)
         }
     })
 
