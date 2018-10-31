@@ -61,21 +61,21 @@
 </html>
 
 <script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
 <script type="text/javascript" src="js/navbar/flexible.js"></script>
 <script type="text/javascript" src="js/navbar/iscroll.js"></script>
 <script type="text/javascript" src="js/navbar/navbarscroll.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/config.js"></script>
 <script src="js/layer/layer.js"></script>
 <script>
     $(function () {
         console.log($_GET['store_id'])
         console.log(decodeURI($_GET['name']))
         $("title").text(decodeURI($_GET['name']))
-        let page = 1
-        let id = $_GET['store_id']
-        let auto = true
-        let viewHeight = $(this).height();//可见高度
+        var page = 1
+        var id = $_GET['store_id']
+        var auto = true
+        var viewHeight = $(this).height();//可见高度
 
         $(".clarity").css("height", $(this).height() + "px")
 
@@ -97,19 +97,19 @@
                 store_id: $_GET['store_id'],
                 ss: getCookie('openid')
             },
-            success: (res) => {
+            success: function (res) {
                 console.log(res)
                 id = res.result[0].store_class_id
-                let daTa = res.result
+                var daTa = res.result
                 if (daTa.length <= 4) {
                     $("#show").hide()
                 }
-                for (let val of daTa) {
-                    let temp = $("#navList").html()
-                    temp = temp.replace("{{goods_second_name}}", val.store_class_name).replace("{{goods_second_id}}", val.store_class_id)
+                $.each(daTa, function (val, index) {
+                    var temp = $("#navList").html()
+                    temp = temp.replace("{{goods_second_name}}", daTa[val].store_class_name).replace("{{goods_second_id}}", daTa[val].store_class_id)
                     $(".clearfix").append(temp)
-                    $(".float ul").append("<li id=" + val.store_class_id + '>' + val.store_class_name + "</li>")
-                }
+                    $(".float ul").append("<li id=" + daTa[val].store_class_id + '>' + daTa[val].store_class_name + "</li>")
+                })
                 $('.wrapper').navbarscroll();
                 // 获取商品列表数据
                 $.ajax({
@@ -121,24 +121,24 @@
                         page: 1,
                         ss: getCookie('openid')
                     },
-                    success: (res) => {
+                    success: function (res) {
                         console.log(res)
-                        let data = res.result
+                        var data = res.result
                         if (data.length == 0) {
                             $(".show").show()
                         } else {
                             $(".show").hide()
                         }
-                        for (let val of data) {
-                            let temp = $("#commentList").html()
+                        for (var val of data) {
+                            var temp = $("#commentList").html()
                             temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
                             $(".commodity ul").append(temp)
                         }
 
                         $(".float li").click(function () {
-                            let store_second_id = $(this).attr("id")
-                            let index = $(this).index()
-                            let nums = -parseInt(index) / 0.02;
+                            var store_second_id = $(this).attr("id")
+                            var index = $(this).index()
+                            var nums = -parseInt(index) / 0.02;
                             $(".scroller").attr("style", "width: " + daTa.length * 98 + "px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;transform: translate(" + nums + "px, 0px) translateZ(0px);")
                             // $(".tem li").remove()
                             $(".commodity ul li").remove()
@@ -159,19 +159,19 @@
                                     page: "1",
                                     ss: getCookie('openid')
                                 },
-                                success: (res) => {
+                                success: function (res) {
                                     console.log(res)
-                                    let data = res.result
+                                    var data = res.result
                                     if (data.length == 0) {
                                         $(".show").show()
                                     } else {
                                         $(".show").hide()
                                     }
-                                    for (let val of data) {
-                                        let temp = $("#commentList").html()
-                                        temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                    $.each(data, function (val, index) {
+                                        var temp = $("#commentList").html()
+                                        temp = temp.replace("{{goods_name}}", data[val].goods_name).replace("{{image}}", data[val].image).replace("{{price}}", data[val].price).replace("{{market_price}}", data[val].market_price).replace("{{ext_id}}", data[val].ext_id)
                                         $(".commodity ul").append(temp)
-                                    }
+                                    })
                                 }
                             })
                         })
@@ -191,19 +191,19 @@
                                     page: "1",
                                     ss: getCookie('openid')
                                 },
-                                success: (res) => {
+                                success: function (res) {
                                     console.log(res)
-                                    let data = res.result
+                                    var data = res.result
                                     if (data.length == 0) {
                                         $(".show").show()
                                     } else {
                                         $(".show").hide()
                                     }
-                                    for (let val of data) {
-                                        let temp = $("#commentList").html()
-                                        temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                    $.each(data, function (val, index) {
+                                        var temp = $("#commentList").html()
+                                        temp = temp.replace("{{goods_name}}", data[val].goods_name).replace("{{image}}", data[val].image).replace("{{price}}", data[val].price).replace("{{market_price}}", data[val].market_price).replace("{{ext_id}}", data[val].ext_id)
                                         $(".commodity ul").append(temp)
-                                    }
+                                    })
                                 }
                             })
                         })
@@ -222,18 +222,18 @@
                                             page: page,
                                             ss: getCookie('openid')
                                         },
-                                        success: (res) => {
+                                        success: function (res) {
                                             console.log(res)
-                                            let data = res.result
+                                            var data = res.result
                                             if (data.length == 0) {
                                                 layer.msg("没有更多了")
                                                 auto = false
                                             } else {
-                                                for (let val of data) {
-                                                    let temp = $("#commentList").html()
-                                                    temp = temp.replace("{{goods_name}}", val.goods_name).replace("{{image}}", val.image).replace("{{price}}", val.price).replace("{{market_price}}", val.market_price).replace("{{ext_id}}", val.ext_id)
+                                                $.each(data, function (val, index) {
+                                                    var temp = $("#commentList").html()
+                                                    temp = temp.replace("{{goods_name}}", data[val].goods_name).replace("{{image}}", data[val].image).replace("{{price}}", data[val].price).replace("{{market_price}}", data[val].market_price).replace("{{ext_id}}", data[val].ext_id)
                                                     $(".commodity ul").append(temp)
-                                                }
+                                                })
                                             }
                                         }
                                     })
