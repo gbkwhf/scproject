@@ -85,9 +85,9 @@
 </body>
 
 </html>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
-<script src="js/jquery.min.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/super.js"></script>
 <script>
