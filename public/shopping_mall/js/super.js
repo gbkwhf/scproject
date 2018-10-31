@@ -37,13 +37,13 @@ $(function () {
                 }
                 store_second_id = data[0].store_second_id
 
-                for (var i in data) {
-                    console.log(data[i])
+                $.each(data,function (j,index) {
+                    console.log(data[j])
                     var temp = $("#navList").html()
-                    temp = temp.replace("{{goods_second_name}}", data[i].store_second_name).replace("{{goods_second_id}}", data[i].store_second_id)
+                    temp = temp.replace("{{goods_second_name}}", data[j].store_second_name).replace("{{goods_second_id}}", data[j].store_second_id)
                     $(".tab-head").append(temp)
-                    $(".float ul").append("<li id=" + data[i].store_second_id + '>' + data[i].store_second_name + "</li>")
-                }
+                    $(".float ul").append("<li id=" + data[j].store_second_id + '>' + data[j].store_second_name + "</li>")
+                })
                 $(".tab-head li").eq(0).addClass("select").siblings().removeClass("select");
                 shop(store_second_id, page);
                 $(".tab-head li").click(function () {
@@ -76,6 +76,7 @@ $(function () {
                         }
                     })
                 })
+
             } catch (e) {
                 console.log(e);
             }
@@ -88,14 +89,20 @@ $(function () {
 
 
     $(this).scroll(function () {
-        var viewHeight = $(this).height();//可见高度
+        var viewHeight = document.documentElement.clientHeight;//可见高度
         var contentHeight = $("#body").get(0).scrollHeight;//内容高度
         var scrollHeight = $(this).scrollTop();//滚动高度
+        console.log(viewHeight+'可见高度')
+        console.log(contentHeight+'内容高度')
+        console.log(scrollHeight+'滚动高度')
         if ((contentHeight - viewHeight) / scrollHeight <= 1) {
             page++
             shop(store_second_id, page, show)
         }
     })
+
+
+
 
 
     // 门店
@@ -119,11 +126,11 @@ $(function () {
                 } else {
                     $(".show").hide()
                 }
-                for (var val in data) {
+                $.each(data,function (val,index) {
                     var temp = $("#commentList").html()
                     temp = temp.replace("{{logo}}", data[val].logo).replace("{{store_name}}", data[val].store_name).replace("{{store_id}}", data[val].store_id).replace("{{name}}", data[val].store_name)
                     $(".tem").append(temp)
-                }
+                })
             }
         })
     }
