@@ -85,32 +85,32 @@
 </body>
 
 </html>
-<script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
-<script src="js/layer/layer.js"></script>
-<script src="js/super.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<!--<script src="js/super.js"></script>-->
 <script>
-    // $(function () {
-    //     alert('123')
-    //     alert(getCookie('openid'))
-    //     $.ajax({
-    //         type: "post",
-    //         dataType: "json",
-    //         url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
-    //         data: {
-    //             'ss': getCookie('openid'),
-    //             'store_first_id': 1
-    //         },
-    //         success:function (res) {
-    //             alert(res)
-    //             for (var val of data) {
-    //                 var temp = $("#navList").html()
-    //                 temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
-    //                 $(".tab-head").append(temp)
-    //                 $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
-    //             }
-    //         }
-    //     })
-    // })
+    $(function () {
+        alert('123')
+        alert(getCookie('openid'))
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: commonsUrl + 'api/gxsc/get/second/info/list' + versioninfos,
+            data: {
+                'ss': getCookie('openid'),
+                'store_first_id': 1
+            },
+            success:function (res) {
+                alert(res)
+                for (var val of data) {
+                    var temp = $("#navList").html()
+                    temp = temp.replace("{{goods_second_name}}", val.store_second_name).replace("{{goods_second_id}}", val.store_second_id)
+                    $(".tab-head").append(temp)
+                    $(".float ul").append("<li id=" + val.store_second_id + '>' + val.store_second_name + "</li>")
+                }
+            }
+        })
+    })
 </script>
