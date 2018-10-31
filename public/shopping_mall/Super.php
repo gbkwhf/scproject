@@ -104,6 +104,7 @@
             },
             success:function (res) {
                 alert(res)
+                var data = res.result;
                 for (var val in data) {
                     var temp = $("#navList").html()
                     temp = temp.replace("{{goods_second_name}}", data[val].store_second_name).replace("{{goods_second_id}}", data[val].store_second_id)
