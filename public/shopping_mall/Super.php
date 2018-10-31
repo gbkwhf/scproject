@@ -17,7 +17,6 @@
         list-style-type: none;
         display: flex;
         flex-wrap: nowrap;
-        justify-content: space-between;
         padding: 0;
         overflow: auto;
         height: 70px;
@@ -33,7 +32,7 @@
 
     .tab-head-item{
         height: 30px;
-        flex: 1 0 auto;
+        flex: 0 0 auto;
         margin: 4px 5px 0;
         line-height: 30px;
         padding: 0 10px;
