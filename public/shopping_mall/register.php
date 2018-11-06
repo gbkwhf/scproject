@@ -132,7 +132,7 @@
                     },
                     error:function(err){
                         console.log(err)
-                        alert(err)
+                        alert("绑定失败，服务器错误");
                     }
 
                 });
