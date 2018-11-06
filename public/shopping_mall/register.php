@@ -106,6 +106,7 @@
                     url:commonsUrl+'api/gxsc/bind/user/openId'+versioninfos,
 //                  timeout:TIMEOUT,
                     method:'POST',
+                    type:'JSON',
                     data:{
                         'pin':verify,
                         'openId': getCookie('openid'),
@@ -129,7 +130,11 @@
                             layer.msg(data.msg);
                         }
                     },
-                    type:'JSON'
+                    error:function(err){
+                        console.log(err)
+                        alert(err)
+                    }
+
                 });
             }
         }
