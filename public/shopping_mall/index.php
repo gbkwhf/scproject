@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>共享商城1</title>
+		<title>共享商城</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="format-detection" content="telephone=no" />

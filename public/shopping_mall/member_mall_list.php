@@ -272,7 +272,7 @@
 							mui('#refreshContainer').pullRefresh().refresh(true);
 							//							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 						} else {
-							layer.msg("已经到底了");
+							layer.msg("别扯了，已经到底了哦！");
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 						}
 					}
