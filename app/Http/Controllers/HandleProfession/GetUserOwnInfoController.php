@@ -130,7 +130,7 @@ class GetUserOwnInfoController extends Controller{
     public function getOwnOpeBill(Request $request)
     {
         $validator = $this->setRules([
-            'ss' => 'required|string', //员工session
+            'ss' => 'required|string', //员工session 
         ])
             ->_validate($request->all());
         if (!$validator)  return $this->setStatusCode(9999)->respondWithError($this->message);
