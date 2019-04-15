@@ -11,30 +11,29 @@
 	</head>
 	<body>
 		<div class="usregHead"></div>
-		<div class="registerBox">
-			<div class="userMobil">
-				<input type="tel" class="inp inpmobile" maxlength="11" onkeyup="value=value.replace(/[^0-9.]/g,'') " id="inpmobile" placeholder="请输入手机号" />
-			</div>
-			<div class="inCode">
-				<input class="inp verify" id="verify" maxlength="6" type="text" placeholder="请输入验证码"/>
-                <div class="getCode" onkeyup="value=value.replace(/[^0-9.]/g,'') " onclick="getcode()">获取验证码</div>
-			</div>
+        <div class="registerBox">
             <div class="userMobil">
-            <p class="inpmobile invite">邀请码: </p>
-			</div>
+                <input type="tel" class="inp inpmobile" maxlength="11" onkeyup="value=value.replace(/[^0-9.]/g,'') " id="inpmobile" placeholder="请输入手机号" />
+            </div>
+            <div class="inCode">
+                <input class="inp verify" id="verify" maxlength="6" type="text" placeholder="请输入验证码"/>
+                <div class="getCode" onkeyup="value=value.replace(/[^0-9.]/g,'') " onclick="getcode()">获取验证码</div>
+            </div>
+            <!--{{--<div class="userMobil">--}}
+            {{--<p class="inpmobile invite">邀请码: </p>--}}
+            {{--</div>--}}-->
             <p class="consent">
-            <input type="checkbox" name="consent" id="" style="-webkit-appearance:checkbox"/>同意授权条约
+                <input type="checkbox" name="consent" id="" style="-webkit-appearance:checkbox"/>同意授权条约
             </p>
-			<div class="registerBtn" onclick="reg()">注册</div>
-		</div>
+           <!-- <div class="registerBtn" onclick="reg()">注册</div>-->
+        </div>
 		<div class="regFooter">
+			<div class="registerBtn" onclick="reg()">注册</div>
 			<div class="maImg">
 				<p><img src="/shopping_mall/images/ma.jpg"/></p>
-				<p style="padding-left: 69.5%;color: #ffffff;font-size: 12px;">双创共享</p>
+				<p style="padding-left: 70.5%;color: #ffffff;font-size: 12px;">双创科技</p>
 			</div>
 			<!--<div class="peopleImg"><img src="images/people.png"/></div>-->
-			
-			
 		</div>
 	</body>
 </html>
@@ -141,12 +140,11 @@
                     success:function(data){
                         layer.closeAll();
                         if(data.code==1){
-                        	setTimeout(function(){
-                        		layer.msg("注册成功");
-                        	},300);
-							
-						    location.href='/shopping_mall/index.php'
-                            
+                            layer.msg("注册成功");
+                            setTimeout(function(){
+                                location.href='/shopping_mall/register_success.php';
+                            },300);
+
                         }else{
                             layer.msg(data.msg);
                             $('#verify').val("");

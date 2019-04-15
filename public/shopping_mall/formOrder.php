@@ -69,7 +69,17 @@
 				 <div class="moneys"></div>
 			  </div>-->
 			</div>
-
+			<div class="select">
+				<p>选择门店：
+					<select name="sel">
+						<option value="请选择所在门店">请选择所在门店</option>
+						<!--<option >兴庆店</option>-->
+					</select>
+				</p>
+			</div>
+			<div class="enameBox">
+				<p>员工姓名：</p><input type="text" placeholder="请输入员工姓名" class="unames"/>
+			</div>
 			<div class="note">
 				<p>备注：</p><input type="text" placeholder="给商家留言（选填）" />
 			</div>
@@ -218,7 +228,12 @@
 				var img = shopList[k].src;
 				var use_score = shopList[k].use_score; //商品单积分
 				var goods_gift = shopList[k].goods_gift;
-				console.log("商品类别"+goods_gift)
+				console.log("商品类别" + goods_gift);
+				if(goods_gift == 2) {
+					price = price + "元"
+				} else {
+					price = '￥' + price
+				}
 				var show = isForm(shopList[k].goods_gift);
 				console.log(show)
 				var ht = '';
@@ -233,9 +248,9 @@
 					'<div class="messageBox">' +
 					'<p class="shopName">' + name + '</p>' +
 					'<p class="shop_attr">' + spec_name + '</p>' +
-					'<p class="moneyBox"><span class="price">¥' + price + '</span>' +
-					'<span class="price1" style="display:' + show + '"> +'+use_score+'积分</span>'+
-					'<span class="shop_num">+' + numbers + '</span>' +
+					'<p class="moneyBox">' +
+					'<span class="price1" style="display:' + show + '"> ' + use_score + '积分+</span>' +
+					'<span class="price">' + price + '</span><span class="shop_num">+' + numbers + '</span>' +
 					'</p>' +
 					'</div>';
 			});
@@ -377,25 +392,68 @@
 			}
 
 		})
+		
+		function type_meal() {
+			$.ajax({
+				type: "post",
+				dataType: 'json',
+				url: commonsUrl + "api/gxsc/get/supplier/get_supplier" + versioninfos,
+				success: function(data) {
+					console.log(data)
+					if(data.code == 1) { //请求成功
+						var con = data.result;
+						if(con.length != 0) {
+							console.log(con);
+							var type_obj = {
+								id: '0',
+								name: '其他'
+							}
+							con.unshift(type_obj); //向数组开头追加一个对象
+							var html = '';
+							$.each(con, function(k, v) {
+								var type_id = con[k].id; //套餐id
+								console.log(type_id);
+								var type_name = con[k].name; //套餐名称
+								html += "<option value=" + type_id + ">" + type_name + "</option>"
+							});
+							$('select').append(html); //动态显示下拉列表数据
+						} else {
 
+						}
+					}
+
+				}
+			});
+		}
+		type_meal();
 		//	提交订单
 		function submit() {
 			var address = $('.address span').html();
 			var mobile = $('.user-phone p').html();
 			var name = $('.user-name p').html();
 			var user_remark = $('.note input').val();
-			if($('header').find('.address').length > 0) {
+			var type_sel = $("select").val();
+			var uname=$(".enameBox input").val();
+			if($('header').find('.address').length == 0){
+				layer.msg('请添加收货地址');
+			}else if(type_sel=="请选择所在门店"){
+				layer.msg("请选择所在门店");
+			}else if(type_sel!=0 && uname ==""){
+				layer.msg("请输入员工姓名");
+			}else{
 				//创建订单
 				$.ajax({
 					type: 'post',
-					url: commonsUrl + '/api/gxsc/v2/user/create/order' + versioninfos,
+					url: commonsUrl + 'api/gxsc/v2/user/create/order' + versioninfos,
 					data: {
 						'address': address,
 						'flag': 2,
 						'mobile': mobile,
 						'name': name,
 						'ss': getCookie('openid'),
-						'user_remark': user_remark
+						'user_remark': user_remark,
+						'employee_name':uname,
+						'supplier_id':type_sel
 					},
 					success: function(data) {
 						if(data.code == 1) {
@@ -412,6 +470,15 @@
 								},
 								success: function(data) {
 									if(data.code == 1) {
+//										var newDeArr = JSON.parse(localStorage.getItem('moneyArr'));
+//										console.log(newDeArr);
+//										tnewarr = [];
+//										$.each(newDeArr, function(k, v) {
+//											$.each(v.arrCon, function(key, value) {
+//												tnewarr.push(value.first_id)
+//											})
+//										})
+//										console.log(tnewarr);
 										console.log(data);
 										data.result.timeStamp = data.result.timeStamp.toString();
 										retStr = data.result;
@@ -425,6 +492,12 @@
 													if(res.err_msg == "get_brand_wcpay_request:ok") {
 														//支付成功
 														location.href = 'myOrderList.php?orderId=0';
+//														if(tnewarr.indexOf("109") > -1 || tnewarr.indexOf("111") > -1) { //0 代表有
+//															location.href = "customService.php"
+//														} else { //-1 没有找到109或者111
+//															location.href = 'myOrderList.php?orderId=0'
+//														}
+														
 													} else {
 														//												             alert(res.err_msg);
 													}
@@ -454,9 +527,7 @@
 						}
 					}
 				})
-			} else {
-				layer.msg('请添加收货地址');
-			}
+			} 
 
 		}
 	</script>

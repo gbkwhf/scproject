@@ -65,7 +65,7 @@ input[type="button"] {
 
 .shopImg {
 	width: 80%;
-	height: 100px;
+	/*height: 100px;*/
 	margin: 0 auto;
 }
 
@@ -114,9 +114,35 @@ input[type="button"] {
 }
 .useScore {
 	color: #f87a35;
-	font-size: 12px;
-	padding-left: 11px;
+	font-size: 14px;
+	/*padding-left: 11px;*/
 	float: left;
+}
+.discount{
+	width: 85%;
+	height: 20px;
+	margin: 0 auto;
+	border-radius: 5px;
+	border: solid 1px #fe5454;
+	margin-bottom: 15px;
+}
+.disLeft{
+	width: 50%;
+	float: left;
+	line-height: 18px;
+	text-align: center;
+	font-size: 12px;
+	border-radius: 3px 0 0 3px;
+	background-color: #fe5454;
+	color: #ffffff;
+}
+.disRight{
+	width: 50%;
+	float: right;
+	line-height: 20px;
+	text-align: center;
+	color: #fe5454;
+	font-size: 13px;
 }
 .mui-pull-bottom-pocket {
 	display: none !important;
@@ -132,7 +158,7 @@ input[type="button"] {
 	z-index: 500;
 }
 .pops {
-	width: 85%;
+	width: 82%;
 	margin: 0 auto;
 	margin-top: 200px;
 	background: #ffffff;

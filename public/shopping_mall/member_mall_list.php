@@ -13,6 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="css/member_mall_list.css" />
 	</head>
 	<style type="text/css">
+		
+		
 		::-webkit-scrollbar {
 			display: none;
 		}
@@ -44,7 +46,7 @@
 		</div>
 		<div class="moreBoxHide" style="display: none;">
 			<div class="moreWidHide">
-				
+
 				<!--<div class="classify1">休闲食品</div>-->
 			</div>
 			<div class="topImg"><img src="images/top.png" class="hides" /></div>
@@ -150,9 +152,9 @@
 							setTimeout(function() {
 								mui('#refreshContainer').pullRefresh().refresh(true);
 							}, 300);
-							var indexs=$(this).index();
-							console.log("我是分类的下标"+indexs);
-							var second_id=$(this).attr("goods_second_id");
+							var indexs = $(this).index();
+							console.log("我是分类的下标" + indexs);
+							var second_id = $(this).attr("goods_second_id");
 							$(".classify1").each(function() {
 								if(second_id == $(this).attr("goods_second_id")) {
 									$(this).addClass('addStyleMi').siblings().removeClass('addStyleMi');
@@ -204,7 +206,9 @@
 	shopList(pageNum, 1);
 	//专区切换
 	function shopList(pageNum, t) {
-
+		var firstId=$_GET['goods_first_id'];
+		var showBox=isShowImgs(firstId);
+		console.log(firstId+"ppppp");
 		var goods_second_id = $(".addStyleMi").attr("goods_second_id");
 		layer.ready(function() {
 			layer.load(2);
@@ -253,18 +257,24 @@
 							var show = isShowImg(con[k].goods_gift);
 							var shows = isShow(con[k].goods_gift);
 							var use_score = con[k].use_score; //可用积分
+							var disMoney= (market_price-price1).toFixed(2);
+							if(goods_gift==2){
+								price1=price1+"元"
+							}else{
+								price1='￥'+price1
+							}
 							if(price1 == null || price1 == undefined) {
 								price1 = '0';
 							}
 							if(market_price == null || market_price == undefined) {
 								market_price = '0';
 							}
-							html += '<div class="shopListBox" goods_id=' + goods_id + ' ext_id=' + ext_id + ' >' +
+							html += '<div class="shopListBox" goods_id=' + goods_id + ' ext_id=' + ext_id + ' firstId='+firstId+' goods_name='+goods_name+'>' +
 								'<div class="shopImg"><img src=' + images + ' /></div>' +
 								'<div class="shopListNames">' + goods_name + '</div>' +
-								'<div class="shops"><span class="shopPrice">￥' + price1 + '</span> <span class="useScore" style="display:' + show + '">需' + use_score + '积分</span>' +
+								'<div class="shops"><span class="useScore" style="display:' + show + '">' + use_score + '积分+</span><span class="shopPrice"> ' + price1 + '</span> ' +
 								'<span class="fan" style="display:' + shows + ';"><span style="text-decoration: line-through;">￥' + market_price + '</span></span></div>' +
-								'</div>';
+								'<div class="discount" style="display:'+showBox+'"><div class="disLeft">可抵扣</div><div class="disRight">￥'+disMoney+'</div></div></div>';
 						});
 						//console.log(html);
 						$('.shopBox').append(html); //动态商品列表
@@ -272,7 +282,7 @@
 							mui('#refreshContainer').pullRefresh().refresh(true);
 							//							mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 						} else {
-							layer.msg("别扯了，已经到底了哦！");
+							layer.msg("已经到底了哦！");
 							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 						}
 					}
@@ -292,9 +302,15 @@
 			return 'block'
 		}
 	};
-
 	function isShow(goods_gift) {
 		if(goods_gift == 1) {
+			return 'block';
+		} else {
+			return 'none'
+		}
+	};
+	function isShowImgs(firstId) {
+		if(firstId == 109 || firstId== 111) {
 			return 'block';
 		} else {
 			return 'none'
@@ -382,9 +398,11 @@
 	//	}
 	mui('body').on('tap', '.shopListBox', function() {
 		var ext_id = $(this).attr('ext_id');
+		var firstId = $(this).attr('firstId');
+		var goods_name = $(this).attr('goods_name');
 		console.log(ext_id);
 		mui.openWindow({
-			url: "newShop_details.php?ext_id=" + ext_id
+			url: "newShop_details.php?ext_id=" + ext_id+"&firstId="+firstId+"&goods_name="+goods_name
 		})
 	})
 </script>

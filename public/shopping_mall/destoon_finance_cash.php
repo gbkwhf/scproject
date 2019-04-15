@@ -38,7 +38,7 @@
 		<div class="inquiry">
 			<ul class="explain-list">
 				<li><em>1、</em>需线下向用户支付<span style="color: #d57232;"></span>元；</li>
-				<li><em>2、</em>提现成功后会从用户余额扣除8%手续费。</li>
+				<li><em>2、</em>提现成功后会从用户余额扣除10%手续费。</li>
 				<li><em>3、</em>请仔细核对提现金额和会员手机号，确认后不可撤销；</li>
 			</ul>
 			<div class="btn-box-pop">
@@ -70,7 +70,7 @@
 							success:function(data){
 								if(data.code==1){
 									console.log(data);
-									$('.balance').html('可提现金额：¥<span class="balanceMoney">'+(data.result.balance-data.result.balance*0.08).toFixed(2)+'</span>');
+									$('.balance').html('可提现金额：¥<span class="balanceMoney">'+(data.result.balance-data.result.balance*0.1).toFixed(2)+'</span>');
 								}else{
 									layer.msg(data.msg);
 								}

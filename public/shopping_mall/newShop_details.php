@@ -29,6 +29,28 @@
 		.cl {
 			margin-right: 4px;
 		}
+		
+		::-webkit-scrollbar {
+			display: none;
+		}
+		
+		.mui-scroll-wrapper {
+			position: absolute;
+			z-index: 2;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			overflow: hidden;
+			width: 100%;
+		}
+		
+		.mui-scroll {
+			position: absolute;
+			z-index: 1;
+			width: 100%;
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+		}
 	</style>
 
 	<body>
@@ -39,37 +61,110 @@
 			<a class="pin" onclick="click_scroll3();">评价</a>
 
 		</div>
-
+		
 		<!-----------轮播图------------->
-		<div class="swiper-container aa" id="001">
-			<div class="swiper-wrapper"></div>
-			<div class="swiper-pagination"></div>
-		</div>
-		<!--------商品名称-->
-		<div class="shopIntroduce"></div>
-		<!--------------商品单价------>
-		<div class="shopPrice">
-			<!--<div class="priceBox">
+		<div id="refreshContainer" class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="swiper-container aa" id="001">
+					<div class="swiper-wrapper"></div>
+					<div class="swiper-pagination"></div>
+				</div>
+				<!--------商品名称-->
+				<div class="shopIntroduce"></div>
+				<!--------------商品单价------>
+				<div class="shopPrice">
+					<!--<div class="priceBox">
 				<div class="price"></div>
 				<div class="originalCost"></div>
 				<div class="useScore"></div>
 			</div>-->
-		</div>
-		<div class="saleBox">
-			<div class="postage">邮费：<span class="postNum"></span></div>
-			<div class="sales">销量：<span class="saleNum"></span></div>
-		</div>
-		<div class="saleBox">
-			<div class="postage">返利期限：<span class="postNum2">365</span>天</div>
-		</div>
-		<div class="saleBox">
-			<div class="postage">返利积分：<span class="postNum1"></span></div>
+				</div>
+				<div class="saleBox">
+					<div class="postage">邮费：<span class="postNum"></span></div>
+					<div class="sales">销量：<span class="saleNum"></span></div>
+				</div>
+				<div class="saleBox">
+					<div class="postage">返利期限：<span class="postNum2">下单确认收货后一次性返完</span></div>
+				</div>
+				<div class="saleBox">
+					<div class="postage">返利积分：<span class="postNum1"></span></div>
 
+				</div>
+				<!-----------选择商品属性-->
+				<div class="selectAttributes">
+					<div class="attributes"></div>
+					<div class="backs"><img src="images/selectBack.png" /></div>
+				</div>
+
+				<!--<div class="rebate">
+			<h4>利润共享返利条件</h4>
+			<ul class="rebate-con">
+				<li>
+					<em>用户自购利润共享：</em> 必须在平台会员区一次性消费1280元/单（含1280）以上，且订单完成（无退货）。
+				</li>
+				<li>
+					<em>利润共享标准：</em> 每日平台总利润50%÷会员每日订单基数；
+				</li>
+				<li>
+					<em>利润共享天数：</em> 180天，由系统每天自动返还。达到以上条件，平台会根据会员个人所推荐的总人数给予会员个人一定比例的推荐返利，推荐共享的金额每天根据财务数据统计，由系统自动返到会员的平台账户“可用余额”里。
+				</li>
+			</ul>
+		</div>-->
+				<div class="kong"></div>
+				<!--<div class="shopInformation">
+			<div class="shopIntoduce">
+				<a href="#002">商品介绍</a>
+				<a class="details" onclick="click_scroll2();">详情</a>
+			</div>
+			<div class="apprarise">
+				<a href="#003">评论</a>
+			</div>
+		</div>-->
+
+				<span style="display: none;" id="hhId"></span>
+				<!------------商品详情------------>
+				<div class="detailTitle aa" id="002">商品详情</div>
+				<div class="shopImg"></div>
+				<!------------商品评价------------>
+
+				<div class="shopApprarise aa" id="003">商品评价</div>
+				<div class="apprariseBox">
+					<!--<div class="apprariseNav">
+				<div class="userMessage">
+					<div class="userImg">
+						<img src="images/userImg1.png" />
+					</div>
+					<div class="userName">
+						<p class="user-name">外屏总是碎</p>
+					</div>
+					<div class="apprariseDate">2017-02-22</div>
+				</div>
+				<div class="evaluationContent"></div>
+			</div>-->
+				</div>
+			</div>
 		</div>
-		<!-----------选择商品属性-->
-		<div class="selectAttributes">
-			<div class="attributes"></div>
-			<div class="backs"><img src="images/selectBack.png" /></div>
+		<!-----------底部固定------------->
+		<div class="shopBuy">
+			<div class="botBox1">
+				<!--<div class="store">
+					<dl>
+						<dt><img src="images/store.png"/></dt>
+						<dd>店铺</dd>
+					</dl>
+				</div>-->
+				<div class="shop_car" onclick="location.href='newShop_cart.php'">
+					<dl>
+						<dt>
+							<img src="images/shop_car.png" class="carImg"/>
+							<span class="carNum">0</span>
+						</dt>
+						<dd>购物车</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="addCar" id="addCar">加入购物车</div>
+			<!--<div class="buyNow">立即结算</div>-->
 		</div>
 		<!-----------选择商品属性弹出层-->
 		<div class="selectPopup" style="display: none;" id="dd">
@@ -109,78 +204,6 @@
 				<div class="confirm">确定</div>
 			</div>
 		</div>
-
-		<!--<div class="rebate">
-			<h4>利润共享返利条件</h4>
-			<ul class="rebate-con">
-				<li>
-					<em>用户自购利润共享：</em> 必须在平台会员区一次性消费1280元/单（含1280）以上，且订单完成（无退货）。
-				</li>
-				<li>
-					<em>利润共享标准：</em> 每日平台总利润50%÷会员每日订单基数；
-				</li>
-				<li>
-					<em>利润共享天数：</em> 180天，由系统每天自动返还。达到以上条件，平台会根据会员个人所推荐的总人数给予会员个人一定比例的推荐返利，推荐共享的金额每天根据财务数据统计，由系统自动返到会员的平台账户“可用余额”里。
-				</li>
-			</ul>
-		</div>-->
-		<div class="kong"></div>
-		<!--<div class="shopInformation">
-			<div class="shopIntoduce">
-				<a href="#002">商品介绍</a>
-				<a class="details" onclick="click_scroll2();">详情</a>
-			</div>
-			<div class="apprarise">
-				<a href="#003">评论</a>
-			</div>
-		</div>-->
-		<!-----------底部固定------------->
-		<div class="shopBuy">
-			<div class="botBox1">
-				<!--<div class="store">
-					<dl>
-						<dt><img src="images/store.png"/></dt>
-						<dd>店铺</dd>
-					</dl>
-				</div>-->
-				<div class="shop_car" onclick="location.href='newShop_cart.php'">
-					<dl>
-						<dt>
-							<img src="images/shop_car.png" class="carImg"/>
-							<span class="carNum">0</span>
-						</dt>
-						<dd>购物车</dd>
-					</dl>
-				</div>
-			</div>
-			<div class="addCar" id="addCar">加入购物车</div>
-			<!--<div class="buyNow">立即结算</div>-->
-		</div>
-		<span style="display: none;" id="hhId"></span>
-		<!------------商品详情------------>
-		<div class="detailTitle aa" id="002">商品详情</div>
-		<div class="shopImg"></div>
-		<!------------商品评价------------>
-		<div class="shopApprarise aa" id="003">商品评价</div>
-		<div id="refreshContainer" class="mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<div class="apprariseBox">
-					<!--<div class="apprariseNav">
-				<div class="userMessage">
-					<div class="userImg">
-						<img src="images/userImg1.png" />
-					</div>
-					<div class="userName">
-						<p class="user-name">外屏总是碎</p>
-					</div>
-					<div class="apprariseDate">2017-02-22</div>
-				</div>
-				<div class="evaluationContent"></div>
-			</div>-->
-				</div>
-			</div>
-		</div>
-
 	</body>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/shopDetails.js"></script>
@@ -197,20 +220,23 @@
 		$(function() {
 			shopCarts(); //页面加载的时候显示购物车的数量
 			var ext_id = $_GET['ext_id']; //获取商品id
+			var goods_name =$_GET['goods_name'];
+			var good_names=decodeURIComponent(goods_name);
+			$('title').html(good_names);
 			console.log(ext_id + '+++++');
-//			var goods_second_id = $_GET['goods_second_id']; //获取商品id
-//			console.log(goods_second_id);
-//			mui.back = function() {
-//				if(goods_second_id) {
-//					if(mui.os.plus) {
-//						plus.webview.currentWebview().hide();
-//						plus.webview.open('member_mall_list.php?goods_second_id=' + goods_second_id, 'member_mall_list.php');
-//					} else {
-//						mui.openWindow('member_mall_list.php?goods_second_id=' + goods_second_id)
-//					}
-//				}
-//
-//			}
+			//			var goods_second_id = $_GET['goods_second_id']; //获取商品id
+			//			console.log(goods_second_id);
+			//			mui.back = function() {
+			//				if(goods_second_id) {
+			//					if(mui.os.plus) {
+			//						plus.webview.currentWebview().hide();
+			//						plus.webview.open('member_mall_list.php?goods_second_id=' + goods_second_id, 'member_mall_list.php');
+			//					} else {
+			//						mui.openWindow('member_mall_list.php?goods_second_id=' + goods_second_id)
+			//					}
+			//				}
+			//
+			//			}
 
 			getCon(ext_id);
 			var exYId = ''; //点击加入购物车  确定的exit_id;
@@ -241,28 +267,32 @@
 							var spec_value = con.spec_value; //规格值
 							var store_id = con.store_id; //店id
 							var value_list = con.value_list; //规格值列表
-							var goods_gift = con.goods_gift;//商品类别
-							console.log(goods_gift+"商品类别");
+							var goods_gift = con.goods_gift; //商品类别
+							console.log(goods_gift + "商品类别");
+							if(goods_gift==2){
+								price=price+"元"
+							}else{
+								price='￥'+price
+							}
 							var show = isShowI(con.goods_gift);
-							console.log("应该是"+show);
+							console.log("应该是" + show);
 							var shows = isShow(con.goods_gift);
-							var use_score = con.use_score;//可用积分
+							var use_score = con.use_score; //可用积分
 							var biaoqian = '';
 							var nameBox = $(".arrBox");
 							$("#hhId").attr("goosId", g_id);
 							//------------进行赋值---------------
 							$('.swiper-pagination-total').html(goods_image.length); //轮播图计数
 							$('.shopIntroduce').html(goods_name); //商品名
-							var ht='';
-							ht+='<div class="priceBox">'+
-								'<div class="price">￥'+price+'</div>'+
-								'<div class="originalCost" style="display:' + shows + '">原价 '+ market_price +' 元</div>'+
-								'<div class="useScore" style="display:' + show + '">需'+use_score+'积分</div>'+
+							var ht = '';
+							ht += '<div class="priceBox">' +
+								'<div class="useScore" style="display:' + show + '">' + use_score + '积分+</div><div class="price">' + price + '</div>' +
+								'<div class="originalCost" style="display:' + shows + '">原价 ' + market_price + ' 元</div>' +
 								'</div>';
-								$('.shopPrice').html(ht);
-//							$('.price').html('¥' + price); //商品单价
-//							$('.originalCost').html('原价' + market_price + '元');
-//							$('.useScore').html('需'+use_score+'积分');
+							$('.shopPrice').html(ht);
+							//							$('.price').html('¥' + price); //商品单价
+							//							$('.originalCost').html('原价' + market_price + '元');
+							//							$('.useScore').html('需'+use_score+'积分');
 							$('.shopImg').html(content); //商品内容
 							$('.saleNum').html(sales); //销量
 							$('.postNum').html(shipping_price + '元'); //运费
@@ -281,7 +311,7 @@
 							var img = '';
 							img += '<div class="attrImg"><img src=""/></div>' +
 								'<div class="selectName">' +
-								'<p class="shop_name">￥' + price + '</p>' +
+								'<p class="shop_name">' + price + '</p>' +
 								'<p class="selectAttr"></p>' +
 								'</div>';
 
@@ -318,14 +348,16 @@
 					}
 				});
 			};
-			function isShowI(goods_gift) { 
+
+			function isShowI(goods_gift) {
 				if(goods_gift == 1) {
 					return 'none';
 				} else {
 					return 'block'
 				}
 			};
-			function isShow(goods_gift) { 
+
+			function isShow(goods_gift) {
 				if(goods_gift == 1) {
 					return 'block';
 				} else {
@@ -365,7 +397,7 @@
 							console.log(conId);
 							exYId = conId;
 							console.log(exYId + 'ddddd');
-//							exYId = conId;
+							//							exYId = conId;
 							getCon(conId);
 						}
 					}
@@ -671,7 +703,6 @@
 				scrollTop: scroll_offset.top //让body的scrollTop等于pos的top，就实现了滚动 
 			}, 0);
 		}
-
 		function click_scroll2() {
 			var scroll_offset = $("#002").offset(); //得到pos这个div层的offset，包含两个值，top和left 
 			$("body,html").animate({
@@ -680,6 +711,7 @@
 		}
 
 		function click_scroll3() {
+			console.log("你点了我")
 			var scroll_offset = $("#003").offset(); //得到pos这个div层的offset，包含两个值，top和left 
 			$("body,html").animate({
 				scrollTop: scroll_offset.top //让body的scrollTop等于pos的top，就实现了滚动 
@@ -695,6 +727,9 @@
 				$('.selectPopup').fadeOut();
 			});
 
+		})
+		mui('body').on('tap', '.selectAttributes,.addCar', function() {
+			$('.selectPopup').fadeIn();
 		})
 	</script>
 	<script type="text/javascript">

@@ -20,6 +20,9 @@
 <script src="js/cityJson.js"></script>
 <script src="js/citySet.js"></script>
 <style type="text/css">
+	body{
+		font-size: 16px;
+	}
     ._citys {width:100%; height:100%;display: inline-block; position: relative; }
     ._citys p{height: 35px;text-align: center;line-height: 35px;font-size: 15px;}
     ._citys span { line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 1em; top: 10px;  cursor: pointer;font-size: 20px}
@@ -48,11 +51,11 @@
 		</div>
 		<div>
 			<label for="">手机号码:</label>
-			<input type="text" name="phone" id="" maxlength="11">
+			<input type="tel" name="phone" id="" maxlength="11">
 		</div>
 		<div>
-			<label for="" >所在地区:
-                <span id="city">请选择 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<label for="" style="width: 100%;"><div style="float: left;width: 22%;">所在地区:</div>
+                <div id="city" style="float: left;width: 77%;">请选择所在省市区</div>
             </label>
 			<img src="images/addback.png" alt="">
 		</div>
@@ -75,7 +78,7 @@
     });
 
     if($_GET["id"]==1){
-        $("title").text("编辑收货地址")
+        $("title").text("编辑收货地址");
         $.ajax({
             type: "post",
             url: commonsUrl + "/api/gxsc/get/delivery/goods/address" + versioninfos,
@@ -95,6 +98,8 @@
     
     
     $("button").click(function () {
+    	let citys=$("#city").text();
+    	console.log(citys);
         let name=$("input[name='name']").val()
 		let phone=$("input[name='phone']").val()
 		let site=$("input[name='site']").val()
@@ -105,10 +110,13 @@
 		    layer.msg("手机号为空")
 		}else if(!pattern.test(phone)){
             layer.msg("手机号格式不正确")
+		}else if(citys=="请选择所在省市区"){
+			layer.msg("请选择所在地区")
 		}else if(site==""){
             layer.msg("地址为空")
 		}else {
-            let city=$("#city").text()+" "+site
+			citys = citys.replace(/-/g,'');
+            let city=citys+" "+site
             let url="/api/gxsc/add/delivery/goods/address"
             let msg="保存成功"
             if($_GET["id"]==1){

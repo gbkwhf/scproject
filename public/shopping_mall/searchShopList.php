@@ -42,7 +42,7 @@
 <script src="js/mui.min.js"></script>
 <script type="text/javascript">
 	var winH = $(window).height();
-	$('.wrapper').height(winH);
+//	$('.wrapper').height(winH);
 	var shopName = $_GET['shopName']; //获取商品名
 	var shopNames = decodeURIComponent(shopName);
 	pages= 1;

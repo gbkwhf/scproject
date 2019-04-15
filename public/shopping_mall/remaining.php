@@ -55,7 +55,8 @@
         <p>积分提现规则 :  </p>
         <p>1、积分可在平台消费获得相应的积分;</p>
         <p>2、积分仅可在双创平台使用，可用于兑换积分兑换区的商品;</p>
-        <p>3、平台消费所获得积分可用于提现，但需扣除8%的手续费;</p>
+        <p>3、平台消费所获得积分可用于提现，但需扣除8%的手续费、每天最多提现余额的10%;</p>
+        <p>4、提现时间为周一至周五，周六、周日不进行提现。</p>
     </div>
 </div>
 </body>
@@ -67,11 +68,16 @@
 <script>
     //
     $(function () {
-        console.log($_GET['balance'])
-        $(".balance").text($_GET['balance'])
+        console.log($_GET['balance']);
+        $(".balance").text($_GET['balance']);
+        var now = new Date();
+        var days = now.getDay();//得到周几
+	  	console.log(days);
         $(".Deposit").click(function () {
             if ($_GET['balance'] <= 0) {
                 layer.msg("您的账户余额为0，无法提现！")
+            }else if(days==0 || days==6){
+            	layer.msg("周末不能进行提现哦！")
             }else{
                 location.href = "remainingDeposit.php?balance=" + $_GET['balance']
             }

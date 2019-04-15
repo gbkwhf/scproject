@@ -60,9 +60,10 @@
     <p>提现金额</p>
     <div>
         <span style="font-size: 30px"> ￥</span>
-        <input type="text" name="money">
+        <input type="tel" name="money">
     </div>
     <span>提现最大额度20,000元,可提现金额为 <span style="color: #c94d10;" class="lastMoney"></span></span>
+    <p style="line-height: 30px;color: red;">提示：每天只能提现一次</p>
 </div>
 <button>提现</button>
 </body>
@@ -73,7 +74,8 @@
 <script src="js/config.js"></script>
 <script>
     //
-    $(".lastMoney").text(($_GET["balance"] - $_GET["balance"] * 0.08).toFixed(2))
+    var sum = ((($_GET["balance"] - $_GET["balance"] * 0.08) * 0.1).toFixed(2)).toString()
+    $(".lastMoney").text(sum)
     $("button").click(function () {
         let val = $("input").val()
         if (val == '') {
@@ -82,8 +84,7 @@
         } else if (val > 20000) {
             layer.msg("提现金额不能大于20000")
             return
-        }
-        if (val > $(".lastMoney").text()) {
+        }else if (val > sum) {
             layer.msg("余额不足")
             return
         } else {

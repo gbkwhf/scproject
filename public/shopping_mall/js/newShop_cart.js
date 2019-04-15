@@ -29,6 +29,7 @@
 						$.each(goodList, function(k, v) {
 							var car_id = goodList[k].car_id; //购物车id
 							var first_class_id = goodList[k].first_class_id;
+							var first_id = goodList[k].first_id;
 							var created_at = goodList[k].created_at;
 							var ext_id = goodList[k].ext_id;
 //							goods_gift="+con[c].goods_gift+" use_score="+con[c].use_score+"
@@ -41,7 +42,7 @@
 							var goods_price = goodList[k].price == "" ? "无" : goodList[k].price; //商品单价
 							var goods_url = goodList[k].image == "" ? "无" : goodList[k].image; //商品图片
 							var number = goodList[k].number == "" ? "无" : goodList[k].number; //商品数量
-							var state = stateCheck(goodList[k].state, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price,goods_gift,use_score); //商品状态
+							var state = stateCheck(goodList[k].state, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price,goods_gift,use_score,first_id); //商品状态
 							var state1 = goodList[k].state == "0"; //商品状态
 							html += "<div class='storeConHei' >" +
 								"<div class='nextCheck'>" + state + "</div>" +
@@ -80,11 +81,11 @@
 			}
 		});
 
-		function stateCheck(sta, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price,goods_gift,use_score) {
+		function stateCheck(sta, car_id, goods_name, goods_url, goods_id, number, goods_price, spec_name, ext_id, shop_price,goods_gift,use_score,first_id) {
 			if(sta == 0) { //0是未选中 
-				return '<label class="childLabel" goods_gift='+goods_gift+' use_score='+use_score+'  state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + '><input type="checkbox"  class="input childInput" incar=' + car_id + ' /></label>';
+				return '<label class="childLabel" goods_gift='+goods_gift+' use_score='+use_score+'  state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + ' first_id='+first_id+'><input type="checkbox"  class="input childInput" incar=' + car_id + ' /></label>';
 			} else {
-				return '<label class="childLabel checked" goods_gift='+goods_gift+' use_score='+use_score+' state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + '><input type="checkbox" incar=' + car_id + ' class="input childInput" checkcon="true"/></label>';
+				return '<label class="childLabel checked" goods_gift='+goods_gift+' use_score='+use_score+' state=' + sta + '  car_id=' + car_id + ' goods_price=' + goods_price + ' number=' + number + ' goods_name=' + goods_name + ' goods_url=' + goods_url + ' goods_id=' + goods_id + ' spec_name=' + spec_name + ' ext_id=' + ext_id + ' shop_price=' + shop_price + ' first_id='+first_id+'><input type="checkbox" incar=' + car_id + ' class="input childInput" checkcon="true"/></label>';
 			}
 		}
 
@@ -625,7 +626,8 @@
 									'spec_name': $(v).find(".conStore").find("label.checked").eq(c).parents(".storeConHei").find(".shopPro1").text(),
 									'shop_price': $(v).find(".conStore").find("label.checked").eq(c).attr("shop_price"), //运费
 									'use_score': $(v).find(".conStore").find("label.checked").eq(c).attr("use_score"),
-									'goods_gift': $(v).find(".conStore").find("label.checked").eq(c).attr("goods_gift")
+									'goods_gift': $(v).find(".conStore").find("label.checked").eq(c).attr("goods_gift"),
+									'first_id':$(v).find(".conStore").find("label.checked").eq(c).attr("first_id")
 									//							
 								}
 								obj.arrCon.push(arrcon);

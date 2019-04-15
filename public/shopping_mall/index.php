@@ -13,17 +13,16 @@
 	</head>
 
 	<body>
-		<div class="companyBanner"><img src="images/shuangguan.jpg" /></div>
+		<div class="companyBanner"><img src="images/comBanner.jpg" /></div>
 		<div class="member" onclick="location.href='memberPages.php'">
 			<img src="images/gxMall.png" />
 		</div>
+		<!--<div class="no_member">
+			<img src="images/association.png" onclick="location.href='setMeal.php'" />
+		</div>-->
 		<div class="gameBox" onclick="waitting()">
 			<img src="images/amusement.png" />
 		</div>
-		<div class="no_member">
-			<img src="images/result_good.png" onclick="location.href='regulation.php'" />
-		</div>
-
 	</body>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/layer/layer.js"></script>
@@ -82,8 +81,8 @@
 		};
 
 		function waitting() {
-//			layer.msg('暂未开通，敬请期待哦！')
-			location.href="http://www.365118.cn/game/index.html "
+			layer.msg('暂未开通，敬请期待哦！')
+//			location.href="http://www.365118.cn/game/index.html "
 		}
 	</script>
 	<style type="text/css">

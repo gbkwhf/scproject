@@ -84,7 +84,11 @@
             我的财富
             <img src="images/right-arrow.png" width="8"/>
         </li>
-        <li class="myinviat" onclick="invitation()">
+         <!--<li onclick="location.href='regulation.php'">
+            平台规则
+            <img src="images/right-arrow.png" width="8"/>
+        </li>-->
+        <li class="myinviat" onclick="location.href = 'invitation.php'">
             我的邀请
             <img src="images/right-arrow.png" width="8"/>
         </li>
@@ -147,12 +151,7 @@
 <script src="js/common.js"></script>
 <script src="js/config.js"></script>
 <script>
-    let payment = "api/gxsc/v2/get/order/info/obligation/list"
-    let shipping = "api/gxsc/v2/get/order/info/list"
-    let evaluate = "api/gxsc/v2/get/order/info/comment/list"
-    encapsulation(payment)
-    encapsulation(shipping)
-    encapsulation(evaluate)
+   
     if (getCookie('is_member') == 1) {
         $('.substitute').show();
     }
@@ -216,13 +215,14 @@
                 }
                 $('.user-info .user_names').html(data.result.name);
                 $('.balance p').html(data.result.balance);
-                $('.balance').attr('href', 'remaining.php?balance=' + data.result.balance);
+               
                 $('.cashback p').html(data.result.total_amount);
                 $('.userRank').html('会员等级：' + data.result.user_lv);
-                if (data.result.user_lv == 0) {
-                    $(".myinviat").hide()
-                    $(".member").hide()
-                }
+                $('.balance').attr('href', 'remaining.php?balance=' + data.result.balance);
+//              if (data.result.user_lv == 0) {
+//                  $(".myinviat").hide()
+//                  $(".member").hide()
+//              }
             } else if (data.code == 1011) {
                 layer.msg('身份已失效，请重新绑定');
                 setTimeout(function () {
@@ -234,28 +234,33 @@
         }
     });
 
-    function invitation() {
-        $.ajax({
-            type: 'post',
-            url: commonsUrl + 'api/gxsc/user/profile' + versioninfos,
-            data: {'ss': getCookie('openid')},
-            success: function (data) {
-                invite_role = data.result.invite_role
-                var user_id = data.result.user_id;//用户id
-                console.log(data);
-                if (invite_role == 0) {
-                    if (data.result.deposit == "0.00") {
-                        location.href = 'myinvite.php'
-                    } else {
-                        location.href = 'deposit.php?degId=1'
-                    }
-                } else {
-                    location.href = 'invitation.php'
-                }
-            }
-        })
-    }
-
+//  function invitation() {
+//      $.ajax({
+//          type: 'post',
+//          url: commonsUrl + 'api/gxsc/user/profile' + versioninfos,
+//          data: {'ss': getCookie('openid')},
+//          success: function (data) {
+//              invite_role = data.result.invite_role
+//              var user_id = data.result.user_id;//用户id
+//              console.log(data);
+//              if (invite_role == 0) {
+//                  if (data.result.deposit == "0.00") {
+//                      location.href = 'myinvite.php'
+//                  } else {
+//                      location.href = 'deposit.php?degId=1'
+//                  }
+//              } else {
+//                  location.href = 'invitation.php'
+//              }
+//          }
+//      })
+//  }
+	var payment = "api/gxsc/v2/get/order/info/obligation/list"
+    var shipping = "api/gxsc/v2/get/order/info/list"
+    var evaluate = "api/gxsc/v2/get/order/info/comment/list"
+    encapsulation(payment)
+    encapsulation(shipping)
+    encapsulation(evaluate)
     function encapsulation(params) {
         $.ajax({
             type: "post",

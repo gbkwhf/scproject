@@ -74,7 +74,7 @@
 				<p>级别</p>
 				<span class="level">666级</span>
 			</li>
-			<li>
+			<!--<li>
 				<p>状态</p>
 				<span class="Open">开通</span>
 			</li>
@@ -84,7 +84,7 @@
 				<p>
 					<img style="width: 7.5px;height: 13px;" src="images/right-arrow.png" alt="">
 				</p>
-			</li>	
+			</li>	-->
 				
 		</ul>
 	</div>

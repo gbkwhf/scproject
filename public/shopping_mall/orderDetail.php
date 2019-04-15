@@ -84,7 +84,7 @@
 			<p>订单编号：12378774644</p>
 			<p>物流单号：12378774644</p>
 			<p>下单时间：12378774644</p>
-			<p>支付方式：12378774644</p>
+			<!--<p>支付方式：12378774644</p>-->
 			<p>留言信息：12378774644</p>
 		</div>
 		<!--下面的查看物流 内容-->
@@ -115,15 +115,15 @@
 				try{
 					console.log(res.result)
 					let data=res.result
-					let TYPE=data.pay_type==1?"微信":"线下支付"
+//					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.user_name + "   " +data.user_mobile)
 					$(".addreIndo").text("地址 : " + data.address)
 					$(".peisong").text(data.info[0].express.state)
 					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
 					$(".orderInBox p:nth-child(2)").text("") 
 					$(".orderInBox p:nth-child(3)").text("下单时间：" + data.create_time) 
-					$(".orderInBox p:nth-child(4)").text("支付方式：" + TYPE) 
-					$(".orderInBox p:nth-child(5)").text("留言信息：" + data.user_remark) 
+//					$(".orderInBox p:nth-child(4)").text("支付方式：" + TYPE) 
+					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
 					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont pay" id="'+data.base_order_id+'">立即支付</span></div>')
 					for(let i=0;i<data.info.length;i++){
 						console.log(data.info[i])
@@ -167,7 +167,7 @@
 				try{
 					console.log(res.result)
 					let data=res.result
-					let TYPE=data.pay_type==1?"微信":"线下支付"
+//					let TYPE=data.pay_type==1?"微信":"线下支付"
 					$(".perInfoma").text("收货人：" + data.name + "   " +data.mobile)
 					$(".addreIndo").text("地址 : " + data.address)
 					$(".peisong").text(data.express.state)
@@ -180,8 +180,8 @@
 					$(".orderInBox p:nth-child(1)").text("订单编号：" + data.base_order_id)
 					$(".orderInBox p:nth-child(2)").text("物流单号：" + data.express_num) 
 					$(".orderInBox p:nth-child(3)").text("下单时间：" + data.create_time) 
-					$(".orderInBox p:nth-child(4)").text("支付方式：" + TYPE) 
-					$(".orderInBox p:nth-child(5)").text("留言信息：" + data.user_remark) 
+//					$(".orderInBox p:nth-child(4)").text("支付方式：" + TYPE) 
+					$(".orderInBox p:nth-child(4)").text("留言信息：" + data.user_remark) 
 					$(".wuliuConter").append('<div class="wuliBox"><span class="checkcont phy"  data-id="'+data.sub_order_id+'">查看物流</span></div><div class="wuliBox"><span class="checkcont aff" data-id="'+data.sub_order_id+'">确认收货</span></div>')
 						// $(".shopInfoBox").append('<div class="orderHea" style="border:none"><div class="orderStore">'+data.info[i].supplier_name+'</div></div>')
 						for(let j=0;j<data.goods_list.length;j++){

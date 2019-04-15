@@ -66,7 +66,7 @@
                     <div>
                         <img src="{{logo}}"/>
                         <p>
-                            <span style="font-size:.4rem">{{store_name}}</span>
+                            <span style="font-size: 14px">{{store_name}}</span>
                             <span>进入专场</span>
                         </p>
                     </div>

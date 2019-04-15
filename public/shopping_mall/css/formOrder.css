@@ -296,6 +296,41 @@ html,body{
 	margin: 3px 0px 0px 3px;
 }
 /*---------选择模块--------*/
+.select{
+	padding: 14px 4%;
+	background: #fff;
+	overflow: hidden;
+	color: #757575;
+	border-bottom: solid 1px #e5e5e5;
+}
+.select select{
+	color: #757575;
+	font-size: 12px;
+	outline: none;
+	background: transparent;
+	height: 30px;
+	line-height: 30px;
+}
+.enameBox{
+	padding: 14px 4%;
+	background: #fff;
+	overflow: hidden;
+	color: #757575;
+	border-bottom: solid 1px #e5e5e5;
+}
+.enameBox p{
+	font-size: 12px;
+	float: left;
+}
+.enameBox input{
+	display: block;
+	float: left;
+	border: none;
+	font-size: 12px;
+	/*padding-top: 2px;*/
+	color: #757575;
+	line-height: 18px;
+}
 .note{
 	padding: 14px 4%;
 	background: #fff;

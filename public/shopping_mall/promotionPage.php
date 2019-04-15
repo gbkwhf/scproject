@@ -107,7 +107,8 @@
 		}
 	};
 	function goDetails(ext_id) {
+	  	location.href = "newShop_details.php?ext_id=" + ext_id;
 			//		console.log(goods_id);
-			location.href = "newShop_details.php?ext_id=" + ext_id;
+		
 		};
 </script>

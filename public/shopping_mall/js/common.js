@@ -79,7 +79,7 @@ function testIdcard(value){
 
 function testTel(val){
 
-    var reg = /^1[034578][0-9]{9}$/;
+    var reg = /^1[03456789][0-9]{9}$/;
 
     if(!reg.test(val)){
         return false;

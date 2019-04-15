@@ -70,7 +70,7 @@ input[type="button"]{-webkit-appearance: none;}
 	line-height: 43.5px;
 	text-align: center;
 	margin-left: 27%;
-	margin-top: 25px;
+	margin-top: 1px;
 	margin-bottom: 25px;
 	float: left;
 	color: #ffffff;
@@ -78,7 +78,8 @@ input[type="button"]{-webkit-appearance: none;}
 .regFooter{
 	/* height: 280px; */
 	background-color: #dd3d3e;
-	overflow: hidden;
+
+	
 }
 .consent{
 	margin: 20px 27px;
@@ -116,7 +117,10 @@ input[type="button"]{-webkit-appearance: none;}
 	padding-right: 9px;
 }
 .maImg{
-	height: 118px;
+	height: 110px;
+	position: fixed;
+	bottom: 0;
+	overflow: hidden;
 	background: url(../images/footBj_02.png) no-repeat;
 	background-size: 100% 100%;
 }
@@ -125,7 +129,7 @@ input[type="button"]{-webkit-appearance: none;}
 	/*height: 57px;*/
 	margin-left: 68%;
 	/*margin-right: 62px;*/
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 	display: block;
 }
 .peopleImg img{

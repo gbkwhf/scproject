@@ -427,9 +427,9 @@
                     console.log(res)
                     if (res.code == 1) {
                         layer.msg("确认成功")
-                        $('.fukuan2').addClass("getStyle").parent().siblings().find(".commClick").removeClass("getStyle")
-                        id = 3
-                        evaluate(page)
+                        setTimeout(function () {
+                            location.href='myOrderList.php?orderId=3'
+                        },1000)
                     } else {
                         layer.msg(res.msg)
                     }

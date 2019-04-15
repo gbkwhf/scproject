@@ -19,15 +19,16 @@
 				<input class="inp verify" id="verify" maxlength="6" type="text" placeholder="请输入验证码"/>
                 <div class="getCode" onkeyup="value=value.replace(/[^0-9.]/g,'') " onclick="getcode()">获取验证码</div>
 			</div>
-            <div class="userMobil">
+            <!--<div class="userMobil">
             <p class="inpmobile invite">邀请码: </p>
-			</div>
+			</div>-->
             <p class="consent">
             <input type="checkbox" name="consent" id="" style="-webkit-appearance:checkbox"/>同意授权条约
             </p>
-			<div class="registerBtn" onclick="reg()">注册</div>
+			
 		</div>
 		<div class="regFooter">
+			<div class="registerBtn" onclick="reg()">注册</div>
 			<div class="maImg">
 				<p><img src="images/ma.jpg"/></p>
 				<p style="padding-left: 69.5%;color: #ffffff;font-size: 12px;">双创共享</p>

@@ -45,6 +45,7 @@ input[type="button"] {
 	line-height: 50px;
 	padding-left: 11px;
 	border-bottom: solid 1px #e5e5e5;
+	background-color: transparent;
 }
 
 .inforCompany {
@@ -61,15 +62,19 @@ input[type="button"] {
 }
 
 .lastName,
-.phoneNum,
-.companys {
+.phoneNum {
 	float: left;
+	width: 17%;
 }
-
+.companys{
+	float: left;
+	width: 25%;
+}
 .inName,
 .inNum,
 .firmName {
 	float: left;
+	width: 70%;
 }
 
 .inputForName,
@@ -82,6 +87,7 @@ input[type="button"] {
 	padding-left: 5px;
 	font-size: 16px;
 	width: 100%;
+	background-color: transparent;
 	/*	min-width: 200px;*/
 }
 
@@ -117,11 +123,13 @@ input[type="button"] {
 .productName,
 .attributesName {
 	float: left;
+	width: 28%;
 }
 
 .pros,
 .proAttributes {
 	float: left;
+	width: 70%;
 }
 
 .inputProductName,
@@ -133,6 +141,7 @@ input[type="button"] {
 	padding-left: 5px;
 	font-size: 16px;
 	width: 100%;
+	background-color: transparent;
 }
 
 

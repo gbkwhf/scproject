@@ -183,23 +183,26 @@ input[type="button"] {
 /*-----福利区--------*/
 
 .welfare {
+	width: 92.5%;
+	margin: 0 auto;
 	margin-top: 20px;
 }
 
 .welfare img {
-	height: 92px;
+	/*height: 89px;*/
 	width: 100%;
 	margin: 0 auto;
+	margin-bottom: 10px;
 }
-
 .noDiv {
 	height: 6px;
 	background-color: #f3f2f2;
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 
 
 /*-------------大分类区--------*/
+
 
 .classfiyTitle {
 	padding-top: 17px;
@@ -211,7 +214,7 @@ input[type="button"] {
 	width: 92%;
 	min-height: 185px;
 	margin: 0 auto;
-	
+	margin-bottom: 10px;
 }
 
 .leftBox {
@@ -251,7 +254,6 @@ input[type="button"] {
 	width: 100%;
 	height: 82px;
 }
-
 
 /*-------新品上线------*/
 
@@ -293,40 +295,71 @@ input[type="button"] {
 
 /*--------商品信息-----*/
 
-.shopBox {
-	clear: both;
-	margin-top: 15px;
+.shop_Box{
+	min-height: 100px; 
+	margin-bottom: 60px;
+	background: #f5f5f5; 
+	overflow: auto;
+	margin-top: 17px;
+}
+.shopBox{
+	/*clear: both;*/
+	/*margin-top: 15px;*/
+	width:46%;
+    /* height: 276px; */
+    /*border-right: solid 2px #e5e5e5;
+    border-top: solid 2px #e5e5e5;*/
+    overflow: auto;
+    float: left;
+    background-color: #ffffff;
+     margin: 0px 5px 10px 10px;
+    
 	/*margin-bottom: 15px;*/
 }
-
-.shopImg img {
+.shopBox:nth-child(even){
+	border-right: none;
+	width: 46%;
+	margin: 0px 5px 10px 5px;
+}
+  .shopBox:nth-child(1){
+ 	margin-top: 10px;
+ }
+ .shopBox:nth-child(2){
+ 	margin-top: 10px;
+ }
+.shopImg{
+	width:100%;
+    height: 115px;
+    margin: 0 auto;
+}
+.shopImg img{
 	width: 100%;
-	height: 250px;
+    height: 115px;
+    margin: 0 auto;
+   /* margin-top: 15px;*/
 }
-
-.shopName {
-	padding: 10px;
-	height: 14px;
-	line-height: 24px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	/*white-space: nowrap;*/
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 1;
-	display: -webkit-box;
-	text-align: left;
+.shopName{
+	height: 20px;
+    padding: 15px  20px 20px 12px;
+    line-height: 20px;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    text-align: left;
 }
-
-.shopMessage {
+.shopMessage{
 	height: 27px;
-	margin-top: 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
-
-.shops {
+.shops{
 	float: left;
 }
-
-.shopPrice {
+.shopPrice{
 	color: #ec4444;
 	padding-left: 12px;
 }
@@ -353,7 +386,86 @@ input[type="button"] {
 	display: none !important;
 }
 
-
+/*-----------------弹窗-----------------*/
+.popBox {
+	/*text-align: center;*/
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 5000;
+}
+.close{
+	width: 42px;
+	height: 42px;
+	float: right;
+	background: url(../images/new_close.png) no-repeat;
+	background-size: 100% 100%;
+	margin-top: 65px;
+	margin-right: 25px;
+	z-index: 500;
+}
+.pops {
+	width: 71%;
+	height: 353px;
+	margin: 0 auto;
+	margin-top: 140px;
+	background: url(../images/new_tanks.png) no-repeat;
+	background-size: 100% 100%;
+	/*background: #ffffff;*/
+	/*overflow: auto;*/
+	border-radius: 5px;
+	overflow: auto;
+}
+ 
+.pops p{
+	padding-left: 19px;
+	color: #fbc08b;
+	line-height: 22px;
+	font-size: 13px;
+}
+.contens{
+	padding-top: 22px;
+}
+.title_names{
+	margin-left: 19px;
+	margin-top: 116px;
+	color: #fff;
+	width: 55%;
+	line-height: 26px;
+	border-bottom: 1px solid #fff;
+	font-size: 15px;
+}
+.dates {
+	color: #fff;
+	font-size: 16px;
+	padding-top: 145px;
+	text-align: center;
+}
+.collect{
+	height: 28px;
+	width: 60%;
+	color: #fff;
+	border-radius: 15px;
+	text-align: center;
+	line-height: 28px;
+	margin: 0 auto;
+	margin-top: 45px;
+	background: -webkit-linear-gradient(top, #fda204 , #f05a15); /* Safari 5.1 - 6.0 */
+	
+}
+.confirm {
+	text-align: center;
+	width: 100%;
+	color: #e63737;
+	line-height: 1.5em;
+	background-color: #fff;
+	/*float: left;*/
+	padding: 11px 0;
+	border-top: 1px solid #e6e6e6;
+}
 /*------------底部-------*/
 
 
